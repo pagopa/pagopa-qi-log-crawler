@@ -158,38 +158,38 @@ interface EventInterface
 
     /**
      * Restituisce la lista degli IUV del carrello associato all'evento
-     * @return array
+     * @return array|null
      */
-    public function getIuvs() : array;
+    public function getIuvs() : array|null;
 
 
     /**
      * Restituisce la lista delle PA Emittenti del carrello associato all'evento
-     * @return array
+     * @return array|null
      */
-    public function getPaEmittenti() : array;
+    public function getPaEmittenti() : array|null;
 
 
     /**
      * Restituisce la lista dei ccp del carrello associato all'evento
      * @return array
      */
-    public function getCcps() : array;
+    public function getCcps() : array|null;
 
 
     /**
      * Restituisce l'id del carrello
-     * @return string
+     * @return string|null
      */
-    public function getIdCarrello() : string;
+    public function getIdCarrello() : string|null;
 
 
     /**
      * Restituisce una chiave utile per storicizzare i dati in cache
      * @param int $index
-     * @return string
+     * @return string|null
      */
-    public function getKey(int $index = 0) : string;
+    public function getKey(int $index = 0) : string|null;
 
 
     /**

@@ -3,9 +3,22 @@
 namespace pagopa\crawler\methods;
 
 use pagopa\methods\MethodInterface;
+use \XMLReader;
 
 class activatePaymentNotice implements MethodInterface
 {
+
+    /**
+     * Rappresenta il payload dell'evento
+     * @var string
+     */
+    protected string $payload;
+
+
+    public function __construct(string $payload = null)
+    {
+        $this->payload = $payload;
+    }
 
     /**
      * Restituisce sempre null perchè nel payload non vi è presenza dello iuv o di più iuv
@@ -22,7 +35,16 @@ class activatePaymentNotice implements MethodInterface
      */
     public function getPaEmittenti(): array|null
     {
-        // TODO: Implement getPaEmittenti() method.
+        $xml = new XMLReader();
+        $xml->XML($this->payload);
+        while($xml->read())
+        {
+            if (($xml->nodeType == XMLReader::ELEMENT) && ($xml->localName == "fiscalCode"))
+            {
+                return [$xml->readString()];
+            }
+        }
+        return null;
     }
 
     /**
@@ -31,7 +53,7 @@ class activatePaymentNotice implements MethodInterface
      */
     public function getCcps(): array|null
     {
-        // TODO: Implement getCcps() method.
+        return null;
     }
 
     /**
@@ -40,7 +62,7 @@ class activatePaymentNotice implements MethodInterface
      */
     public function getAllTokens(): array|null
     {
-        // TODO: Implement getAllTokens() method.
+        return null;
     }
 
     /**
@@ -49,7 +71,16 @@ class activatePaymentNotice implements MethodInterface
      */
     public function getAllNoticesNumbers(): array|null
     {
-        // TODO: Implement getAllNoticesNumbers() method.
+        $xml = new XMLReader();
+        $xml->XML($this->payload);
+        while($xml->read())
+        {
+            if (($xml->nodeType == XMLReader::ELEMENT) && ($xml->localName == "noticeNumber"))
+            {
+                return [$xml->readString()];
+            }
+        }
+        return null;
     }
 
     /**
@@ -69,7 +100,7 @@ class activatePaymentNotice implements MethodInterface
      */
     public function getPaEmittente(int $index = 0): string|null
     {
-        return (is_null($this->getPaEmittente())) ? null : $this->getPaEmittenti()[0];
+        return (is_null($this->getPaEmittenti())) ? null : $this->getPaEmittenti()[0];
     }
 
     /**
@@ -93,12 +124,31 @@ class activatePaymentNotice implements MethodInterface
     }
 
     /**
+     * Restituisce un array con un singolo valore che rappresenta il campo qrCode.noticeNumber
+     * @param int $index
+     * @return string|null
+     */
+    public function getNoticeNumber(int $index = 0): string|null
+    {
+        return (is_null($this->getAllNoticesNumbers())) ? null : $this->getAllNoticesNumbers()[0];
+    }
+
+    /**
      * Restituisce l'importo presente al campo <amount> del payload. Questo importo non è attualizzato.
      * @return string|null
      */
     public function getImportoTotale(): string|null
     {
-        // TODO: Implement getImportoTotale() method.
+        $xml = new XMLReader();
+        $xml->XML($this->payload);
+        while($xml->read())
+        {
+            if (($xml->nodeType == XMLReader::ELEMENT) && ($xml->localName == "amount"))
+            {
+                return [$xml->readString()];
+            }
+        }
+        return null;
     }
 
     /**
@@ -108,7 +158,7 @@ class activatePaymentNotice implements MethodInterface
      */
     public function getImporto(int $index = 0): string|null
     {
-        // TODO: Implement getImporto() method.
+        return $this->getImportoTotale();
     }
 
     /**
@@ -153,5 +203,78 @@ class activatePaymentNotice implements MethodInterface
     public function isBollo(int $transfer = 0, int $index = 0): bool
     {
         return false;
+    }
+
+
+    /**
+     * Restituisce il valore del campo idPSP
+     * @return string|null
+     */
+    public function getPsp(): string|null
+    {
+        $xml = new XMLReader();
+        $xml->XML($this->payload);
+        while($xml->read())
+        {
+            if (($xml->nodeType == XMLReader::ELEMENT) && ($xml->localName == "idPSP"))
+            {
+                return $xml->readString();
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Restituisce il valore del campo idBrokerPSP
+     * @return string|null
+     */
+    public function getBrokerPsp(): string|null
+    {
+        $xml = new XMLReader();
+        $xml->XML($this->payload);
+        while($xml->read())
+        {
+            if (($xml->nodeType == XMLReader::ELEMENT) && ($xml->localName == "idBrokerPSP"))
+            {
+                return $xml->readString();
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Restituisce il valore del campo idChannel
+     * @return string|null
+     */
+    public function getCanale(): string|null
+    {
+        $xml = new XMLReader();
+        $xml->XML($this->payload);
+        while($xml->read())
+        {
+            if (($xml->nodeType == XMLReader::ELEMENT) && ($xml->localName == "idChannel"))
+            {
+                return $xml->readString();
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Restituisce null perchè nel payload non c'è il broker PA
+     * @return string|null
+     */
+    public function getBrokerPa(): string|null
+    {
+        return null;
+    }
+
+    /**
+     * Restituisce null perchè nel payload non c'è la stazione
+     * @return string|null
+     */
+    public function getStazione(): string|null
+    {
+        return null;
     }
 }

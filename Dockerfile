@@ -10,3 +10,9 @@ USER root:root
 
 # git clone del progetto che deve andare a finire in /var/www/html/crawler
 # run del comando composer install dalla directory /var/www/html/crawler
+
+# from https://getcomposer.org/doc/faqs/should-i-commit-the-dependencies-in-my-vendor-directory.md
+# remove all .git directory from installed dependencies
+#    find vendor/ -type d -name ".git" -exec rm -rf {} \;
+#
+#    Add a .gitignore rule (/vendor/**/.git)

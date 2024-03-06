@@ -2,7 +2,6 @@
 
 namespace pagopa\crawler;
 
-use pagopa\crawler\EventInterface;
 use pagopa\database\sherlock\Transaction;
 use pagopa\methods\MethodInterface;
 
@@ -15,12 +14,23 @@ abstract class AbstractEvent implements EventInterface
      */
     protected array $data = [];
 
-    protected MethodInterface $method;
+    /**
+     * Rappresenta la singola riga dell'evento prelevata dal Registro Eventi
+     * @var Transaction
+     */
+    protected Transaction $instance;
 
 
     public function __construct(array $eventData)
     {
         $this->data = $eventData;
+        $payload = '';
+        if (array_key_exists('payload', $eventData))
+        {
+            $payload = (is_resource($eventData["payload"])) ? base64_decode(stream_get_contents($eventData["payload"])) : base64_decode($eventData["payload"]);
+            $this->data["payload"] = $payload;
+        }
+        //$this->instance = new TransactionRe(new \DateTime($eventData["insertedtimestamp"]), $eventData);
     }
 
     /**
@@ -56,6 +66,44 @@ abstract class AbstractEvent implements EventInterface
     }
 
     /**
+     * Restituisce il session id dell'evento
+     * @return string|null
+     */
+    public function getSessionId() : string|null
+    {
+        return $this->getColumn('sessionid');
+    }
+
+
+    /**
+     * Restituisce il session id originale dell'evento
+     * @return string|null
+     */
+    public function getSessionIdOriginal(): string|null
+    {
+        return $this->getColumn('sessionidoriginal');
+    }
+
+    /**
+     * Restituisce lo unique id dell'evento
+     * @return string|null
+     */
+    public function getUniqueId() : string|null
+    {
+        return $this->getColumn('uniqueid');
+    }
+
+    /**
+     * Restituisce il payload dell'evento già decodificato in base 64
+     * @return string|null
+     */
+    public function getPayload(): string|null
+    {
+        return $this->getColumn('payload');
+    }
+
+
+    /**
      * @inheritDoc
      */
     abstract public function getPaEmittente(int $index = 0): string|null;
@@ -88,24 +136,45 @@ abstract class AbstractEvent implements EventInterface
     /**
      * @inheritDoc
      */
-    abstract public function getIuvs(): array;
+    abstract public function getIuvs(): array|null;
 
     /**
      * @inheritDoc
      */
-    abstract public function getPaEmittenti(): array;
+    abstract public function getPaEmittenti(): array|null;
 
     /**
      * @inheritDoc
      */
-    abstract public function getCcps(): array;
+    abstract public function getCcps(): array|null;
+
+    /**
+     * Restituisce il psp dell'evento. Sarà la classe che implementa la AbstractEvent a decidere se usare l'evento o il payload
+     * @return string|null
+     */
+    abstract public function getPsp(): string|null;
+
+    /**
+     * Restituisce la stazione dell'evento. Sarà la classe che implementa la AbstractEvent a decidere se usare l'evento o il payload
+     * @return string|null
+     */
+    abstract public function getStazione(): string|null;
+
+
+    abstract public function getCanale(): string|null;
+
+
+    abstract public function getBrokerPa(): string|null;
+
+
+    abstract public function getBrokerPsp(): string|null;
+
 
     /**
      * @inheritDoc
      */
     public function getIdCarrello(): string
     {
-        // TODO: Implement getIdCarrello() method.
         return '';
     }
 
@@ -128,4 +197,7 @@ abstract class AbstractEvent implements EventInterface
      * @inheritDoc
      */
     abstract public function getMethodInterface(): MethodInterface;
+
+
+
 }

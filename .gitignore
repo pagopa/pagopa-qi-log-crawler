@@ -40,3 +40,4 @@ obj/
 
 # php composer package
 /src/vendor/
+/src/vendor/**/.git

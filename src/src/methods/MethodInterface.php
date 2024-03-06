@@ -81,6 +81,14 @@ interface MethodInterface
      */
     public function getToken(int $index = 0) : string|null;
 
+    /**
+     * Restituisce l'i-esimo notice number del carrello. Se l'evento gestisce un solo pagamento, restituisce il singolo notice number.
+     * Restituisce null se non vi è la presenza del dato nel payload
+     * @param int $index
+     * @return string|null
+     */
+    public function getNoticeNumber(int $index = 0): string|null;
+
 
     /**
      * Restituisce l'importo totale del pagamento. Se è un carrello, restituisce l'importo totale del carrello
@@ -134,6 +142,44 @@ interface MethodInterface
      * @return bool
      */
     public function isBollo(int $transfer = 0, int $index = 0) : bool;
+
+
+    /**
+     * Restituisce l'id psp prelevandolo dal payload, se presente
+     * @return string|null
+     */
+    public function getPsp() : string|null;
+
+    /**
+     * Restituisce il broker PSP prelevandolo dal payload, se presente
+     * @return string|null
+     */
+    public function getBrokerPsp() : string|null;
+
+
+    /**
+     * Restitusice il canale prelevandolo dal payload, se presente
+     * @return string|null
+     */
+    public function getCanale() : string|null;
+
+
+    /**
+     * Restituisce il broker pa prelevandola dal payload, se presente
+     * @return string|null
+     */
+    public function getBrokerPa() : string|null;
+
+    /**
+     * Restituisce la stazione prelevandola dal payload, se presente
+     * @return string|null
+     */
+    public function getStazione() : string|null;
+
+
+
+
+
 
 
 
