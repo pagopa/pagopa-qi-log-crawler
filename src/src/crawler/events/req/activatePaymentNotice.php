@@ -1,14 +1,21 @@
 <?php
+namespace pagopa\crawler\events\req;
 
-use pagopa\database\sherlock\Transaction;
-use pagopa\crawler\AbstractEvent;
-use pagopa\methods\MethodInterface;
-use pagopa\crawler\methods\activatePaymentNotice as Payload;
+
+use pagopa\crawler\methods\MethodInterface;
+use pagopa\crawler\methods\req\activatePaymentNotice as Payload;
 
 class activatePaymentNotice extends \pagopa\crawler\AbstractEvent
 {
 
     protected Payload $method;
+
+
+    public function __construct(array $eventData)
+    {
+        parent::__construct($eventData);
+        $this->method = new Payload($this->data['payload']);
+    }
 
 
     /**
@@ -125,6 +132,10 @@ class activatePaymentNotice extends \pagopa\crawler\AbstractEvent
      */
     public function getStazione(): string|null
     {
+        if (empty($this->getColumn('stazione')))
+        {
+            return $this->getMethodInterface()->getStazione();
+        }
         return $this->getColumn('stazione');
     }
 
@@ -139,7 +150,7 @@ class activatePaymentNotice extends \pagopa\crawler\AbstractEvent
             // se la colonna è vuota, provo a recuperare dal payload
             return $this->getMethodInterface()->getCanale();
         }
-        return $this->getColumn('psp');
+        return $this->getColumn('canale');
     }
 
     /**
@@ -223,5 +234,14 @@ class activatePaymentNotice extends \pagopa\crawler\AbstractEvent
     public function getPaymentsCount(): int
     {
         return 1;
+    }
+
+    /**
+     * @param int $index
+     * @return int|null
+     */
+    public function getTransferCount(int $index = 0): int|null
+    {
+        return null;
     }
 }

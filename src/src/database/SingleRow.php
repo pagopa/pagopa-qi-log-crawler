@@ -228,7 +228,7 @@ class SingleRow implements SingleRowInterface
 
         $this->query = sprintf($model, $this->getTable(), $columns, implode(",", array_keys($bindColumns)));
         $this->bindParams = $bindColumns;
-        $this->alreadyGenerated = true;
+        $this->hasAlreadyGenerated = true;
         return $this;
 
     }
@@ -250,6 +250,17 @@ class SingleRow implements SingleRowInterface
         {
             throw new SingleRowException('Non è possibile effettuare una update senza chiavi primarie');
         }
+
+
+        // prendo dai dati in cache quelle che possono essere le chiavi primarie
+        foreach($this->data as $pKey => $pValue)
+        {
+            if (in_array($pKey, $this->primary_keys))
+            {
+                $this->setNewColumnValue($pKey, $pValue);
+            }
+        }
+
 
         foreach($this->getPrimaryKeys() as $key)
         {
@@ -279,7 +290,7 @@ class SingleRow implements SingleRowInterface
 
         foreach($this->newdata as $column => $value)
         {
-            $bindColumn = sprintf(":%s_%s", $column, $this->unique_id);
+            $bindColumn = sprintf(":%s_%s", $column, $this->uniqid);
             $bindParams[$bindColumn] = $value;
             $sets[] = sprintf("%s = %s", $column, $bindColumn);
         }
@@ -287,7 +298,7 @@ class SingleRow implements SingleRowInterface
         $bindParamsKey = [];
         foreach($pkeys as $pkey => $pvalue)
         {
-            $pkBindColumn = sprintf(":%s_%s", $pkey, $this->unique_id);
+            $pkBindColumn = sprintf(":%s_%s", $pkey, $this->uniqid);
             $bindParamsKey[$pkBindColumn] = $pvalue;
             $where[] = sprintf("%s = %s", $pkey, $pkBindColumn);
         }

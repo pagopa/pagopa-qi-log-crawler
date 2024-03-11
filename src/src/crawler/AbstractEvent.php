@@ -2,8 +2,9 @@
 
 namespace pagopa\crawler;
 
+use pagopa\crawler\methods\MethodInterface;
 use pagopa\database\sherlock\Transaction;
-use pagopa\methods\MethodInterface;
+use pagopa\database\sherlock\TransactionRe;
 
 abstract class AbstractEvent implements EventInterface
 {
@@ -18,7 +19,7 @@ abstract class AbstractEvent implements EventInterface
      * Rappresenta la singola riga dell'evento prelevata dal Registro Eventi
      * @var Transaction
      */
-    protected Transaction $instance;
+    protected TransactionRe $instance;
 
 
     public function __construct(array $eventData)
@@ -30,7 +31,8 @@ abstract class AbstractEvent implements EventInterface
             $payload = (is_resource($eventData["payload"])) ? base64_decode(stream_get_contents($eventData["payload"])) : base64_decode($eventData["payload"]);
             $this->data["payload"] = $payload;
         }
-        //$this->instance = new TransactionRe(new \DateTime($eventData["insertedtimestamp"]), $eventData);
+        $date = new \DateTime($eventData['insertedtimestamp']);
+        $this->instance = new TransactionRe($date, $eventData);
     }
 
     /**
@@ -199,5 +201,8 @@ abstract class AbstractEvent implements EventInterface
     abstract public function getMethodInterface(): MethodInterface;
 
 
-
+    public function getEventRowInstance(): TransactionRe
+    {
+        return $this->instance;
+    }
 }

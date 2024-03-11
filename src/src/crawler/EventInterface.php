@@ -4,8 +4,9 @@
  */
 namespace pagopa\crawler;
 
+use pagopa\crawler\methods\MethodInterface;
 use pagopa\database\sherlock\Transaction;
-use pagopa\methods\MethodInterface;
+use pagopa\database\sherlock\TransactionRe;
 
 interface EventInterface
 {
@@ -157,6 +158,14 @@ interface EventInterface
 
 
     /**
+     * Restituisce il numero di versamenti dell'iesimo pagamento del carrello
+     * @param int $index
+     * @return int|null
+     */
+    public function getTransferCount(int $index = 0) : int|null;
+
+
+    /**
      * Restituisce la lista degli IUV del carrello associato all'evento
      * @return array|null
      */
@@ -213,5 +222,12 @@ interface EventInterface
      * @return MethodInterface
      */
     public function getMethodInterface() : MethodInterface;
+
+
+    /**
+     * Restituisce l'istanza SingleRow che gestisce l'evento sul db
+     * @return TransactionRe
+     */
+    public function getEventRowInstance() : TransactionRe;
 
 }

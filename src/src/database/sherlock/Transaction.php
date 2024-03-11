@@ -2,8 +2,8 @@
 
 namespace pagopa\database\sherlock;
 
-use Illuminate\Support\Facades\Date;
 use pagopa\database\SingleRow;
+use Illuminate\Database\Capsule\Manager as Capsule;
 
 class Transaction extends SingleRow
 {
@@ -21,10 +21,10 @@ class Transaction extends SingleRow
     protected array $need_primary_keys = ['date_event'];
 
 
-    public function __construct(\DateTime $date)
+    public function __construct(\DateTime $date, array $eventData = [])
     {
         $table = sprintf('transaction_%s', $date->format('Y'));
-        parent::__construct($table);
+        parent::__construct($table, $eventData, ['id', 'date_event'], ['date_event']);
 
     }
 
@@ -178,4 +178,91 @@ class Transaction extends SingleRow
     }
 
 
+    /**
+     * Cerca un tentativo
+     * @param string $iuv
+     * @param string $pa_emittente
+     * @param string $token
+     * @return Transaction[]|null
+     */
+    public static function searchByAttempt(string $iuv, string $pa_emittente, string $token) : array|null
+    {
+        $years = ['2023'];
+        $results = [];
+        foreach($years as $year)
+        {
+            $table = sprintf('transaction_%s', $year);
+            $events = Capsule::table($table)
+                ->where('iuv', '=', $iuv)
+                ->where('pa_emittente', '=', $pa_emittente)
+                ->where('token_ccp', '=', $token)
+                ->get();
+            foreach($events as $attempt)
+            {
+                $results[] = (array) $attempt;
+            }
+        }
+        return (count($results) == 0) ? null : $results;
+    }
+
+
+    /**
+     * Cerca un pagamento
+     * @param string $iuv
+     * @param string $pa_emittente
+     * @return Transaction[]|null
+     */
+    public static function searchByPayment(string $iuv, string $pa_emittente) : array|null
+    {
+        $years = ['2023'];
+        $results = [];
+        foreach($years as $year)
+        {
+            $table = sprintf('transaction_%s', $year);
+            $events = Capsule::table($table)
+                ->where('iuv', '=', $iuv)
+                ->where('pa_emittente', '=', $pa_emittente)
+                ->get();
+            foreach($events as $payment)
+            {
+                $results[] = (array) $payment;
+            }
+        }
+        return (count($results) == 0) ? null : $results;
+    }
+
+
+    /**
+     * Cerca un pagamento e/o tentativo in base al notice_id
+     * @param string $notice_id
+     * @param string|null $pa
+     * @return Transaction[]|null
+     */
+    public static function searchByNoticeId(string $notice_id, string $pa = null) : array|null
+    {
+        // query sui 17 e 15 caratteri dell'avviso fornito
+        // + where su campo notice_id = a $notice_id
+        // + pa se indicata
+        $years = ['2023'];
+        $results = [];
+        $iuv_17 = substr($notice_id,1,17);
+        $iuv_15 = substr($notice_id, 3, 15);
+        foreach($years as $year)
+        {
+            $table = sprintf('transaction_%s', $year);
+            $events = Capsule::table($table)
+                ->whereIn('iuv', [$iuv_17, $iuv_15])
+                ->where('notice_id', '=', $notice_id);
+            if (!is_null($pa))
+            {
+                $events->where('pa_emittente', '=', $pa);
+            }
+            $events->get();
+            foreach($events as $payment)
+            {
+                $results[] = (array) $payment;
+            }
+        }
+        return (count($results) == 0) ? null : $results;
+    }
 }

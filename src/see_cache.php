@@ -15,11 +15,9 @@ if (!$connect)
 $mem->setOption(Memcached::OPT_COMPRESSION, true);
 
 
-while (count($mem->getAllKeys()) > 0)
+foreach($mem->getAllKeys() as $key)
 {
-    echo "Ci sono " .count($mem->getAllKeys()) . " elementi , effettuo il flush " .PHP_EOL;
-    sleep(2);
-    $mem->flush();
+    print_r($mem->get($key));
 }
 
 echo "Flush terminato" .PHP_EOL;

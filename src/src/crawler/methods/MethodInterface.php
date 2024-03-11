@@ -2,7 +2,7 @@
 /**
  * Interfaccia che definisce i metodi per ricavare dai da un payload
  */
-namespace pagopa\methods;
+namespace pagopa\crawler\methods;
 
 interface MethodInterface
 {
@@ -131,6 +131,14 @@ interface MethodInterface
      * @return string|null
      */
     public function getTransferIban(int $transfer = 0, int $index = 0) : string|null;
+
+
+    /**
+     * Restituiscei il numero di transfer dell'iesimo pagamento gestito dal metodo
+     * @param int $index
+     * @return int|null
+     */
+    public function getTransferCount(int $index = 0) : int|null;
 
 
     /**

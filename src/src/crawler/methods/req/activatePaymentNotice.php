@@ -1,9 +1,9 @@
 <?php
 
-namespace pagopa\crawler\methods;
+namespace pagopa\crawler\methods\req;
 
-use pagopa\methods\MethodInterface;
-use \XMLReader;
+use pagopa\crawler\methods\MethodInterface;
+use XMLReader;
 
 class activatePaymentNotice implements MethodInterface
 {
@@ -145,7 +145,7 @@ class activatePaymentNotice implements MethodInterface
         {
             if (($xml->nodeType == XMLReader::ELEMENT) && ($xml->localName == "amount"))
             {
-                return [$xml->readString()];
+                return $xml->readString();
             }
         }
         return null;
@@ -274,6 +274,15 @@ class activatePaymentNotice implements MethodInterface
      * @return string|null
      */
     public function getStazione(): string|null
+    {
+        return null;
+    }
+
+    /**
+     * @param int $index
+     * @return int|null
+     */
+    public function getTransferCount(int $index = 0): int|null
     {
         return null;
     }

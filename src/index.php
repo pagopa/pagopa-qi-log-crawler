@@ -5,25 +5,14 @@ require_once './vendor/autoload.php';
 
 
 use Illuminate\Database\Capsule\Manager as Capsule;
-use Illuminate\Database\Capsule\Manager as DB;
-use pagopa\crawler\events\req\nodoInviaCarrelloRPT;
-use pagopa\crawler\PaymentList2;
 
 
-const TABLE_RE          = 'transaction_re_%s';
-const TABLE_TRANSACTION = 'transaction_%s';
-const TABLE_DETAILS     = 'transaction_details_%s';
-const TABLE_EVENTS      = 'transaction_events_%s';
-const TABLE_SESSION_ID  = 'transaction_session_id_%s';
-
-
-
-const DB_HOST           =   '172.21.0.2';
+const DB_HOST           =   '172.17.0.2';
 const DB_PORT           =   5432;
 const DB_DATABASE       =   'postgres';
 const DB_USERNAME       =   'postgres';
 const DB_PASSWORD       =   'admin';
-const MEMCACHED_HOST    =   '172.21.0.3';
+const MEMCACHED_HOST    =   '172.17.0.3';
 const MEMCACHED_PORT    =   11211;
 
 /*$id = "1298084";
@@ -171,95 +160,10 @@ $capsule->bootEloquent();
  *
  * Per la singleRow, implementare metodi per ricavare una o + righe da varie chiavi (che siano le pk o i dati della transaction)
  *
- * 
+ *
  */
 
-$event_type = 'TO_LOAD';
 
-$data_crawler = [
-    [
-        'method' => 'startNodoInviaCarrelloRPTReq',
-        'limit' => 100,
-        'use_db' => false,
-        'enable' => false,
-        'event_type' => $event_type
-    ],
-    [
-        'method' => 'startNodoInviaCarrelloRPTResp',
-        'limit' => 100,
-        'use_db' => false,
-        'enable' => false,
-        'event_type' => $event_type
-    ],
-    [
-        'method' => 'startActivatePaymentNoticeReq',
-        'limit' => 500,
-        'use_db' => false,
-        'enable' => false,
-        'event_type' => $event_type
-    ],
-    [
-        'method' => 'startActivatePaymentNoticeResp',
-        'limit' => 500,
-        'use_db' => false,
-        'enable' => true,
-        'event_type' => $event_type
-    ]
-];
+$a = new \pagopa\crawler\paymentlist\req\activatePaymentNotice(new DateTime('2023-09-01'), 'activatePaymentNotice', 'REQ', new \pagopa\crawler\Memcached());
+$a->run();
 
-$paymentList = new \pagopa\crawler\PaymentList(new DateTime('2023-09-01'));
-
-foreach($data_crawler as $data)
-{
-    $method = $data['method'];
-    $limit = $data['limit'];
-    $use_db = $data['use_db'];
-    $enable = $data['enable'];
-
-    if ($enable)
-    {
-        call_user_func_array(array($paymentList, $method), array($limit, $use_db));
-    }
-}
-
-
-die();
-
-$paymentList = new PaymentList2(new DateTime('2023-09-01'));
-
-
-
-$data_crawler = [
-    [
-        'method' => 'startNodoInviaCarrelloRPTReq',
-        'limit' => 100,
-        'use_db' => false,
-        'enable' => true,
-    ],
-    [
-        'method' => 'startNodoInviaCarrelloRPTResp',
-        'limit' => 100,
-        'use_db' => true,
-        'enable' => false
-    ],
-    [
-        'method' => 'startActivatePaymentNoticeReq',
-        'limit' => 100,
-        'use_db' => false,
-        'enable' => false
-    ],
-];
-
-
-foreach($data_crawler as $data)
-{
-    $method = $data['method'];
-    $limit = $data['limit'];
-    $use_db = $data['use_db'];
-    $enable = $data['enable'];
-
-    if ($enable)
-    {
-        call_user_func_array(array($paymentList, $method), array($limit, $use_db));
-    }
-}

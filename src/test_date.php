@@ -1,6 +1,91 @@
 <?php
 
 
+require_once './vendor/autoload.php';
+
+use Illuminate\Database\Capsule\Manager as Capsule;
+use pagopa\crawler\Memcached;
+
+
+const MEMCACHED_HOST = '172.17.0.3';
+
+const MEMCACHED_PORT = "11211";
+const DB_HOST = '172.17.0.5';
+const DB_PORT = '5432';
+const DB_DATABASE = 'postgres';
+const DB_USERNAME = 'postgres';
+const DB_PASSWORD = 'mock';
+
+
+
+$capsule = new Capsule;
+
+$capsule->addConnection([
+    'driver' => 'pgsql',
+    'host' => DB_HOST,
+    'port' => DB_PORT,
+    'database' => DB_DATABASE,
+    'username' => DB_USERNAME,
+    'password' => DB_PASSWORD,
+    'charset' => 'utf8',
+    'collation' => 'utf8_unicode_ci'
+]);
+
+$capsule->setAsGlobal();
+$capsule->bootEloquent();
+$memcache = new Memcached();
+
+//Capsule::statement('truncate table transaction_2024, transaction_details_2024, transaction_events_2024;');
+//Capsule::statement('update transaction_re_2024 set state=:state', [':state' => 'TO_LOAD']);
+
+$a = new \pagopa\crawler\paymentlist\req\activatePaymentNotice(new \DateTime('2024-03-10'),'activatePaymentNotice', 'REQ', $memcache);
+$a->run();
+
+
+$a = new \pagopa\crawler\paymentlist\resp\activatePaymentNotice(new \DateTime('2024-03-10'),'activatePaymentNotice', 'RESP', $memcache);
+$a->run();
+
+
+
+
+
+die();
+
+$payload = '
+<soapenv:Envelope xmlns:common="http://pagopa-api.pagopa.gov.it/xsd/common-types/v1.0.0/" xmlns:nfp="http://pagopa-api.pagopa.gov.it/node/nodeForPsp.xsd" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<soapenv:Body>
+		<nfp:activatePaymentNoticeRes>
+			<outcome>OK</outcome>
+			<totalAmount>183.85</totalAmount>
+			<paymentDescription>ENEL ENERGIA/NUMDOC=4355425863/DATADOC=08.08.2023/AVVISO=304100435542586389/IMPORTO=183,85/</paymentDescription>
+			<fiscalCodePA>06655971007</fiscalCodePA>
+			<companyName>Enel Energia S.p.A.</companyName>
+			<paymentToken>0a8ef4f0194f4886942cbc8da8fdbe04</paymentToken>
+			<transferList>
+				<transfer>
+					<idTransfer>1</idTransfer>
+					<transferAmount>183.85</transferAmount>
+					<fiscalCodePA>06655971007</fiscalCodePA>
+					<IBAN>IT18U0306909400100000009138</IBAN>
+					<remittanceInformation>/RFB/04100435542586389/TXT/ENEL ENERGIA/NUMDOC=4355425863/DATADOC=08.08.2023/AVVISO=304100435542586389/IMPORTO=183,85/</remittanceInformation>
+				</transfer>
+			</transferList>
+			<creditorReferenceId>04100435542586389</creditorReferenceId>
+		</nfp:activatePaymentNoticeRes>
+	</soapenv:Body>
+</soapenv:Envelope>';
+
+
+$xml = new XMLReader();
+$xml->XML($payload);
+while($xml->read())
+{
+    if (($xml->nodeType == XMLReader::ELEMENT) && ($xml->localName == 'transferList'))
+    {
+        echo $xml->readOuterXml();
+    }
+}
+
 
 die();
 

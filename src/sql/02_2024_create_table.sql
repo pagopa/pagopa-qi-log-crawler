@@ -38,9 +38,8 @@ create table if not exists public.transaction_events_2024
 (
     id                  bigint              default nextval('public.transaction_2024_events_id_seq'::regclass) not null,
     date_event          date                not null,
-    iuv                 varchar(35)         null,
-    pa_emittente        varchar(11)         null,
-    token_ccp           varchar(35)         null,
+    fk_payment          bigint              not null,
+    fk_tipoEvento       bigint              not null,
     event_timestamp     timestamp           not null,
     event_id            varchar(50)         null,
     tipo_evento         varchar(40)         null,
