@@ -245,6 +245,31 @@ class activatePaymentNotice implements MethodInterface, FaultInterface
     }
 
     /**
+     * @param int $transfer
+     * @param int $index
+     * @return string|null
+     */
+    public function getTransferId(int $transfer = 0, int $index = 0): string|null
+    {
+        $transferBlock = $this->getTransferNumber($transfer);
+        if (!is_null($transferBlock))
+        {
+            $xml = new XMLReader();
+            $xml->XML($transferBlock);
+            $count = 0;
+            while($xml->read())
+            {
+                if (($xml->nodeType == XMLReader::ELEMENT) && ($xml->localName == "idTransfer"))
+                {
+                    return $xml->readString();
+                }
+            }
+            return null;
+        }
+        return null;
+    }
+
+    /**
      * La activatePaymentNotice non gestisce bollo
      */
     public function isBollo(int $transfer = 0, int $index = 0): bool
@@ -284,6 +309,7 @@ class activatePaymentNotice implements MethodInterface, FaultInterface
         return null;
     }
 
+
     /**
      * Nel payload non esiste la stazione
      */
@@ -291,7 +317,6 @@ class activatePaymentNotice implements MethodInterface, FaultInterface
     {
         return null;
     }
-
 
     /**
      * Recupera il blocco di XML del campo transferList

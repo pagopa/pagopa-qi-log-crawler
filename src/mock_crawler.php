@@ -43,5 +43,9 @@ $a = new \pagopa\crawler\paymentlist\req\activatePaymentNotice(new \DateTime('20
 $a->run();
 
 
+$a = new \pagopa\crawler\paymentlist\resp\activatePaymentNotice(new \DateTime('2024-03-10'),'activatePaymentNotice', 'RESP', $memcache);
+$a->run();
+
+
 //$a = new \pagopa\crawler\paymentlist\resp\activatePaymentNotice(new \DateTime('2024-03-10'),'activatePaymentNotice', 'RESP', $memcache);
 //$a->run();

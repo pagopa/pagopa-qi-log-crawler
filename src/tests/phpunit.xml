@@ -35,6 +35,7 @@
             <file>process/normal/T0008.php</file>
             <file>process/normal/T0009.php</file>
             <file>process/normal/T0010.php</file>
+            <file>process/normal/T0011.php</file>
             <!--<file>process/normal/TestAnalysisActivatePaymentNoticeReq.php</file>-->
             <!--<file>process/normal/TestAnalysisActivatePaymentNoticeResp.php</file>-->
         </testsuite>
