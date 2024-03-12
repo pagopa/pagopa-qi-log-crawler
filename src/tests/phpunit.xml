@@ -1,0 +1,46 @@
+<phpunit
+        displayDetailsOnTestsThatTriggerWarnings="true"
+        displayDetailsOnTestsThatTriggerErrors="true"
+        displayDetailsOnTestsThatTriggerNotices="true"
+        displayDetailsOnTestsThatTriggerDeprecations="true"
+        displayDetailsOnSkippedTests="true"
+        displayDetailsOnIncompleteTests="true"
+        colors="true"
+        testdox="true">
+    <php>
+        <const name="MEMCACHED_HOST" value="172.17.0.3" />
+        <const name="MEMCACHED_PORT" value="11211" />
+        <const name="DB_HOST" value="172.17.0.5" />
+        <const name="DB_PORT" value="5432" />
+        <const name="DB_DATABASE" value="postgres" />
+        <const name="DB_USERNAME" value="postgres" />
+        <const name="DB_PASSWORD" value="mock" />
+    </php>
+    <testsuites>
+        <testsuite name="unit_tests">
+            <file>database/SingleRowTest.php</file>
+            <file>events/req/activatePaymentNoticeTest.php</file>
+            <file>events/resp/activatePaymentNoticeTest.php</file>
+            <file>methods/req/activatePaymentNoticeTest.php</file>
+            <file>methods/resp/activatePaymentNoticeTest.php</file>
+        </testsuite>
+        <testsuite name="process">
+            <file>process/normal/T0001.php</file>
+            <file>process/normal/T0002.php</file>
+            <file>process/normal/T0003.php</file>
+            <file>process/normal/T0004.php</file>
+            <file>process/normal/T0005.php</file>
+            <file>process/normal/T0006.php</file>
+            <file>process/normal/T0007.php</file>
+            <file>process/normal/T0008.php</file>
+            <file>process/normal/T0009.php</file>
+            <file>process/normal/T0010.php</file>
+            <!--<file>process/normal/TestAnalysisActivatePaymentNoticeReq.php</file>-->
+            <!--<file>process/normal/TestAnalysisActivatePaymentNoticeResp.php</file>-->
+        </testsuite>
+        <testsuite name="cache_use">
+            <file>process/cache/TestAnalysisActivatePaymentNoticeReq.php</file>
+            <file>process/cache/TestAnalysisActivatePaymentNoticeResp.php</file>
+        </testsuite>
+    </testsuites>
+</phpunit>
