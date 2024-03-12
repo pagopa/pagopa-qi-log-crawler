@@ -151,7 +151,9 @@ class activatePaymentNotice extends AbstractPaymentList
             'date_event'    =>  $date_event,
             'id'            =>  $last_inserted_id,
             'iuv'           =>  $iuv,
-            'pa_emittente'  =>  $pa_emittente
+            'pa_emittente'  =>  $pa_emittente,
+            'transfer_added'    =>  false,
+            'amount_update'     =>  false
         ];
         $this->addValueCache($cache_key, $cache_value);
 
@@ -251,7 +253,7 @@ class activatePaymentNotice extends AbstractPaymentList
             $transaction_details->setNewColumnValue('date_event', $date_event);
             $transaction_details->setPaTransfer($this->getEvent()->getMethodInterface()->getTransferPa($i, 0));
             $transaction_details->setAmountTransfer($this->getEvent()->getMethodInterface()->getTransferAmount($i, 0));
-            $transaction_details->setTransferIban($this->getEvent()->getMethodInterface()->getTransferAmount($i, 0));
+            $transaction_details->setTransferIban($this->getEvent()->getMethodInterface()->getTransferIban($i, 0));
             $transaction_details->setIdTransfer($this->getEvent()->getMethodInterface()->getTransferId($i, 0));
             $transaction_details->insert();
             DB::statement($transaction_details->getQuery(), $transaction_details->getBindParams());
@@ -267,7 +269,8 @@ class activatePaymentNotice extends AbstractPaymentList
             'iuv'           =>  $iuv,
             'pa_emittente'  =>  $pa_emittente,
             'token_ccp'     =>  $token,
-            'transfer_add'  =>  true
+            'transfer_add'  =>  true,
+            'amount_update' =>  true
         ];
         $this->addValueCache($cache_key, $cache_value);
 
@@ -303,10 +306,45 @@ class activatePaymentNotice extends AbstractPaymentList
             $cached_attempts = []; // fix per la get dalla cache
         }
 
-        foreach($cached_attempts as $attempt)
+        foreach($cached_attempts as $key => $attempt)
         {
             $id = $attempt['id'];
             $date = $attempt['date_event'];
+            $transfer_added = $attempt['transfer_added'];
+            $amount_import = $attempt['amount_update'];
+
+            if (!$this->getEvent()->getMethodInterface()->isFaultEvent())
+            {
+                if ($amount_import === false)
+                {
+                    // se non è un faultCode, e non ho aggiornato l'importo, lo faccio
+                    $transaction = new Transaction($this->getEvent()->getInsertedTimestamp(), $attempt);
+                    $transaction->setNewColumnValue('importo', $this->getEvent()->getMethodInterface()->getImportoTotale());
+                    $transaction->update();
+                    DB::statement($transaction->getQuery(), $transaction->getBindParams());
+                    $attempt['amount_update'] = true;
+                }
+
+                if ($transfer_added === false)
+                {
+                    for($i=0;$i<$this->getEvent()->getTransferCount($index);$i++)
+                    {
+                        $transaction_details = new TransactionDetails($this->getEvent()->getInsertedTimestamp());
+                        $transaction_details->setFkPayment($id);
+                        $transaction_details->setNewColumnValue('date_event', $date_event);
+                        $transaction_details->setPaTransfer($this->getEvent()->getMethodInterface()->getTransferPa($i, 0));
+                        $transaction_details->setAmountTransfer($this->getEvent()->getMethodInterface()->getTransferAmount($i, 0));
+                        $transaction_details->setTransferIban($this->getEvent()->getMethodInterface()->getTransferIban($i, 0));
+                        $transaction_details->setIdTransfer($this->getEvent()->getMethodInterface()->getTransferId($i, 0));
+                        $transaction_details->insert();
+                        DB::statement($transaction_details->getQuery(), $transaction_details->getBindParams());
+                        $attempt['transfer_added'] = true;
+                    }
+                }
+            }
+
+            $cached_attempts[$key] = $attempt; // aggiorno la cache con le nuove info (se aggiornate) di aggiunta transfer e aggiornamento importo
+
 
             $workflow = new Workflow($this->getEvent()->getInsertedTimestamp());
             $workflow->setNewColumnValue('date_event', $date);
@@ -314,8 +352,22 @@ class activatePaymentNotice extends AbstractPaymentList
             $workflow->setEventTimestamp($this->getEvent()->getInsertedTimestamp());
             $workflow->setEventId($this->getEvent()->getUniqueId());
             $workflow->setFkTipoEvento(2);
+            if (!is_null($this->getEvent()->getMethodInterface()->getFaultCode()))
+            {
+                $workflow->setFaultCode($this->getEvent()->getMethodInterface()->getFaultCode());
+            }
             $workflow->insert();
             DB::statement($workflow->getQuery(), $workflow->getBindParams());
+        }
+
+        if (count($cached_attempts) > 0)
+        {
+            // se ho valori in cache , la aggiorno
+            $this->delFromCache($cache_key);
+            foreach($cached_attempts as $v)
+            {
+                $this->addValueCache($cache_key, $v);
+            }
         }
     }
 
@@ -338,31 +390,46 @@ class activatePaymentNotice extends AbstractPaymentList
             $cached_attempts = [];
         }
 
-        foreach($cached_attempts as $attempt)
+        foreach($cached_attempts as $key => $attempt)
         {
+            // scorrro tutta la cache per questa transazione
             $id = $attempt['id'];
             $date = $attempt['date_event'];
+            $transfer_added = $attempt['transfer_added'];
+            $amount_import = $attempt['amount_update'];
+
 
             if (!$this->getEvent()->getMethodInterface()->isFaultEvent())
             {
-                $transaction = new Transaction($this->getEvent()->getInsertedTimestamp(), $attempt);
-                $transaction->setNewColumnValue('importo', $this->getEvent()->getMethodInterface()->getImportoTotale());
-                $transaction->update();
-                DB::statement($transaction->getQuery(), $transaction->getBindParams());
+                if ($amount_import === false)
+                {
+                    // se non è un faultCode, e non ho aggiornato l'importo, lo faccio
+                    $transaction = new Transaction($this->getEvent()->getInsertedTimestamp(), $attempt);
+                    $transaction->setNewColumnValue('importo', $this->getEvent()->getMethodInterface()->getImportoTotale());
+                    $transaction->update();
+                    DB::statement($transaction->getQuery(), $transaction->getBindParams());
+                    $attempt['amount_update'] = true;
+                }
+
+                if ($transfer_added === false)
+                {
+                    for($i=0;$i<$this->getEvent()->getTransferCount($index);$i++)
+                    {
+                        $transaction_details = new TransactionDetails($this->getEvent()->getInsertedTimestamp());
+                        $transaction_details->setFkPayment($id);
+                        $transaction_details->setNewColumnValue('date_event', $date_event);
+                        $transaction_details->setPaTransfer($this->getEvent()->getMethodInterface()->getTransferPa($i, 0));
+                        $transaction_details->setAmountTransfer($this->getEvent()->getMethodInterface()->getTransferAmount($i, 0));
+                        $transaction_details->setTransferIban($this->getEvent()->getMethodInterface()->getTransferIban($i, 0));
+                        $transaction_details->setIdTransfer($this->getEvent()->getMethodInterface()->getTransferId($i, 0));
+                        $transaction_details->insert();
+                        DB::statement($transaction_details->getQuery(), $transaction_details->getBindParams());
+                        $attempt['transfer_added'] = true;
+                    }
+                }
             }
 
-            for($i=0;$i<$this->getEvent()->getTransferCount($index);$i++)
-            {
-                $transaction_details = new TransactionDetails($this->getEvent()->getInsertedTimestamp());
-                $transaction_details->setFkPayment($id);
-                $transaction_details->setNewColumnValue('date_event', $date_event);
-                $transaction_details->setPaTransfer($this->getEvent()->getMethodInterface()->getTransferPa($i, 0));
-                $transaction_details->setAmountTransfer($this->getEvent()->getMethodInterface()->getTransferAmount($i, 0));
-                $transaction_details->setTransferIban($this->getEvent()->getMethodInterface()->getTransferIban($i, 0));
-                $transaction_details->setIdTransfer($this->getEvent()->getMethodInterface()->getTransferId($i, 0));
-                $transaction_details->insert();
-                DB::statement($transaction_details->getQuery(), $transaction_details->getBindParams());
-            }
+            $cached_attempts[$key] = $attempt; // aggiorno la cache con le nuove info (se aggiornate) di aggiunta transfer e aggiornamento importo
 
             $workflow = new Workflow($this->getEvent()->getInsertedTimestamp());
             $workflow->setNewColumnValue('date_event', $date);
@@ -378,6 +445,17 @@ class activatePaymentNotice extends AbstractPaymentList
             $workflow->insert();
             DB::statement($workflow->getQuery(), $workflow->getBindParams());
         }
+
+        if (count($cached_attempts) > 0)
+        {
+            // se ho valori in cache , la aggiorno
+            $this->delFromCache($cache_key);
+            foreach($cached_attempts as $v)
+            {
+                $this->addValueCache($cache_key, $v);
+            }
+        }
+
     }
 
     /**

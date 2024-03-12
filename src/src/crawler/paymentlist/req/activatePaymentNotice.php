@@ -149,10 +149,12 @@ class activatePaymentNotice extends AbstractPaymentList
 
         $cache_key      =   base64_encode(sprintf('payment_%s_%s_%s', $date_x_cache, $iuv, $pa_emittente));
         $cache_value    =   [
-            'date_event'    =>  $date_event,
-            'id'            =>  $last_inserted_id,
-            'iuv'           =>  $iuv,
-            'pa_emittente'  =>  $pa_emittente
+            'date_event'        =>  $date_event,
+            'id'                =>  $last_inserted_id,
+            'iuv'               =>  $iuv,
+            'pa_emittente'      =>  $pa_emittente,
+            'transfer_added'    =>  false,
+            'amount_update'     =>  false
         ];
         $this->addValueCache($cache_key, $cache_value);
 
@@ -246,11 +248,13 @@ class activatePaymentNotice extends AbstractPaymentList
 
         $cache_key      =   base64_encode(sprintf('attempt_%s_%s_%s_%s', $date_x_cache, $iuv, $pa_emittente, $token));
         $cache_value    =   [
-            'date_event'    =>  $date_event,
-            'id'            =>  $last_inserted_id,
-            'iuv'           =>  $iuv,
-            'pa_emittente'  =>  $pa_emittente,
-            'token_ccp'     =>  $token
+            'date_event'        =>  $date_event,
+            'id'                =>  $last_inserted_id,
+            'iuv'               =>  $iuv,
+            'pa_emittente'      =>  $pa_emittente,
+            'token_ccp'         =>  $token,
+            'transfer_added'    =>  false,
+            'amount_update'     =>  false
         ];
         $this->addValueCache($cache_key, $cache_value);
 

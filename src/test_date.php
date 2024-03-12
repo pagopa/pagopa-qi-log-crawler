@@ -1,5 +1,19 @@
 <?php
 
+$memcache = new \Memcached();
+$memcache->addServer('172.17.0.3', 11211);
+
+$memcache->append('a', '2');
+$memcache->append('a', '3');
+
+$memcache->set('b', 5);
+
+print_r($memcache->get('YXR0ZW1wdF8yMDI0MDMxMF8wMTAwMDAwMDAwMDAwMDAxMV83Nzc3Nzc3Nzc3N190MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAxMQ=='));
+
+
+
+
+die();
 
 require_once './vendor/autoload.php';
 
