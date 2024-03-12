@@ -286,4 +286,14 @@ class activatePaymentNotice implements MethodInterface
     {
         return null;
     }
+
+    /**
+     * @param int $transfer
+     * @param int $index
+     * @return string|null
+     */
+    public function getTransferId(int $transfer = 0, int $index = 0): string|null
+    {
+        return null;
+    }
 }

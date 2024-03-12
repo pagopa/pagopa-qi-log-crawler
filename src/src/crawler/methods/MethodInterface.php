@@ -134,6 +134,16 @@ interface MethodInterface
 
 
     /**
+     * Restituisce l'id transfer alla posizione $transfer del pagamento alla posizione $index
+     * del carrello. Se l'evento non gestisce un carrello, $index viene ignorato
+     * @param int $transfer
+     * @param int $index
+     * @return string|null
+     */
+    public function getTransferId(int $transfer = 0, int $index = 0) : string|null;
+
+
+    /**
      * Restituiscei il numero di transfer dell'iesimo pagamento gestito dal metodo
      * @param int $index
      * @return int|null

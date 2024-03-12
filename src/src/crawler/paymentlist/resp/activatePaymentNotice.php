@@ -252,6 +252,7 @@ class activatePaymentNotice extends AbstractPaymentList
             $transaction_details->setPaTransfer($this->getEvent()->getMethodInterface()->getTransferPa($i, 0));
             $transaction_details->setAmountTransfer($this->getEvent()->getMethodInterface()->getTransferAmount($i, 0));
             $transaction_details->setTransferIban($this->getEvent()->getMethodInterface()->getTransferAmount($i, 0));
+            $transaction_details->setIdTransfer($this->getEvent()->getMethodInterface()->getTransferId($i, 0));
             $transaction_details->insert();
             DB::statement($transaction_details->getQuery(), $transaction_details->getBindParams());
         }
@@ -358,6 +359,7 @@ class activatePaymentNotice extends AbstractPaymentList
                 $transaction_details->setPaTransfer($this->getEvent()->getMethodInterface()->getTransferPa($i, 0));
                 $transaction_details->setAmountTransfer($this->getEvent()->getMethodInterface()->getTransferAmount($i, 0));
                 $transaction_details->setTransferIban($this->getEvent()->getMethodInterface()->getTransferIban($i, 0));
+                $transaction_details->setIdTransfer($this->getEvent()->getMethodInterface()->getTransferId($i, 0));
                 $transaction_details->insert();
                 DB::statement($transaction_details->getQuery(), $transaction_details->getBindParams());
             }
