@@ -90,57 +90,7 @@ class activatePaymentNotice extends AbstractPaymentList
         $date_event     =   $this->getEvent()->getInsertedTimestamp()->format('Y-m-d');
         $date_x_cache   =   $this->getEvent()->getInsertedTimestamp()->format('Ymd');
 
-        $notice_id      =   $this->getEvent()->getNoticeNumber($index);
-
-        $broker_psp     =   $this->getEvent()->getBrokerPsp();
-        $psp_id         =   $this->getEvent()->getPsp();
-        $canale         =   $this->getEvent()->getCanale();
-
-        $broker_pa      =   $this->getEvent()->getBrokerPa();
-        $stazione       =   $this->getEvent()->getStazione();
-
-        $importo        =   $this->getEvent()->getMethodInterface()->getImporto(0);
-
-        $transaction = new Transaction($this->getEvent()->getInsertedTimestamp());
-        $transaction->setIuv($iuv);
-        $transaction->setPaEmittente($pa_emittente);
-        $transaction->setInsertedTimestamp($this->getEvent()->getInsertedTimestamp());
-        $transaction->setNewColumnValue('date_event', $date_event);
-
-        if (!is_null($notice_id))
-        {
-            $transaction->setNoticeId($notice_id);
-        }
-
-        if (!is_null($broker_psp))
-        {
-            $transaction->setBrokerPsp($broker_psp);
-        }
-
-        if (!is_null($psp_id))
-        {
-            $transaction->setPsp($psp_id);
-        }
-
-        if (!is_null($canale))
-        {
-            $transaction->setCanale($canale);
-        }
-
-        if (!is_null($broker_pa))
-        {
-            $transaction->setBrokerPa($broker_pa);
-        }
-
-        if (!is_null($stazione))
-        {
-            $transaction->setStazione($stazione);
-        }
-
-        if (!is_null($importo))
-        {
-            $transaction->setImporto($importo);
-        }
+        $transaction = $this->getEvent()->transaction($index);
 
         $transaction->insert();
         DB::statement($transaction->getQuery(), $transaction->getBindParams());
@@ -159,15 +109,10 @@ class activatePaymentNotice extends AbstractPaymentList
         $this->addValueCache($cache_key, $cache_value);
 
 
-        $workflow = new Workflow($this->getEvent()->getInsertedTimestamp());
-        $workflow->setNewColumnValue('date_event', $date_event);
+        $workflow = $this->getEvent()->workflowEvent($index);
         $workflow->setFkPayment($last_inserted_id);
-        $workflow->setEventTimestamp($this->getEvent()->getInsertedTimestamp());
-        $workflow->setEventId($this->getEvent()->getUniqueId());
-        $workflow->setFkTipoEvento(1);
         $workflow->insert();
         DB::statement($workflow->getQuery(), $workflow->getBindParams());
-
 
         return $cache_value;
     }
@@ -177,65 +122,10 @@ class activatePaymentNotice extends AbstractPaymentList
      */
     public function runCreateAttempt(int $index = 0): array
     {
-        $iuv            =   $this->getEvent()->getIuv($index);
-        $pa_emittente   =   $this->getEvent()->getPaEmittente($index);
         $token          =   $this->getEvent()->getCcp($index);
-        $date_event     =   $this->getEvent()->getInsertedTimestamp()->format('Y-m-d');
-        $date_x_cache   =   $this->getEvent()->getInsertedTimestamp()->format('Ymd');
 
-        $notice_id      =   $this->getEvent()->getNoticeNumber($index);
-
-        $broker_psp     =   $this->getEvent()->getBrokerPsp();
-        $psp_id         =   $this->getEvent()->getPsp();
-        $canale         =   $this->getEvent()->getCanale();
-
-        $broker_pa      =   $this->getEvent()->getBrokerPa();
-        $stazione       =   $this->getEvent()->getStazione();
-
-        $importo        =   $this->getEvent()->getMethodInterface()->getImporto(0);
-
-        $transaction = new Transaction($this->getEvent()->getInsertedTimestamp());
-        $transaction->setIuv($iuv);
-        $transaction->setPaEmittente($pa_emittente);
+        $transaction = $this->getEvent()->transaction($index);
         $transaction->setTokenCcp($token);
-        $transaction->setInsertedTimestamp($this->getEvent()->getInsertedTimestamp());
-        $transaction->setNewColumnValue('date_event', $date_event);
-
-        if (!is_null($notice_id))
-        {
-            $transaction->setNoticeId($notice_id);
-        }
-
-        if (!is_null($broker_psp))
-        {
-            $transaction->setBrokerPsp($broker_psp);
-        }
-
-        if (!is_null($psp_id))
-        {
-            $transaction->setPsp($psp_id);
-        }
-
-        if (!is_null($canale))
-        {
-            $transaction->setCanale($canale);
-        }
-
-        if (!is_null($broker_pa))
-        {
-            $transaction->setBrokerPa($broker_pa);
-        }
-
-        if (!is_null($stazione))
-        {
-            $transaction->setStazione($stazione);
-        }
-
-        if (!is_null($importo))
-        {
-            $transaction->setImporto($importo);
-        }
-
         $transaction->insert();
         DB::statement($transaction->getQuery(), $transaction->getBindParams());
         $last_inserted_id = DB::connection()->getPdo()->lastInsertId();
@@ -244,6 +134,8 @@ class activatePaymentNotice extends AbstractPaymentList
         $iuv            =   $this->getEvent()->getIuv($index);
         $pa_emittente   =   $this->getEvent()->getPaEmittente($index);
         $token          =   $this->getEvent()->getPaymentToken($index);
+        $date_event     =   $this->getEvent()->getInsertedTimestamp()->format('Y-m-d');
+        $date_x_cache   =   $this->getEvent()->getInsertedTimestamp()->format('Ymd');
 
 
         $cache_key      =   base64_encode(sprintf('attempt_%s_%s_%s_%s', $date_x_cache, $iuv, $pa_emittente, $token));
@@ -259,12 +151,8 @@ class activatePaymentNotice extends AbstractPaymentList
         $this->addValueCache($cache_key, $cache_value);
 
 
-        $workflow = new Workflow($this->getEvent()->getInsertedTimestamp());
-        $workflow->setNewColumnValue('date_event', $date_event);
+        $workflow = $this->getEvent()->workflowEvent($index);
         $workflow->setFkPayment($last_inserted_id);
-        $workflow->setEventTimestamp($this->getEvent()->getInsertedTimestamp());
-        $workflow->setEventId($this->getEvent()->getUniqueId());
-        $workflow->setFkTipoEvento(1);
         $workflow->insert();
         DB::statement($workflow->getQuery(), $workflow->getBindParams());
 
@@ -293,13 +181,9 @@ class activatePaymentNotice extends AbstractPaymentList
         foreach($cached_attempts as $attempt)
         {
             $id = $attempt['id'];
-            $date = $attempt['date_event'];
 
-            $workflow = new Workflow($this->getEvent()->getInsertedTimestamp());
-            $workflow->setNewColumnValue('date_event', $date);
+            $workflow = $this->getEvent()->workflowEvent($index);
             $workflow->setFkPayment($id);
-            $workflow->setEventTimestamp($this->getEvent()->getInsertedTimestamp());
-            $workflow->setEventId($this->getEvent()->getUniqueId());
             $workflow->setFkTipoEvento(1);
             $workflow->insert();
             DB::statement($workflow->getQuery(), $workflow->getBindParams());
@@ -330,11 +214,8 @@ class activatePaymentNotice extends AbstractPaymentList
             $id = $attempt['id'];
             $date = $attempt['date_event'];
 
-            $workflow = new Workflow($this->getEvent()->getInsertedTimestamp());
-            $workflow->setNewColumnValue('date_event', $date);
+            $workflow = $this->getEvent()->workflowEvent($index);
             $workflow->setFkPayment($id);
-            $workflow->setEventTimestamp($this->getEvent()->getInsertedTimestamp());
-            $workflow->setEventId($this->getEvent()->getUniqueId());
             $workflow->setFkTipoEvento(1);
             $workflow->insert();
             DB::statement($workflow->getQuery(), $workflow->getBindParams());

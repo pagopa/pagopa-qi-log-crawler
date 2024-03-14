@@ -17,12 +17,18 @@
         <const name="DB_PASSWORD" value="mock" />
     </php>
     <testsuites>
+        <testsuite name="temp_suite">
+        </testsuite>
         <testsuite name="unit_tests">
-            <file>database/SingleRowTest.php</file>
-            <file>events/req/activatePaymentNoticeTest.php</file>
-            <file>events/resp/activatePaymentNoticeTest.php</file>
-            <file>methods/req/activatePaymentNoticeTest.php</file>
-            <file>methods/resp/activatePaymentNoticeTest.php</file>
+            <file>pagopa/database/SingleRowTest.php</file>
+            <file>pagopa/methods/req/activatePaymentNoticeTest.php</file>
+            <file>pagopa/methods/resp/activatePaymentNoticeTest.php</file>
+            <file>pagopa/methods/req/nodoInviaCarrelloRPTTest.php</file>
+            <file>pagopa/methods/resp/nodoInviaCarrelloRPTTest.php</file>
+            <file>pagopa/events/req/activatePaymentNoticeTest.php</file>
+            <file>pagopa/events/resp/activatePaymentNoticeTest.php</file>
+            <file>pagopa/events/req/nodoInviaCarrelloRPTTest.php</file>
+            <file>pagopa/events/resp/nodoInviaCarrelloRPTTest.php</file>
         </testsuite>
         <testsuite name="process">
             <file>process/normal/T0001.php</file>

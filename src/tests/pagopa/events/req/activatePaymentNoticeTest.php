@@ -1,7 +1,7 @@
 <?php
-namespace pagopa\crawler\events\req;
+namespace pagopa\events\req;
 
-use pagopa\database\SingleRow;
+use pagopa\crawler\events\req\activatePaymentNotice;
 use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
 

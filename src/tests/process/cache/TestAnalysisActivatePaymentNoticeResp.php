@@ -1,14 +1,12 @@
 <?php
 
-namespace pagopa\process\cache;
+namespace tests\process\cache;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 use pagopa\crawler\Memcached;
 use pagopa\crawler\paymentlist\req\activatePaymentNotice;
 use pagopa\database\sherlock\Transaction;
 use pagopa\database\sherlock\TransactionDetails;
-use pagopa\database\sherlock\TransactionRe;
-use pagopa\database\sherlock\Workflow;
 use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
 

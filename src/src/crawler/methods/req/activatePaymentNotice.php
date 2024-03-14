@@ -296,4 +296,12 @@ class activatePaymentNotice implements MethodInterface
     {
         return null;
     }
+
+    /**
+     * @return int|null
+     */
+    public function getPaymentsCount(): int|null
+    {
+        return 1;
+    }
 }

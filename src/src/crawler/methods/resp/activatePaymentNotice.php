@@ -456,4 +456,12 @@ class activatePaymentNotice implements MethodInterface, FaultInterface
         }
         return $count;
     }
+
+    /**
+     * @return int|null
+     */
+    public function getPaymentsCount(): int|null
+    {
+        return 1;
+    }
 }

@@ -1,8 +1,9 @@
 <?php
-namespace pagopa\crawler\methods\req;
+namespace pagopa\methods\req;
 
-use PHPUnit\Framework\TestCase;
+use pagopa\crawler\methods\req\activatePaymentNotice;
 use PHPUnit\Framework\Attributes\TestDox;
+use PHPUnit\Framework\TestCase;
 
 
 #[TestDox('methods\req\activatePaymentNotice::class')]

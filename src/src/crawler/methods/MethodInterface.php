@@ -7,6 +7,13 @@ namespace pagopa\crawler\methods;
 interface MethodInterface
 {
 
+
+    /**
+     * Restituisce il numero di pagamenti gestiti da questo evento
+     * @return int|null
+     */
+    public function getPaymentsCount() : int|null;
+
     /**
      * Restituisce la lista degli iuv (nel caso di carrello) altrimenti un array con dentro un solo iuv
      * Restituisce null se il payload non permette di ricavare il dato

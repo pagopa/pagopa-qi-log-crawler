@@ -177,6 +177,17 @@ class Transaction extends SingleRow
         return $this;
     }
 
+    /**
+     * Configura il flag is_bollo a true/false
+     * @param bool $is_bollo
+     * @return $this
+     */
+    public function setBollo(bool $is_bollo) : self
+    {
+        $this->setNewColumnValue('is_bollo', $is_bollo);
+        return $this;
+    }
+
 
     /**
      * Cerca un tentativo

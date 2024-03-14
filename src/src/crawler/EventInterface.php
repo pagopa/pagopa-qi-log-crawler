@@ -6,7 +6,9 @@ namespace pagopa\crawler;
 
 use pagopa\crawler\methods\MethodInterface;
 use pagopa\database\sherlock\Transaction;
+use pagopa\database\sherlock\TransactionDetails;
 use pagopa\database\sherlock\TransactionRe;
+use pagopa\database\sherlock\Workflow;
 
 interface EventInterface
 {
@@ -152,9 +154,9 @@ interface EventInterface
 
     /**
      * Restituisce il numero di pagamenti gestiti dall'evento
-     * @return int
+     * @return int|null
      */
-    public function getPaymentsCount() : int;
+    public function getPaymentsCount() : int|null;
 
 
     /**
@@ -207,6 +209,22 @@ interface EventInterface
      * @return Transaction|null
      */
     public function transaction(int $index = 0) : Transaction|null;
+
+    /**
+     * Restituisce una istanza per l'inserimento/aggiornamento nella transaction update
+     * @param int $transfer
+     * @param int $index
+     * @return TransactionDetails|null
+     */
+    public function transactionDetails(int $transfer, int $index = 0) : TransactionDetails|null;
+
+
+    /**
+     * Restituisce una istanza per l'inserimento nella transaction events
+     * @param int $index
+     * @return Workflow|null
+     */
+    public function workflowEvent(int $index = 0) : Workflow|null;
 
 
     /**

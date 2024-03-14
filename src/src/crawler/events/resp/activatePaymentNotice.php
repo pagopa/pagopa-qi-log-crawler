@@ -6,6 +6,8 @@ use pagopa\crawler\AbstractEvent;
 use pagopa\crawler\FaultInterface;
 use pagopa\crawler\methods\resp\activatePaymentNotice as Payload;
 use pagopa\database\sherlock\Transaction;
+use pagopa\database\sherlock\TransactionDetails;
+use pagopa\database\sherlock\Workflow;
 
 class activatePaymentNotice extends AbstractEvent implements FaultInterface
 {
@@ -167,7 +169,7 @@ class activatePaymentNotice extends AbstractEvent implements FaultInterface
      */
     public function getKey(int $index = 0): string
     {
-        // TODO: Implement getKey() method.
+        return '';
     }
 
     /**
@@ -175,7 +177,91 @@ class activatePaymentNotice extends AbstractEvent implements FaultInterface
      */
     public function transaction(int $index = 0): Transaction|null
     {
-        // TODO: Implement transaction() method.
+        $iuv            =   $this->getIuv($index);
+        $pa_emittente   =   $this->getPaEmittente($index);
+        $date_event     =   $this->getInsertedTimestamp()->format('Y-m-d');
+
+        $notice_id      =   $this->getNoticeNumber($index);
+
+        $broker_psp     =   $this->getBrokerPsp();
+        $psp_id         =   $this->getPsp();
+        $canale         =   $this->getCanale();
+
+        $broker_pa      =   $this->getBrokerPa();
+        $stazione       =   $this->getStazione();
+
+        $importo        =   $this->getMethodInterface()->getImportoTotale();
+
+        $transaction = new Transaction($this->getInsertedTimestamp());
+        $transaction->setIuv($iuv);
+        $transaction->setPaEmittente($pa_emittente);
+        $transaction->setInsertedTimestamp($this->getInsertedTimestamp());
+        $transaction->setNewColumnValue('date_event', $date_event);
+
+        if (!is_null($notice_id))
+        {
+            $transaction->setNoticeId($notice_id);
+        }
+
+        if (!is_null($broker_psp))
+        {
+            $transaction->setBrokerPsp($broker_psp);
+        }
+
+        if (!is_null($psp_id))
+        {
+            $transaction->setPsp($psp_id);
+        }
+
+        if (!is_null($canale))
+        {
+            $transaction->setCanale($canale);
+        }
+
+        if (!is_null($broker_pa))
+        {
+            $transaction->setBrokerPa($broker_pa);
+        }
+
+        if (!is_null($stazione))
+        {
+            $transaction->setStazione($stazione);
+        }
+
+        if (!is_null($importo))
+        {
+            $transaction->setImporto($importo);
+        }
+
+        return $transaction;
+
+    }
+
+    /**
+     * @param int $index
+     * @return TransactionDetails|null
+     */
+    public function transactionDetails(int $transfer = 0, int $index = 0): TransactionDetails|null
+    {
+        return null;
+    }
+
+    /**
+     * @param int $index
+     * @return Workflow|null
+     */
+    public function workflowEvent(int $index = 0): Workflow|null
+    {
+        $workflow = new Workflow($this->getInsertedTimestamp());
+        $workflow->setNewColumnValue('date_event', $this->getInsertedTimestamp()->format('Y-m-d'));
+        $workflow->setEventTimestamp($this->getInsertedTimestamp());
+        $workflow->setEventId($this->getUniqueId());
+        $workflow->setFkTipoEvento(2);
+        if (!is_null($this->getMethodInterface()->getFaultCode()))
+        {
+            $workflow->setFaultCode($this->getMethodInterface()->getFaultCode());
+        }
+        return $workflow;
     }
 
     /**
@@ -201,7 +287,7 @@ class activatePaymentNotice extends AbstractEvent implements FaultInterface
     /**
      * Restituisce sempre 1 perchè l'activatePaymentNotice non gestisce più di uno IUV
      */
-    public function getPaymentsCount(): int
+    public function getPaymentsCount(): int|null
     {
         return 1;
     }

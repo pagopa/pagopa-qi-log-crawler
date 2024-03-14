@@ -16,3 +16,31 @@ USER root:root
 #    find vendor/ -type d -name ".git" -exec rm -rf {} \;
 #
 #    Add a .gitignore rule (/vendor/**/.git)
+
+
+# valutare questo dockerfile
+##   FROM alpine:latest as git_repo
+##
+##   RUN apk upgrade && apk update && apk add git
+##
+##   WORKDIR /tmp
+##
+##   RUN git clone https://github.com/pagopa/pagopa-qi-log-crawler
+##
+##
+##
+##   FROM composer:latest as composer
+##
+##   RUN mkdir -p /tmp/repo
+##
+##   COPY --from=git_repo /tmp/pagopa-qi-log-crawler/src /tmp/repo/
+##
+##   WORKDIR /tmp/repo
+##
+##   RUN composer install
+##
+##   FROM php:8.2-fpm
+##
+##   RUN mkdir -p /var/www/html/sherlock
+##
+##   COPY --from=composer /tmp/repo/ /var/www/html/sherlock

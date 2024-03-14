@@ -1,9 +1,8 @@
 <?php
 
-namespace pagopa\process\normal;
+namespace tests\process\normal;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
-use Illuminate\Support\Facades\Date;
 use pagopa\crawler\Memcached;
 use pagopa\crawler\paymentlist\resp\activatePaymentNotice;
 use pagopa\database\sherlock\Transaction;

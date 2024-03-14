@@ -1,9 +1,10 @@
 <?php
 
-namespace pagopa\crawler\events\resp;
+namespace pagopa\events\resp;
 
-use PHPUnit\Framework\TestCase;
+use pagopa\crawler\events\resp\activatePaymentNotice;
 use PHPUnit\Framework\Attributes\TestDox;
+use PHPUnit\Framework\TestCase;
 
 #[TestDox('events\resp\activatePaymentNotice::class')]
 class activatePaymentNoticeTest extends TestCase

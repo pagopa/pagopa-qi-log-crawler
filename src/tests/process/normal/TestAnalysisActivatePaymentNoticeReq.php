@@ -1,6 +1,6 @@
 <?php
 
-namespace pagopa\process\normal;
+namespace tests\process\normal;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 use pagopa\crawler\Memcached;

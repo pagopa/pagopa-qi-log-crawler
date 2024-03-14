@@ -1,9 +1,10 @@
 <?php
 
-namespace pagopa\crawler\methods\resp;
+namespace pagopa\methods\resp;
 
-use PHPUnit\Framework\TestCase;
+use pagopa\crawler\methods\resp\activatePaymentNotice;
 use PHPUnit\Framework\Attributes\TestDox;
+use PHPUnit\Framework\TestCase;
 
 #[TestDox('methods\resp\activatePaymentNotice::class')]
 class activatePaymentNoticeTest extends TestCase

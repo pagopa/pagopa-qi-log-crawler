@@ -1,6 +1,6 @@
 <?php
 
-namespace pagopa\process\cache;
+namespace process\cache;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 use pagopa\crawler\Memcached;

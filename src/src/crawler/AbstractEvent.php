@@ -4,7 +4,9 @@ namespace pagopa\crawler;
 
 use pagopa\crawler\methods\MethodInterface;
 use pagopa\database\sherlock\Transaction;
+use pagopa\database\sherlock\TransactionDetails;
 use pagopa\database\sherlock\TransactionRe;
+use pagopa\database\sherlock\Workflow;
 
 abstract class AbstractEvent implements EventInterface
 {
@@ -175,20 +177,27 @@ abstract class AbstractEvent implements EventInterface
     /**
      * @inheritDoc
      */
-    public function getIdCarrello(): string
+    public function getIdCarrello(): string|null
     {
-        return '';
+        return null;
     }
 
     /**
      * @inheritDoc
      */
-    abstract public function getKey(int $index = 0): string;
+    abstract public function getKey(int $index = 0): string|null;
 
     /**
      * @inheritDoc
      */
     abstract public function transaction(int $index = 0): Transaction|null;
+
+
+    abstract public function transactionDetails(int $transfer, int $index = 0): TransactionDetails|null;
+
+
+    abstract public function workflowEvent(int $index = 0): Workflow|null;
+
 
     /**
      * @inheritDoc

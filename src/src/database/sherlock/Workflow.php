@@ -70,7 +70,7 @@ class Workflow extends SingleRow
      */
     public function setFkTipoEvento(string $fkTipoEvento) : self
     {
-        $this->setNewColumnValue('fk_tipoEvento', $fkTipoEvento);
+        $this->setNewColumnValue('fk_tipoevento', $fkTipoEvento);
         return $this;
     }
 
