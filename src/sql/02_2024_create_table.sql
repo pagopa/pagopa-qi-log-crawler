@@ -42,8 +42,11 @@ create table if not exists public.transaction_events_2024
     fk_tipoEvento       bigint              not null,
     event_timestamp     timestamp           not null,
     event_id            varchar(50)         null,
-    tipo_evento         varchar(40)         null,
-    sotto_tipo_evento   varchar(10)         null,
+    id_broker_pa        varchar(25)         null,
+    id_broker_psp       varchar(25)         null,
+    id_psp              varchar(25)         null,
+    stazione            varchar(30)         null,
+    canale              varchar(30)         null,
     faultcode           varchar(50)         null,
     constraint transaction_events_2024_pk primary key (date_event, id)
 )
