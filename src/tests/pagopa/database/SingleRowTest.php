@@ -359,4 +359,13 @@ class SingleRowTest extends TestCase
 
     }
 
+    #[TestDox('removeReadyColumn()')]
+    public function testRemoveColumn()
+    {
+        $this->instance_one_pk->setNewColumnValue('new_column', 'new_value');
+        $this->assertEquals('new_value', $this->instance_one_pk->getReadyColumnValue('new_column'));
+        $this->instance_one_pk->removeReadyColumn('new_column');
+        $this->assertNull($this->instance_one_pk->getReadyColumnValue('new_column'));
+    }
+
 }

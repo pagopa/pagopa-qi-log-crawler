@@ -45,6 +45,14 @@ interface SingleRowInterface
 
 
     /**
+     * Elimina un valore dai dati pronti per l'inserimento/aggiornamento
+     * @param string $column
+     * @return self
+     */
+    public function removeReadyColumn(string $column) : self;
+
+
+    /**
      * Restituisce la riga prelevata dal db (o quella con i dati fittizi)
      * @return array
      */

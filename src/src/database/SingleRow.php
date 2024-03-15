@@ -114,6 +114,19 @@ class SingleRow implements SingleRowInterface
     }
 
     /**
+     * @param string $column
+     * @return self
+     */
+    public function removeReadyColumn(string $column): self
+    {
+        if (array_key_exists($column, $this->newdata))
+        {
+            unset($this->newdata[$column]);
+        }
+        return $this;
+    }
+
+    /**
      * @inheritDoc
      */
     public function getRow(): array
