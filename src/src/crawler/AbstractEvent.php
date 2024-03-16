@@ -33,7 +33,7 @@ abstract class AbstractEvent implements EventInterface
             $payload = (is_resource($eventData["payload"])) ? base64_decode(stream_get_contents($eventData["payload"])) : base64_decode($eventData["payload"]);
             $this->data["payload"] = $payload;
         }
-        $date = new \DateTime($eventData['insertedtimestamp']);
+        $date = new \DateTime($eventData['inserted_timestamp']);
         $this->instance = new TransactionRe($date, $eventData);
     }
 
@@ -50,7 +50,7 @@ abstract class AbstractEvent implements EventInterface
      */
     public function getInsertedTimestamp(): \DateTime
     {
-        return new \DateTime($this->getColumn('insertedtimestamp'));
+        return new \DateTime($this->getColumn('inserted_timestamp'));
     }
 
     /**

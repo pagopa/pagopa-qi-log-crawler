@@ -72,8 +72,6 @@ class T0018 extends TestCase
         $this->assertEquals('301000000000000017',$transaction->getColumnValue('notice_id'));
         $this->assertNull($transaction->getColumnValue('id_carrello'));
         $this->assertEquals('t0000000000000000000000000000017', $transaction->getColumnValue('token_ccp'));
-        $this->assertEquals('77777777777', $transaction->getColumnValue('id_broker_pa'));
-        $this->assertEquals('88888888888',$transaction->getColumnValue('id_broker_psp'));
         $this->assertEquals('PSP_01',$transaction->getColumnValue('id_psp'));
         $this->assertEquals('77777777777_01',$transaction->getColumnValue('stazione'));
         $this->assertEquals('88888888888_01',$transaction->getColumnValue('canale'));
@@ -132,6 +130,10 @@ class T0018 extends TestCase
 
         $this->assertEquals('2024-03-10 09:28:10.232', $event->getColumnValue('event_timestamp'));
         $this->assertEquals('T000027', $event->getColumnValue('event_id'));
+        $this->assertEquals('PSP_01',$event->getColumnValue('id_psp'));
+        $this->assertEquals('77777777777_01',$event->getColumnValue('stazione'));
+        $this->assertEquals('88888888888_01',$event->getColumnValue('canale'));
+
 
 
         $result = Capsule::table('transaction_events_2024')
@@ -145,6 +147,9 @@ class T0018 extends TestCase
 
         $this->assertEquals('2024-03-10 09:28:25.232', $event->getColumnValue('event_timestamp'));
         $this->assertEquals('T000028', $event->getColumnValue('event_id'));
+        $this->assertEquals('PSP_01',$event->getColumnValue('id_psp'));
+        $this->assertEquals('77777777777_01',$event->getColumnValue('stazione'));
+        $this->assertEquals('88888888888_01',$event->getColumnValue('canale'));
 
 
 

@@ -35,7 +35,7 @@ class activatePaymentNoticeTest extends TestCase
         $this->instance_all_field = new activatePaymentNotice(
             [
                 'date_event' => '2023-09-01',
-                'insertedtimestamp' => '2023-09-01 07:37:50',
+                'inserted_timestamp' => '2023-09-01 07:37:50',
                 'tipoevento' => 'activatePaymentNotice',
                 'sottotipoevento' => 'RESP',
                 'psp' => 'ABI03069',
@@ -58,7 +58,7 @@ class activatePaymentNoticeTest extends TestCase
         $this->instance_no_stazione_canale_in_evento = new activatePaymentNotice(
             [
                 'date_event' => '2023-09-01',
-                'insertedtimestamp' => '2023-09-01 07:37:50',
+                'inserted_timestamp' => '2023-09-01 07:37:50',
                 'tipoevento' => 'activatePaymentNotice',
                 'sottotipoevento' => 'RESP',
                 'psp' => '',
@@ -82,7 +82,7 @@ class activatePaymentNoticeTest extends TestCase
         $this->instance_no_iuv_in_evento = new activatePaymentNotice(
             [
                 'date_event' => '2023-09-01',
-                'insertedtimestamp' => '2023-09-01 07:37:50',
+                'inserted_timestamp' => '2023-09-01 07:37:50',
                 'tipoevento' => 'activatePaymentNotice',
                 'sottotipoevento' => 'RESP',
                 'psp' => 'ABI03069',
@@ -106,7 +106,7 @@ class activatePaymentNoticeTest extends TestCase
         $this->instance_no_dominio_in_evento = new activatePaymentNotice(
             [
                 'date_event' => '2023-09-01',
-                'insertedtimestamp' => '2023-09-01 07:37:50',
+                'inserted_timestamp' => '2023-09-01 07:37:50',
                 'tipoevento' => 'activatePaymentNotice',
                 'sottotipoevento' => 'RESP',
                 'psp' => 'ABI03069',
@@ -130,7 +130,7 @@ class activatePaymentNoticeTest extends TestCase
         $this->instance_no_token_in_evento = new activatePaymentNotice(
             [
                 'date_event' => '2023-09-01',
-                'insertedtimestamp' => '2023-09-01 07:37:50',
+                'inserted_timestamp' => '2023-09-01 07:37:50',
                 'tipoevento' => 'activatePaymentNotice',
                 'sottotipoevento' => 'RESP',
                 'psp' => 'ABI03069',
@@ -154,7 +154,7 @@ class activatePaymentNoticeTest extends TestCase
         $this->instance_no_nav_in_evento = new activatePaymentNotice(
             [
                 'date_event' => '2023-09-01',
-                'insertedtimestamp' => '2023-09-01 07:37:50',
+                'inserted_timestamp' => '2023-09-01 07:37:50',
                 'tipoevento' => 'activatePaymentNotice',
                 'sottotipoevento' => 'RESP',
                 'psp' => 'ABI03069',
@@ -177,7 +177,7 @@ class activatePaymentNoticeTest extends TestCase
         $this->faultInstance = new activatePaymentNotice(
             [
                 'date_event' => '2023-09-01',
-                'insertedtimestamp' => '2023-09-01 07:37:50',
+                'inserted_timestamp' => '2023-09-01 07:37:50',
                 'tipoevento' => 'activatePaymentNotice',
                 'sottotipoevento' => 'RESP',
                 'psp' => 'ABI03069',

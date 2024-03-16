@@ -83,8 +83,6 @@ class T0010 extends TestCase
         $this->assertEquals('301000000000000001',self::$transaction->getColumnValue('notice_id'));
         $this->assertNull(self::$transaction->getColumnValue('id_carrello'));
         $this->assertEquals('t0000000000000000000000000000001', self::$transaction->getColumnValue('token_ccp'));
-        $this->assertEquals('77777777777', self::$transaction->getColumnValue('id_broker_pa'));
-        $this->assertEquals('88888888888',self::$transaction->getColumnValue('id_broker_psp'));
         $this->assertEquals('PSP_01',self::$transaction->getColumnValue('id_psp'));
         $this->assertEquals('77777777777_01', self::$transaction->getColumnValue('stazione'));
         $this->assertEquals('88888888888_01',self::$transaction->getColumnValue('canale'));
@@ -100,6 +98,9 @@ class T0010 extends TestCase
         $this->assertEquals('2024-03-10 09:10:10.232', self::$workflow->getColumnValue('event_timestamp'));
         $this->assertEquals(1, self::$workflow->getColumnValue('fk_tipoevento'));
         $this->assertEquals('T000001', self::$workflow->getColumnValue('event_id'));
+        $this->assertEquals('PSP_01',self::$workflow->getColumnValue('id_psp'));
+        $this->assertEquals('77777777777_01', self::$workflow->getColumnValue('stazione'));
+        $this->assertEquals('88888888888_01',self::$workflow->getColumnValue('canale'));
 
         $result = Capsule::table('transaction_events_2024')
             ->where('fk_payment', '=', self::$transaction->getColumnValue('id'))
@@ -112,6 +113,10 @@ class T0010 extends TestCase
         $this->assertEquals('2024-03-10 09:10:30.232', $workflow->getColumnValue('event_timestamp'));
         $this->assertEquals(1, $workflow->getColumnValue('fk_tipoevento'));
         $this->assertEquals('T000010', $workflow->getColumnValue('event_id'));
+        $this->assertEquals('PSP_01',$workflow->getColumnValue('id_psp'));
+        $this->assertEquals('77777777777_01', $workflow->getColumnValue('stazione'));
+        $this->assertEquals('88888888888_01',$workflow->getColumnValue('canale'));
+
 
 
     }

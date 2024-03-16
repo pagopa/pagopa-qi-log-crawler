@@ -85,4 +85,38 @@ class Workflow extends SingleRow
         $this->setNewColumnValue('faultcode', $faultCode);
         return $this;
     }
+
+
+    /**
+     * Configura l'id_psp dell'evento
+     * @param string $id_psp
+     * @return self
+     */
+    public function setPsp(string $id_psp) : self
+    {
+        $this->setNewColumnValue('id_psp', $id_psp);
+        return $this;
+    }
+
+    /**
+     * Configura la stazione dell'evento
+     * @param string $stazione
+     * @return self
+     */
+    public function setStazione(string $stazione) : self
+    {
+        $this->setNewColumnValue('stazione', $stazione);
+        return $this;
+    }
+
+    /**
+     * Configura il canale dell'evento
+     * @param string $canale
+     * @return self
+     */
+    public function setCanale(string $canale) : self
+    {
+        $this->setNewColumnValue('canale', $canale);
+        return $this;
+    }
 }

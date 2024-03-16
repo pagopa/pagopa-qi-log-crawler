@@ -82,8 +82,6 @@ class T0009 extends TestCase
         $this->assertEquals('301000000000000006',self::$transaction->getColumnValue('notice_id'));
         $this->assertNull(self::$transaction->getColumnValue('id_carrello'));
         $this->assertEquals('t0000000000000000000000000000006', self::$transaction->getColumnValue('token_ccp'));
-        $this->assertEquals('77777777777', self::$transaction->getColumnValue('id_broker_pa'));
-        $this->assertEquals('88888888888',self::$transaction->getColumnValue('id_broker_psp'));
         $this->assertEquals('PSP_01',self::$transaction->getColumnValue('id_psp'));
         $this->assertEquals('77777777777_02', self::$transaction->getColumnValue('stazione'));
         $this->assertEquals('88888888888_01',self::$transaction->getColumnValue('canale'));
@@ -99,6 +97,9 @@ class T0009 extends TestCase
         $this->assertEquals('2024-03-10 09:10:16.232', self::$workflow->getColumnValue('event_timestamp'));
         $this->assertEquals(1, self::$workflow->getColumnValue('fk_tipoevento'));
         $this->assertEquals('T000006', self::$workflow->getColumnValue('event_id'));
+        $this->assertEquals('77777777777_02', self::$workflow->getColumnValue('stazione'));
+        $this->assertEquals('88888888888_01',self::$workflow->getColumnValue('canale'));
+
 
 
 
@@ -125,8 +126,6 @@ class T0009 extends TestCase
         $this->assertEquals('301000000000000006',$transaction->getColumnValue('notice_id'));
         $this->assertNull($transaction->getColumnValue('id_carrello'));
         $this->assertEquals('t0000000000000000000000000000006', $transaction->getColumnValue('token_ccp'));
-        $this->assertEquals('77777777777', $transaction->getColumnValue('id_broker_pa'));
-        $this->assertEquals('88888888888',$transaction->getColumnValue('id_broker_psp'));
         $this->assertEquals('PSP_01',$transaction->getColumnValue('id_psp'));
         $this->assertEquals('77777777777_02', $transaction->getColumnValue('stazione'));
         $this->assertEquals('88888888888_01',$transaction->getColumnValue('canale'));
@@ -138,6 +137,8 @@ class T0009 extends TestCase
         $this->assertEquals('2024-03-11 09:10:20.232', $workflow->getColumnValue('event_timestamp'));
         $this->assertEquals(1, $workflow->getColumnValue('fk_tipoevento'));
         $this->assertEquals('T000009', $workflow->getColumnValue('event_id'));
+        $this->assertEquals('77777777777_02', $workflow->getColumnValue('stazione'));
+        $this->assertEquals('88888888888_01',$workflow->getColumnValue('canale'));
 
 
     }

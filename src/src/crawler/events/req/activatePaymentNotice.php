@@ -210,11 +210,8 @@ class activatePaymentNotice extends AbstractEvent
 
         $notice_id      =   $this->getNoticeNumber($index);
 
-        $broker_psp     =   $this->getBrokerPsp();
         $psp_id         =   $this->getPsp();
         $canale         =   $this->getCanale();
-
-        $broker_pa      =   $this->getBrokerPa();
         $stazione       =   $this->getStazione();
 
         $importo        =   $this->getMethodInterface()->getImporto(0);
@@ -224,16 +221,10 @@ class activatePaymentNotice extends AbstractEvent
         $transaction->setPaEmittente($pa_emittente);
         $transaction->setInsertedTimestamp($this->getInsertedTimestamp());
         $transaction->setNewColumnValue('date_event', $date_event);
-        $transaction->setBollo(false); // sempre a false perchè l'activatePaymentNotice non gestisce bollo
 
         if (!is_null($notice_id))
         {
             $transaction->setNoticeId($notice_id);
-        }
-
-        if (!is_null($broker_psp))
-        {
-            $transaction->setBrokerPsp($broker_psp);
         }
 
         if (!is_null($psp_id))
@@ -244,11 +235,6 @@ class activatePaymentNotice extends AbstractEvent
         if (!is_null($canale))
         {
             $transaction->setCanale($canale);
-        }
-
-        if (!is_null($broker_pa))
-        {
-            $transaction->setBrokerPa($broker_pa);
         }
 
         if (!is_null($stazione))
@@ -300,6 +286,24 @@ class activatePaymentNotice extends AbstractEvent
         $workflow->setEventTimestamp($this->getInsertedTimestamp());
         $workflow->setEventId($this->getUniqueId());
         $workflow->setFkTipoEvento(1);
+
+        $id_psp     = $this->getPsp();
+        $stazione   = $this->getStazione();
+        $canale     = $this->getCanale();
+
+        if (!is_null($id_psp))
+        {
+            $workflow->setPsp($id_psp);
+        }
+        if (!is_null($stazione))
+        {
+            $workflow->setStazione($stazione);
+        }
+        if (!is_null($canale))
+        {
+            $workflow->setCanale($canale);
+        }
+
         return $workflow;
     }
 

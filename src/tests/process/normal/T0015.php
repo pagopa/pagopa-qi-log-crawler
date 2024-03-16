@@ -72,8 +72,6 @@ class T0015 extends TestCase
         $this->assertEquals('301000000000000014',$transaction->getColumnValue('notice_id'));
         $this->assertNull($transaction->getColumnValue('id_carrello'));
         $this->assertEquals('t0000000000000000000000000000014', $transaction->getColumnValue('token_ccp'));
-        $this->assertEquals('77777777777', $transaction->getColumnValue('id_broker_pa'));
-        $this->assertEquals('88888888888',$transaction->getColumnValue('id_broker_psp'));
         $this->assertEquals('PSP_01',$transaction->getColumnValue('id_psp'));
         $this->assertEquals('77777777777_01',$transaction->getColumnValue('stazione'));
         $this->assertEquals('88888888888_01',$transaction->getColumnValue('canale'));
@@ -119,18 +117,28 @@ class T0015 extends TestCase
         $this->assertEquals('2024-03-10 09:24:30.232', $req->getColumnValue('event_timestamp'));
         $this->assertEquals(1, $req->getColumnValue('fk_tipoevento'));
         $this->assertEquals('T000020', $req->getColumnValue('event_id'));
+        $this->assertEquals('PSP_01',$req->getColumnValue('id_psp'));
+        $this->assertEquals('77777777777_01',$req->getColumnValue('stazione'));
+        $this->assertEquals('88888888888_01',$req->getColumnValue('canale'));
+
 
 
         $this->assertEquals('2024-03-10', $resp_1->getColumnValue('date_event'));
         $this->assertEquals('2024-03-10 09:24:35.232', $resp_1->getColumnValue('event_timestamp'));
         $this->assertEquals(2, $resp_1->getColumnValue('fk_tipoevento'));
         $this->assertEquals('T000021', $resp_1->getColumnValue('event_id'));
+        $this->assertEquals('PSP_01',$resp_1->getColumnValue('id_psp'));
+        $this->assertEquals('77777777777_01',$resp_1->getColumnValue('stazione'));
+        $this->assertEquals('88888888888_01',$resp_1->getColumnValue('canale'));
 
         $this->assertEquals('2024-03-10', $resp_2->getColumnValue('date_event'));
         $this->assertEquals('2024-03-10 09:24:45.232', $resp_2->getColumnValue('event_timestamp'));
         $this->assertEquals(2, $resp_2->getColumnValue('fk_tipoevento'));
         $this->assertEquals('T000022', $resp_2->getColumnValue('event_id'));
         $this->assertEquals('PPT_ERRORE_EMESSO_DA_PAA', $resp_2->getColumnValue('faultcode'));
+        $this->assertEquals('PSP_01',$resp_2->getColumnValue('id_psp'));
+        $this->assertEquals('77777777777_01',$resp_2->getColumnValue('stazione'));
+        $this->assertEquals('88888888888_01',$resp_2->getColumnValue('canale'));
 
 
     }

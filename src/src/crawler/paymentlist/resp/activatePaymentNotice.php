@@ -89,6 +89,10 @@ class activatePaymentNotice extends AbstractPaymentList
         $date_x_cache   =   $this->getEvent()->getInsertedTimestamp()->format('Ymd');
 
         $transaction    = $this->getEvent()->transaction($index);
+        $transaction->removeReadyColumn('id_psp');
+        $transaction->removeReadyColumn('stazione');
+        $transaction->removeReadyColumn('canale');
+
         $transaction->insert();
         DB::statement($transaction->getQuery(), $transaction->getBindParams());
         $last_inserted_id = DB::connection()->getPdo()->lastInsertId();
@@ -268,8 +272,8 @@ class activatePaymentNotice extends AbstractPaymentList
             // scorrro tutta la cache per questa transazione
             $id = $attempt['id'];
             $date = $attempt['date_event'];
-            $transfer_added = $attempt['transfer_added'];
-            $amount_import = $attempt['amount_update'];
+            $transfer_added = (array_key_exists('transfer_added', $attempt)) ? $attempt['transfer_added'] : 'block';
+            $amount_import  = (array_key_exists('amount_update', $attempt)) ? $attempt['amount_update']  : 'block';
 
 
             if (!$this->getEvent()->getMethodInterface()->isFaultEvent())
@@ -304,19 +308,12 @@ class activatePaymentNotice extends AbstractPaymentList
 
             $cached_attempts[$key] = $attempt; // aggiorno la cache con le nuove info (se aggiornate) di aggiunta transfer e aggiornamento importo
 
-            $workflow = new Workflow($this->getEvent()->getInsertedTimestamp());
-            $workflow->setNewColumnValue('date_event', $date);
+            $workflow = $this->getEvent()->workflowEvent($index);
             $workflow->setFkPayment($id);
-            $workflow->setEventTimestamp($this->getEvent()->getInsertedTimestamp());
-            $workflow->setEventId($this->getEvent()->getUniqueId());
             $workflow->setFkTipoEvento(2);
-            if (!is_null($this->getEvent()->getMethodInterface()->getFaultCode()))
-            {
-                $workflow->setFaultCode($this->getEvent()->getMethodInterface()->getFaultCode());
-            }
-            // inserire faultCode
             $workflow->insert();
             DB::statement($workflow->getQuery(), $workflow->getBindParams());
+
         }
 
         if (count($cached_attempts) > 0)

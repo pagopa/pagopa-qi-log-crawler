@@ -123,6 +123,7 @@ class activatePaymentNotice extends AbstractEvent implements FaultInterface
      */
     public function getPsp(): string|null
     {
+//        echo $this->getColumn('unique_id') . ' => ' .$this->getColumn('psp') .PHP_EOL;
         return (empty($this->getColumn('psp'))) ? null : $this->getColumn('psp');
     }
 
@@ -183,11 +184,8 @@ class activatePaymentNotice extends AbstractEvent implements FaultInterface
 
         $notice_id      =   $this->getNoticeNumber($index);
 
-        $broker_psp     =   $this->getBrokerPsp();
         $psp_id         =   $this->getPsp();
         $canale         =   $this->getCanale();
-
-        $broker_pa      =   $this->getBrokerPa();
         $stazione       =   $this->getStazione();
 
         $importo        =   $this->getMethodInterface()->getImportoTotale();
@@ -203,11 +201,6 @@ class activatePaymentNotice extends AbstractEvent implements FaultInterface
             $transaction->setNoticeId($notice_id);
         }
 
-        if (!is_null($broker_psp))
-        {
-            $transaction->setBrokerPsp($broker_psp);
-        }
-
         if (!is_null($psp_id))
         {
             $transaction->setPsp($psp_id);
@@ -216,11 +209,6 @@ class activatePaymentNotice extends AbstractEvent implements FaultInterface
         if (!is_null($canale))
         {
             $transaction->setCanale($canale);
-        }
-
-        if (!is_null($broker_pa))
-        {
-            $transaction->setBrokerPa($broker_pa);
         }
 
         if (!is_null($stazione))
@@ -257,6 +245,24 @@ class activatePaymentNotice extends AbstractEvent implements FaultInterface
         $workflow->setEventTimestamp($this->getInsertedTimestamp());
         $workflow->setEventId($this->getUniqueId());
         $workflow->setFkTipoEvento(2);
+
+        $id_psp     = $this->getPsp();
+        $stazione   = $this->getStazione();
+        $canale     = $this->getCanale();
+
+        if (!is_null($id_psp))
+        {
+            $workflow->setPsp($id_psp);
+        }
+        if (!is_null($stazione))
+        {
+            $workflow->setStazione($stazione);
+        }
+        if (!is_null($canale))
+        {
+            $workflow->setCanale($canale);
+        }
+
         if (!is_null($this->getMethodInterface()->getFaultCode()))
         {
             $workflow->setFaultCode($this->getMethodInterface()->getFaultCode());

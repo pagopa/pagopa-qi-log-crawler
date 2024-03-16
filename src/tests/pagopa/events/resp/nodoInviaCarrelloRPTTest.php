@@ -21,7 +21,7 @@ class nodoInviaCarrelloRPTTest extends TestCase
     protected function setUp(): void
     {
         $this->instance_1 = new nodoInviaCarrelloRPT([
-            "insertedtimestamp" =>  "2024-03-13 09:15:00.210",
+            "inserted_timestamp" =>  "2024-03-13 09:15:00.210",
             "tipoEvento" =>  "nodoInviaCarrelloRPT",
             "sottoTipoEvento" =>  "RESP",
             "idDominio" =>  "",
@@ -40,7 +40,7 @@ class nodoInviaCarrelloRPTTest extends TestCase
         ]);
 
         $this->instance_fault = new nodoInviaCarrelloRPT([
-            "insertedtimestamp" =>  "2024-03-13 09:18:00.210",
+            "inserted_timestamp" =>  "2024-03-13 09:18:00.210",
             "tipoEvento" =>  "nodoInviaCarrelloRPT",
             "sottoTipoEvento" =>  "RESP",
             "idDominio" =>  "",

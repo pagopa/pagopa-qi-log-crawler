@@ -175,7 +175,7 @@ abstract class AbstractPaymentList implements PaymentListInterface
             ->where('tipoevento', '=', $method)
             ->where('sottotipoevento', '=', $type)
             ->where('state', '=', 'TO_LOAD')
-            ->orderBy('insertedtimestamp', 'asc')
+            ->orderBy('inserted_timestamp', 'asc')
             ->limit($limit)
             ->get();
 

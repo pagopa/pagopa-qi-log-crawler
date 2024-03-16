@@ -68,8 +68,6 @@ class T0011 extends TestCase
         $this->assertEquals('301000000000000010',$transaction->getColumnValue('notice_id'));
         $this->assertNull($transaction->getColumnValue('id_carrello'));
         $this->assertEquals('t0000000000000000000000000000010', $transaction->getColumnValue('token_ccp'));
-        $this->assertEquals('77777777777', $transaction->getColumnValue('id_broker_pa'));
-        $this->assertEquals('88888888888',$transaction->getColumnValue('id_broker_psp'));
         $this->assertEquals('PSP_01',$transaction->getColumnValue('id_psp'));
         $this->assertEquals('77777777777_01',$transaction->getColumnValue('stazione'));
         $this->assertEquals('88888888888_01',$transaction->getColumnValue('canale'));
@@ -112,11 +110,18 @@ class T0011 extends TestCase
         $this->assertEquals('2024-03-10 09:11:10.232', $req->getColumnValue('event_timestamp'));
         $this->assertEquals(1, $req->getColumnValue('fk_tipoevento'));
         $this->assertEquals('T000010', $req->getColumnValue('event_id'));
+        $this->assertEquals('PSP_01',$req->getColumnValue('id_psp'));
+        $this->assertEquals('77777777777_01',$req->getColumnValue('stazione'));
+        $this->assertEquals('88888888888_01',$req->getColumnValue('canale'));
+
 
         $this->assertEquals('2024-03-10', $resp->getColumnValue('date_event'));
         $this->assertEquals('2024-03-10 09:12:10.232', $resp->getColumnValue('event_timestamp'));
         $this->assertEquals(2, $resp->getColumnValue('fk_tipoevento'));
         $this->assertEquals('T000010', $resp->getColumnValue('event_id'));
+        $this->assertEquals('PSP_01',$resp->getColumnValue('id_psp'));
+        $this->assertEquals('77777777777_01',$resp->getColumnValue('stazione'));
+        $this->assertEquals('88888888888_01',$resp->getColumnValue('canale'));
 
 
         $result = Capsule::table('transaction_events_2024')

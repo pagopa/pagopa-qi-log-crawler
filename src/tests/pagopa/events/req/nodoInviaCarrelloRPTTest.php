@@ -26,7 +26,7 @@ class nodoInviaCarrelloRPTTest extends TestCase
     protected function setUp() : void
     {
         $this->instance_1_rpt_1_versamento = new nodoInviaCarrelloRPT([
-            "insertedtimestamp" =>  "2024-03-13 09:10:00.210",
+            "inserted_timestamp" =>  "2024-03-13 09:10:00.210",
             "tipoEvento" =>  "nodoInviaCarrelloRPT",
             "sottoTipoEvento" =>  "REQ",
             "idDominio" =>  "",
@@ -45,7 +45,7 @@ class nodoInviaCarrelloRPTTest extends TestCase
         ]);
 
         $this->instance_1_rpt_2_versamento = new nodoInviaCarrelloRPT([
-            "insertedtimestamp" =>  "2024-03-13 09:11:00.210",
+            "inserted_timestamp" =>  "2024-03-13 09:11:00.210",
             "tipoEvento" =>  "nodoInviaCarrelloRPT",
             "sottoTipoEvento" =>  "REQ",
             "idDominio" =>  "",
@@ -64,7 +64,7 @@ class nodoInviaCarrelloRPTTest extends TestCase
         ]);
 
         $this->instance_2_rpt_2_versamento = new nodoInviaCarrelloRPT([
-            "insertedtimestamp" =>  "2024-03-13 09:12:00.210",
+            "inserted_timestamp" =>  "2024-03-13 09:12:00.210",
             "tipoEvento" =>  "nodoInviaCarrelloRPT",
             "sottoTipoEvento" =>  "REQ",
             "idDominio" =>  "",
@@ -84,7 +84,7 @@ class nodoInviaCarrelloRPTTest extends TestCase
 
 
         $this->instance_1_rpt_2_versamento_1_bollo = new nodoInviaCarrelloRPT([
-            "insertedtimestamp" =>  "2024-03-13 09:13:00.210",
+            "inserted_timestamp" =>  "2024-03-13 09:13:00.210",
             "tipoEvento" =>  "nodoInviaCarrelloRPT",
             "sottoTipoEvento" =>  "REQ",
             "idDominio" =>  "",
@@ -105,7 +105,7 @@ class nodoInviaCarrelloRPTTest extends TestCase
 
 
         $this->instance_2_rpt_1_versamento_multi = new nodoInviaCarrelloRPT([
-            "insertedtimestamp" =>  "2024-03-13 09:14:00.210",
+            "inserted_timestamp" =>  "2024-03-13 09:14:00.210",
             "tipoEvento" =>  "nodoInviaCarrelloRPT",
             "sottoTipoEvento" =>  "REQ",
             "idDominio" =>  "",

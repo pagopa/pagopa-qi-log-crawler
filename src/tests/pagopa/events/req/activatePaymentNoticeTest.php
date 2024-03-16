@@ -17,7 +17,7 @@ class activatePaymentNoticeTest extends TestCase
         $this->instance = new activatePaymentNotice(
           [
               'date_event' => '2023-09-01',
-              'insertedtimestamp' => '2023-09-01 07:37:50',
+              'inserted_timestamp' => '2023-09-01 07:37:50',
               'tipoevento' => 'activatePaymentNotice',
               'sottotipoevento' => 'REQ',
               'psp' => 'ABI03069',

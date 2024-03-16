@@ -91,6 +91,9 @@ class activatePaymentNotice extends AbstractPaymentList
         $date_x_cache   =   $this->getEvent()->getInsertedTimestamp()->format('Ymd');
 
         $transaction = $this->getEvent()->transaction($index);
+        $transaction->removeReadyColumn('id_psp');
+        $transaction->removeReadyColumn('stazione');
+        $transaction->removeReadyColumn('canale');
 
         $transaction->insert();
         DB::statement($transaction->getQuery(), $transaction->getBindParams());

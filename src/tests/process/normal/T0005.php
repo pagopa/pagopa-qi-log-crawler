@@ -81,11 +81,9 @@ class T0005 extends TestCase
         $this->assertEquals('301000000000000005',self::$transaction->getColumnValue('notice_id'));
         $this->assertNull(self::$transaction->getColumnValue('id_carrello'));
         $this->assertNull(self::$transaction->getColumnValue('token_ccp'));
-        $this->assertEquals('77777777777', self::$transaction->getColumnValue('id_broker_pa'));
-        $this->assertEquals('88888888888',self::$transaction->getColumnValue('id_broker_psp'));
-        $this->assertEquals('PSP_01',self::$transaction->getColumnValue('id_psp'));
-        $this->assertEquals('77777777777_02', self::$transaction->getColumnValue('stazione'));
-        $this->assertEquals('88888888888_01',self::$transaction->getColumnValue('canale'));
+        $this->assertNull(self::$transaction->getColumnValue('id_psp'));
+        $this->assertNull(self::$transaction->getColumnValue('stazione'));
+        $this->assertNull(self::$transaction->getColumnValue('canale'));
         $this->assertEquals('0.00',self::$transaction->getColumnValue('importo'));
         $this->assertNull(self::$transaction->getColumnValue('esito'));
     }
@@ -98,6 +96,9 @@ class T0005 extends TestCase
         $this->assertEquals('2024-03-10 09:10:15.232', self::$workflow->getColumnValue('event_timestamp'));
         $this->assertEquals(1, self::$workflow->getColumnValue('fk_tipoevento'));
         $this->assertEquals('T000005', self::$workflow->getColumnValue('event_id'));
+        $this->assertEquals('77777777777_02', self::$workflow->getColumnValue('stazione'));
+        $this->assertEquals('88888888888_01',self::$workflow->getColumnValue('canale'));
+        $this->assertEquals('PSP_01',self::$workflow->getColumnValue('id_psp'));
     }
 
     #[TestDox('[RE] Verifica della modifica in LOADED dell\'evento analizzato')]
