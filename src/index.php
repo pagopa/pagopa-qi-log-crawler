@@ -14,6 +14,10 @@ const DB_USERNAME       =   'postgres';
 const DB_PASSWORD       =   'admin';
 const MEMCACHED_HOST    =   '172.17.0.3';
 const MEMCACHED_PORT    =   11211;
+const TRANSACTION_TABLE             = "transaction_%s";
+const TRANSACTION_DETAILS_TABLE     = "transaction_details_%s";
+const TRANSACTION_EVENTS_TABLE      = "transaction_events_%s";
+const TRANSACTION_RE_TABLE          = "transaction_re_%s";
 
 /*$id = "1298084";
 

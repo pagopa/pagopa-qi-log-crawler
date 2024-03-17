@@ -10,7 +10,7 @@ class TransactionRe extends SingleRow
 
     public function __construct(\DateTime $date, $eventData = [])
     {
-        $table = sprintf('transaction_re_%s', $date->format('Y'));
+        $table = sprintf(TRANSACTION_RE_TABLE, $date->format('Y'));
         parent::__construct($table, $eventData, ['id', 'date_event'], ['date_event']);
 
     }

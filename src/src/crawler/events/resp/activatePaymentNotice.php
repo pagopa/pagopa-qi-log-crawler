@@ -25,6 +25,8 @@ class activatePaymentNotice extends AbstractEvent implements FaultInterface
      */
     public function getPaEmittente(int $index = 0): string|null
     {
+        $pa = $this->getColumn('iddominio');
+        return (empty($pa)) ? null : $pa;
         if (empty($this->getColumn('iddominio')))
         {
             // se la colonna iddominio è vuota, provo a recuperare dal payload
@@ -38,6 +40,8 @@ class activatePaymentNotice extends AbstractEvent implements FaultInterface
      */
     public function getIuv(int $index = 0): string|null
     {
+        $iuv = $this->getColumn('iuv');
+        return (empty($iuv)) ? null : $iuv;
         if (empty($this->getColumn('iuv')))
         {
             // se la colonna iuv è vuota, provo a recuperare dal payload visto che nella response dell'activatePaymentNotice il valore c'è (se non c'è fault)
@@ -51,6 +55,8 @@ class activatePaymentNotice extends AbstractEvent implements FaultInterface
      */
     public function getCcp(int $index = 0): string|null
     {
+        $ccp = $this->getColumn('ccp');
+        return (empty($ccp)) ? null : $ccp;
         if (empty($this->getColumn('ccp')))
         {
             // se la colonna iddominio è vuota, provo a recuperare dal payload
@@ -72,6 +78,8 @@ class activatePaymentNotice extends AbstractEvent implements FaultInterface
      */
     public function getCreditorReferenceId(int $index = 0): string|null
     {
+        $iuv = $this->getColumn('creditorreferenceid');
+        return (empty($iuv)) ? null : $iuv;
         if (empty($this->getColumn('creditorreferenceid')))
         {
             // se la colonna iuv è vuota, provo a recuperare dal payload visto che nella response dell'activatePaymentNotice il valore c'è (se non c'è fault)
@@ -85,6 +93,8 @@ class activatePaymentNotice extends AbstractEvent implements FaultInterface
      */
     public function getPaymentToken(int $index = 0): string|null
     {
+        $token = $this->getColumn('paymenttoken');
+        return (empty($token)) ? null : $token;
         if (empty($this->getColumn('paymenttoken')))
         {
             // se la colonna iuv è vuota, provo a recuperare dal payload visto che nella response dell'activatePaymentNotice il valore c'è (se non c'è fault)

@@ -98,7 +98,6 @@ class activatePaymentNotice extends AbstractPaymentList
         $last_inserted_id = DB::connection()->getPdo()->lastInsertId();
 
 
-
         $cache_key      =   base64_encode(sprintf('payment_%s_%s_%s', $date_x_cache, $iuv, $pa_emittente));
         $cache_value    =   [
             'date_event'    =>  $date_event,
@@ -181,15 +180,19 @@ class activatePaymentNotice extends AbstractPaymentList
         $iuv            =   $this->getEvent()->getIuv($index);
         $pa_emittente   =   $this->getEvent()->getPaEmittente($index);
         $date_event     =   $this->getEvent()->getInsertedTimestamp()->format('Y-m-d');
+        $date_x_cache   =   $this->getEvent()->getInsertedTimestamp()->format('Ymd');
 
-        $cache_key      =   base64_encode(sprintf('payment_%s_%s_%s', $date_event, $iuv, $pa_emittente));
+        $cache_key      =   base64_encode(sprintf('payment_%s_%s_%s', $date_x_cache, $iuv, $pa_emittente));
 
         $cached_attempts = $this->getFromCache($cache_key);
+
 
         if (!is_array($cached_attempts))
         {
             $cached_attempts = []; // fix per la get dalla cache
         }
+
+
 
         foreach($cached_attempts as $key => $attempt)
         {
@@ -198,7 +201,7 @@ class activatePaymentNotice extends AbstractPaymentList
             $transfer_added = $attempt['transfer_added'];
             $amount_import = $attempt['amount_update'];
 
-            if (!$this->getEvent()->getMethodInterface()->isFaultEvent())
+            /*if (!$this->getEvent()->getMethodInterface()->isFaultEvent())
             {
                 if ($amount_import === false)
                 {
@@ -226,7 +229,7 @@ class activatePaymentNotice extends AbstractPaymentList
                         $attempt['transfer_added'] = true;
                     }
                 }
-            }
+            }*/
 
             $cached_attempts[$key] = $attempt; // aggiorno la cache con le nuove info (se aggiornate) di aggiunta transfer e aggiornamento importo
 

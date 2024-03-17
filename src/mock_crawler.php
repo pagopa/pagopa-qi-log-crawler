@@ -5,16 +5,17 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 use pagopa\crawler\Memcached;
 
 
-const MEMCACHED_HOST = '172.17.0.3';
-
-const MEMCACHED_PORT = "11211";
-const DB_HOST = '172.17.0.5';
-const DB_PORT = '5432';
-const DB_DATABASE = 'postgres';
-const DB_USERNAME = 'postgres';
-const DB_PASSWORD = 'mock';
-
-
+const MEMCACHED_HOST                = '172.17.0.3';
+const MEMCACHED_PORT                = "11211";
+const DB_HOST                       = '172.17.0.5';
+const DB_PORT                       = '5432';
+const DB_DATABASE                   = 'postgres';
+const DB_USERNAME                   = 'postgres';
+const DB_PASSWORD                   = 'mock';
+const TRANSACTION_TABLE             = "transaction_%s";
+const TRANSACTION_DETAILS_TABLE     = "transaction_details_%s";
+const TRANSACTION_EVENTS_TABLE      = "transaction_events_%s";
+const TRANSACTION_RE_TABLE          = "transaction_re_%s";
 
 $capsule = new Capsule;
 
