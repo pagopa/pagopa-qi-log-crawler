@@ -15,15 +15,45 @@ $connection =
     ];
 
 
+function randomString($n = 15)
+{
+    $string = '';
+    for($i=0;$i<$n;$i++)
+    {
+        $string .= rand(0, 9);
+    }
+    return $string;
+}
+
 
 $redis_cache = new \pagopa\crawler\RedisCache($connection);
 
-$add = [
-    [
-        'id'  => 'valore',
-        'date_event' => 'oggi'
-    ]
-];
+$redis_cache->clearCache();
+die();
+
+for($i=0;$i<1500000;$i++)
+{
+    $add = [
+            'id'  => 'valore',
+            'date_event' => 'oggi',
+        'iuv' => randomString(17),
+        'token' => randomString(25),
+        'dominio' => randomString(11)
+    ];
+    $redis_cache->setValue(sprintf('s_%s', $i), $add);
+    if (($i % 10000) == 0)
+    {
+        echo "Inserisco valore " .$i .PHP_EOL;
+    }
+}
+
+
+
+die();
+
+
+
+
 
 $add1 = [
         'id'  => 'valore',

@@ -231,19 +231,19 @@ abstract class AbstractPaymentList implements PaymentListInterface
                 }
                 else
                 {
-                    if ($this->isEnableSearch())
+                    $eventInstance = $this->runRejectedEvent();
+                    DB::statement($eventInstance->getQuery(), $eventInstance->getBindParams());
+                }
+                /*                else
+            {
+
+                if ($this->isEnableSearch())
+                {
+                    if ($this->isFoundOnDb($i))
                     {
-                        if ($this->isFoundOnDb($i))
-                        {
-                            $this->runCopyPaymentToday($i);
-                            $eventInstance = $this->runCompleteEvent();
-                            DB::statement($eventInstance->getQuery(), $eventInstance->getBindParams());
-                        }
-                        else
-                        {
-                            $eventInstance = $this->runRejectedEvent();
-                            DB::statement($eventInstance->getQuery(), $eventInstance->getBindParams());
-                        }
+                        $this->runCopyPaymentToday($i);
+                        $eventInstance = $this->runCompleteEvent();
+                        DB::statement($eventInstance->getQuery(), $eventInstance->getBindParams());
                     }
                     else
                     {
@@ -251,6 +251,14 @@ abstract class AbstractPaymentList implements PaymentListInterface
                         DB::statement($eventInstance->getQuery(), $eventInstance->getBindParams());
                     }
                 }
+                else
+                {
+                    $eventInstance = $this->runRejectedEvent();
+                    DB::statement($eventInstance->getQuery(), $eventInstance->getBindParams());
+                }
+
+                }
+*/
             }
         }
         catch (\Exception $e)

@@ -200,26 +200,6 @@ class nodoInviaCarrelloRPT extends AbstractEvent
             $transaction->setIdCarrello($id_carrello);
         }
 
-        if (!is_null($broker_psp))
-        {
-            $transaction->setBrokerPsp($broker_psp);
-        }
-
-        if (!is_null($psp_id))
-        {
-            $transaction->setPsp($psp_id);
-        }
-
-        if (!is_null($canale))
-        {
-            $transaction->setCanale($canale);
-        }
-
-        if (!is_null($broker_pa))
-        {
-            $transaction->setBrokerPa($broker_pa);
-        }
-
         if (!is_null($stazione))
         {
             $transaction->setStazione($stazione);
@@ -280,6 +260,10 @@ class nodoInviaCarrelloRPT extends AbstractEvent
         $workflow->setNewColumnValue('date_event', $this->getInsertedTimestamp()->format('Y-m-d'));
         $workflow->setEventId($this->getUniqueId());
         $workflow->setEventTimestamp($this->getInsertedTimestamp());
+        if (!is_null($this->getStazione()))
+        {
+            $workflow->setStazione($this->getStazione());
+        }
         $workflow->setFkTipoEvento(3);
         return $workflow;
     }
