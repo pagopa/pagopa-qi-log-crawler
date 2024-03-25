@@ -1,1 +1,103 @@
 <?php
+
+
+require_once './vendor/autoload.php';
+
+const REDIS_HOST        = '172.17.0.6';
+const REDIS_PORT        = '6379';
+
+
+$connection =
+    [
+        'scheme' => 'tcp',
+        'host' => REDIS_HOST,
+        'port' => REDIS_PORT
+    ];
+
+
+
+$redis_cache = new \pagopa\crawler\RedisCache($connection);
+
+$add = [
+    [
+        'id'  => 'valore',
+        'date_event' => 'oggi'
+    ]
+];
+
+$add1 = [
+        'id'  => 'valore',
+        'date_event' => 'domani'
+];
+
+$redis_cache->clearCache();
+
+$redis_cache->setValue('miachiave', $add, 10);
+
+
+$value = $redis_cache->getValue('miachiave');
+
+$redis_cache->addValue('miachiave', $add1);
+
+
+$value = $redis_cache->getValue('miachiave');
+
+
+print_r($redis_cache->getAllKeys());
+$redis_cache->clearCache();;
+print_r($redis_cache->getAllKeys());
+
+
+
+echo PHP_EOL;
+
+
+
+
+
+
+
+
+
+
+
+
+
+die();
+$client = new Predis\Client($connection);
+
+$add = [
+    [
+        'id'  => 'valore',
+        'date_event' => 'oggi'
+    ]
+];
+
+$client->set('miachiave', json_encode($add));
+
+
+$value = $client->get('miachiave');
+
+print_r(json_decode($value, JSON_OBJECT_AS_ARRAY));
+
+
+
+$add = [
+    [
+        'id'  => 'valore',
+        'date_event' => 'domani'
+    ]
+];
+
+echo PHP_EOL;
+
+echo "PROCEDO CON NUOVA AGGIUNTA" .PHP_EOL;
+
+$client->set('miachiave', json_encode($add));
+
+$value = $client->get('miachiave');
+
+
+print_r(json_decode($value, JSON_OBJECT_AS_ARRAY));
+
+echo PHP_EOL;

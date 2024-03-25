@@ -1,10 +1,25 @@
 <?php
 
+require_once './vendor/autoload.php';
 
 
 $mem = new Memcached();
 $connect = $mem->addServer('172.17.0.3',11211);
 
+const REDIS_HOST        = '172.17.0.6';
+const REDIS_PORT        = '6379';
+
+
+$connection =
+    [
+        'scheme' => 'tcp',
+        'host' => REDIS_HOST,
+        'port' => REDIS_PORT
+    ];
+
+
+
+$redis_cache = new \pagopa\crawler\RedisCache($connection);
 
 
 if (!$connect)
@@ -17,12 +32,18 @@ $mem->setOption(Memcached::OPT_COMPRESSION, true);
 
 while (count($mem->getAllKeys()) > 0)
 {
-    echo "Ci sono " .count($mem->getAllKeys()) . " elementi , effettuo il flush " .PHP_EOL;
+    echo "Ci sono " .count($mem->getAllKeys()) . " elementi su memcache, effettuo il flush " .PHP_EOL;
     sleep(2);
     $mem->flush();
 }
 
 echo "Flush terminato" .PHP_EOL;
+
+while(count($redis_cache->getAllKeys()) > 0)
+{
+    echo "Ci sono " .count($redis_cache->getAllKeys()) . " elementi su redis, effettuo il flush " .PHP_EOL;
+    $redis_cache->clearCache();
+}
 
 
 

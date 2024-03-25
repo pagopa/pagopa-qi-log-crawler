@@ -19,6 +19,10 @@ const TRANSACTION_DETAILS_TABLE     = "transaction_details_%s";
 const TRANSACTION_EVENTS_TABLE      = "transaction_events_%s";
 const TRANSACTION_RE_TABLE          = "transaction_re_%s";
 
+
+const REDIS_HOST        = '172.17.0.6';
+const REDIS_PORT        = '6379';
+
 /*$id = "1298084";
 
 $capsule = new Capsule;
