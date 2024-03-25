@@ -25,7 +25,7 @@ create table if not exists public.transaction_details_2024
     iur                 varchar(35)         null,
     pa_transfer         varchar(11)         not null,
     id_transfer         smallint            null,
-    iban_transfer       varchar(40)         not null,
+    iban_transfer       varchar(40)         null,
     amount_transfer     numeric             null,
     is_bollo            boolean             default false,
     constraint "TRANSACTION_DETAILS_2024_pk" PRIMARY KEY (date_event, id)
