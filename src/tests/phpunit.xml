@@ -23,7 +23,7 @@
     </php>
     <testsuites>
         <testsuite name="temp_suite">
-            <file>process/crawler/nodoInviaCarrelloRPT/SingleEvent/T00023_CreateAttemptTwoRPTFirstRpt2TransferSecondRpt2Transfer1Bollo.php</file>
+            <file>process/crawler/nodoInviaCarrelloRPT/BothEvents/T00027_CreateAttempTwoRPTTwoTransferForRPTWithResponseDifferentData.php</file>
         </testsuite>
         <testsuite name="crawler">
             <file>process/crawler/activatePaymentNotice/SingleEvent/T00001_CreateAttemptAllInfoInEvent.php</file>
@@ -44,6 +44,10 @@
             <file>process/crawler/nodoInviaCarrelloRPT/SingleEvent/T00021_CreateAttemptOneRPTTwoTransfer.php</file>
             <file>process/crawler/nodoInviaCarrelloRPT/SingleEvent/T00022_CreateAttemptTwoRPTTwoTransfer.php</file>
             <file>process/crawler/nodoInviaCarrelloRPT/SingleEvent/T00023_CreateAttemptTwoRPTFirstRpt2TransferSecondRpt2Transfer1Bollo.php</file>
+            <file>process/crawler/nodoInviaCarrelloRPT/BothEvents/T00024_CreateAttemptOneRPT1TransferSameData.php</file>
+            <file>process/crawler/nodoInviaCarrelloRPT/BothEvents/T00025_CreateAttemptOneRPT2TransferSameData.php</file>
+            <file>process/crawler/nodoInviaCarrelloRPT/BothEvents/T00026_CreateAttempTwoRPTTwoTransferForRPTSameData.php</file>
+            <file>process/crawler/nodoInviaCarrelloRPT/BothEvents/T00027_CreateAttempTwoRPTTwoTransferForRPTWithResponseDifferentData.php</file>
         </testsuite>
         <testsuite name="unit_tests">
             <file>pagopa/database/SingleRowTest.php</file>

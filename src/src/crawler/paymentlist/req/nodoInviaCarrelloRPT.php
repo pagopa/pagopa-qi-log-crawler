@@ -132,17 +132,17 @@ class nodoInviaCarrelloRPT extends AbstractPaymentList
 
         $session_key    =   base64_encode(sprintf('session_original_%s', $this->getEvent()->getSessionIdOriginal()));
         $cache_key      =   base64_encode(sprintf('attempt_%s_%s_%s_%s_%s', $date_x_cache, $id_carrello, $iuv, $pa_emittente, $ccp));
+        $transfer_add = array();
         $cache_value    =   [
             'date_event'    => $date_event,
             'id'            => $last_inserted_id,
             'iuv'           => $iuv,
             'pa_emittente'  => $pa_emittente,
             'token_ccp'     => $ccp,
+            'id_carrello'   => $id_carrello,
             'transfer_add'  => true,
             'amount_update' => true
         ];
-        $this->addValueCache($cache_key, $cache_value);
-        $this->addValueCache($session_key, $cache_value);
 
         for($i=0;$i<$this->getEvent()->getTransferCount($index);$i++)
         {
@@ -150,7 +150,32 @@ class nodoInviaCarrelloRPT extends AbstractPaymentList
             $details->setFkPayment($last_inserted_id);
             $details->insert();
             DB::statement($details->getQuery(), $details->getBindParams());
+
+            if ($this->getEvent()->getMethodInterface()->isBollo($i, $index))
+            {
+                $transfer_add = [
+                    'pa_transfer'       => $this->getEvent()->getMethodInterface()->getTransferPa($i, $index),
+                    'bollo'             => true,
+                    'amount_transfer'   => $this->getEvent()->getMethodInterface()->getTransferAmount($i, $index),
+                    'iban_transfer'              => ''
+                ];
+            }
+            else
+            {
+                $transfer_add = [
+                    'pa_transfer'       => $this->getEvent()->getMethodInterface()->getTransferPa($i, $index),
+                    'bollo'             => false,
+                    'amount_transfer'   => $this->getEvent()->getMethodInterface()->getTransferAmount($i, $index),
+                    'iban_transfer'     => $this->getEvent()->getMethodInterface()->getTransferIban($i, $index)
+                ];
+            }
+            $cache_value['transfer_list'][] = $transfer_add;
         }
+
+
+        $this->addValueCache($cache_key, $cache_value);
+        $this->addValueCache($session_key, $cache_value);
+
 
         $workflow = $this->getEvent()->workflowEvent($index);
         $workflow->setFkPayment($last_inserted_id);
