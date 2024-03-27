@@ -30,7 +30,7 @@ use PHPUnit\Framework\TestCase;
  *            <td style="border-right: 1px dashed;padding: 8px">22</td>
  *            <td style="border-right: 1px dashed;padding: 8px">nodoInviaCarrelloRPT</td>
  *            <td style="border-right: 1px dashed;padding: 8px">REQ</td>
- *            <td style="padding: 8px">c0000000000000000000000000000013</td>
+ *            <td style="padding: 8px">c0000000000000000000000000000012</td>
  *          </tr>
  *      </tbody>
  *  </table>
@@ -46,14 +46,14 @@ use PHPUnit\Framework\TestCase;
  *     </thead>
  *     <tbody>
  *         <tr style="border-bottom: 1px dashed;">
- *          <td style="border-right: 1px dashed;padding: 10px">01000000000000023</td>
+ *          <td style="border-right: 1px dashed;padding: 10px">01000000000000022</td>
  *           <td style="border-right: 1px dashed;padding: 10px">77777777777</td>
- *           <td style="padding: 10px">t0000000000000000000000000000023</td>
+ *           <td style="padding: 10px">t0000000000000000000000000000022</td>
  *         </tr>
  *         <tr style="border-bottom: 1px dashed;">
- *           <td style="border-right: 1px dashed;padding: 10px">01000000000000024</td>
+ *           <td style="border-right: 1px dashed;padding: 10px">01000000000000023</td>
  *            <td style="border-right: 1px dashed;padding: 10px">77777777777</td>
- *            <td style="padding: 10px">t0000000000000000000000000000023</td>
+ *            <td style="padding: 10px">t0000000000000000000000000000022</td>
  *         </tr>
  *     </tbody>
  *     <tfoot>
@@ -74,22 +74,22 @@ use PHPUnit\Framework\TestCase;
  *     </thead>
  *     <tbody>
  *         <tr style="border-bottom: 1px dashed;">
- *           <td style="border-right: 1px dashed;padding: 10px">180.00</td>
+ *           <td style="border-right: 1px dashed;padding: 10px">250.00</td>
  *           <td style="border-right: 1px dashed;padding: 10px">77777777777</td>
  *           <td style="padding: 10px">IT18U0000000000000000000010</td>
  *        </tr>
  *        <tr style="border-bottom: 1px dashed;">
- *            <td style="border-right: 1px dashed;padding: 10px">20.00</td>
+ *            <td style="border-right: 1px dashed;padding: 10px">350.00</td>
  *            <td style="border-right: 1px dashed;padding: 10px">77777777777</td>
  *            <td style="padding: 10px">IT18U0000000000000000000011</td>
  *        </tr>
  *       <tr style="border-bottom: 1px dashed;">
- *            <td style="border-right: 1px dashed;padding: 10px">180.00</td>
+ *            <td style="border-right: 1px dashed;padding: 10px">200.00</td>
  *            <td style="border-right: 1px dashed;padding: 10px">77777777777</td>
  *            <td style="padding: 10px">IT18U0000000000000000000012</td>
  *         </tr>
  *         <tr style="border-bottom: 1px dashed;">
- *             <td style="border-right: 1px dashed;padding: 10px">120.00</td>
+ *             <td style="border-right: 1px dashed;padding: 10px">100.00</td>
  *             <td style="border-right: 1px dashed;padding: 10px">77777777777</td>
  *             <td style="padding: 10px">IT18U0000000000000000000013</td>
  *         </tr>
@@ -112,19 +112,14 @@ use PHPUnit\Framework\TestCase;
  *      </thead>
  *      <tbody>
  *          <tr style="border-bottom: 1px dashed;">
- *            <td style="border-right: 1px dashed;padding: 10px">T000030</td>
+ *            <td style="border-right: 1px dashed;padding: 10px">T000028</td>
  *            <td style="border-right: 1px dashed;padding: 10px">3</td>
- *            <td style="padding: 10px">2024-03-10 10:38:00.197</td>
+ *            <td style="padding: 10px">2024-03-10 10:35:00.197</td>
  *          </tr>
  *          <tr style="border-bottom: 1px dashed;">
- *             <td style="border-right: 1px dashed;padding: 10px">T000031</td>
+ *             <td style="border-right: 1px dashed;padding: 10px">T000029</td>
  *             <td style="border-right: 1px dashed;padding: 10px">4</td>
- *             <td style="padding: 10px">2024-03-10 10:39:00.197</td>
- *          </tr>
- *          <tr style="border-bottom: 1px dashed;">
- *              <td style="border-right: 1px dashed;padding: 10px">T000032</td>
- *              <td style="border-right: 1px dashed;padding: 10px">4</td>
- *              <td style="padding: 10px">2024-03-10 10:40:00.197</td>
+ *             <td style="padding: 10px">2024-03-10 10:36:00.197</td>
  *          </tr>
  *      </tbody>
  *      <tfoot>
@@ -143,8 +138,8 @@ use PHPUnit\Framework\TestCase;
  */
 
 
-#[TestDox('[T00027] Valuta la corretta lavorazione di una nodoInviaCarrelloRPT REQ/RESP con 2 RPT e 2 Transfer in data diversa')]
-class T00027_CreateAttempTwoRPTTwoTransferForRPTWithResponseDifferentData extends TestCase
+#[TestDox('[T00026] Valuta la corretta lavorazione di una nodoInviaCarrelloRPT REQ/RESP con 2 RPT e 2 Transfer Avvenute nella stessa data')]
+class T00026_CreateAttemptTwoRPTTwoTransferForRPTSameData extends TestCase
 {
 
     protected static \GetInfoFromDb $db;
@@ -160,23 +155,23 @@ class T00027_CreateAttempTwoRPTTwoTransferForRPTWithResponseDifferentData extend
     public function testTransaction()
     {
 
-        $transaction = self::$db->getTransaction(new \DateTime('2024-03-10'), '01000000000000024');
-        $this->assertEquals('2024-03-10 10:38:00.197', $transaction->getColumnValue('inserted_timestamp'));
-        $this->assertEquals('01000000000000024', $transaction->getColumnValue('iuv'));
+        $transaction = self::$db->getTransaction(new \DateTime('2024-03-10'), '01000000000000022');
+        $this->assertEquals('2024-03-10 10:35:00.197', $transaction->getColumnValue('inserted_timestamp'));
+        $this->assertEquals('01000000000000022', $transaction->getColumnValue('iuv'));
         $this->assertEquals('77777777777', $transaction->getColumnValue('pa_emittente'));
-        $this->assertEquals('t0000000000000000000000000000023', $transaction->getColumnValue('token_ccp'));
-        $this->assertEquals('c0000000000000000000000000000013', $transaction->getColumnValue('id_carrello'));
-        $this->assertEquals('300.00', $transaction->getColumnValue('importo'));
+        $this->assertEquals('t0000000000000000000000000000022', $transaction->getColumnValue('token_ccp'));
+        $this->assertEquals('c0000000000000000000000000000012', $transaction->getColumnValue('id_carrello'));
+        $this->assertEquals('600.00', $transaction->getColumnValue('importo'));
         $this->assertEquals('77777777777_01', $transaction->getColumnValue('stazione'));
         $this->assertNull($transaction->getColumnValue('id_psp'));
         $this->assertNull($transaction->getColumnValue('canale'));
 
-        $transaction = self::$db->getTransaction(new \DateTime('2024-03-10'), '01000000000000025');
-        $this->assertEquals('2024-03-10 10:38:00.197', $transaction->getColumnValue('inserted_timestamp'));
-        $this->assertEquals('01000000000000025', $transaction->getColumnValue('iuv'));
+        $transaction = self::$db->getTransaction(new \DateTime('2024-03-10'), '01000000000000023');
+        $this->assertEquals('2024-03-10 10:35:00.197', $transaction->getColumnValue('inserted_timestamp'));
+        $this->assertEquals('01000000000000023', $transaction->getColumnValue('iuv'));
         $this->assertEquals('77777777777', $transaction->getColumnValue('pa_emittente'));
-        $this->assertEquals('t0000000000000000000000000000023', $transaction->getColumnValue('token_ccp'));
-        $this->assertEquals('c0000000000000000000000000000013', $transaction->getColumnValue('id_carrello'));
+        $this->assertEquals('t0000000000000000000000000000022', $transaction->getColumnValue('token_ccp'));
+        $this->assertEquals('c0000000000000000000000000000012', $transaction->getColumnValue('id_carrello'));
         $this->assertEquals('300.00', $transaction->getColumnValue('importo'));
         $this->assertEquals('77777777777_01', $transaction->getColumnValue('stazione'));
         $this->assertNull($transaction->getColumnValue('id_psp'));
@@ -186,48 +181,48 @@ class T00027_CreateAttempTwoRPTTwoTransferForRPTWithResponseDifferentData extend
     #[TestDox('[DETAILS] Verifica assenza dettagli')]
     public function testTransactionDetails()
     {
-        $transaction = self::$db->getTransaction(new \DateTime('2024-03-10'), '01000000000000024');
-        $details = self::$db->getTransactionDetails($transaction, 1);
-
-        $this->assertNull($details->getColumnValue('iur'));
-        $this->assertNull($details->getColumnValue('id_transfer'));
-        $this->assertEquals('77777777777', $details->getColumnValue('pa_transfer'));
-        $this->assertEquals('IT18U0000000000000000000010', $details->getColumnValue('iban_transfer'));
-        $this->assertEquals('180.00', $details->getColumnValue('amount_transfer'));
-        $this->assertFalse($details->getColumnValue('is_bollo'));
-
-
+        $transaction = self::$db->getTransaction(new \DateTime('2024-03-10'), '01000000000000022');
         $details = self::$db->getTransactionDetails($transaction, 0);
 
         $this->assertNull($details->getColumnValue('iur'));
         $this->assertNull($details->getColumnValue('id_transfer'));
         $this->assertEquals('77777777777', $details->getColumnValue('pa_transfer'));
-        $this->assertEquals('IT18U0000000000000000000011', $details->getColumnValue('iban_transfer'));
-        $this->assertEquals('20.00', $details->getColumnValue('amount_transfer'));
+        $this->assertEquals('IT18U0000000000000000000010', $details->getColumnValue('iban_transfer'));
+        $this->assertEquals('250.00', $details->getColumnValue('amount_transfer'));
         $this->assertFalse($details->getColumnValue('is_bollo'));
 
 
-
-
-
-        $transaction = self::$db->getTransaction(new \DateTime('2024-03-10'), '01000000000000025');
         $details = self::$db->getTransactionDetails($transaction, 1);
 
         $this->assertNull($details->getColumnValue('iur'));
         $this->assertNull($details->getColumnValue('id_transfer'));
         $this->assertEquals('77777777777', $details->getColumnValue('pa_transfer'));
-        $this->assertEquals('IT18U0000000000000000000012', $details->getColumnValue('iban_transfer'));
-        $this->assertEquals('180.00', $details->getColumnValue('amount_transfer'));
+        $this->assertEquals('IT18U0000000000000000000011', $details->getColumnValue('iban_transfer'));
+        $this->assertEquals('350.00', $details->getColumnValue('amount_transfer'));
         $this->assertFalse($details->getColumnValue('is_bollo'));
 
 
+
+
+
+        $transaction = self::$db->getTransaction(new \DateTime('2024-03-10'), '01000000000000023');
         $details = self::$db->getTransactionDetails($transaction, 0);
 
         $this->assertNull($details->getColumnValue('iur'));
         $this->assertNull($details->getColumnValue('id_transfer'));
         $this->assertEquals('77777777777', $details->getColumnValue('pa_transfer'));
         $this->assertEquals('IT18U0000000000000000000013', $details->getColumnValue('iban_transfer'));
-        $this->assertEquals('120.00', $details->getColumnValue('amount_transfer'));
+        $this->assertEquals('100.00', $details->getColumnValue('amount_transfer'));
+        $this->assertFalse($details->getColumnValue('is_bollo'));
+
+
+        $details = self::$db->getTransactionDetails($transaction, 1);
+
+        $this->assertNull($details->getColumnValue('iur'));
+        $this->assertNull($details->getColumnValue('id_transfer'));
+        $this->assertEquals('77777777777', $details->getColumnValue('pa_transfer'));
+        $this->assertEquals('IT18U0000000000000000000012', $details->getColumnValue('iban_transfer'));
+        $this->assertEquals('200.00', $details->getColumnValue('amount_transfer'));
         $this->assertFalse($details->getColumnValue('is_bollo'));
 
     }
@@ -235,68 +230,46 @@ class T00027_CreateAttempTwoRPTTwoTransferForRPTWithResponseDifferentData extend
     #[TestDox('[WORKFLOW] Verifica presenza eventi Workflow')]
     public function testWorkFlow()
     {
-        $transaction = self::$db->getTransaction(new \DateTime('2024-03-10'), '01000000000000024');
+        $transaction = self::$db->getTransaction(new \DateTime('2024-03-10'), '01000000000000022');
         $workflow = self::$db->getWorkFlow($transaction, 0);
 
 
         $this->assertEquals('3', $workflow->getColumnValue('fk_tipoevento'));
-        $this->assertEquals('2024-03-10 10:38:00.197', $workflow->getColumnValue('event_timestamp'));
-        $this->assertEquals('T000030', $workflow->getColumnValue('event_id'));
+        $this->assertEquals('2024-03-10 10:35:00.197', $workflow->getColumnValue('event_timestamp'));
+        $this->assertEquals('T000028', $workflow->getColumnValue('event_id'));
         $this->assertEquals('77777777777_01', $workflow->getColumnValue('stazione'));
 
         $workflow = self::$db->getWorkFlow($transaction, 1);
         $this->assertEquals('4', $workflow->getColumnValue('fk_tipoevento'));
-        $this->assertEquals('2024-03-10 10:39:00.197', $workflow->getColumnValue('event_timestamp'));
-        $this->assertEquals('T000031', $workflow->getColumnValue('event_id'));
-        $this->assertEquals('77777777777_01', $workflow->getColumnValue('stazione'));
-
-        $transaction = self::$db->getTransaction(new \DateTime('2024-03-11'), '01000000000000024');
-        $workflow = self::$db->getWorkFlow($transaction, 0);
-
-        $this->assertEquals('4', $workflow->getColumnValue('fk_tipoevento'));
-        $this->assertEquals('2024-03-11 10:40:00.197', $workflow->getColumnValue('event_timestamp'));
-        $this->assertEquals('T000032', $workflow->getColumnValue('event_id'));
+        $this->assertEquals('2024-03-10 10:36:00.197', $workflow->getColumnValue('event_timestamp'));
+        $this->assertEquals('T000029', $workflow->getColumnValue('event_id'));
         $this->assertEquals('77777777777_01', $workflow->getColumnValue('stazione'));
 
 
-        $transaction = self::$db->getTransaction(new \DateTime('2024-03-10'), '01000000000000025');
+        $transaction = self::$db->getTransaction(new \DateTime('2024-03-10'), '01000000000000023');
         $workflow = self::$db->getWorkFlow($transaction, 0);
 
 
         $this->assertEquals('3', $workflow->getColumnValue('fk_tipoevento'));
-        $this->assertEquals('2024-03-10 10:38:00.197', $workflow->getColumnValue('event_timestamp'));
-        $this->assertEquals('T000030', $workflow->getColumnValue('event_id'));
+        $this->assertEquals('2024-03-10 10:35:00.197', $workflow->getColumnValue('event_timestamp'));
+        $this->assertEquals('T000028', $workflow->getColumnValue('event_id'));
         $this->assertEquals('77777777777_01', $workflow->getColumnValue('stazione'));
 
         $workflow = self::$db->getWorkFlow($transaction, 1);
         $this->assertEquals('4', $workflow->getColumnValue('fk_tipoevento'));
-        $this->assertEquals('2024-03-10 10:39:00.197', $workflow->getColumnValue('event_timestamp'));
-        $this->assertEquals('T000031', $workflow->getColumnValue('event_id'));
+        $this->assertEquals('2024-03-10 10:36:00.197', $workflow->getColumnValue('event_timestamp'));
+        $this->assertEquals('T000029', $workflow->getColumnValue('event_id'));
         $this->assertEquals('77777777777_01', $workflow->getColumnValue('stazione'));
-
-
-        $transaction = self::$db->getTransaction(new \DateTime('2024-03-11'), '01000000000000025');
-        $workflow = self::$db->getWorkFlow($transaction, 0);
-
-        $this->assertEquals('4', $workflow->getColumnValue('fk_tipoevento'));
-        $this->assertEquals('2024-03-11 10:40:00.197', $workflow->getColumnValue('event_timestamp'));
-        $this->assertEquals('T000032', $workflow->getColumnValue('event_id'));
-        $this->assertEquals('77777777777_01', $workflow->getColumnValue('stazione'));
-
     }
 
     #[TestDox('[ReEvent] Verifica stato evento')]
     public function testEvent()
     {
-        $event = self::$db->getReEvent(new \DateTime('2024-03-10'), 30);
+        $event = self::$db->getReEvent(new \DateTime('2024-03-10'), 28);
         $this->assertEquals('LOADED', $event->getColumnValue('state'));
 
-        $event = self::$db->getReEvent(new \DateTime('2024-03-10'), 31);
+        $event = self::$db->getReEvent(new \DateTime('2024-03-10'), 29);
         $this->assertEquals('LOADED', $event->getColumnValue('state'));
-
-        $event = self::$db->getReEvent(new \DateTime('2024-03-11'), 32);
-        $this->assertEquals('LOADED', $event->getColumnValue('state'));
-
     }
 
 
