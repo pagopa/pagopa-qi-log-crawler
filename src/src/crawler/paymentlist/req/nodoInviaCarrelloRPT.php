@@ -141,6 +141,7 @@ class nodoInviaCarrelloRPT extends AbstractPaymentList
             'token_ccp'     => $ccp,
             'id_carrello'   => $id_carrello,
             'transfer_add'  => true,
+            'esito'         => false,
             'amount_update' => true
         ];
 
@@ -150,6 +151,7 @@ class nodoInviaCarrelloRPT extends AbstractPaymentList
             $details->setFkPayment($last_inserted_id);
             $details->insert();
             DB::statement($details->getQuery(), $details->getBindParams());
+            $last_inserted_id_transfer = DB::connection()->getPdo()->lastInsertId();
 
             if ($this->getEvent()->getMethodInterface()->isBollo($i, $index))
             {
@@ -157,7 +159,7 @@ class nodoInviaCarrelloRPT extends AbstractPaymentList
                     'pa_transfer'       => $this->getEvent()->getMethodInterface()->getTransferPa($i, $index),
                     'bollo'             => true,
                     'amount_transfer'   => $this->getEvent()->getMethodInterface()->getTransferAmount($i, $index),
-                    'iban_transfer'              => ''
+                    'iban_transfer'     => ''
                 ];
             }
             else
@@ -169,6 +171,8 @@ class nodoInviaCarrelloRPT extends AbstractPaymentList
                     'iban_transfer'     => $this->getEvent()->getMethodInterface()->getTransferIban($i, $index)
                 ];
             }
+            $transfer_add['id'] = $last_inserted_id_transfer;
+            $transfer_add['date_event'] = $this->getEvent()->getInsertedTimestamp()->format('Y-m-d');
             $cache_value['transfer_list'][] = $transfer_add;
         }
 

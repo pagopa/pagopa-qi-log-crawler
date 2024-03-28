@@ -135,17 +135,22 @@ class activatePaymentNotice extends AbstractPaymentList
         DB::statement($transaction->getQuery(), $transaction->getBindParams());
         $last_inserted_id = DB::connection()->getPdo()->lastInsertId();
 
+        $transfer_add = [];
         for($i=0;$i<$this->getEvent()->getTransferCount($index);$i++)
         {
-            $transaction_details = new TransactionDetails($this->getEvent()->getInsertedTimestamp());
+            $transaction_details = $this->getEvent()->transactionDetails($i, 0);
             $transaction_details->setFkPayment($last_inserted_id);
-            $transaction_details->setNewColumnValue('date_event', $date_event);
-            $transaction_details->setPaTransfer($this->getEvent()->getMethodInterface()->getTransferPa($i, 0));
-            $transaction_details->setAmountTransfer($this->getEvent()->getMethodInterface()->getTransferAmount($i, 0));
-            $transaction_details->setTransferIban($this->getEvent()->getMethodInterface()->getTransferIban($i, 0));
-            $transaction_details->setIdTransfer($this->getEvent()->getMethodInterface()->getTransferId($i, 0));
             $transaction_details->insert();
             DB::statement($transaction_details->getQuery(), $transaction_details->getBindParams());
+            $last_inserted_id_transfer = DB::connection()->getPdo()->lastInsertId();
+            $transfer_add[] = [
+                'pa_transfer'       => $this->getEvent()->getMethodInterface()->getTransferPa($i, 0),
+                'bollo'             => false,
+                'amount_transfer'   => $this->getEvent()->getMethodInterface()->getTransferAmount($i, 0),
+                'iban_transfer'     => $this->getEvent()->getMethodInterface()->getTransferIban($i, 0),
+                'id'                => $last_inserted_id_transfer,
+                'date_event'        => $this->getEvent()->getInsertedTimestamp()->format('Y-m-d')
+            ];
         }
 
 
@@ -159,6 +164,8 @@ class activatePaymentNotice extends AbstractPaymentList
             'pa_emittente'  =>  $pa_emittente,
             'token_ccp'     =>  $token,
             'transfer_add'  =>  true,
+            'transfer_list' =>  $transfer_add,
+            'esito'         =>  false,
             'amount_update' =>  true
         ];
         $this->addValueCache($cache_key, $cache_value);

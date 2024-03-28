@@ -149,6 +149,7 @@ class activatePaymentNotice extends AbstractPaymentList
             'pa_emittente'      =>  $pa_emittente,
             'token_ccp'         =>  $token,
             'transfer_added'    =>  false,
+            'esito'             =>  false,
             'amount_update'     =>  false
         ];
         $this->addValueCache($cache_key, $cache_value);

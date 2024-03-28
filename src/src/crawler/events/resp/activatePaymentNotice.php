@@ -241,7 +241,13 @@ class activatePaymentNotice extends AbstractEvent implements FaultInterface
      */
     public function transactionDetails(int $transfer = 0, int $index = 0): TransactionDetails|null
     {
-        return null;
+        $transaction_details = new TransactionDetails($this->getInsertedTimestamp());
+        $transaction_details->setNewColumnValue('date_event', $this->getInsertedTimestamp()->format('Y-m-d'));
+        $transaction_details->setPaTransfer($this->getMethodInterface()->getTransferPa($transfer, 0));
+        $transaction_details->setAmountTransfer($this->getMethodInterface()->getTransferAmount($transfer, 0));
+        $transaction_details->setTransferIban($this->getMethodInterface()->getTransferIban($transfer, 0));
+        $transaction_details->setIdTransfer($this->getMethodInterface()->getTransferId($transfer, 0));
+        return $transaction_details;
     }
 
     /**
