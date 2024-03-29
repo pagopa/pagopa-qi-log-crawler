@@ -292,5 +292,4 @@ interface PaymentListInterface
      * @return TransactionRe
      */
     public function runCompleteEvent(string $message = null) : TransactionRe;
-
 }

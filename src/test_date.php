@@ -2,6 +2,17 @@
 require_once './vendor/autoload.php';
 
 
+$a = json_encode(array('2024-02-02'));
+
+print_r(json_decode($a, JSON_OBJECT_AS_ARRAY));
+
+echo PHP_EOL;
+
+
+
+die();
+
+
 $a = new \pagopa\crawler\events\req\nodoInviaCarrelloRPT([
     "insertedtimestamp" =>  "2024-03-13 09:10:00.210",
     "tipoEvento" =>  "nodoInviaCarrelloRPT",

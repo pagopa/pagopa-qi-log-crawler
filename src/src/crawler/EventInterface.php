@@ -248,4 +248,18 @@ interface EventInterface
      */
     public function getEventRowInstance() : TransactionRe;
 
+
+    /**
+     * Restituisce la chiave cache dove sono presenti tutti pagamenti impattati da questo evento
+     * @return string
+     */
+    public function getCacheKeyPayment() : string;
+
+
+    /**
+     * Restituisce la chiave cache dove sono presenti tutti i pagamenti impattati da questo tentativo associato all'evnto
+     * @return string
+     */
+    public function getCacheKeyAttempt() : string;
+
 }

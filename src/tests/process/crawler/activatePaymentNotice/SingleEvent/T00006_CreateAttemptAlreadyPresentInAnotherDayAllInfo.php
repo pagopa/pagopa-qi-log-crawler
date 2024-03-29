@@ -103,18 +103,7 @@ class T00006_CreateAttemptAlreadyPresentInAnotherDayAllInfo extends TestCase
     {
 
         $transaction = self::$db->getTransaction(new \DateTime('2024-03-11'), '01000000000000001', 't0000000000000000000000000000001');
-
-        $this->assertEquals('2024-03-11', $transaction->getColumnValue('date_event'));
-        $this->assertEquals('2024-03-11 09:29:25.232', $transaction->getColumnValue('inserted_timestamp'));
-        $this->assertEquals('01000000000000001', $transaction->getColumnValue('iuv'));
-        $this->assertEquals('77777777777', $transaction->getColumnValue('pa_emittente'));
-        $this->assertEquals('301000000000000001', $transaction->getColumnValue('notice_id'));
-        $this->assertEquals('t0000000000000000000000000000001', $transaction->getColumnValue('token_ccp'));
-        $this->assertEquals('AGID_01', $transaction->getColumnValue('id_psp'));
-        $this->assertEquals('77777777777_01', $transaction->getColumnValue('stazione'));
-        $this->assertEquals('88888888888_01', $transaction->getColumnValue('canale'));
-        $this->assertEquals('0.00', $transaction->getColumnValue('importo'));
-        $this->assertNull($transaction->getColumnValue('id_carrello'));
+        $this->assertNull($transaction);
 
     }
 
@@ -123,17 +112,15 @@ class T00006_CreateAttemptAlreadyPresentInAnotherDayAllInfo extends TestCase
     public function testTransactionDetails()
     {
         $transaction = self::$db->getTransaction(new \DateTime('2024-03-11'), '01000000000000001', 't0000000000000000000000000000001');
-        $details = self::$db->getTransactionDetails($transaction, 0);
-
-        $this->assertNull($details);
+        $this->assertNull($transaction);
 
     }
 
     #[TestDox('[WORKFLOW] Verifica della correttezza nella tabella Workflow')]
     public function testWorkflow()
     {
-        $transaction = self::$db->getTransaction(new \DateTime('2024-03-11'), '01000000000000001', 't0000000000000000000000000000001');
-        $workflow = self::$db->getWorkFlow($transaction, 0);
+        $transaction = self::$db->getTransaction(new \DateTime('2024-03-10'), '01000000000000001', 't0000000000000000000000000000001');
+        $workflow = self::$db->getWorkFlow($transaction, 1);
 
         $this->assertEquals('1', $workflow->getColumnValue('fk_tipoevento'));
         $this->assertEquals('2024-03-11 09:29:25.232', $workflow->getColumnValue('event_timestamp'));

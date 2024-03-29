@@ -29,7 +29,7 @@ class activatePaymentNotice extends AbstractPaymentList
      */
     public function isValidPayment(int $index = 0): bool
     {
-        return ($this->getEvent()->getIuv($index) && $this->getEvent()->getPaEmittente($index));
+        return ($this->getEvent()->getIuv(0) && $this->getEvent()->getPaEmittente(0));
     }
 
     /**
@@ -37,7 +37,7 @@ class activatePaymentNotice extends AbstractPaymentList
      */
     public function isAttempt(int $index = 0): bool
     {
-        return ($this->getEvent()->getIuv($index) && $this->getEvent()->getPaEmittente($index) && $this->getEvent()->getPaymentToken($index));
+        return ($this->getEvent()->getIuv(0) && $this->getEvent()->getPaEmittente(0) && $this->getEvent()->getPaymentToken(0));
     }
 
     /**
@@ -46,11 +46,12 @@ class activatePaymentNotice extends AbstractPaymentList
     public function isAttemptInCache(int $index = 0): bool
     {
         $date       = $this->getEvent()->getInsertedTimestamp()->format('Ymd');
-        $iuv        = $this->getEvent()->getIuv($index);
-        $pa         = $this->getEvent()->getPaEmittente($index);
-        $token      = $this->getEvent()->getPaymentToken($index);
-        $key        = base64_encode(sprintf('attempt_%s_%s_%s_%s', $date, $iuv, $pa, $token));
-        return $this->hasInCache($key);
+        $iuv        = $this->getEvent()->getIuv(0);
+        $pa         = $this->getEvent()->getPaEmittente(0);
+        $token      = $this->getEvent()->getPaymentToken(0);
+        $key        = base64_encode(sprintf('attempt_%s_%s_%s', $iuv, $pa, $token));
+        $cache_key  = $this->getEvent()->getCacheKeyAttempt();
+        return $this->hasInCache($cache_key);
     }
 
     /**
@@ -61,9 +62,9 @@ class activatePaymentNotice extends AbstractPaymentList
         $date       = $this->getEvent()->getInsertedTimestamp()->format('Ymd');
         $iuv        = $this->getEvent()->getIuv($index);
         $pa         = $this->getEvent()->getPaEmittente($index);
-        $key        = base64_encode(sprintf('payment_%s_%s_%s', $date, $iuv, $pa));
-        return $this->hasInCache($key);
-
+        $key        = base64_encode(sprintf('payment_%s_%s', $iuv, $pa));
+        $cache_key  = $this->getEvent()->getCacheKeyPayment();
+        return $this->hasInCache($cache_key);
     }
 
     /**
@@ -85,32 +86,31 @@ class activatePaymentNotice extends AbstractPaymentList
      */
     public function runCreatePayment(int $index = 0): array
     {
-        $iuv            =   $this->getEvent()->getIuv($index);
-        $pa_emittente   =   $this->getEvent()->getPaEmittente($index);
+        // devo creare la transazione e il workflow
+        // se sono qui, è perchè non esiste la cache
         $date_event     =   $this->getEvent()->getInsertedTimestamp()->format('Y-m-d');
-        $date_x_cache   =   $this->getEvent()->getInsertedTimestamp()->format('Ymd');
+        $iuv            =   $this->getEvent()->getIuv(0);
+        $pa_emittente   =   $this->getEvent()->getPaEmittente(0);
 
-        $transaction = $this->getEvent()->transaction($index);
+        $transaction = $this->getEvent()->transaction(0);
         $transaction->removeReadyColumn('id_psp');
         $transaction->removeReadyColumn('stazione');
         $transaction->removeReadyColumn('canale');
-
         $transaction->insert();
         DB::statement($transaction->getQuery(), $transaction->getBindParams());
         $last_inserted_id = DB::connection()->getPdo()->lastInsertId();
 
-
-        $cache_key      =   base64_encode(sprintf('payment_%s_%s_%s', $date_x_cache, $iuv, $pa_emittente));
+        $cache_key      = $this->getEvent()->getCacheKeyPayment();
         $cache_value    =   [
             'date_event'        =>  $date_event,
             'id'                =>  $last_inserted_id,
             'iuv'               =>  $iuv,
             'pa_emittente'      =>  $pa_emittente,
             'transfer_added'    =>  false,
-            'amount_update'     =>  false
+            'amount_update'     =>  false,
+            'date_wf'           => json_encode(array())
         ];
         $this->addValueCache($cache_key, $cache_value);
-
 
         $workflow = $this->getEvent()->workflowEvent($index);
         $workflow->setFkPayment($last_inserted_id);
@@ -125,32 +125,28 @@ class activatePaymentNotice extends AbstractPaymentList
      */
     public function runCreateAttempt(int $index = 0): array
     {
-        $token          =   $this->getEvent()->getCcp($index);
+        // devo creare la transazione e il workflow
+        // se sono qui, è perchè non esiste la cache
+        $date_event     =   $this->getEvent()->getInsertedTimestamp()->format('Y-m-d');
+        $token          =   $this->getEvent()->getCcp(0);
 
-        $transaction = $this->getEvent()->transaction($index);
+        $transaction = $this->getEvent()->transaction(0);
         $transaction->setTokenCcp($token);
         $transaction->insert();
         DB::statement($transaction->getQuery(), $transaction->getBindParams());
         $last_inserted_id = DB::connection()->getPdo()->lastInsertId();
 
-
-        $iuv            =   $this->getEvent()->getIuv($index);
-        $pa_emittente   =   $this->getEvent()->getPaEmittente($index);
-        $token          =   $this->getEvent()->getPaymentToken($index);
-        $date_event     =   $this->getEvent()->getInsertedTimestamp()->format('Y-m-d');
-        $date_x_cache   =   $this->getEvent()->getInsertedTimestamp()->format('Ymd');
-
-
-        $cache_key      =   base64_encode(sprintf('attempt_%s_%s_%s_%s', $date_x_cache, $iuv, $pa_emittente, $token));
+        $cache_key      = $this->getEvent()->getCacheKeyAttempt();
         $cache_value    =   [
             'date_event'        =>  $date_event,
             'id'                =>  $last_inserted_id,
-            'iuv'               =>  $iuv,
-            'pa_emittente'      =>  $pa_emittente,
+            'iuv'               =>  $this->getEvent()->getIuv(0),
+            'pa_emittente'      =>  $this->getEvent()->getPaEmittente(0),
             'token_ccp'         =>  $token,
             'transfer_added'    =>  false,
             'esito'             =>  false,
-            'amount_update'     =>  false
+            'amount_update'     =>  false,
+            'date_wf'           => json_encode(array())
         ];
         $this->addValueCache($cache_key, $cache_value);
 
@@ -169,29 +165,35 @@ class activatePaymentNotice extends AbstractPaymentList
      */
     public function runPaymentAlreadyEvaluated(int $index = 0): void
     {
-        $iuv            =   $this->getEvent()->getIuv($index);
-        $pa_emittente   =   $this->getEvent()->getPaEmittente($index);
-        $date_event     =   $this->getEvent()->getInsertedTimestamp()->format('Y-m-d');
+        $cache_key      =   $this->getEvent()->getCacheKeyPayment();
+        $cache_data     =   $this->getFromCache($cache_key);
 
-        $cache_key      =   base64_encode(sprintf('payment_%s_%s_%s', $date_event, $iuv, $pa_emittente));
-
-        $cached_attempts = $this->getFromCache($cache_key);
-
-        if (!is_array($cached_attempts))
+        foreach($cache_data as $ck => $cache_value)
         {
-            $cached_attempts = []; // fix per la get dalla cache
-        }
-
-        foreach($cached_attempts as $attempt)
-        {
-            $id = $attempt['id'];
-
+            $id             =   $cache_value['id'];
+            $date_event     =   $cache_value['date_event'];
+            $date_wf        =   json_decode($cache_value['date_wf'], JSON_OBJECT_AS_ARRAY);
             $workflow = $this->getEvent()->workflowEvent($index);
             $workflow->setFkPayment($id);
             $workflow->setFkTipoEvento(1);
             $workflow->insert();
             DB::statement($workflow->getQuery(), $workflow->getBindParams());
+
+            // se la data dell'evento che sto analizzando è diversa dalla date in cache
+            // aggiungo la data
+            $new_date_event = $this->getEvent()->getInsertedTimestamp()->format('Y-m-d');
+            if (($new_date_event != $date_event) && (!in_array($new_date_event, $date_wf)))
+            {
+                $date_wf[] = $new_date_event;
+                $cache_data[$ck]['date_wf'] = json_encode($date_wf);
+                $transaction = Transaction::searchByPrimaryKey($id, $date_event);
+                $transaction->addNewDate($date_wf);
+                $transaction->update();
+                DB::statement($transaction->getQuery(), $transaction->getBindParams());
+            }
         }
+        $this->setCache($cache_key, $cache_data);
+
     }
 
     /**
@@ -199,31 +201,35 @@ class activatePaymentNotice extends AbstractPaymentList
      */
     public function runAttemptAlreadyEvaluated(int $index = 0): void
     {
-        $iuv            =   $this->getEvent()->getIuv($index);
-        $pa_emittente   =   $this->getEvent()->getPaEmittente($index);
-        $token          =   $this->getEvent()->getPaymentToken($index);
-        $date_event     =   $this->getEvent()->getInsertedTimestamp()->format('Ymd');
 
-        $cache_key      =   base64_encode(sprintf('attempt_%s_%s_%s_%s', $date_event, $iuv, $pa_emittente, $token));
+        $cache_key      =   $this->getEvent()->getCacheKeyAttempt();
+        $cache_data     =   $this->getFromCache($cache_key);
 
-        $cached_attempts = $this->getFromCache($cache_key);
-
-        if (!is_array($cached_attempts))
+        foreach($cache_data as $ck => $cache_value)
         {
-            $cached_attempts = [];
-        }
-
-        foreach($cached_attempts as $attempt)
-        {
-            $id = $attempt['id'];
-            $date = $attempt['date_event'];
-
+            $id             =   $cache_value['id'];
+            $date_event     =   $cache_value['date_event'];
+            $date_wf        =   json_decode($cache_value['date_wf'], JSON_OBJECT_AS_ARRAY);
             $workflow = $this->getEvent()->workflowEvent($index);
             $workflow->setFkPayment($id);
             $workflow->setFkTipoEvento(1);
             $workflow->insert();
             DB::statement($workflow->getQuery(), $workflow->getBindParams());
+
+            // se la data dell'evento che sto analizzando è diversa dalla date in cache
+            // aggiungo la data
+            $new_date_event = $this->getEvent()->getInsertedTimestamp()->format('Y-m-d');
+            if (($new_date_event != $date_event) && (!in_array($new_date_event, $date_wf)))
+            {
+                $date_wf[] = $new_date_event;
+                $cache_data[$ck]['date_wf'] = json_encode($date_wf);
+                $transaction = Transaction::searchByPrimaryKey($id, $date_event);
+                $transaction->addNewDate($date_wf);
+                $transaction->update();
+                DB::statement($transaction->getQuery(), $transaction->getBindParams());
+            }
         }
+        $this->setCache($cache_key, $cache_data);
     }
 
     /**
@@ -249,5 +255,54 @@ class activatePaymentNotice extends AbstractPaymentList
     public function runCompleteEvent(string $message = null): TransactionRe
     {
         return $this->getEvent()->getEventRowInstance()->loaded($message)->update();
+    }
+
+    public function runAnalysisSingleEvent() : void
+    {
+        try {
+            // aggiustare l'update dell'evento , capire se mettere il ciclo dentro o fuori la validazione
+            $date_event = $this->getEvent()->getInsertedTimestamp()->format('Y-m-d');
+            if ($this->isValidPayment())
+            {
+                // se è ALMENO un pagamento
+                if ($this->isAttempt())
+                {
+                    // se è un tentativo
+                    if ($this->isAttemptInCache())
+                    {
+                        //se il tentativo è in cache, a parità di medesimo evento
+                        $this->runAttemptAlreadyEvaluated();
+                    }
+                    else
+                    {
+                        // creo il tentativo
+                        $this->runCreateAttempt();
+                    }
+                }
+                else
+                {
+                    if ($this->isPaymentInCache())
+                    {
+                        $this->runPaymentAlreadyEvaluated();
+                    }
+                    else
+                    {
+                        $this->runCreatePayment();
+                    }
+                }
+                $rowid = $this->getEvent()->getEventRowInstance()->loaded()->update();
+                DB::statement($rowid->getQuery(), $rowid->getBindParams());
+            }
+            else
+            {
+                $rowid = $this->getEvent()->getEventRowInstance()->reject('Evento non valido')->update();
+                DB::statement($rowid->getQuery(), $rowid->getBindParams());
+            }
+        }
+        catch (\Exception $e)
+        {
+            $rowid = $this->getEvent()->getEventRowInstance()->reject(substr($e->getMessage(), 0, 190))->update();
+            DB::statement($rowid->getQuery(), $rowid->getBindParams());
+        }
     }
 }

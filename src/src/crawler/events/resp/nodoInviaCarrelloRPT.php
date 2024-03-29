@@ -219,4 +219,22 @@ class nodoInviaCarrelloRPT extends AbstractEvent
         }
         return $workflow;
     }
+
+    /**
+     * @return string
+     */
+    public function getCacheKeyPayment(): string
+    {
+        $session        = $this->getSessionIdOriginal();
+        return base64_encode(sprintf('sessionOriginal_%s', $session));
+    }
+
+    /**
+     * @return string
+     */
+    public function getCacheKeyAttempt(): string
+    {
+        $session        = $this->getSessionIdOriginal();
+        return base64_encode(sprintf('sessionOriginal_%s', $session));
+    }
 }

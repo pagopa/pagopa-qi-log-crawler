@@ -30,6 +30,7 @@ class nodoInviaCarrelloRPT extends AbstractPaymentList
      */
     public function isValidPayment(int $index = 0): bool
     {
+        return !is_null($this->getEvent()->getSessionIdOriginal());
         $session_key    =   base64_encode(sprintf('session_original_%s', $this->getEvent()->getSessionIdOriginal()));
         $cache_data     =   $this->getFromCache($session_key);
         if (!is_array($cache_data))
@@ -52,6 +53,11 @@ class nodoInviaCarrelloRPT extends AbstractPaymentList
      */
     public function isAttemptInCache(int $index = 0): bool
     {
+
+        $session        = $this->getEvent()->getSessionIdOriginal();
+        $key            = base64_encode(sprintf('sessionOriginal_%s', $session));
+        return $this->hasInCache($key);
+
         $session_key    =   base64_encode(sprintf('session_original_%s', $this->getEvent()->getSessionIdOriginal()));
         $cache_value    =   $this->getFromCache($session_key);
 
@@ -75,6 +81,9 @@ class nodoInviaCarrelloRPT extends AbstractPaymentList
      */
     public function isPaymentInCache(int $index = 0): bool
     {
+        $session        = $this->getEvent()->getSessionIdOriginal();
+        $key            = base64_encode(sprintf('sessionOriginal_%s', $session));
+        return $this->hasInCache($key);
         return $this->isAttemptInCache($index);
     }
 

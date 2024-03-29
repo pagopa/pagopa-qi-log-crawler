@@ -117,6 +117,7 @@ class T00001_CreateAttemptAllInfoInEvent extends TestCase
         $this->assertEquals('77777777777_01', $transaction->getColumnValue('stazione'));
         $this->assertEquals('88888888888_01', $transaction->getColumnValue('canale'));
         $this->assertEquals('0.00', $transaction->getColumnValue('importo'));
+        $this->assertContains('2024-03-11', json_decode($transaction->getColumnValue('date_wf'),JSON_OBJECT_AS_ARRAY));
         $this->assertNull($transaction->getColumnValue('id_carrello'));
 
     }

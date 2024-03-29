@@ -192,73 +192,47 @@ abstract class AbstractPaymentList implements PaymentListInterface
 
     }
 
+
     public function runAnalysisSingleEvent() : void
     {
         try {
             // aggiustare l'update dell'evento , capire se mettere il ciclo dentro o fuori la validazione
             $date_event = $this->getEvent()->getInsertedTimestamp()->format('Y-m-d');
-            for($i=0;$i<$this->getEvent()->getPaymentsCount();$i++)
+            if ($this->isValidPayment())
             {
-                if ($this->isValidPayment($i))
+                // se è ALMENO un pagamento
+                if ($this->isAttempt())
                 {
-                    $iuv            = $this->getEvent()->getIuv($i);
-                    $pa_emittente   = $this->getEvent()->getPaEmittente($i);
-                    if ($this->isAttempt($i))
+                    // se è un tentativo
+                    if ($this->isAttemptInCache())
                     {
-                        $token      = $this->getEvent()->getPaymentToken($i);
-                        if ($this->isAttemptInCache($i))
-                        {
-                            $this->runAttemptAlreadyEvaluated($i);
-                        }
-                        else
-                        {
-                            $this->runCreateAttempt($i);
-                        }
+                        //se il tentativo è in cache, a parità di medesimo evento
+                        $this->runAttemptAlreadyEvaluated();
                     }
                     else
                     {
-                        if ($this->isPaymentInCache($i))
-                        {
-                            $this->runPaymentAlreadyEvaluated($i);
-                        }
-                        else
-                        {
-                            $this->runCreatePayment($i);
-                        }
-                    }
-                    $eventInstance = $this->runCompleteEvent();
-                    DB::statement($eventInstance->getQuery(), $eventInstance->getBindParams());
-                }
-                else
-                {
-                    $eventInstance = $this->runRejectedEvent();
-                    DB::statement($eventInstance->getQuery(), $eventInstance->getBindParams());
-                }
-                /*                else
-            {
-
-                if ($this->isEnableSearch())
-                {
-                    if ($this->isFoundOnDb($i))
-                    {
-                        $this->runCopyPaymentToday($i);
-                        $eventInstance = $this->runCompleteEvent();
-                        DB::statement($eventInstance->getQuery(), $eventInstance->getBindParams());
-                    }
-                    else
-                    {
-                        $eventInstance = $this->runRejectedEvent();
-                        DB::statement($eventInstance->getQuery(), $eventInstance->getBindParams());
+                        // creo il tentativo
+                        $this->runCreateAttempt();
                     }
                 }
                 else
                 {
-                    $eventInstance = $this->runRejectedEvent();
-                    DB::statement($eventInstance->getQuery(), $eventInstance->getBindParams());
+                    if ($this->isPaymentInCache())
+                    {
+                        $this->runPaymentAlreadyEvaluated();
+                    }
+                    else
+                    {
+                        $this->runCreatePayment();
+                    }
                 }
-
-                }
-*/
+                $rowid = $this->getEvent()->getEventRowInstance()->loaded()->update();
+                DB::statement($rowid->getQuery(), $rowid->getBindParams());
+            }
+            else
+            {
+                $rowid = $this->getEvent()->getEventRowInstance()->reject('Evento non valido')->update();
+                DB::statement($rowid->getQuery(), $rowid->getBindParams());
             }
         }
         catch (\Exception $e)

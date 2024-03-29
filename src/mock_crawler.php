@@ -55,13 +55,17 @@ $redis_cache = new \pagopa\crawler\RedisCache($connection);
 $a = new \pagopa\crawler\paymentlist\req\activatePaymentNotice(new \DateTime('2024-03-10'),'activatePaymentNotice', 'REQ', $redis_cache);
 $a->run();
 
+
 $a = new \pagopa\crawler\paymentlist\req\activatePaymentNotice(new \DateTime('2024-03-11'),'activatePaymentNotice', 'REQ', $redis_cache);
 $a->run();
 
+$a = new \pagopa\crawler\paymentlist\req\activatePaymentNotice(new \DateTime('2024-03-12'),'activatePaymentNotice', 'REQ', $redis_cache);
+$a->run();
 
 $a = new \pagopa\crawler\paymentlist\resp\activatePaymentNotice(new \DateTime('2024-03-10'),'activatePaymentNotice', 'RESP', $redis_cache);
 $a->run();
 
+die();
 
 $a = new \pagopa\crawler\paymentlist\req\nodoInviaCarrelloRPT(new \DateTime('2024-03-10'),'nodoInviaCarrelloRPT', 'REQ', $redis_cache);
 $a->run();

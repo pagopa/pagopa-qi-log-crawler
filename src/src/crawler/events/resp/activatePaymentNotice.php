@@ -354,4 +354,29 @@ class activatePaymentNotice extends AbstractEvent implements FaultInterface
     {
         return $this->getMethodInterface()->getTransferCount($index);
     }
+
+    /**
+     * @return string
+     */
+    public function getCacheKeyPayment(): string
+    {
+        $iuv            =   $this->getIuv(0);
+        $pa_emittente   =   $this->getPaEmittente(0);
+
+        $cache_key      =   base64_encode(sprintf('payment_%s_%s', $iuv, $pa_emittente));
+        return $cache_key;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCacheKeyAttempt(): string
+    {
+        $iuv            =   $this->getIuv(0);
+        $pa_emittente   =   $this->getPaEmittente(0);
+        $token          =   $this->getPaymentToken(0);
+
+        $cache_key      =   base64_encode(sprintf('attempt_%s_%s_%s', $iuv, $pa_emittente, $token));
+        return $cache_key;
+    }
 }

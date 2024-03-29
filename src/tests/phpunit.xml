@@ -23,7 +23,20 @@
     </php>
     <testsuites>
         <testsuite name="temp_suite">
-            <file>process/crawler/nodoInviaCarrelloRPT/BothEvents/T00029_CreateAttempOneRPTTwoTransferWithSessionIdOriginalNotFound.php</file>
+            <file>process/crawler/activatePaymentNotice/SingleEvent/T00001_CreateAttemptAllInfoInEvent.php</file>
+            <file>process/crawler/activatePaymentNotice/SingleEvent/T00002_CreateAttemptNotAllInfoInEvent.php</file>
+            <file>process/crawler/activatePaymentNotice/SingleEvent/T00003_CreatePaymentAllInfoInEvent.php</file>
+            <file>process/crawler/activatePaymentNotice/SingleEvent/T00004_CreatePaymentNotAllInfoInEvent.php</file>
+            <file>process/crawler/activatePaymentNotice/SingleEvent/T00005_CreateNoPaymentNoInfo.php</file>
+            <file>process/crawler/activatePaymentNotice/SingleEvent/T00006_CreateAttemptAlreadyPresentInAnotherDayAllInfo.php</file>
+            <file>process/crawler/activatePaymentNotice/SingleEvent/T00007_CreateAttemptAlreadyPresentInAnotherDayNotAllInfo.php</file>
+            <file>process/crawler/activatePaymentNotice/SingleEvent/T00008_CreatePaymentAlreadyPresenteInAnotherDayAllInfoInEvent.php</file>
+            <file>process/crawler/activatePaymentNotice/SingleEvent/T00009_CreatePaymentAlreadyPresenteInAnotherDayNotAllInfoInEvent.php</file>
+            <file>process/crawler/activatePaymentNotice/BothEvents/T00011_CreateAttemptReqRespOneTransferAllInfoEvent.php</file>
+            <file>process/crawler/activatePaymentNotice/BothEvents/T00012_CreateAttemptReqRespTwoTransferAllInfoEvent.php</file>
+            <file>process/crawler/activatePaymentNotice/BothEvents/T00013_CreateAttemptReqRespOneTransferNotAllInfoEvent.php</file>
+            <file>process/crawler/activatePaymentNotice/BothEvents/T00014_CreateAttemptReqRespTwoTransferNotAllInfoEvent.php</file>
+            <file>process/crawler/activatePaymentNotice/BothEvents/T00015_CreatePaymentReqRespWithAllInfoAndFaultCode.php</file>
         </testsuite>
         <testsuite name="crawler">
             <file>process/crawler/activatePaymentNotice/SingleEvent/T00001_CreateAttemptAllInfoInEvent.php</file>

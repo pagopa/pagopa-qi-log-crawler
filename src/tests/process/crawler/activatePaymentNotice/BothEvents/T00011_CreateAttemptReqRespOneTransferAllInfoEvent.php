@@ -151,6 +151,7 @@ class T00011_CreateAttemptReqRespOneTransferAllInfoEvent extends TestCase
 
         $this->assertNull($transaction->getColumnValue('id_carrello'));
         $this->assertNull($transaction->getColumnValue('esito'));
+        $this->assertNull($transaction->getColumnValue('date_wf'));
     }
 
     #[TestDox('[DETAILS] Verifica assenza dettagli')]

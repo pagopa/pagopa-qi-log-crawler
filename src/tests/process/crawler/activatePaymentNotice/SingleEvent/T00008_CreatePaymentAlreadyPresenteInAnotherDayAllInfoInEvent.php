@@ -103,38 +103,23 @@ class T00008_CreatePaymentAlreadyPresenteInAnotherDayAllInfoInEvent extends Test
     #[TestDox('[TRANSACTION] Verifica correttezza dei dati nella tabella transaction')]
     public function testTransaction()
     {
-
-        $transaction = self::$db->getTransaction(new \DateTime('2024-03-11'), '01000000000000003');
-
-        $this->assertEquals('2024-03-11', $transaction->getColumnValue('date_event'));
-        $this->assertEquals('2024-03-11 09:41:25.232', $transaction->getColumnValue('inserted_timestamp'));
-        $this->assertEquals('01000000000000003', $transaction->getColumnValue('iuv'));
-        $this->assertEquals('77777777777', $transaction->getColumnValue('pa_emittente'));
-        $this->assertEquals('301000000000000003', $transaction->getColumnValue('notice_id'));
-
-        $this->assertEquals('0.00', $transaction->getColumnValue('importo'));
-        $this->assertNull($transaction->getColumnValue('id_carrello'));
-        $this->assertNull($transaction->getColumnValue('token_ccp'));
-        $this->assertNull($transaction->getColumnValue('id_psp'));
-        $this->assertNull($transaction->getColumnValue('stazione'));
-        $this->assertNull($transaction->getColumnValue('canale'));
+        $transaction = self::$db->getTransaction(new \DateTime('2024-03-11'), '01000000000000001', 't0000000000000000000000000000001');
+        $this->assertNull($transaction);
     }
 
     #[TestDox('[DETAILS] Verifica assenza dettagli')]
     public function testTransactionDetails()
     {
-        $transaction = self::$db->getTransaction(new \DateTime('2024-03-11'), '01000000000000003' );
-        $details = self::$db->getTransactionDetails($transaction, 0);
-
-        $this->assertNull($details);
+        $transaction = self::$db->getTransaction(new \DateTime('2024-03-11'), '01000000000000001', 't0000000000000000000000000000001');
+        $this->assertNull($transaction);
 
     }
 
     #[TestDox('[WORKFLOW] Verifica presenza eventi Workflow')]
     public function testWorkFlow()
     {
-        $transaction = self::$db->getTransaction(new \DateTime('2024-03-11'), '01000000000000003' );
-        $event = self::$db->getWorkFlow($transaction, 0);
+        $transaction = self::$db->getTransaction(new \DateTime('2024-03-10'), '01000000000000003' );
+        $event = self::$db->getWorkFlow($transaction, 1);
 
         $this->assertEquals('1', $event->getColumnValue('fk_tipoevento'));
         $this->assertEquals('2024-03-11 09:41:25.232', $event->getColumnValue('event_timestamp'));

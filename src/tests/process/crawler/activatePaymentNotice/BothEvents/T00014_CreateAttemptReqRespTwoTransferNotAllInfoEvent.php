@@ -154,6 +154,7 @@ class T00014_CreateAttemptReqRespTwoTransferNotAllInfoEvent extends TestCase
         $this->assertEquals('88888888888_01', $transaction->getColumnValue('canale'));
         $this->assertEquals('150.00', $transaction->getColumnValue('importo'));
 
+        $this->assertNull($transaction->getColumnValue('date_wf'));
         $this->assertNull($transaction->getColumnValue('id_carrello'));
         $this->assertNull($transaction->getColumnValue('esito'));
     }

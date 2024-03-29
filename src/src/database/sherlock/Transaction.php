@@ -188,6 +188,36 @@ class Transaction extends SingleRow
         return $this;
     }
 
+    public function addNewDate($date) : self
+    {
+        $encode = json_encode($date);
+        $this->setNewColumnValue('date_wf', $encode);
+        return $this;
+
+
+        $column = $this->getColumnValue('date_wf');
+        $date_wf = [];
+        if (is_null($column))
+        {
+            // è vuoto, la aggiungo
+            $date_wf[] = $date;
+        }
+        else
+        {
+            $result_date_wf = json_decode($column, JSON_OBJECT_AS_ARRAY);
+            if (!in_array($date, $result_date_wf))
+            {
+                $date_wf = $result_date_wf;
+                $date_wf[] = $date;
+            }
+        }
+        if (count($date_wf) > 0)
+        {
+            $this->setNewColumnValue('date_wf', json_encode($date_wf));
+        }
+        return $this;
+    }
+
 
     /**
      * Cerca un tentativo
@@ -275,5 +305,25 @@ class Transaction extends SingleRow
             }
         }
         return (count($results) == 0) ? null : $results;
+    }
+
+
+    public static function searchByPrimaryKey(string $id, string $date_event) : Transaction|null
+    {
+        $datetime = new \DateTime($date_event);
+        $years = $datetime->format('Y');
+        $results = [];
+        $table = sprintf(TRANSACTION_TABLE, $years);
+        $events = Capsule::table($table)
+            ->where('id', '=', $id)
+            ->where('date_event', '=', $date_event)
+            ->get();
+
+        foreach($events as $payment)
+        {
+            $date = new \DateTime($payment->date_event);
+            $results[] = new Transaction($date, (array) $payment);
+        }
+        return (count($results) == 0) ? null : $results[0];
     }
 }

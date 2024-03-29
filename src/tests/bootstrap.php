@@ -81,6 +81,7 @@ class GetInfoFromDb
         $date = new DateTime($transaction->getColumnValue('inserted_timestamp'));
         $ymd = $date->format('Y_m_d');
         $table = sprintf(TRANSACTION_EVENTS_TABLE, $ymd);
+        $table = 'transaction_events_2024';
 
         $result = Capsule::table($table)
             ->where('fk_payment', '=', $transaction->getColumnValue('id'))

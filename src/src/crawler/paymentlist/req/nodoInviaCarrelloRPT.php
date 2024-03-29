@@ -25,7 +25,8 @@ class nodoInviaCarrelloRPT extends AbstractPaymentList
      */
     public function isValidPayment(int $index = 0): bool
     {
-        return ($this->getEvent()->getIuv($index) && $this->getEvent()->getPaEmittente($index));
+        return !is_null($this->getEvent()->getSessionIdOriginal());
+        //return ($this->getEvent()->getIuv($index) && $this->getEvent()->getPaEmittente($index));
     }
 
     /**
@@ -33,7 +34,8 @@ class nodoInviaCarrelloRPT extends AbstractPaymentList
      */
     public function isAttempt(int $index = 0): bool
     {
-        return ($this->getEvent()->getIuv($index) && $this->getEvent()->getPaEmittente($index) && $this->getEvent()->getCcp($index));
+        return !is_null($this->getEvent()->getSessionIdOriginal());
+        //return ($this->getEvent()->getIuv($index) && $this->getEvent()->getPaEmittente($index) && $this->getEvent()->getCcp($index));
     }
 
     /**
@@ -46,7 +48,8 @@ class nodoInviaCarrelloRPT extends AbstractPaymentList
         $pa             = $this->getEvent()->getPaEmittente($index);
         $ccp            = $this->getEvent()->getCcp($index);
         $id_carrello    = $this->getEvent()->getIdCarrello();
-        $key            = base64_encode(sprintf('attempt_%s_%s_%s_%s_%s', $date, $id_carrello, $iuv, $pa, $ccp));
+        $session        = $this->getEvent()->getSessionIdOriginal();
+        $key            = base64_encode(sprintf('sessionOriginal_%s', $session));
         return $this->hasInCache($key);
     }
 
@@ -58,7 +61,8 @@ class nodoInviaCarrelloRPT extends AbstractPaymentList
         $date           = $this->getEvent()->getInsertedTimestamp()->format('Ymd');
         $iuv            = $this->getEvent()->getIuv($index);
         $pa             = $this->getEvent()->getPaEmittente($index);
-        $key            = base64_encode(sprintf('payment_%s_%s_%s', $date, $iuv, $pa));
+        $session        = $this->getEvent()->getSessionIdOriginal();
+        $key            = base64_encode(sprintf('sessionOriginal_%s', $session));
         return $this->hasInCache($key);
     }
 

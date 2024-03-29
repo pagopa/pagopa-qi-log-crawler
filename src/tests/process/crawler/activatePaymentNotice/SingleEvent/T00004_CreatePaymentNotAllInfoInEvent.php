@@ -113,6 +113,7 @@ class T00004_CreatePaymentNotAllInfoInEvent extends TestCase
         $this->assertEquals('01000000000000004', $transaction->getColumnValue('iuv'));
         $this->assertEquals('77777777777', $transaction->getColumnValue('pa_emittente'));
         $this->assertEquals('301000000000000004', $transaction->getColumnValue('notice_id'));
+        $this->assertContains('2024-03-11', json_decode($transaction->getColumnValue('date_wf'),JSON_OBJECT_AS_ARRAY));
 
         $this->assertEquals('0.00', $transaction->getColumnValue('importo'));
         $this->assertNull($transaction->getColumnValue('id_carrello'));
@@ -142,6 +143,16 @@ class T00004_CreatePaymentNotAllInfoInEvent extends TestCase
         $this->assertEquals('1', $event->getColumnValue('fk_tipoevento'));
         $this->assertEquals('2024-03-10 09:41:00.232', $event->getColumnValue('event_timestamp'));
         $this->assertEquals('T000004', $event->getColumnValue('event_id'));
+        $this->assertEquals('77777777777_01', $event->getColumnValue('stazione'));
+        $this->assertEquals('88888888888_01', $event->getColumnValue('canale'));
+        $this->assertEquals('PSP_01', $event->getColumnValue('id_psp'));
+
+        $event = self::$db->getWorkFlow($transaction, 1);
+
+        $this->assertEquals('T000009', $event->getColumnValue('event_id'));
+        $this->assertEquals('1', $event->getColumnValue('fk_tipoevento'));
+        $this->assertEquals('2024-03-11 09:42:25.232', $event->getColumnValue('event_timestamp'));
+        $this->assertEquals('T000009', $event->getColumnValue('event_id'));
         $this->assertEquals('77777777777_01', $event->getColumnValue('stazione'));
         $this->assertEquals('88888888888_01', $event->getColumnValue('canale'));
         $this->assertEquals('PSP_01', $event->getColumnValue('id_psp'));

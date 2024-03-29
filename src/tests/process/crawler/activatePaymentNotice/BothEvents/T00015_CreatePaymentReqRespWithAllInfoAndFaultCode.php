@@ -130,6 +130,7 @@ class T00015_CreatePaymentReqRespWithAllInfoAndFaultCode extends TestCase
         $this->assertNull($transaction->getColumnValue('canale'));
         $this->assertEquals('0.00', $transaction->getColumnValue('importo'));
 
+        $this->assertNull($transaction->getColumnValue('date_wf'));
         $this->assertNull($transaction->getColumnValue('id_carrello'));
         $this->assertNull($transaction->getColumnValue('esito'));
     }
@@ -157,6 +158,7 @@ class T00015_CreatePaymentReqRespWithAllInfoAndFaultCode extends TestCase
         $this->assertEquals('AGID_01', $event->getColumnValue('id_psp'));
 
 
+        $transaction = self::$db->getTransaction(new \DateTime('2024-03-10'), '01000000000000010' );
         $event = self::$db->getWorkFlow($transaction, 1);
 
         $this->assertEquals('2', $event->getColumnValue('fk_tipoevento'));
