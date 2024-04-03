@@ -23,20 +23,16 @@
     </php>
     <testsuites>
         <testsuite name="temp_suite">
-            <file>process/crawler/activatePaymentNotice/SingleEvent/T00001_CreateAttemptAllInfoInEvent.php</file>
-            <file>process/crawler/activatePaymentNotice/SingleEvent/T00002_CreateAttemptNotAllInfoInEvent.php</file>
-            <file>process/crawler/activatePaymentNotice/SingleEvent/T00003_CreatePaymentAllInfoInEvent.php</file>
-            <file>process/crawler/activatePaymentNotice/SingleEvent/T00004_CreatePaymentNotAllInfoInEvent.php</file>
-            <file>process/crawler/activatePaymentNotice/SingleEvent/T00005_CreateNoPaymentNoInfo.php</file>
-            <file>process/crawler/activatePaymentNotice/SingleEvent/T00006_CreateAttemptAlreadyPresentInAnotherDayAllInfo.php</file>
-            <file>process/crawler/activatePaymentNotice/SingleEvent/T00007_CreateAttemptAlreadyPresentInAnotherDayNotAllInfo.php</file>
-            <file>process/crawler/activatePaymentNotice/SingleEvent/T00008_CreatePaymentAlreadyPresenteInAnotherDayAllInfoInEvent.php</file>
-            <file>process/crawler/activatePaymentNotice/SingleEvent/T00009_CreatePaymentAlreadyPresenteInAnotherDayNotAllInfoInEvent.php</file>
-            <file>process/crawler/activatePaymentNotice/BothEvents/T00011_CreateAttemptReqRespOneTransferAllInfoEvent.php</file>
-            <file>process/crawler/activatePaymentNotice/BothEvents/T00012_CreateAttemptReqRespTwoTransferAllInfoEvent.php</file>
-            <file>process/crawler/activatePaymentNotice/BothEvents/T00013_CreateAttemptReqRespOneTransferNotAllInfoEvent.php</file>
-            <file>process/crawler/activatePaymentNotice/BothEvents/T00014_CreateAttemptReqRespTwoTransferNotAllInfoEvent.php</file>
-            <file>process/crawler/activatePaymentNotice/BothEvents/T00015_CreatePaymentReqRespWithAllInfoAndFaultCode.php</file>
+            <file>process/crawler/nodoInviaCarrelloRPT/SingleEvent/T00020_CreateAttemptOneRPTOneTransfer.php</file>
+            <file>process/crawler/nodoInviaCarrelloRPT/SingleEvent/T00021_CreateAttemptOneRPTTwoTransfer.php</file>
+            <file>process/crawler/nodoInviaCarrelloRPT/SingleEvent/T00022_CreateAttemptTwoRPTTwoTransfer.php</file>
+            <file>process/crawler/nodoInviaCarrelloRPT/SingleEvent/T00023_CreateAttemptTwoRPTFirstRpt2TransferSecondRpt2Transfer1Bollo.php</file>
+            <file>process/crawler/nodoInviaCarrelloRPT/BothEvents/T00024_CreateAttemptOneRPT1TransferSameData.php</file>
+            <file>process/crawler/nodoInviaCarrelloRPT/BothEvents/T00025_CreateAttemptOneRPT2TransferSameData.php</file>
+            <file>process/crawler/nodoInviaCarrelloRPT/BothEvents/T00026_CreateAttemptTwoRPTTwoTransferForRPTSameData.php</file>
+            <file>process/crawler/nodoInviaCarrelloRPT/BothEvents/T00027_CreateAttemptTwoRPTTwoTransferForRPTWithResponseDifferentData.php</file>
+            <file>process/crawler/nodoInviaCarrelloRPT/BothEvents/T00028_CreateAttemptOneRPTTwoTransferWithFaultCodeInResponse.php</file>
+            <file>process/crawler/nodoInviaCarrelloRPT/BothEvents/T00029_CreateAttemptOneRPTTwoTransferWithSessionIdOriginalNotFound.php</file>
         </testsuite>
         <testsuite name="crawler">
             <file>process/crawler/activatePaymentNotice/SingleEvent/T00001_CreateAttemptAllInfoInEvent.php</file>

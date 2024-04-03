@@ -43,13 +43,13 @@ class nodoInviaCarrelloRPT extends AbstractPaymentList
      */
     public function isAttemptInCache(int $index = 0): bool
     {
-        $date           = $this->getEvent()->getInsertedTimestamp()->format('Ymd');
-        $iuv            = $this->getEvent()->getIuv($index);
-        $pa             = $this->getEvent()->getPaEmittente($index);
-        $ccp            = $this->getEvent()->getCcp($index);
-        $id_carrello    = $this->getEvent()->getIdCarrello();
-        $session        = $this->getEvent()->getSessionIdOriginal();
-        $key            = base64_encode(sprintf('sessionOriginal_%s', $session));
+        $date = $this->getEvent()->getInsertedTimestamp()->format('Ymd');
+        $iuv = $this->getEvent()->getIuv($index);
+        $pa = $this->getEvent()->getPaEmittente($index);
+        $ccp = $this->getEvent()->getCcp($index);
+        $id_carrello = $this->getEvent()->getIdCarrello();
+        $session = $this->getEvent()->getSessionIdOriginal();
+        $key = base64_encode(sprintf('sessionOriginal_%s', $session));
         return $this->hasInCache($key);
     }
 
@@ -58,11 +58,11 @@ class nodoInviaCarrelloRPT extends AbstractPaymentList
      */
     public function isPaymentInCache(int $index = 0): bool
     {
-        $date           = $this->getEvent()->getInsertedTimestamp()->format('Ymd');
-        $iuv            = $this->getEvent()->getIuv($index);
-        $pa             = $this->getEvent()->getPaEmittente($index);
-        $session        = $this->getEvent()->getSessionIdOriginal();
-        $key            = base64_encode(sprintf('sessionOriginal_%s', $session));
+        $date = $this->getEvent()->getInsertedTimestamp()->format('Ymd');
+        $iuv = $this->getEvent()->getIuv($index);
+        $pa = $this->getEvent()->getPaEmittente($index);
+        $session = $this->getEvent()->getSessionIdOriginal();
+        $key = base64_encode(sprintf('sessionOriginal_%s', $session));
         return $this->hasInCache($key);
     }
 
@@ -71,12 +71,11 @@ class nodoInviaCarrelloRPT extends AbstractPaymentList
      */
     public function isFoundOnDb(int $index = 0): bool
     {
-        if ($this->search_on_db === false)
-        {
+        if ($this->search_on_db === false) {
             return false;
         }
-        $iuv        = $this->getEvent()->getIuv($index);
-        $pa         = $this->getEvent()->getPaEmittente($index);
+        $iuv = $this->getEvent()->getIuv($index);
+        $pa = $this->getEvent()->getPaEmittente($index);
         return !is_null(Transaction::searchByPayment($iuv, $pa));
     }
 
@@ -85,33 +84,23 @@ class nodoInviaCarrelloRPT extends AbstractPaymentList
      */
     public function runAttemptAlreadyEvaluated(int $index = 0): void
     {
-        $iuv            =   $this->getEvent()->getIuv($index);
-        $pa_emittente   =   $this->getEvent()->getPaEmittente($index);
-        $ccp            =   $this->getEvent()->getPaymentToken($index);
-        $date_event     =   $this->getEvent()->getInsertedTimestamp()->format('Ymd');
-        $date_x_cache   =   $this->getEvent()->getInsertedTimestamp()->format('Ymd');
-        $id_carrello    =   $this->getEvent()->getIdCarrello();
 
-        $cache_key      =   base64_encode(sprintf('attempt_%s_%s_%s_%s_%s', $date_x_cache, $id_carrello, $iuv, $pa_emittente, $ccp));
+        $cache_key = $this->getEvent()->getCacheKeyAttempt();
+        $cached_data = $this->getFromCache($cache_key);
 
-        $cached_attempts = $this->getFromCache($cache_key);
-
-        if (!is_array($cached_attempts))
+        if (is_array($cached_data))
         {
-            $cached_attempts = [];
+            foreach($cached_data as $ck => $cached_attempt)
+            {
+                $id = $cached_attempt['id'];
+                $date = $cached_attempt['date_event'];
+
+                $workflow = $this->getEvent()->workflowEvent();
+                $workflow->setFkPayment($id);
+                $workflow->insert();
+                DB::statement($workflow->getQuery(), $workflow->getBindParams());
+            }
         }
-
-        foreach($cached_attempts as $attempt)
-        {
-            $id     = $attempt['id'];
-            $date   = $attempt['date_event'];
-
-            $workflow = $this->getEvent()->workflowEvent($index);
-            $workflow->setFkPayment($id);
-            $workflow->insert();
-            DB::statement($workflow->getQuery(), $workflow->getBindParams());
-        }
-
     }
 
     /**
@@ -119,76 +108,71 @@ class nodoInviaCarrelloRPT extends AbstractPaymentList
      */
     public function runCreateAttempt(int $index = 0): array
     {
-        $ccp      = $this->getEvent()->getCcp($index);
+        $date_event = $this->getEvent()->getInsertedTimestamp()->format('Y-m-d');
+        $date_x_cache = $this->getEvent()->getInsertedTimestamp()->format('Ymd');
+        $id_carrello = $this->getEvent()->getIdCarrello();
 
-        $transaction = $this->getEvent()->transaction($index);
-        $transaction->setTokenCcp($ccp);
-        $transaction->insert();
-        DB::statement($transaction->getQuery(), $transaction->getBindParams());
-        $last_inserted_id = DB::connection()->getPdo()->lastInsertId();
+        $session_key = $this->getEvent()->getCacheKeyAttempt();
 
-        $iuv            =   $this->getEvent()->getIuv($index);
-        $pa_emittente   =   $this->getEvent()->getPaEmittente($index);
-        $ccp            =   $this->getEvent()->getCcp($index);
-        $date_event     =   $this->getEvent()->getInsertedTimestamp()->format('Y-m-d');
-        $date_x_cache   =   $this->getEvent()->getInsertedTimestamp()->format('Ymd');
-        $id_carrello    =   $this->getEvent()->getIdCarrello();
-
-        $session_key    =   base64_encode(sprintf('session_original_%s', $this->getEvent()->getSessionIdOriginal()));
-        $cache_key      =   base64_encode(sprintf('attempt_%s_%s_%s_%s_%s', $date_x_cache, $id_carrello, $iuv, $pa_emittente, $ccp));
-        $transfer_add = array();
-        $cache_value    =   [
-            'date_event'    => $date_event,
-            'id'            => $last_inserted_id,
-            'iuv'           => $iuv,
-            'pa_emittente'  => $pa_emittente,
-            'token_ccp'     => $ccp,
-            'id_carrello'   => $id_carrello,
-            'transfer_add'  => true,
-            'esito'         => false,
-            'amount_update' => true
-        ];
-
-        for($i=0;$i<$this->getEvent()->getTransferCount($index);$i++)
+        for($x=0;$x<$this->getEvent()->getPaymentsCount();$x++)
         {
-            $details = $this->getEvent()->transactionDetails($i, $index);
-            $details->setFkPayment($last_inserted_id);
-            $details->insert();
-            DB::statement($details->getQuery(), $details->getBindParams());
-            $last_inserted_id_transfer = DB::connection()->getPdo()->lastInsertId();
+            $ccp = $this->getEvent()->getCcp($x);
+            $transaction = $this->getEvent()->transaction($x);
+            $transaction->setTokenCcp($ccp);
+            $transaction->insert();
+            DB::statement($transaction->getQuery(), $transaction->getBindParams());
+            $last_inserted_id = DB::connection()->getPdo()->lastInsertId();
 
-            if ($this->getEvent()->getMethodInterface()->isBollo($i, $index))
-            {
-                $transfer_add = [
-                    'pa_transfer'       => $this->getEvent()->getMethodInterface()->getTransferPa($i, $index),
-                    'bollo'             => true,
-                    'amount_transfer'   => $this->getEvent()->getMethodInterface()->getTransferAmount($i, $index),
-                    'iban_transfer'     => ''
-                ];
+            $iuv = $this->getEvent()->getIuv($x);
+            $pa_emittente = $this->getEvent()->getPaEmittente($x);
+            $ccp = $this->getEvent()->getCcp($x);
+            $cache_key = base64_encode(sprintf('attempt_%s_%s_%s_%s_%s', $date_x_cache, $id_carrello, $iuv, $pa_emittente, $ccp));
+            $transfer_add = array();
+            $cache_value = [
+                'date_event' => $date_event,
+                'id' => $last_inserted_id,
+                'iuv' => $iuv,
+                'pa_emittente' => $pa_emittente,
+                'token_ccp' => $ccp,
+                'id_carrello' => $id_carrello,
+                'transfer_add' => true,
+                'esito' => false,
+                'amount_update' => true
+            ];
+            for ($i = 0; $i < $this->getEvent()->getTransferCount($x); $i++) {
+                $details = $this->getEvent()->transactionDetails($i, $x);
+                $details->setFkPayment($last_inserted_id);
+                $details->insert();
+                DB::statement($details->getQuery(), $details->getBindParams());
+                $last_inserted_id_transfer = DB::connection()->getPdo()->lastInsertId();
+
+                if ($this->getEvent()->getMethodInterface()->isBollo($i, $x)) {
+                    $transfer_add = [
+                        'pa_transfer' => $this->getEvent()->getMethodInterface()->getTransferPa($i, $x),
+                        'bollo' => true,
+                        'amount_transfer' => $this->getEvent()->getMethodInterface()->getTransferAmount($i, $x),
+                        'iban_transfer' => ''
+                    ];
+                } else {
+                    $transfer_add = [
+                        'pa_transfer' => $this->getEvent()->getMethodInterface()->getTransferPa($i, $x),
+                        'bollo' => false,
+                        'amount_transfer' => $this->getEvent()->getMethodInterface()->getTransferAmount($i, $x),
+                        'iban_transfer' => $this->getEvent()->getMethodInterface()->getTransferIban($i, $x)
+                    ];
+                }
+                $transfer_add['id'] = $last_inserted_id_transfer;
+                $transfer_add['date_event'] = $this->getEvent()->getInsertedTimestamp()->format('Y-m-d');
+                $cache_value['transfer_list'][] = $transfer_add;
             }
-            else
-            {
-                $transfer_add = [
-                    'pa_transfer'       => $this->getEvent()->getMethodInterface()->getTransferPa($i, $index),
-                    'bollo'             => false,
-                    'amount_transfer'   => $this->getEvent()->getMethodInterface()->getTransferAmount($i, $index),
-                    'iban_transfer'     => $this->getEvent()->getMethodInterface()->getTransferIban($i, $index)
-                ];
-            }
-            $transfer_add['id'] = $last_inserted_id_transfer;
-            $transfer_add['date_event'] = $this->getEvent()->getInsertedTimestamp()->format('Y-m-d');
-            $cache_value['transfer_list'][] = $transfer_add;
+            $this->addValueCache($cache_key, $cache_value);
+            $this->addValueCache($session_key, $cache_value);
+
+            $workflow = $this->getEvent()->workflowEvent($x);
+            $workflow->setFkPayment($last_inserted_id);
+            $workflow->insert();
+            DB::statement($workflow->getQuery(), $workflow->getBindParams());
         }
-
-
-        $this->addValueCache($cache_key, $cache_value);
-        $this->addValueCache($session_key, $cache_value);
-
-
-        $workflow = $this->getEvent()->workflowEvent($index);
-        $workflow->setFkPayment($last_inserted_id);
-        $workflow->insert();
-        DB::statement($workflow->getQuery(), $workflow->getBindParams());
 
         return $cache_value;
 
@@ -199,30 +183,7 @@ class nodoInviaCarrelloRPT extends AbstractPaymentList
      */
     public function runPaymentAlreadyEvaluated(int $index = 0): void
     {
-        $iuv            = $this->getEvent()->getIuv($index);
-        $pa_emittente   = $this->getEvent()->getPaEmittente($index);
-        $date_event     = $this->getEvent()->getInsertedTimestamp()->format('Y-m-d');
-        $date_x_cache   = $this->getEvent()->getInsertedTimestamp()->format('Ymd');
-
-        $cache_key      =   base64_encode(sprintf('payment_%s_%s_%s', $date_x_cache, $iuv, $pa_emittente));
-
-        $cached_attempts = $this->getFromCache($cache_key);
-
-        if (!is_array($cached_attempts))
-        {
-            $cached_attempts = [];
-        }
-
-        foreach($cached_attempts as $attempt)
-        {
-            $id = $attempt['id'];
-
-            $workflow = $this->getEvent()->workflowEvent($index);
-            $workflow->setFkPayment($id);
-            $workflow->insert();
-            DB::statement($workflow->getQuery(), $workflow->getBindParams());
-        }
-
+        $this->runAttemptAlreadyEvaluated();
     }
 
     /**
@@ -230,38 +191,7 @@ class nodoInviaCarrelloRPT extends AbstractPaymentList
      */
     public function runCreatePayment(int $index = 0): array
     {
-        $iuv            = $this->getEvent()->getIuv($index);
-        $pa_emittente   = $this->getEvent()->getPaEmittente($index);
-        $date_event     = $this->getEvent()->getInsertedTimestamp()->format('Y-m-d');
-        $date_x_cache   = $this->getEvent()->getInsertedTimestamp()->format('Ymd');
-
-
-        $transaction = $this->getEvent()->transaction($index);
-        $transaction->removeReadyColumn('id_psp');
-        $transaction->removeReadyColumn('stazione');
-        $transaction->removeReadyColumn('canale');
-
-        $transaction->insert();
-        DB::statement($transaction->getQuery(), $transaction->getBindParams());
-        $last_inserted_id = DB::connection()->getPdo()->lastInsertId();
-
-        $cache_key      =   base64_encode(sprintf('payment_%s_%s_%s', $date_x_cache, $iuv, $pa_emittente));
-        $cache_value    =   [
-            'date_event'        => $date_event,
-            'id'                => $last_inserted_id,
-            'iuv'               => $iuv,
-            'pa_emittente'      => $pa_emittente,
-            'transfer_added'    => false,
-            'amount_update'     => true
-        ];
-        $this->addValueCache($cache_key, $cache_value);
-
-        $workflow = $this->getEvent()->workflowEvent($index);
-        $workflow->setFkPayment($last_inserted_id);
-        $workflow->insert();
-        DB::statement($workflow->getQuery(), $workflow->getBindParams());
-
-        return $cache_value;
+        return $this->runCreateAttempt();
     }
 
     /**

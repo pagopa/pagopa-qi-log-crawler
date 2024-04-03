@@ -341,8 +341,7 @@ class activatePaymentNotice extends AbstractEvent
         $iuv            =   $this->getIuv(0);
         $pa_emittente   =   $this->getPaEmittente(0);
 
-        $cache_key      =   base64_encode(sprintf('payment_%s_%s', $iuv, $pa_emittente));
-        return $cache_key;
+        return base64_encode(sprintf('payment_%s_%s', $iuv, $pa_emittente));
 
     }
 
@@ -355,7 +354,6 @@ class activatePaymentNotice extends AbstractEvent
         $pa_emittente   =   $this->getPaEmittente(0);
         $token          =   $this->getPaymentToken(0);
 
-        $cache_key      =   base64_encode(sprintf('attempt_%s_%s_%s', $iuv, $pa_emittente, $token));
-        return $cache_key;
+        return base64_encode(sprintf('attempt_%s_%s_%s', $iuv, $pa_emittente, $token));
     }
 }

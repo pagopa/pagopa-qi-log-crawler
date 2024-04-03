@@ -86,72 +86,6 @@ class activatePaymentNotice extends AbstractPaymentList
     {
         // è difficile che la response di una activate non abbia già in cache la sua req
         return [];
-
-        $iuv            =   $this->getEvent()->getIuv($index);
-        $pa_emittente   =   $this->getEvent()->getPaEmittente($index);
-        $date_event     =   $this->getEvent()->getInsertedTimestamp()->format('Y-m-d');
-
-        $transaction    = $this->getEvent()->transaction($index);
-        $transaction->removeReadyColumn('id_psp');
-        $transaction->removeReadyColumn('stazione');
-        $transaction->removeReadyColumn('canale');
-        $transaction->insert();
-        DB::statement($transaction->getQuery(), $transaction->getBindParams());
-        $last_inserted_id = DB::connection()->getPdo()->lastInsertId();
-
-        $cache_key      =   $this->getEvent()->getCacheKeyPayment();
-        $cache_value    =   [
-            'date_event'    =>  $date_event,
-            'id'            =>  $last_inserted_id,
-            'iuv'           =>  $iuv,
-            'pa_emittente'  =>  $pa_emittente,
-            'transfer_added'    =>  false,
-            'amount_update'     =>  false
-        ];
-        $this->addValueCache($cache_key, $cache_value);
-        $workflow = $this->getEvent()->workflowEvent($index);
-        $workflow->setFkTipoEvento(2);
-        $workflow->insert();
-        DB::statement($workflow->getQuery(), $workflow->getBindParams());
-
-        return $cache_value;
-
-
-
-        return [];
-        $iuv            =   $this->getEvent()->getIuv($index);
-        $pa_emittente   =   $this->getEvent()->getPaEmittente($index);
-        $date_event     =   $this->getEvent()->getInsertedTimestamp()->format('Y-m-d');
-        $date_x_cache   =   $this->getEvent()->getInsertedTimestamp()->format('Ymd');
-
-        $transaction    = $this->getEvent()->transaction($index);
-        $transaction->removeReadyColumn('id_psp');
-        $transaction->removeReadyColumn('stazione');
-        $transaction->removeReadyColumn('canale');
-
-        $transaction->insert();
-        DB::statement($transaction->getQuery(), $transaction->getBindParams());
-        $last_inserted_id = DB::connection()->getPdo()->lastInsertId();
-
-
-        $cache_key      =   base64_encode(sprintf('payment_%s_%s_%s', $date_x_cache, $iuv, $pa_emittente));
-        $cache_value    =   [
-            'date_event'    =>  $date_event,
-            'id'            =>  $last_inserted_id,
-            'iuv'           =>  $iuv,
-            'pa_emittente'  =>  $pa_emittente,
-            'transfer_added'    =>  false,
-            'amount_update'     =>  false
-        ];
-        $this->addValueCache($cache_key, $cache_value);
-
-        $workflow = $this->getEvent()->workflowEvent($index);
-        $workflow->setFkTipoEvento(2);
-        $workflow->insert();
-        DB::statement($workflow->getQuery(), $workflow->getBindParams());
-
-        return $cache_value;
-
     }
 
     /**
@@ -161,114 +95,7 @@ class activatePaymentNotice extends AbstractPaymentList
     {
         // è difficile che una response di una activate vada a creare un pagamento nuovo. Che ci fa una response se
         // non ho in cache la activate?
-
         return [];
-
-        $iuv            =   $this->getEvent()->getIuv(0);
-        $pa_emittente   =   $this->getEvent()->getPaEmittente(0);
-        $token          =   $this->getEvent()->getPaymentToken(0);
-        $date_event     =   $this->getEvent()->getInsertedTimestamp()->format('Y-m-d');
-
-        $transaction = $this->getEvent()->transaction($index);
-        $transaction->setTokenCcp($token);
-        $transaction->insert();
-        DB::statement($transaction->getQuery(), $transaction->getBindParams());
-        $last_inserted_id = DB::connection()->getPdo()->lastInsertId();
-
-        $transfer_add = [];
-        for($i=0;$i<$this->getEvent()->getTransferCount($index);$i++)
-        {
-            $transaction_details = $this->getEvent()->transactionDetails($i, 0);
-            $transaction_details->setFkPayment($last_inserted_id);
-            $transaction_details->insert();
-            DB::statement($transaction_details->getQuery(), $transaction_details->getBindParams());
-            $last_inserted_id_transfer = DB::connection()->getPdo()->lastInsertId();
-            $transfer_add[] = [
-                'pa_transfer'       => $this->getEvent()->getMethodInterface()->getTransferPa($i, 0),
-                'bollo'             => false,
-                'amount_transfer'   => $this->getEvent()->getMethodInterface()->getTransferAmount($i, 0),
-                'iban_transfer'     => $this->getEvent()->getMethodInterface()->getTransferIban($i, 0),
-                'id'                => $last_inserted_id_transfer,
-                'date_event'        => $this->getEvent()->getInsertedTimestamp()->format('Y-m-d')
-            ];
-        }
-
-        $cache_key      =   $this->getEvent()->getCacheKeyAttempt();
-        $cache_value    =   [
-            'date_event'    =>  $date_event,
-            'id'            =>  $last_inserted_id,
-            'iuv'           =>  $iuv,
-            'pa_emittente'  =>  $pa_emittente,
-            'token_ccp'     =>  $token,
-            'transfer_add'  =>  true,
-            'esito'         =>  false,
-            'amount_update' =>  true
-        ];
-        $this->addValueCache($cache_key, $cache_value);
-
-        $workflow = $this->getEvent()->workflowEvent($index);
-        $workflow->setFkPayment($last_inserted_id);
-        $workflow->insert();
-        DB::statement($workflow->getQuery(), $workflow->getBindParams());
-
-        return $cache_value;
-
-
-
-        return [];
-        $iuv            =   $this->getEvent()->getIuv($index);
-        $pa_emittente   =   $this->getEvent()->getPaEmittente($index);
-        $token          =   $this->getEvent()->getPaymentToken($index);
-        $date_event     =   $this->getEvent()->getInsertedTimestamp()->format('Y-m-d');
-        $date_x_cache   =   $this->getEvent()->getInsertedTimestamp()->format('Ymd');
-
-        $transaction = $this->getEvent()->transaction($index);
-        $transaction->setTokenCcp($token);
-        $transaction->insert();
-        DB::statement($transaction->getQuery(), $transaction->getBindParams());
-        $last_inserted_id = DB::connection()->getPdo()->lastInsertId();
-
-        $transfer_add = [];
-        for($i=0;$i<$this->getEvent()->getTransferCount($index);$i++)
-        {
-            $transaction_details = $this->getEvent()->transactionDetails($i, 0);
-            $transaction_details->setFkPayment($last_inserted_id);
-            $transaction_details->insert();
-            DB::statement($transaction_details->getQuery(), $transaction_details->getBindParams());
-            $last_inserted_id_transfer = DB::connection()->getPdo()->lastInsertId();
-            $transfer_add[] = [
-                'pa_transfer'       => $this->getEvent()->getMethodInterface()->getTransferPa($i, 0),
-                'bollo'             => false,
-                'amount_transfer'   => $this->getEvent()->getMethodInterface()->getTransferAmount($i, 0),
-                'iban_transfer'     => $this->getEvent()->getMethodInterface()->getTransferIban($i, 0),
-                'id'                => $last_inserted_id_transfer,
-                'date_event'        => $this->getEvent()->getInsertedTimestamp()->format('Y-m-d')
-            ];
-        }
-
-
-
-
-        $cache_key      =   base64_encode(sprintf('attempt_%s_%s_%s_%s', $date_x_cache, $iuv, $pa_emittente, $token));
-        $cache_value    =   [
-            'date_event'    =>  $date_event,
-            'id'            =>  $last_inserted_id,
-            'iuv'           =>  $iuv,
-            'pa_emittente'  =>  $pa_emittente,
-            'token_ccp'     =>  $token,
-            'transfer_add'  =>  true,
-            'transfer_list' =>  $transfer_add,
-            'esito'         =>  false,
-            'amount_update' =>  true
-        ];
-        $this->addValueCache($cache_key, $cache_value);
-
-        $workflow = $this->getEvent()->workflowEvent($index);
-        $workflow->setFkPayment($last_inserted_id);
-        $workflow->insert();
-        DB::statement($workflow->getQuery(), $workflow->getBindParams());
-
-        return $cache_value;
 
     }
 
@@ -442,7 +269,7 @@ class activatePaymentNotice extends AbstractPaymentList
                     // se è un tentativo
                     if ($this->isAttemptInCache())
                     {
-                        //se il tentativo è in cache, a parità di medesimo evento
+                        // deve per forza essere in cache, non può esistere una RESP senza una REQ
                         $this->runAttemptAlreadyEvaluated();
                     }
                     else

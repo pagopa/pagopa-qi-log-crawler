@@ -65,7 +65,6 @@ $a->run();
 $a = new \pagopa\crawler\paymentlist\resp\activatePaymentNotice(new \DateTime('2024-03-10'),'activatePaymentNotice', 'RESP', $redis_cache);
 $a->run();
 
-die();
 
 $a = new \pagopa\crawler\paymentlist\req\nodoInviaCarrelloRPT(new \DateTime('2024-03-10'),'nodoInviaCarrelloRPT', 'REQ', $redis_cache);
 $a->run();
@@ -76,5 +75,6 @@ $a->run();
 
 $a = new \pagopa\crawler\paymentlist\resp\nodoInviaCarrelloRPT(new \DateTime('2024-03-11'),'nodoInviaCarrelloRPT', 'RESP', $redis_cache);
 $a->run();
+die();
 //$a = new \pagopa\crawler\paymentlist\resp\activatePaymentNotice(new \DateTime('2024-03-10'),'activatePaymentNotice', 'RESP', $memcache);
 //$a->run();

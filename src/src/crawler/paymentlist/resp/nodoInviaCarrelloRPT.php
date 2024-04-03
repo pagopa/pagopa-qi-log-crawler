@@ -56,6 +56,7 @@ class nodoInviaCarrelloRPT extends AbstractPaymentList
 
         $session        = $this->getEvent()->getSessionIdOriginal();
         $key            = base64_encode(sprintf('sessionOriginal_%s', $session));
+        $key            = $this->getEvent()->getCacheKeyAttempt();
         return $this->hasInCache($key);
 
         $session_key    =   base64_encode(sprintf('session_original_%s', $this->getEvent()->getSessionIdOriginal()));
@@ -100,7 +101,20 @@ class nodoInviaCarrelloRPT extends AbstractPaymentList
      */
     public function runAttemptAlreadyEvaluated(int $index = 0): void
     {
+        $cache_key = $this->getEvent()->getCacheKeyAttempt();
+        $cached_data = $this->getFromCache($cache_key);
 
+        if (is_array($cached_data))
+        {
+            foreach($cached_data as $ck => $cached_attempt)
+            {
+                $id = $cached_attempt['id'];
+                $workflow = $this->getEvent()->workflowEvent();
+                $workflow->setFkPayment($id);
+                $workflow->insert();
+                DB::statement($workflow->getQuery(), $workflow->getBindParams());
+            }
+        }
     }
 
     /**
@@ -108,8 +122,7 @@ class nodoInviaCarrelloRPT extends AbstractPaymentList
      */
     public function runCreateAttempt(int $index = 0): array
     {
-
-        // TODO: Implement runCreateAttempt() method.
+        return [];
     }
 
     /**
@@ -117,7 +130,7 @@ class nodoInviaCarrelloRPT extends AbstractPaymentList
      */
     public function runPaymentAlreadyEvaluated(int $index = 0): void
     {
-        // TODO: Implement runPaymentAlreadyEvaluated() method.
+        $this->runAttemptAlreadyEvaluated();
     }
 
     /**
@@ -125,7 +138,7 @@ class nodoInviaCarrelloRPT extends AbstractPaymentList
      */
     public function runCreatePayment(int $index = 0): array
     {
-        // TODO: Implement runCreatePayment() method.
+        return $this->runCreateAttempt();
     }
 
     /**
@@ -154,7 +167,7 @@ class nodoInviaCarrelloRPT extends AbstractPaymentList
 
 
 
-    public function runAnalysisSingleEvent() : void
+    public function runAnalysisSingleEventa() : void
     {
         try {
             // la nodo invia carrello può essere OK o KO
@@ -292,6 +305,46 @@ class nodoInviaCarrelloRPT extends AbstractPaymentList
                 DB::statement($error->getQuery(), $error->getBindParams());
             }
 
+        }
+        catch (\Exception $e)
+        {
+            $rowid = $this->getEvent()->getEventRowInstance()->reject(substr($e->getMessage(), 0, 190))->update();
+            DB::statement($rowid->getQuery(), $rowid->getBindParams());
+        }
+    }
+
+
+    public function runAnalysisSingleEvent() : void
+    {
+        try {
+            // aggiustare l'update dell'evento , capire se mettere il ciclo dentro o fuori la validazione
+            $date_event = $this->getEvent()->getInsertedTimestamp()->format('Y-m-d');
+            if ($this->isValidPayment())
+            {
+                // se è ALMENO un pagamento
+                if ($this->isAttempt())
+                {
+                    // se è un tentativo
+                    if ($this->isAttemptInCache())
+                    {
+                        //se il tentativo è in cache, a parità di medesimo evento
+                        $this->runAttemptAlreadyEvaluated();
+                        $rowid = $this->getEvent()->getEventRowInstance()->loaded()->update();
+                        DB::statement($rowid->getQuery(), $rowid->getBindParams());
+                    }
+                    else
+                    {
+                        // creo il tentativo
+                        $rowid = $this->getEvent()->getEventRowInstance()->reject()->update();
+                        DB::statement($rowid->getQuery(), $rowid->getBindParams());
+                    }
+                }
+            }
+            else
+            {
+                $rowid = $this->getEvent()->getEventRowInstance()->reject('Evento non valido')->update();
+                DB::statement($rowid->getQuery(), $rowid->getBindParams());
+            }
         }
         catch (\Exception $e)
         {

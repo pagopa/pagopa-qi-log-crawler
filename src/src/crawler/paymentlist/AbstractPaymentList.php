@@ -215,17 +215,6 @@ abstract class AbstractPaymentList implements PaymentListInterface
                         $this->runCreateAttempt();
                     }
                 }
-                else
-                {
-                    if ($this->isPaymentInCache())
-                    {
-                        $this->runPaymentAlreadyEvaluated();
-                    }
-                    else
-                    {
-                        $this->runCreatePayment();
-                    }
-                }
                 $rowid = $this->getEvent()->getEventRowInstance()->loaded()->update();
                 DB::statement($rowid->getQuery(), $rowid->getBindParams());
             }

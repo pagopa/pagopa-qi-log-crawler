@@ -250,9 +250,7 @@ class T00027_CreateAttemptTwoRPTTwoTransferForRPTWithResponseDifferentData exten
         $this->assertEquals('T000031', $workflow->getColumnValue('event_id'));
         $this->assertEquals('77777777777_01', $workflow->getColumnValue('stazione'));
 
-        $transaction = self::$db->getTransaction(new \DateTime('2024-03-11'), '01000000000000024');
-        $workflow = self::$db->getWorkFlow($transaction, 0);
-
+        $workflow = self::$db->getWorkFlow($transaction, 2);
         $this->assertEquals('4', $workflow->getColumnValue('fk_tipoevento'));
         $this->assertEquals('2024-03-11 10:40:00.197', $workflow->getColumnValue('event_timestamp'));
         $this->assertEquals('T000032', $workflow->getColumnValue('event_id'));
@@ -274,10 +272,7 @@ class T00027_CreateAttemptTwoRPTTwoTransferForRPTWithResponseDifferentData exten
         $this->assertEquals('T000031', $workflow->getColumnValue('event_id'));
         $this->assertEquals('77777777777_01', $workflow->getColumnValue('stazione'));
 
-
-        $transaction = self::$db->getTransaction(new \DateTime('2024-03-11'), '01000000000000025');
-        $workflow = self::$db->getWorkFlow($transaction, 0);
-
+        $workflow = self::$db->getWorkFlow($transaction, 2);
         $this->assertEquals('4', $workflow->getColumnValue('fk_tipoevento'));
         $this->assertEquals('2024-03-11 10:40:00.197', $workflow->getColumnValue('event_timestamp'));
         $this->assertEquals('T000032', $workflow->getColumnValue('event_id'));
