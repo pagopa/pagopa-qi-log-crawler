@@ -12,6 +12,12 @@ abstract class AbstractEvent implements EventInterface
 {
 
     /**
+     * Contiene il valore che dovrà restituire isCartEvent()
+     * @var bool
+     */
+    protected bool $isCart = false;
+
+    /**
      * Contiene i dati dell'evento
      * @var array
      */
@@ -213,5 +219,11 @@ abstract class AbstractEvent implements EventInterface
     public function getEventRowInstance(): TransactionRe
     {
         return $this->instance;
+    }
+
+
+    public function isCartEvent(): bool
+    {
+        return $this->isCart;
     }
 }

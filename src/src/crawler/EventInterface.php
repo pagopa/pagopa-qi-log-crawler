@@ -262,4 +262,12 @@ interface EventInterface
      */
     public function getCacheKeyAttempt() : string;
 
+
+    /**
+     * Restituisce true/false se un evento impatta un carrello di pagamenti
+     * @return bool
+     */
+    public function isCartEvent() : bool;
+
+
 }

@@ -334,8 +334,8 @@ class nodoInviaCarrelloRPT extends AbstractPaymentList
                     }
                     else
                     {
-                        // creo il tentativo
-                        $rowid = $this->getEvent()->getEventRowInstance()->reject()->update();
+                        // se il tentativo non è in cache, che ci fa un evento di RESP nei log? :)
+                        $rowid = $this->getEvent()->getEventRowInstance()->reject('Evento non associabile a nessun carrello')->update();
                         DB::statement($rowid->getQuery(), $rowid->getBindParams());
                     }
                 }

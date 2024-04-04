@@ -257,7 +257,9 @@ class activatePaymentNotice extends AbstractPaymentList
         return $this->getEvent()->getEventRowInstance()->loaded($message)->update();
     }
 
-    public function runAnalysisSingleEventaa() : void
+
+
+    public function runAnalysisSingleEvent() : void
     {
         try {
             // aggiustare l'update dell'evento , capire se mettere il ciclo dentro o fuori la validazione

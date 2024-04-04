@@ -14,6 +14,8 @@ class nodoInviaCarrelloRPT extends AbstractEvent
 
     protected Payload $method;
 
+    protected bool $isCart = true;
+
 
     public function __construct(array $eventData)
     {

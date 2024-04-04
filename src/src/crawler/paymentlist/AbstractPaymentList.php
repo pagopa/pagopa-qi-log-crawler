@@ -193,7 +193,7 @@ abstract class AbstractPaymentList implements PaymentListInterface
     }
 
 
-    public function runAnalysisSingleEvent() : void
+    public function runAnalysisSingleEventaaa() : void
     {
         try {
             // aggiustare l'update dell'evento , capire se mettere il ciclo dentro o fuori la validazione
@@ -215,6 +215,17 @@ abstract class AbstractPaymentList implements PaymentListInterface
                         $this->runCreateAttempt();
                     }
                 }
+                else
+                {
+                    if ($this->isPaymentInCache())
+                    {
+                        $this->runPaymentAlreadyEvaluated();
+                    }
+                    else
+                    {
+                        $this->runCreatePayment();
+                    }
+                }
                 $rowid = $this->getEvent()->getEventRowInstance()->loaded()->update();
                 DB::statement($rowid->getQuery(), $rowid->getBindParams());
             }
@@ -230,6 +241,9 @@ abstract class AbstractPaymentList implements PaymentListInterface
             DB::statement($rowid->getQuery(), $rowid->getBindParams());
         }
     }
+
+    abstract public function runAnalysisSingleEvent() : void;
+
 
 
     /**

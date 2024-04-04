@@ -217,4 +217,53 @@ class nodoInviaCarrelloRPT extends AbstractPaymentList
     {
         return $this->getEvent()->getEventRowInstance()->loaded($message)->update();
     }
+
+    public function runAnalysisSingleEvent() : void
+    {
+        try {
+            // aggiustare l'update dell'evento , capire se mettere il ciclo dentro o fuori la validazione
+            $date_event = $this->getEvent()->getInsertedTimestamp()->format('Y-m-d');
+            if ($this->isValidPayment())
+            {
+                // se è ALMENO un pagamento
+                if ($this->isAttempt())
+                {
+                    // se è un tentativo
+                    if ($this->isAttemptInCache())
+                    {
+                        //se il tentativo è in cache, a parità di medesimo evento
+                        $this->runAttemptAlreadyEvaluated();
+                    }
+                    else
+                    {
+                        // creo il tentativo
+                        $this->runCreateAttempt();
+                    }
+                }
+                else
+                {
+                    if ($this->isPaymentInCache())
+                    {
+                        $this->runPaymentAlreadyEvaluated();
+                    }
+                    else
+                    {
+                        $this->runCreatePayment();
+                    }
+                }
+                $rowid = $this->getEvent()->getEventRowInstance()->loaded()->update();
+                DB::statement($rowid->getQuery(), $rowid->getBindParams());
+            }
+            else
+            {
+                $rowid = $this->getEvent()->getEventRowInstance()->reject('Evento non valido')->update();
+                DB::statement($rowid->getQuery(), $rowid->getBindParams());
+            }
+        }
+        catch (\Exception $e)
+        {
+            $rowid = $this->getEvent()->getEventRowInstance()->reject(substr($e->getMessage(), 0, 190))->update();
+            DB::statement($rowid->getQuery(), $rowid->getBindParams());
+        }
+    }
 }
