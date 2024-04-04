@@ -2,6 +2,7 @@
 namespace pagopa\crawler\events\req;
 
 use pagopa\crawler\AbstractEvent;
+use pagopa\crawler\MapEvents;
 use pagopa\crawler\methods\MethodInterface;
 use pagopa\crawler\methods\req\activatePaymentNotice as Payload;
 use pagopa\database\sherlock\Transaction;
@@ -285,7 +286,7 @@ class activatePaymentNotice extends AbstractEvent
         $workflow->setNewColumnValue('date_event', $this->getInsertedTimestamp()->format('Y-m-d'));
         $workflow->setEventTimestamp($this->getInsertedTimestamp());
         $workflow->setEventId($this->getUniqueId());
-        $workflow->setFkTipoEvento(1);
+        $workflow->setFkTipoEvento(MapEvents::getMethodId($this->getTipoEvento(), $this->getSottoTipoEvento()));
 
         $id_psp     = $this->getPsp();
         $stazione   = $this->getStazione();

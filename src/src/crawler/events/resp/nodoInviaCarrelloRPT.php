@@ -3,6 +3,7 @@
 namespace pagopa\crawler\events\resp;
 
 use pagopa\crawler\AbstractEvent;
+use pagopa\crawler\MapEvents;
 use pagopa\crawler\methods\MethodInterface;
 use pagopa\database\sherlock\Transaction;
 use pagopa\crawler\methods\resp\nodoInviaCarrelloRPT as Payload;
@@ -209,7 +210,7 @@ class nodoInviaCarrelloRPT extends AbstractEvent
         $workflow->setNewColumnValue('date_event', $this->getInsertedTimestamp()->format('Y-m-d'));
         $workflow->setEventId($this->getUniqueId());
         $workflow->setEventTimestamp($this->getInsertedTimestamp());
-        $workflow->setFkTipoEvento(4);
+        $workflow->setFkTipoEvento(MapEvents::getMethodId($this->getTipoEvento(), $this->getSottoTipoEvento()));
         $stazione = $this->getStazione();
         if (!is_null($this->getMethodInterface()->getFaultCode()))
         {

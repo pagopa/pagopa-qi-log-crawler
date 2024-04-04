@@ -3,6 +3,7 @@
 namespace pagopa\crawler\events\req;
 
 use pagopa\crawler\AbstractEvent;
+use pagopa\crawler\MapEvents;
 use pagopa\database\sherlock\Transaction;
 use pagopa\crawler\methods\req\nodoInviaCarrelloRPT as Payload;
 use pagopa\database\sherlock\TransactionDetails;
@@ -266,7 +267,7 @@ class nodoInviaCarrelloRPT extends AbstractEvent
         {
             $workflow->setStazione($this->getStazione());
         }
-        $workflow->setFkTipoEvento(3);
+        $workflow->setFkTipoEvento(MapEvents::getMethodId($this->getTipoEvento(), $this->getSottoTipoEvento()));
         return $workflow;
     }
 

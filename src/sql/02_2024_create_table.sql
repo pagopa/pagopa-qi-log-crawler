@@ -84,6 +84,3 @@ create table if not exists public.metadata_2024 (
     constraint "METADATA_2024_pk" primary key (date_event, id)
 )
 PARTITION BY RANGE (date_event);
-
-
-
