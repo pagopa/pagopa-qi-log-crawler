@@ -49,6 +49,8 @@ $connection =
 
 $redis_cache = new \pagopa\crawler\RedisCache($connection);
 
+\pagopa\crawler\MapEvents::init();
+
 //Capsule::statement('truncate table transaction_2024, transaction_details_2024, transaction_events_2024;');
 //Capsule::statement('update transaction_re_2024 set state=:state', [':state' => 'TO_LOAD']);
 

@@ -2,43 +2,32 @@
 
 namespace pagopa\crawler;
 
+use Illuminate\Database\Capsule\Manager as DB;
+
 class MapEvents
 {
 
-    protected static array $map_events =
-        [
-            array(
-                'type'      => 'activatePaymentNotice',
-                'subtype'   => 'REQ',
-                'id'        => 1
-            ),
-            array(
-                'type'      => 'activatePaymentNotice',
-                'subtype'   => 'RESP',
-                'id'        => 2
-            ),
-            array(
-                'type'      => 'nodoInviaCarrelloRPT',
-                'subtype'   => 'REQ',
-                'id'        => 3
-            ),
-            array(
-                'type'      => 'nodoInviaCarrelloRPT',
-                'subtype'   => 'RESP',
-                'id'        => 4
-            )
-        ];
-
+    protected static array $map_events = array();
 
     public static function getMethodId(string $type, string $subtype) : int|null
     {
         foreach(self::$map_events as $event)
         {
-            if (($event['type'] == $type) && ($event['subtype'] == $subtype))
+            if (($event['tipo_evento'] == $type) && ($event['sotto_tipo_evento'] == $subtype))
             {
-                return $event['id'];
+                return $event['fk_event'];
             }
         }
         return null;
+    }
+
+
+    public static function init() : void
+    {
+        $result = DB::table('mapped_events')->get();
+        foreach($result as $r)
+        {
+            self::$map_events[] = (array) $r;
+        }
     }
 }
