@@ -158,9 +158,8 @@ class T00023_CreateAttemptTwoRPTFirstRpt2TransferSecondRpt2Transfer1Bollo extend
         $this->assertEquals('c0000000000000000000000000000004', $transaction->getColumnValue('id_carrello'));
         $this->assertEquals('400.00', $transaction->getColumnValue('importo'));
         $this->assertEquals('77777777777_01', $transaction->getColumnValue('stazione'));
-        $this->assertNull($transaction->getColumnValue('id_psp'));
-        $this->assertNull($transaction->getColumnValue('canale'));
-
+        $this->assertEquals('AGID_01', $transaction->getColumnValue('id_psp'));
+        $this->assertEquals('88888888888_01', $transaction->getColumnValue('canale'));
 
 
         $transaction = self::$db->getTransaction(new \DateTime('2024-03-10'), '01000000000000016');
@@ -171,8 +170,9 @@ class T00023_CreateAttemptTwoRPTFirstRpt2TransferSecondRpt2Transfer1Bollo extend
         $this->assertEquals('c0000000000000000000000000000004', $transaction->getColumnValue('id_carrello'));
         $this->assertEquals('116.00', $transaction->getColumnValue('importo'));
         $this->assertEquals('77777777777_01', $transaction->getColumnValue('stazione'));
-        $this->assertNull($transaction->getColumnValue('id_psp'));
-        $this->assertNull($transaction->getColumnValue('canale'));
+        $this->assertEquals('AGID_01', $transaction->getColumnValue('id_psp'));
+        $this->assertEquals('88888888888_01', $transaction->getColumnValue('canale'));
+
     }
 
     #[TestDox('[DETAILS] Verifica assenza dettagli')]

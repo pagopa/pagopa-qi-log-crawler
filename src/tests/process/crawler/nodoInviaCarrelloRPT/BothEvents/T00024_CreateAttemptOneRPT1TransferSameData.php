@@ -142,8 +142,8 @@ class T00024_CreateAttemptOneRPT1TransferSameData extends TestCase
         $this->assertEquals('c0000000000000000000000000000010', $transaction->getColumnValue('id_carrello'));
         $this->assertEquals('600.00', $transaction->getColumnValue('importo'));
         $this->assertEquals('77777777777_01', $transaction->getColumnValue('stazione'));
-        $this->assertNull($transaction->getColumnValue('id_psp'));
-        $this->assertNull($transaction->getColumnValue('canale'));
+        $this->assertEquals('AGID_01', $transaction->getColumnValue('id_psp'));
+        $this->assertEquals('88888888888_01', $transaction->getColumnValue('canale'));
     }
 
     #[TestDox('[DETAILS] Verifica assenza dettagli')]

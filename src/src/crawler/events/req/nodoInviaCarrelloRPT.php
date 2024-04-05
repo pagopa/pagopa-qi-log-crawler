@@ -188,6 +188,8 @@ class nodoInviaCarrelloRPT extends AbstractEvent
 
         $broker_pa      =   $this->getBrokerPa();
         $stazione       =   $this->getStazione();
+        $psp_id         =   $this->getPsp();
+        $canale         =   $this->getCanale();
 
         $importo        =   $this->getMethodInterface()->getImporto($index);
 
@@ -211,6 +213,16 @@ class nodoInviaCarrelloRPT extends AbstractEvent
         if (!is_null($importo))
         {
             $transaction->setImporto($importo);
+        }
+
+        if (!is_null($psp_id))
+        {
+            $transaction->setPsp($psp_id);
+        }
+
+        if (!is_null($canale))
+        {
+            $transaction->setCanale($canale);
         }
 
         return $transaction;
