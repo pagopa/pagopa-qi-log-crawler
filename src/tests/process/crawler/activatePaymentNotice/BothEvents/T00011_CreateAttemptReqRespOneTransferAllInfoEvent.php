@@ -187,6 +187,7 @@ class T00011_CreateAttemptReqRespOneTransferAllInfoEvent extends TestCase
         $this->assertEquals('77777777777_01', $event->getColumnValue('stazione'));
         $this->assertEquals('88888888888_01', $event->getColumnValue('canale'));
         $this->assertEquals('AGID_01', $event->getColumnValue('id_psp'));
+        $this->assertEquals('OK', $event->getColumnValue('outcome'));
 
     }
 

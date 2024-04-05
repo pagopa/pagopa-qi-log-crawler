@@ -119,4 +119,15 @@ class Workflow extends SingleRow
         $this->setNewColumnValue('canale', $canale);
         return $this;
     }
+
+    /**
+     * Configura l'outcome della chiamata. Non è l'outcome di una sendPaymentOutcome
+     * @param string $outcome
+     * @return $this
+     */
+    public function setOutcomeEvent(string $outcome) : self
+    {
+        $this->setNewColumnValue('outcome', $outcome);
+        return $this;
+    }
 }

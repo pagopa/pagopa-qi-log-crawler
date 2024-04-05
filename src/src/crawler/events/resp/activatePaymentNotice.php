@@ -251,9 +251,13 @@ class activatePaymentNotice extends AbstractEvent implements FaultInterface
             $workflow->setCanale($canale);
         }
 
-        if (!is_null($this->getMethodInterface()->getFaultCode()))
+        if ($this->getMethodInterface()->isFaultEvent())
         {
             $workflow->setFaultCode($this->getMethodInterface()->getFaultCode());
+        }
+        if (!is_null($this->getMethodInterface()->outcome()))
+        {
+            $workflow->setOutcomeEvent($this->getMethodInterface()->outcome());
         }
         return $workflow;
     }

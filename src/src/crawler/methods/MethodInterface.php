@@ -202,12 +202,12 @@ interface MethodInterface
     public function getStazione() : string|null;
 
 
-
-
-
-
-
-
+    /**
+     * Restituisce ok/ko se l'outcome per i metodi che prevedono outcome
+     * Restituisce ok/ko per i metodi che non prevedono un outcome ma hanno un faultCode
+     * @return string|null
+     */
+    public function outcome() : string|null;
 
 
 }

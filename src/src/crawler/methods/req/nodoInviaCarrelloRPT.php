@@ -393,4 +393,12 @@ class nodoInviaCarrelloRPT implements MethodInterface
         }
         return null;
     }
+
+    /**
+     * @return string|null
+     */
+    public function outcome(): string|null
+    {
+        return null;
+    }
 }

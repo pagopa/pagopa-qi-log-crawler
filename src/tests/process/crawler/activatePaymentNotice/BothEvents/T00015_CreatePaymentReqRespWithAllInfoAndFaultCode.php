@@ -168,6 +168,7 @@ class T00015_CreatePaymentReqRespWithAllInfoAndFaultCode extends TestCase
         $this->assertEquals('88888888888_01', $event->getColumnValue('canale'));
         $this->assertEquals('AGID_01', $event->getColumnValue('id_psp'));
         $this->assertEquals('PPT_PAGAMENTO_DUPLICATO', $event->getColumnValue('faultcode'));
+        $this->assertEquals('KO', $event->getColumnValue('outcome'));
     }
 
 

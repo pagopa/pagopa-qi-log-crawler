@@ -180,6 +180,15 @@ class T00013_CreateAttemptReqRespOneTransferNotAllInfoEvent extends TestCase
         $this->assertEquals('88888888888_01', $event->getColumnValue('canale'));
         $this->assertEquals('PSP_01', $event->getColumnValue('id_psp'));
 
+        $event = self::$db->getWorkFlow($transaction, 1);
+        $this->assertEquals('2', $event->getColumnValue('fk_tipoevento'));
+        $this->assertEquals('2024-03-10 10:36:00.197', $event->getColumnValue('event_timestamp'));
+        $this->assertEquals('T000015', $event->getColumnValue('event_id'));
+        $this->assertEquals('77777777777_01', $event->getColumnValue('stazione'));
+        $this->assertEquals('88888888888_01', $event->getColumnValue('canale'));
+        $this->assertNull($event->getColumnValue('id_psp'));
+        $this->assertEquals('OK', $event->getColumnValue('outcome'));
+
     }
 
     #[TestDox('[ReEvent] Verifica stato evento')]

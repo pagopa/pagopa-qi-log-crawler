@@ -3,7 +3,7 @@
 namespace pagopa\crawler\methods\req;
 
 use pagopa\crawler\methods\MethodInterface;
-use XMLReader;
+use \XMLReader;
 
 class activatePaymentNotice implements MethodInterface
 {
@@ -303,5 +303,14 @@ class activatePaymentNotice implements MethodInterface
     public function getPaymentsCount(): int|null
     {
         return 1;
+    }
+
+    /**
+     * Le request non hanno outcome
+     * @return string|null
+     */
+    public function outcome(): string|null
+    {
+        return null;
     }
 }

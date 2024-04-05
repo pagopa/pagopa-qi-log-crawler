@@ -4,7 +4,7 @@ namespace pagopa\crawler\methods\resp;
 
 use pagopa\crawler\FaultInterface;
 use pagopa\crawler\methods\MethodInterface;
-use XMLReader;
+use \XMLReader;
 
 class activatePaymentNotice implements MethodInterface, FaultInterface
 {
@@ -463,5 +463,22 @@ class activatePaymentNotice implements MethodInterface, FaultInterface
     public function getPaymentsCount(): int|null
     {
         return 1;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function outcome(): string|null
+    {
+        $xml = new \XMLReader();
+        $xml->XML($this->payload);
+        while($xml->read())
+        {
+            if (($xml->nodeType == XMLReader::ELEMENT) && (strtolower($xml->localName) == 'outcome'))
+            {
+                return $xml->readString();
+            }
+        }
+        return null;
     }
 }

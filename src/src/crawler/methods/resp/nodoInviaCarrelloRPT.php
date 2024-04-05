@@ -280,4 +280,12 @@ class nodoInviaCarrelloRPT implements MethodInterface, FaultInterface
     {
         return null;
     }
+
+    /**
+     * @return string|null
+     */
+    public function outcome(): string|null
+    {
+        return ($this->isFaultEvent()) ? 'KO' : null;
+    }
 }

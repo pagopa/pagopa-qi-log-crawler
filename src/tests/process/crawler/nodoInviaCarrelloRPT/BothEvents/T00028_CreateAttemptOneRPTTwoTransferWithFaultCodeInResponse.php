@@ -202,6 +202,8 @@ class T00028_CreateAttemptOneRPTTwoTransferWithFaultCodeInResponse extends TestC
         $this->assertEquals('T000034', $workflow->getColumnValue('event_id'));
         $this->assertEquals('77777777777_01', $workflow->getColumnValue('stazione'));
         $this->assertEquals('PPT_IBAN_NON_CENSITO', $workflow->getColumnValue('faultcode'));
+        $this->assertEquals('KO',$workflow->getColumnValue('outcome'));
+
     }
 
     #[TestDox('[ReEvent] Verifica stato evento')]

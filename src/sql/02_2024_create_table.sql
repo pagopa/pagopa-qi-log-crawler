@@ -44,6 +44,7 @@ create table if not exists public.transaction_events_2024
     stazione            varchar(30)         null,
     canale              varchar(30)         null,
     faultcode           varchar(50)         null,
+    outcome             varchar(10)         null,
     constraint transaction_events_2024_pk primary key (date_event, id)
 )
 partition by RANGE (date_event);

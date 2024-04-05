@@ -200,6 +200,7 @@ class T00014_CreateAttemptReqRespTwoTransferNotAllInfoEvent extends TestCase
         $this->assertEquals('T000017', $event->getColumnValue('event_id'));
         $this->assertEquals('77777777777_01', $event->getColumnValue('stazione'));
         $this->assertEquals('88888888888_01', $event->getColumnValue('canale'));
+        $this->assertEquals('OK', $event->getColumnValue('outcome'));
         $this->assertNull($event->getColumnValue('id_psp'));
 
     }

@@ -212,13 +212,22 @@ class nodoInviaCarrelloRPT extends AbstractEvent
         $workflow->setEventTimestamp($this->getInsertedTimestamp());
         $workflow->setFkTipoEvento(MapEvents::getMethodId($this->getTipoEvento(), $this->getSottoTipoEvento()));
         $stazione = $this->getStazione();
-        if (!is_null($this->getMethodInterface()->getFaultCode()))
+        $canale = $this->getCanale();
+        if ($this->getMethodInterface()->isFaultEvent())
         {
             $workflow->setFaultCode($this->getMethodInterface()->getFaultCode());
         }
         if (!is_null($stazione))
         {
             $workflow->setStazione($stazione);
+        }
+        if (!is_null($canale))
+        {
+            $workflow->setCanale($canale);
+        }
+        if (!is_null($this->getMethodInterface()->outcome()))
+        {
+            $workflow->setOutcomeEvent($this->getMethodInterface()->outcome());
         }
         return $workflow;
     }
