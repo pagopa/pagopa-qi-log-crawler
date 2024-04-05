@@ -188,6 +188,17 @@ class Transaction extends SingleRow
         return $this;
     }
 
+    /**
+     * Configura il touchpoint della transazione
+     * @param string $touchpoint
+     * @return $this
+     */
+    public function setTouchPoint(string $touchpoint) : self
+    {
+        $this->setNewColumnValue('touchpoint', $touchpoint);
+        return $this;
+    }
+
     public function addNewDate($date) : self
     {
         $encode = json_encode($date);

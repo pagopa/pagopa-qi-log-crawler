@@ -222,6 +222,7 @@ class activatePaymentNotice extends AbstractEvent
         $transaction->setPaEmittente($pa_emittente);
         $transaction->setInsertedTimestamp($this->getInsertedTimestamp());
         $transaction->setNewColumnValue('date_event', $date_event);
+        $transaction->setTouchPoint('TOUCHPOINT_PSP');
 
         if (!is_null($notice_id))
         {

@@ -199,6 +199,7 @@ class nodoInviaCarrelloRPT extends AbstractEvent
         $transaction->setTokenCcp($ccp);
         $transaction->setInsertedTimestamp($this->getInsertedTimestamp());
         $transaction->setNewColumnValue('date_event', $date_event);
+        $transaction->setTouchPoint('TOUCHPOINT_EC_OLD');
 
         if (!is_null($id_carrello))
         {

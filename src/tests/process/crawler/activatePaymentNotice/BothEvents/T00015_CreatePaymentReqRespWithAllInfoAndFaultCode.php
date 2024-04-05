@@ -129,6 +129,7 @@ class T00015_CreatePaymentReqRespWithAllInfoAndFaultCode extends TestCase
         $this->assertNull($transaction->getColumnValue('stazione'));
         $this->assertNull($transaction->getColumnValue('canale'));
         $this->assertEquals('0.00', $transaction->getColumnValue('importo'));
+        $this->assertEquals('TOUCHPOINT_PSP', $transaction->getColumnValue('touchpoint'));
 
         $this->assertNull($transaction->getColumnValue('date_wf'));
         $this->assertNull($transaction->getColumnValue('id_carrello'));

@@ -103,14 +103,14 @@ class T00008_CreatePaymentAlreadyPresenteInAnotherDayAllInfoInEvent extends Test
     #[TestDox('[TRANSACTION] Verifica correttezza dei dati nella tabella transaction')]
     public function testTransaction()
     {
-        $transaction = self::$db->getTransaction(new \DateTime('2024-03-11'), '01000000000000001', 't0000000000000000000000000000001');
+        $transaction = self::$db->getTransaction(new \DateTime('2024-03-11'), '01000000000000003', 't0000000000000000000000000000001');
         $this->assertNull($transaction);
     }
 
     #[TestDox('[DETAILS] Verifica assenza dettagli')]
     public function testTransactionDetails()
     {
-        $transaction = self::$db->getTransaction(new \DateTime('2024-03-11'), '01000000000000001', 't0000000000000000000000000000001');
+        $transaction = self::$db->getTransaction(new \DateTime('2024-03-11'), '01000000000000003', 't0000000000000000000000000000001');
         $this->assertNull($transaction);
 
     }

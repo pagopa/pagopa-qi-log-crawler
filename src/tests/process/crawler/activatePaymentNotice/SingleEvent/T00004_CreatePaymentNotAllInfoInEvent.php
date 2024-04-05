@@ -114,6 +114,7 @@ class T00004_CreatePaymentNotAllInfoInEvent extends TestCase
         $this->assertEquals('77777777777', $transaction->getColumnValue('pa_emittente'));
         $this->assertEquals('301000000000000004', $transaction->getColumnValue('notice_id'));
         $this->assertContains('2024-03-11', json_decode($transaction->getColumnValue('date_wf'),JSON_OBJECT_AS_ARRAY));
+        $this->assertEquals('TOUCHPOINT_PSP', $transaction->getColumnValue('touchpoint'));
 
         $this->assertEquals('0.00', $transaction->getColumnValue('importo'));
         $this->assertNull($transaction->getColumnValue('id_carrello'));

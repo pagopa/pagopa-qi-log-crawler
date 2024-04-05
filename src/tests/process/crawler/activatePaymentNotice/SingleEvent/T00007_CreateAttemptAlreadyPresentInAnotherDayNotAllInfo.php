@@ -102,7 +102,7 @@ class T00007_CreateAttemptAlreadyPresentInAnotherDayNotAllInfo extends TestCase
     public function testTransaction()
     {
 
-        $transaction = self::$db->getTransaction(new \DateTime('2024-03-11'), '01000000000000001', 't0000000000000000000000000000001');
+        $transaction = self::$db->getTransaction(new \DateTime('2024-03-11'), '01000000000000002', 't0000000000000000000000000000001');
         $this->assertNull($transaction);
 
     }
@@ -111,7 +111,7 @@ class T00007_CreateAttemptAlreadyPresentInAnotherDayNotAllInfo extends TestCase
     #[TestDox('[DETAILS] Verifica dell\'assenza dei dettagli')]
     public function testTransactionDetails()
     {
-        $transaction = self::$db->getTransaction(new \DateTime('2024-03-11'), '01000000000000001', 't0000000000000000000000000000001');
+        $transaction = self::$db->getTransaction(new \DateTime('2024-03-11'), '01000000000000002', 't0000000000000000000000000000001');
         $this->assertNull($transaction);
 
     }

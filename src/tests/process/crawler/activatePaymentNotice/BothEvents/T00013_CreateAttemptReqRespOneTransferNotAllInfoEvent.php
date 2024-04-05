@@ -148,6 +148,7 @@ class T00013_CreateAttemptReqRespOneTransferNotAllInfoEvent extends TestCase
         $this->assertEquals('77777777777_01', $transaction->getColumnValue('stazione'));
         $this->assertEquals('88888888888_01', $transaction->getColumnValue('canale'));
         $this->assertEquals('120.00', $transaction->getColumnValue('importo'));
+        $this->assertEquals('TOUCHPOINT_PSP', $transaction->getColumnValue('touchpoint'));
 
         $this->assertNull($transaction->getColumnValue('date_wf'));
         $this->assertNull($transaction->getColumnValue('id_carrello'));

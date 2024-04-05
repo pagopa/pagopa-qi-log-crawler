@@ -12,6 +12,7 @@ create table if not exists public.transaction_2024 (
     canale              varchar(30)         null,
     importo             numeric             null,
     esito               varchar(10)         null,
+    touchpoint          TOUCHPOINT_TYPE     null,
     date_wf             json                null,
     CONSTRAINT "TRANSACTION_2024_pk" PRIMARY KEY (date_event, id)
 )

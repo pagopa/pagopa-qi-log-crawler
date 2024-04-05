@@ -156,7 +156,7 @@ class T00028_CreateAttemptOneRPTTwoTransferWithFaultCodeInResponse extends TestC
         $this->assertEquals('77777777777_01', $transaction->getColumnValue('stazione'));
         $this->assertEquals('AGID_01', $transaction->getColumnValue('id_psp'));
         $this->assertEquals('88888888888_01', $transaction->getColumnValue('canale'));
-
+        $this->assertEquals('TOUCHPOINT_EC_OLD', $transaction->getColumnValue('touchpoint'));
 
     }
 

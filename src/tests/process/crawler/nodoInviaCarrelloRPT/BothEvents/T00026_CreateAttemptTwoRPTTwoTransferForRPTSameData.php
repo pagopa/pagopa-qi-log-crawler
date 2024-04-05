@@ -165,6 +165,7 @@ class T00026_CreateAttemptTwoRPTTwoTransferForRPTSameData extends TestCase
         $this->assertEquals('77777777777_01', $transaction->getColumnValue('stazione'));
         $this->assertEquals('AGID_01', $transaction->getColumnValue('id_psp'));
         $this->assertEquals('88888888888_01', $transaction->getColumnValue('canale'));
+        $this->assertEquals('TOUCHPOINT_EC_OLD', $transaction->getColumnValue('touchpoint'));
 
         $transaction = self::$db->getTransaction(new \DateTime('2024-03-10'), '01000000000000023');
         $this->assertEquals('2024-03-10 10:35:00.197', $transaction->getColumnValue('inserted_timestamp'));
@@ -176,6 +177,7 @@ class T00026_CreateAttemptTwoRPTTwoTransferForRPTSameData extends TestCase
         $this->assertEquals('77777777777_01', $transaction->getColumnValue('stazione'));
         $this->assertEquals('AGID_01', $transaction->getColumnValue('id_psp'));
         $this->assertEquals('88888888888_01', $transaction->getColumnValue('canale'));
+        $this->assertEquals('TOUCHPOINT_EC_OLD', $transaction->getColumnValue('touchpoint'));
 
     }
 
