@@ -4,6 +4,7 @@ namespace pagopa\crawler\paymentlist\req;
 
 use Datetime;
 use pagopa\crawler\CacheInterface;
+use pagopa\crawler\MapEvents;
 use pagopa\crawler\paymentlist\AbstractPaymentList;
 use pagopa\database\sherlock\Transaction;
 use pagopa\database\sherlock\TransactionRe;
@@ -13,6 +14,8 @@ use Illuminate\Database\Capsule\Manager as DB;
 class activatePaymentNotice extends AbstractPaymentList
 {
 
+
+    protected bool $isCreateTransactionEvent = true;
 
 
     /**
@@ -108,6 +111,7 @@ class activatePaymentNotice extends AbstractPaymentList
             'pa_emittente'      =>  $pa_emittente,
             'transfer_added'    =>  false,
             'amount_update'     =>  false,
+            'esito'             =>  false,
             'date_wf'           => json_encode(array())
         ];
         $this->addValueCache($cache_key, $cache_value);
@@ -150,7 +154,6 @@ class activatePaymentNotice extends AbstractPaymentList
         ];
         $this->addValueCache($cache_key, $cache_value);
 
-
         $workflow = $this->getEvent()->workflowEvent($index);
         $workflow->setFkPayment($last_inserted_id);
         $workflow->insert();
@@ -175,7 +178,6 @@ class activatePaymentNotice extends AbstractPaymentList
             $date_wf        =   json_decode($cache_value['date_wf'], JSON_OBJECT_AS_ARRAY);
             $workflow = $this->getEvent()->workflowEvent($index);
             $workflow->setFkPayment($id);
-            $workflow->setFkTipoEvento(1);
             $workflow->insert();
             DB::statement($workflow->getQuery(), $workflow->getBindParams());
 
@@ -193,7 +195,6 @@ class activatePaymentNotice extends AbstractPaymentList
             }
         }
         $this->setCache($cache_key, $cache_data);
-
     }
 
     /**
@@ -212,7 +213,6 @@ class activatePaymentNotice extends AbstractPaymentList
             $date_wf        =   json_decode($cache_value['date_wf'], JSON_OBJECT_AS_ARRAY);
             $workflow = $this->getEvent()->workflowEvent($index);
             $workflow->setFkPayment($id);
-            $workflow->setFkTipoEvento(1);
             $workflow->insert();
             DB::statement($workflow->getQuery(), $workflow->getBindParams());
 
@@ -259,7 +259,7 @@ class activatePaymentNotice extends AbstractPaymentList
 
 
 
-    public function runAnalysisSingleEvent() : void
+    public function runAnalysisSingleEventaaa() : void
     {
         try {
             // aggiustare l'update dell'evento , capire se mettere il ciclo dentro o fuori la validazione

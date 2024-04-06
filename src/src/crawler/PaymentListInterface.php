@@ -292,4 +292,11 @@ interface PaymentListInterface
      * @return TransactionRe
      */
     public function runCompleteEvent(string $message = null) : TransactionRe;
+
+
+    /**
+     * Restituisce true/false se l'evento può creare transazioni
+     * @return bool
+     */
+    public function isCreateTransactionEvent() : bool;
 }

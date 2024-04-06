@@ -314,7 +314,7 @@ class nodoInviaCarrelloRPT extends AbstractPaymentList
     }
 
 
-    public function runAnalysisSingleEvent() : void
+    public function runAnalysisSingleEventaaa() : void
     {
         try {
             // aggiustare l'update dell'evento , capire se mettere il ciclo dentro o fuori la validazione

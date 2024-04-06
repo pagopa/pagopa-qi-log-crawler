@@ -23,23 +23,24 @@ class TransactionRe extends SingleRow
      */
     public function loaded(string $message = null) : self
     {
-        $this->setNewColumnValue('state', 'LOADED');
-        if (!is_null($message))
-        {
-            $this->setNewColumnValue('message', $message);
-        }
+        $this->setState('LOADED', $message);
         return $this;
     }
 
 
     public function reject(string $message = null) : self
     {
-        $this->setNewColumnValue('state', 'REJECTED');
-        if (!is_null($message))
-        {
-            $this->setNewColumnValue('message', $message);
-        }
+        $this->setState('REJECTED', $message);
         return $this;
     }
 
+    public function setState(string $state, string $message = null) : self
+    {
+        $this->setNewColumnValue('state', $state);
+        if (!is_null($message))
+        {
+            $this->setNewColumnValue('message', substr($message, 0, 199));
+        }
+        return $this;
+    }
 }

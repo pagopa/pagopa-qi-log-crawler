@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 
 
 /**
- * <p>Valuta la corretta lavorazione di una singola nodoInviaCarrelloRPT Request con 2 RPT contenente 2 singolo versamento</p>
+ * <p>Valuta la corretta lavorazione di una singola nodoInviaCarrelloRPT Request con 2 RPT contenente 2 singolo versamento ma con sessionIdOriginale non corrispondente ad una REQ</p>
  *
  *
  * <h2>Event(s)</h2>
@@ -206,8 +206,8 @@ class T00029_CreateAttemptOneRPTTwoTransferWithSessionIdOriginalNotFound extends
         $this->assertEquals('LOADED', $event->getColumnValue('state'));
 
         $event = self::$db->getReEvent(new \DateTime('2024-03-10'), 36);
-        $this->assertEquals('REJECTED', $event->getColumnValue('state'));
-
+        $this->assertEquals('TO_SEARCH', $event->getColumnValue('state'));
+        $this->assertEquals('Evento non associabile a nessun pagamento in cache, va ricercato', $event->getColumnValue('message'));
     }
 
 

@@ -52,6 +52,13 @@ abstract class AbstractPaymentList implements PaymentListInterface
 
 
     /**
+     * Contiene l'informazione relativa alla possibilità di creare transazioni da parte dell'evento
+     * @var bool
+     */
+    protected bool $isCreateTransactionEvent = false;
+
+
+    /**
      * Contiene la classe che gestisce l'evento+payload
      * @var EventInterface
      */
@@ -242,7 +249,7 @@ abstract class AbstractPaymentList implements PaymentListInterface
         }
     }
 
-    abstract public function runAnalysisSingleEvent() : void;
+    //abstract public function runAnalysisSingleEvent() : void;
 
 
 
@@ -353,4 +360,75 @@ abstract class AbstractPaymentList implements PaymentListInterface
      * @inheritDoc
      */
     abstract public function runCompleteEvent(string $message = null): TransactionRe;
+
+
+
+    public function runAnalysisSingleEvent() : void
+    {
+        try {
+            $state      = 'LOADED';
+            $message    = null;
+            if ($this->isValidPayment())
+            {
+                // è un evento tentativo valido
+                if ($this->isAttempt())
+                {
+                    // è un tentativo
+                    if ($this->isAttemptInCache())
+                    {
+                        // il tentativo è già in cache
+                        $this->runAttemptAlreadyEvaluated();
+                    }
+                    else
+                    {
+                        // il tentativo non è in cache
+                        if ($this->isCreateTransactionEvent())
+                        {
+                            // è una primitiva che crea transazioni, e non è in cache, quindi è la prima volta che arriva sul nodo
+                            $this->runCreateAttempt();
+                        }
+                        else
+                        {
+                            // è una primitiva che non crea transazioni, non è in cache, che ci fa qui ? Rigetto
+                            // potrebbe essere una sendPayment arrivata con giorni di ritardo... capita.
+                            $state      = 'TO_SEARCH';
+                            $message    = 'Evento non associabile a nessun pagamento in cache, va ricercato';
+                        }
+                    }
+                }
+                else
+                {
+                    // è sicuramente un payment
+                    if ($this->isPaymentInCache())
+                    {
+                        // il pagamento è in cache
+                        $this->runPaymentAlreadyEvaluated();
+                    }
+                    else
+                    {
+                        $this->runCreatePayment();
+                    }
+                }
+            }
+            else
+            {
+                $state      = 'REJECTED';
+                $message    = 'Evento non valido';
+            }
+            $rowid = $this->getEvent()->getEventRowInstance()->setState($state, $message)->update();
+            DB::statement($rowid->getQuery(), $rowid->getBindParams());
+        }
+        catch (\Exception $e)
+        {
+            $state      = 'ERROR';
+            $message    = $e->getMessage();
+            $rowid = $this->getEvent()->getEventRowInstance()->setState($state, $message)->update();
+            DB::statement($rowid->getQuery(), $rowid->getBindParams());
+        }
+    }
+
+    public function isCreateTransactionEvent(): bool
+    {
+        return $this->isCreateTransactionEvent;
+    }
 }

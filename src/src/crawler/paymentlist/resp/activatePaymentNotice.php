@@ -171,19 +171,14 @@ class activatePaymentNotice extends AbstractPaymentList
     {
         $cache_key      =   $this->getEvent()->getCacheKeyAttempt();
         $cache_data     =   $this->getFromCache($cache_key);
-        if ($this->getEvent()->getIuv(0) == '01000000000000010')
-        {
-            echo 'sono qui ' .PHP_EOL;
-        }
 
         foreach($cache_data as $ck => $cache_value)
         {
             $id             =   $cache_value['id'];
             $date_event     =   $cache_value['date_event'];
             $date_wf        =   json_decode($cache_value['date_wf'], JSON_OBJECT_AS_ARRAY);
-            $workflow = $this->getEvent()->workflowEvent($index);
+            $workflow = $this->getEvent()->workflowEvent();
             $workflow->setFkPayment($id);
-            $workflow->setFkTipoEvento(2);
             $workflow->insert();
             DB::statement($workflow->getQuery(), $workflow->getBindParams());
 
@@ -191,6 +186,7 @@ class activatePaymentNotice extends AbstractPaymentList
             $update = false;
             if ($cache_value['amount_update'] === false)
             {
+                // aggiorno l'importo se non fatto e se non è un fault event
                 if (!$this->getEvent()->getMethodInterface()->isFaultEvent())
                 {
                     $transaction->setImporto($this->getEvent()->getMethodInterface()->getImportoTotale());
@@ -202,6 +198,7 @@ class activatePaymentNotice extends AbstractPaymentList
             $new_date_event = $this->getEvent()->getInsertedTimestamp()->format('Y-m-d');
             if (($new_date_event != $date_event) && (!in_array($new_date_event, $date_wf)))
             {
+                // aggiungo nuove date se l'evento è in una data precedente alla nascita del tentativo
                 $date_wf[] = $new_date_event;
                 $cache_data[$ck]['date_wf'] = json_encode($date_wf);
                 $transaction->addNewDate($date_wf);
@@ -210,6 +207,7 @@ class activatePaymentNotice extends AbstractPaymentList
 
             if ($cache_value['transfer_added'] === false)
             {
+                // se non ho già aggiunto i transfer, e non è un fault, li aggiungo
                 if (!$this->getEvent()->getMethodInterface()->isFaultEvent())
                 {
                     for($i=0;$i<$this->getEvent()->getTransferCount($index);$i++)
@@ -220,11 +218,12 @@ class activatePaymentNotice extends AbstractPaymentList
                         DB::statement($transaction_details->getQuery(), $transaction_details->getBindParams());
                     }
                     $cache_data[$ck]['transfer_added'] = true;
-                    $update = true;
+//                    $update = true;
                 }
             }
             if ($update === true)
             {
+                // se c'è stato qualche aggiornamento , faccio update
                 $transaction->update();
                 DB::statement($transaction->getQuery(), $transaction->getBindParams());
             }

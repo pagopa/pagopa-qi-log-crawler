@@ -11,6 +11,8 @@ use Illuminate\Database\Capsule\Manager as DB;
 class nodoInviaCarrelloRPT extends AbstractPaymentList
 {
 
+    protected bool $isCreateTransactionEvent = true;
+
     /**
      * @inheritDoc
      */
@@ -218,7 +220,7 @@ class nodoInviaCarrelloRPT extends AbstractPaymentList
         return $this->getEvent()->getEventRowInstance()->loaded($message)->update();
     }
 
-    public function runAnalysisSingleEvent() : void
+    public function runAnalysisSingleEventaa() : void
     {
         try {
             // aggiustare l'update dell'evento , capire se mettere il ciclo dentro o fuori la validazione
