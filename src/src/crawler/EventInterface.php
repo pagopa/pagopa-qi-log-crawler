@@ -297,4 +297,11 @@ interface EventInterface
     public function getFaultDescription() : string|null;
 
 
+    /**
+     * Restituisce true/false se il payload è valido (check del formato json/xml)
+     * @return bool
+     */
+    public function isValidPayload() : bool;
+
+
 }

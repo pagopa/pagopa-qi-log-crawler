@@ -2,7 +2,11 @@
 
 namespace pagopa\crawler;
 
+use Illuminate\Support\Facades\Cache;
+use pagopa\database\sherlock\Transaction;
+use pagopa\database\sherlock\TransactionDetails;
 use pagopa\database\sherlock\TransactionRe;
+use pagopa\database\sherlock\Workflow;
 
 /**
  * Questa interfaccia gestisce l'analisi di un blocco di eventi della stessa tipologia (es. tutte activatePaymentNotice Request, tutte nodoInviaCarrello Req, tutte pspNotifyPayment Response, etc)
@@ -299,4 +303,74 @@ interface PaymentListInterface
      * @return bool
      */
     public function isCreateTransactionEvent() : bool;
+
+
+    /**
+     * Metodo eseguito quando un viene trattato un evento di tentativo di pagamento che può inizializzare una sessione di pagamento
+     * (activatePaymentNotice, nodoInviaCarrelloRPT, etc)
+     * Restituisce un array di informazioni da storicizzare in cache
+     * @param int $index
+     * @return array|null
+     */
+    public function createTransaction(int $index = 0) : array|null;
+
+
+    /**
+     * Metodo che viene richiamato dopo la creazione di una transazione. Riceve i dati dalla cache per associare correttamente
+     * i transfer al tentativo
+     * Restituisce un array di informazioni da storicizzare in cache
+     * @param CacheObject $cache
+     * @param int $index
+     * @return array|null
+     */
+    public function detailsTransaction(CacheObject $cache, int $index = 0) : array|null;
+
+
+    /**
+     * Crea un evento di workflow per l'evento analizzato, associandolo ad ogni pagamento impattato.
+     * Aggiunge anche extra data alla transaction se l'evento avviene in date diverse rispetto alla nascita
+     * del tentativo.
+     * Restituisce un array di informazioni da storicizzare in cache
+     * @param CacheObject $cache
+     * @param int $index
+     * @return array|null
+     */
+    public function workflow(CacheObject $cache, int $index = 0) : array|null;
+
+    /**
+     * Metodo che viene lanciato quando la transazione già esiste ed è necessario aggiornarla
+     * I dati vengono recuperati fornendo ogni pagamento presente in cache.
+     * Restituisce un array di informazioni da storicizzare in cache
+     * @param CacheObject $cache
+     * @param int $index
+     * @return array|null
+     */
+    public function updateTransaction(CacheObject $cache, int $index = 0) : array|null;
+
+    /**
+     * Metodo che viene lanciato quando la transazione già esiste ed è necessario aggiornare i dettagli.
+     * I dati vengono recuperati fornendo ogni pagamento presente in cache.
+     * Restituisce un array di informazioni da storicizzare in cache
+     * @param CacheObject $cache
+     * @param int $index
+     * @return array|null
+     */
+    public function updateDetails(CacheObject $cache, int $index = 0) : array|null;
+
+    /**
+     * Crea un pagamento, che è relativo a una chiamata senza token (es. verifyPaymentNotice).
+     * Restituisce un array di informazioni da storicizzare in cache
+     * @param int $index
+     * @return array|null
+     */
+    public function createPayment(int $index = 0): array|null;
+
+    /**
+     * Aggiorna i dettagli di un pagamento se necessario.
+     * Restituisce un array di informazioni da storicizzare in cache
+     * @param CacheObject $cache
+     * @param int $index
+     * @return array|null
+     */
+    public function detailsPayment(CacheObject $cache, int $index = 0): array|null;
 }

@@ -2,6 +2,7 @@
 
 namespace pagopa\crawler\paymentlist\req;
 
+use pagopa\crawler\CacheObject;
 use pagopa\crawler\paymentlist\AbstractPaymentList;
 use pagopa\database\sherlock\TransactionRe;
 use pagopa\database\sherlock\Transaction;
@@ -267,5 +268,119 @@ class nodoInviaCarrelloRPT extends AbstractPaymentList
             $rowid = $this->getEvent()->getEventRowInstance()->reject(substr($e->getMessage(), 0, 190))->update();
             DB::statement($rowid->getQuery(), $rowid->getBindParams());
         }
+    }
+
+
+    public function createTransaction(int $index = 0) : array|null
+    {
+        $iuv            =   $this->getEvent()->getIuv($index);
+        $pa_emittente   =   $this->getEvent()->getPaEmittente($index);
+        $ccp            =   $this->getEvent()->getCcp($index);
+        $id_carrello    =   $this->getEvent()->getIdCarrello();
+        $date_event     =   $this->getEvent()->getInsertedTimestamp()->format('Y-m-d');
+
+        $transaction = $this->getEvent()->transaction($index);
+        $transaction->setTokenCcp($ccp);
+        $transaction->insert();
+        DB::statement($transaction->getQuery(), $transaction->getBindParams());
+        $last_inserted_id = DB::connection()->getPdo()->lastInsertId();
+
+        return [
+            'date_event' => $date_event,
+            'id' => $last_inserted_id,
+            'iuv' => $iuv,
+            'pa_emittente' => $pa_emittente,
+            'token_ccp' => $ccp,
+            'id_carrello' => $id_carrello,
+            'transfer_added' => false,
+            'esito' => false,
+            'amount_update' => true,
+            'date_wf' => json_encode(array())
+        ];
+
+    }
+
+
+    public function detailsTransaction(CacheObject $cache, int $index = 0): array|null
+    {
+        if ($cache->getTransferAdded() === true)
+        {
+            return $cache->getCacheData();
+        }
+        $id             =   $cache->getId();
+        $transfer_list  =   array();
+        for ($i = 0; $i < $this->getEvent()->getTransferCount($index); $i++) {
+            $details = $this->getEvent()->transactionDetails($i, $index);
+            $details->setFkPayment($id);
+            $details->insert();
+            DB::statement($details->getQuery(), $details->getBindParams());
+            $last_inserted_id_transfer = DB::connection()->getPdo()->lastInsertId();
+
+            if ($this->getEvent()->getMethodInterface()->isBollo($i, $index)) {
+                $transfer_add = [
+                    'pa_transfer' => $this->getEvent()->getMethodInterface()->getTransferPa($i, $index),
+                    'bollo' => true,
+                    'amount_transfer' => $this->getEvent()->getMethodInterface()->getTransferAmount($i, $index),
+                    'iban_transfer' => ''
+                ];
+            } else {
+                $transfer_add = [
+                    'pa_transfer' => $this->getEvent()->getMethodInterface()->getTransferPa($i, $index),
+                    'bollo' => false,
+                    'amount_transfer' => $this->getEvent()->getMethodInterface()->getTransferAmount($i, $index),
+                    'iban_transfer' => $this->getEvent()->getMethodInterface()->getTransferIban($i, $index)
+                ];
+            }
+            $transfer_add['id'] = $last_inserted_id_transfer;
+            $transfer_add['date_event'] = $this->getEvent()->getInsertedTimestamp()->format('Y-m-d');
+            $transfer_list[] = $transfer_add;
+        }
+        $cache->setKey('transfer_added', true);
+        $cache->setKey('transfer_list', $transfer_list);
+        return $cache->getCacheData();
+    }
+
+    public function workflow(CacheObject $cache, int $index = 0): array|null
+    {
+        $id             =   $cache->getId();
+        $date_event     =   $cache->getDateEvent();
+        $date_wf        =   json_decode($cache->getDateWf(), JSON_OBJECT_AS_ARRAY);
+
+        $workflow = $this->getEvent()->workflowEvent($index);
+        $workflow->setFkPayment($id);
+        $workflow->insert();
+        DB::statement($workflow->getQuery(), $workflow->getBindParams());
+
+        $new_date_event = $this->getEvent()->getInsertedTimestamp()->format('Y-m-d');
+        if (($new_date_event != $date_event) && (!in_array($new_date_event, $date_wf)))
+        {
+            $date_wf[] = $new_date_event;
+            $cache->setKey('date_wf', json_encode($date_wf));
+            $transaction = Transaction::getTransactionByIdAndDateEvent($cache->getId(), $date_event);
+            $transaction->addNewDate($date_wf);
+            $transaction->update();
+            DB::statement($transaction->getQuery(), $transaction->getBindParams());
+        }
+        return $cache->getCacheData();
+    }
+
+    public function updateTransaction(CacheObject $cache, int $index = 0): array|null
+    {
+        return $cache->getCacheData();
+    }
+
+    public function updateDetails(CacheObject $cache, int $index = 0): array|null
+    {
+        return $cache->getCacheData();
+    }
+
+    public function createPayment(int $index = 0): array|null
+    {
+        return [];
+    }
+
+    public function detailsPayment(CacheObject $cache, int $index = 0): array|null
+    {
+        return $cache->getCacheData();
     }
 }

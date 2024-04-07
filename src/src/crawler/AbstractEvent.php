@@ -17,6 +17,13 @@ abstract class AbstractEvent implements EventInterface
      */
     protected bool $isCart = false;
 
+
+    /**
+     * Restituisce il tipo di formato previsto per il payload
+     * @var string
+     */
+    protected string $typePayload = 'xml';
+
     /**
      * Contiene i dati dell'evento
      * @var array
@@ -225,5 +232,26 @@ abstract class AbstractEvent implements EventInterface
     public function isCartEvent(): bool
     {
         return $this->isCart;
+    }
+
+
+    public function isValidPayload(): bool
+    {
+        $payload = $this->getPayload();
+        if ($this->typePayload == 'xml')
+        {
+            libxml_use_internal_errors(true);
+            simplexml_load_string($payload);
+            $errors = libxml_get_errors();
+            libxml_clear_errors();
+            return empty($errors);
+        }
+        if ($this->typePayload == 'json')
+        {
+            json_decode($payload);
+            return json_last_error() === JSON_ERROR_NONE;
+        }
+        return false;
+
     }
 }

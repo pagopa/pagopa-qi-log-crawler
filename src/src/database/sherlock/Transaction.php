@@ -337,4 +337,11 @@ class Transaction extends SingleRow
         }
         return (count($results) == 0) ? null : $results[0];
     }
+
+
+    public static function getTransactionByIdAndDateEvent(string $id, string $date_event) : Transaction
+    {
+        $datetime = new \DateTime($date_event);
+        return new Transaction($datetime, ['id' => $id, 'date_event' => $date_event]);
+    }
 }

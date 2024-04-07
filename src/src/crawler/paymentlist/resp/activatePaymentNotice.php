@@ -2,6 +2,7 @@
 
 namespace pagopa\crawler\paymentlist\resp;
 
+use pagopa\crawler\CacheObject;
 use pagopa\crawler\paymentlist\AbstractPaymentList;
 use pagopa\database\sherlock\Transaction;
 use pagopa\database\sherlock\TransactionDetails;
@@ -305,5 +306,99 @@ class activatePaymentNotice extends AbstractPaymentList
             $rowid = $this->getEvent()->getEventRowInstance()->reject(substr($e->getMessage(), 0, 190))->update();
             DB::statement($rowid->getQuery(), $rowid->getBindParams());
         }
+    }
+
+    public function createTransaction(int $index = 0): array|null
+    {
+        // una activatePaymentNotice Resp non può creare transaction, solo aggiornarle
+        return [];
+    }
+
+    public function updateTransaction(CacheObject $cache, int $index = 0): array|null
+    {
+        // una activatePaymentNotice Resp aggiorna la transaction se non rappresenta un fault e pure i transfer
+
+        if (($this->getEvent()->isFaultEvent()) || ($cache->getAmountUpdate()))
+        {
+            return $cache->getCacheData();
+        }
+
+
+        $id             =   $cache->getId();
+        $date_event     =   $cache->getDateEvent();
+        $transaction = new Transaction(new \Datetime($date_event), ['id' => $id, 'date_event' => $date_event]);
+        $transaction->setImporto($this->getEvent()->getMethodInterface()->getImportoTotale());
+        $transaction->update();
+        DB::statement($transaction->getQuery(), $transaction->getBindParams());
+        $cache->setKey('amount_update', true);
+
+        return $cache->getCacheData();
+    }
+
+    public function detailsTransaction(CacheObject $cache, int $index = 0): array|null
+    {
+
+        // questo metodo viene lanciato quando un evento che rappresenta un tentativo non è in cache
+        // l'activatePaymentNotice RESP non può non essere in cache, vuol dire che c'è un problema
+        return $cache->getCacheData();
+    }
+
+    public function updateDetails(CacheObject $cache, int $index = 0): array|null
+    {
+        // se è un fault oppure se ho già aggiunto i transfer, non faccio nulla
+        if (($this->getEvent()->isFaultEvent()) || $cache->getTransferAdded())
+        {
+            return $cache->getCacheData();
+        }
+
+
+        $id         =   $cache->getId();
+        for($i=0;$i<$this->getEvent()->getTransferCount($index);$i++)
+        {
+            $transaction_details = $this->getEvent()->transactionDetails($i, $index);
+            $transaction_details->setFkPayment($id);
+            $transaction_details->insert();
+            DB::statement($transaction_details->getQuery(), $transaction_details->getBindParams());
+        }
+
+        $cache->setKey('transfer_added', true);
+
+        return $cache->getCacheData();
+    }
+
+    public function workflow(CacheObject $cache, int $index = 0): array|null
+    {
+        $date_event     =   $cache->getDateEvent();
+        $id             =   $cache->getId();
+        $date_wf        =   json_decode($cache->getDateWf(), JSON_OBJECT_AS_ARRAY);
+        $workflow = $this->getEvent()->workflowEvent($index);
+        $workflow->setFkPayment($id);
+        $workflow->insert();
+        DB::statement($workflow->getQuery(), $workflow->getBindParams());
+
+        $new_date_event = $this->getEvent()->getInsertedTimestamp()->format('Y-m-d');
+        if (($new_date_event != $date_event) && (!in_array($new_date_event, $date_wf)))
+        {
+            $date_wf[] = $new_date_event;
+            $cache->setKey('date_wf', json_encode($date_wf));
+            $transaction = Transaction::getTransactionByIdAndDateEvent($cache->getId(), $date_event);
+            $transaction->addNewDate($date_wf);
+            $transaction->update();
+            DB::statement($transaction->getQuery(), $transaction->getBindParams());
+        }
+        return $cache->getCacheData();
+    }
+
+
+    public function createPayment(int $index = 0): array|null
+    {
+        // non è possibile creare un payment da una RESP che non trova occorrenze in cache
+        return [];
+    }
+
+    public function detailsPayment(CacheObject $cache, int $index = 0): array|null
+    {
+        // non è possibile aggiornare un payment da una RESP che non trova occorrenze in cache
+        return $cache->getCacheData();
     }
 }

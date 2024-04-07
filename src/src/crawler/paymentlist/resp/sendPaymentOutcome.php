@@ -1,15 +1,9 @@
 <?php
 
-namespace pagopa\crawler\paymentlist\req;
+namespace pagopa\crawler\paymentlist\resp;
 
-use pagopa\crawler\CacheObject;
 use pagopa\crawler\paymentlist\AbstractPaymentList;
 use pagopa\database\sherlock\TransactionRe;
-use Datetime;
-use pagopa\crawler\CacheInterface;
-use pagopa\database\sherlock\Transaction;
-use pagopa\database\sherlock\Workflow;
-use Illuminate\Database\Capsule\Manager as DB;
 
 class sendPaymentOutcome extends AbstractPaymentList
 {
@@ -19,13 +13,8 @@ class sendPaymentOutcome extends AbstractPaymentList
      */
     public function createEventInstance(array $eventData): void
     {
-        $event = new \pagopa\crawler\events\req\sendPaymentOutcome($eventData);
+        $event = new \pagopa\crawler\events\resp\sendPaymentOutcome($eventData);
         $this->setEvent($event);
-    }
-
-    public function runAnalysisSingleEvent(): void
-    {
-        // TODO: Implement runAnalysisSingleEvent() method.
     }
 
     /**
@@ -56,6 +45,7 @@ class sendPaymentOutcome extends AbstractPaymentList
     {
         $cache_key      =   $this->getEvent()->getCacheKeyAttempt();
         return $this->hasInCache($cache_key);
+
     }
 
     /**
@@ -129,23 +119,5 @@ class sendPaymentOutcome extends AbstractPaymentList
     public function runCompleteEvent(string $message = null): TransactionRe
     {
         return $this->getEvent()->getEventRowInstance()->loaded($message)->update();
-    }
-
-
-    public function updateTransaction(CacheObject $cache, int $index = 0): array|null
-    {
-        if (!$this->getEvent()->isValidPayload())
-        {
-            return $cache->getCacheData();
-        }
-        $id             =   $cache->getId();
-        $date_event     =   $cache->getDateEvent();
-
-        $transaction    =   Transaction::getTransactionByIdAndDateEvent($id, $date_event);
-        $transaction->setEsito($this->getEvent()->getMethodInterface()->outcome());
-        $transaction->update();
-        DB::statement($transaction->getQuery(), $transaction->getBindParams());
-        $cache->setKey('esito', true);
-        return $cache->getCacheData();
     }
 }

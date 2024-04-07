@@ -210,8 +210,7 @@ class sendPaymentOutcome extends AbstractEvent
         $iuv = $this->getIuv(0);
         $pa = $this->getPaEmittente(0);
         $token = $this->getPaymentToken(0);
-        $date = $this->getInsertedTimestamp()->format('Y-m-d');
-        return ($date && $iuv && $pa && $token);
+        return ($iuv && $pa && $token);
     }
 
     /**
