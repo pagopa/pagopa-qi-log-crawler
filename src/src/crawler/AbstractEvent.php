@@ -194,12 +194,6 @@ abstract class AbstractEvent implements EventInterface
     {
         return null;
     }
-
-    /**
-     * @inheritDoc
-     */
-    abstract public function getKey(int $index = 0): string|null;
-
     /**
      * @inheritDoc
      */
@@ -210,12 +204,6 @@ abstract class AbstractEvent implements EventInterface
 
 
     abstract public function workflowEvent(int $index = 0): Workflow|null;
-
-
-    /**
-     * @inheritDoc
-     */
-    abstract public function isValid(int $index = 0): bool;
 
     /**
      * @inheritDoc

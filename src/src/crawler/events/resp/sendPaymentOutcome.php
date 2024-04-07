@@ -3,9 +3,7 @@
 namespace pagopa\crawler\events\resp;
 
 use pagopa\crawler\AbstractEvent;
-use pagopa\crawler\FaultInterface;
 use pagopa\crawler\MapEvents;
-use pagopa\crawler\methods\MethodInterface;
 use pagopa\crawler\methods\resp\sendPaymentOutcome as Payload;
 use pagopa\database\sherlock\Transaction;
 use pagopa\database\sherlock\TransactionDetails;
@@ -147,14 +145,6 @@ class sendPaymentOutcome extends AbstractEvent
     /**
      * @inheritDoc
      */
-    public function getKey(int $index = 0): string|null
-    {
-        return '';
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function transaction(int $index = 0): Transaction|null
     {
         return null;
@@ -196,17 +186,6 @@ class sendPaymentOutcome extends AbstractEvent
         }
 
         return $workflow;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function isValid(int $index = 0): bool
-    {
-        $iuv = $this->getIuv(0);
-        $pa = $this->getPaEmittente(0);
-        $token = $this->getPaymentToken(0);
-        return ($iuv && $pa && $token);
     }
 
     /**

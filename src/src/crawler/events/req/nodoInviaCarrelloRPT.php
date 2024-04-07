@@ -152,20 +152,6 @@ class nodoInviaCarrelloRPT extends AbstractEvent
         $e = explode('_', $broker, 2);
         return $e[0];
     }
-
-    /**
-     * @inheritDoc
-     */
-    public function getKey(int $index = 0): string
-    {
-        $date           =   $this->getInsertedTimestamp()->format('Ymd');
-        $iuv            =   $this->getIuv($index);
-        $pa             =   $this->getPaEmittente($index);
-        $ccp            =   $this->getCcp($index);
-        $id_carrello    =   $this->getIdCarrello();
-        return base64_encode(sprintf('payment_%s_%s_%s_%s_%s', $date, $iuv, $pa, $ccp, $id_carrello));
-    }
-
     /**
      * @inheritDoc
      */
@@ -282,14 +268,6 @@ class nodoInviaCarrelloRPT extends AbstractEvent
         }
         $workflow->setFkTipoEvento(MapEvents::getMethodId($this->getTipoEvento(), $this->getSottoTipoEvento()));
         return $workflow;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function isValid(int $index = 0): bool
-    {
-        return !empty($this->getColumn('sessionidoriginal'));
     }
 
     /**

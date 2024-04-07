@@ -45,7 +45,6 @@ class sendPaymentOutcome extends AbstractPaymentList
     {
         $cache_key      =   $this->getEvent()->getCacheKeyAttempt();
         return $this->hasInCache($cache_key);
-
     }
 
     /**
@@ -55,54 +54,6 @@ class sendPaymentOutcome extends AbstractPaymentList
     {
         $cache_key      =   $this->getEvent()->getCacheKeyPayment();
         return $this->hasInCache($cache_key);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function isFoundOnDb(int $index = 0): bool
-    {
-        // TODO: Implement isFoundOnDb() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function runAttemptAlreadyEvaluated(int $index = 0): void
-    {
-        // TODO: Implement runAttemptAlreadyEvaluated() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function runCreateAttempt(int $index = 0): array
-    {
-        // TODO: Implement runCreateAttempt() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function runPaymentAlreadyEvaluated(int $index = 0): void
-    {
-        // TODO: Implement runPaymentAlreadyEvaluated() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function runCreatePayment(int $index = 0): array
-    {
-        // TODO: Implement runCreatePayment() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function runCopyPaymentToday(int $index = 0): void
-    {
-        // TODO: Implement runCopyPaymentToday() method.
     }
 
     /**

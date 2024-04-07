@@ -195,70 +195,9 @@ abstract class AbstractPaymentList implements PaymentListInterface
             foreach($events as $event)
             {
                 $this->createEventInstance((array) $event);
-                //$this->runAnalysisSingleEvent();
-                $this->runEvent();
+                $this->runAnalysisSingleEvent();
             }
-
-            //$this->runAnalysisSingleEvent();
-            // commit
-            // extract other events
-            // init transaction
-
     }
-
-
-    public function runAnalysisSingleEventaaa() : void
-    {
-        try {
-            // aggiustare l'update dell'evento , capire se mettere il ciclo dentro o fuori la validazione
-            $date_event = $this->getEvent()->getInsertedTimestamp()->format('Y-m-d');
-            if ($this->isValidPayment())
-            {
-                // se è ALMENO un pagamento
-                if ($this->isAttempt())
-                {
-                    // se è un tentativo
-                    if ($this->isAttemptInCache())
-                    {
-                        //se il tentativo è in cache, a parità di medesimo evento
-                        $this->runAttemptAlreadyEvaluated();
-                    }
-                    else
-                    {
-                        // creo il tentativo
-                        $this->runCreateAttempt();
-                    }
-                }
-                else
-                {
-                    if ($this->isPaymentInCache())
-                    {
-                        $this->runPaymentAlreadyEvaluated();
-                    }
-                    else
-                    {
-                        $this->runCreatePayment();
-                    }
-                }
-                $rowid = $this->getEvent()->getEventRowInstance()->loaded()->update();
-                DB::statement($rowid->getQuery(), $rowid->getBindParams());
-            }
-            else
-            {
-                $rowid = $this->getEvent()->getEventRowInstance()->reject('Evento non valido')->update();
-                DB::statement($rowid->getQuery(), $rowid->getBindParams());
-            }
-        }
-        catch (\Exception $e)
-        {
-            $rowid = $this->getEvent()->getEventRowInstance()->reject(substr($e->getMessage(), 0, 190))->update();
-            DB::statement($rowid->getQuery(), $rowid->getBindParams());
-        }
-    }
-
-    //abstract public function runAnalysisSingleEvent() : void;
-
-
 
     /**
      * @inheritDoc
@@ -327,37 +266,6 @@ abstract class AbstractPaymentList implements PaymentListInterface
     {
         return $this->search_on_db;
     }
-
-    /**
-     * @inheritDoc
-     */
-    abstract public function isFoundOnDb(int $index = 0): bool;
-
-    /**
-     * @inheritDoc
-     */
-    abstract public function runAttemptAlreadyEvaluated(int $index = 0): void;
-
-    /**
-     * @inheritDoc
-     */
-    abstract public function runCreateAttempt(int $index = 0): array;
-
-    /**
-     * @inheritDoc
-     */
-    abstract public function runPaymentAlreadyEvaluated(int $index = 0): void;
-
-    /**
-     * @inheritDoc
-     */
-    abstract public function runCreatePayment(int $index = 0): array;
-
-    /**
-     * @inheritDoc
-     */
-    abstract public function runCopyPaymentToday(int $index = 0): void;
-
     /**
      * @inheritDoc
      */
@@ -369,73 +277,7 @@ abstract class AbstractPaymentList implements PaymentListInterface
     abstract public function runCompleteEvent(string $message = null): TransactionRe;
 
 
-
     public function runAnalysisSingleEvent() : void
-    {
-        try {
-            $state      = 'LOADED';
-            $message    = null;
-            if ($this->isValidPayment())
-            {
-                // è un evento tentativo valido
-                if ($this->isAttempt())
-                {
-                    // è un tentativo
-                    if ($this->isAttemptInCache())
-                    {
-                        // il tentativo è già in cache
-                        $this->runAttemptAlreadyEvaluated();
-                    }
-                    else
-                    {
-                        // il tentativo non è in cache
-                        if ($this->isCreateTransactionEvent())
-                        {
-                            // è una primitiva che crea transazioni, e non è in cache, quindi è la prima volta che arriva sul nodo
-                            $this->runCreateAttempt();
-                        }
-                        else
-                        {
-                            // è una primitiva che non crea transazioni, non è in cache, che ci fa qui ? Rigetto
-                            // potrebbe essere una sendPayment arrivata con giorni di ritardo... capita.
-                            $state      = 'TO_SEARCH';
-                            $message    = 'Evento non associabile a nessun pagamento in cache, va ricercato';
-                        }
-                    }
-                }
-                else
-                {
-                    // è sicuramente un payment
-                    if ($this->isPaymentInCache())
-                    {
-                        // il pagamento è in cache
-                        $this->runPaymentAlreadyEvaluated();
-                    }
-                    else
-                    {
-                        $this->runCreatePayment();
-                    }
-                }
-            }
-            else
-            {
-                $state      = 'REJECTED';
-                $message    = 'Evento non valido';
-            }
-            $rowid = $this->getEvent()->getEventRowInstance()->setState($state, $message)->update();
-            DB::statement($rowid->getQuery(), $rowid->getBindParams());
-        }
-        catch (\Exception $e)
-        {
-            $state      = 'ERROR';
-            $message    = $e->getMessage();
-            $rowid = $this->getEvent()->getEventRowInstance()->setState($state, $message)->update();
-            DB::statement($rowid->getQuery(), $rowid->getBindParams());
-        }
-    }
-
-
-    public function runEvent()
     {
         try {
             $state      = 'LOADED';

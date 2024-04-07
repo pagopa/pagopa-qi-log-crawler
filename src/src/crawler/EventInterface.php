@@ -194,15 +194,6 @@ interface EventInterface
      */
     public function getIdCarrello() : string|null;
 
-
-    /**
-     * Restituisce una chiave utile per storicizzare i dati in cache
-     * @param int $index
-     * @return string|null
-     */
-    public function getKey(int $index = 0) : string|null;
-
-
     /**
      * Restituisce una istanza transaction per salvare la transazione sul db
      * @param int $index
@@ -225,15 +216,6 @@ interface EventInterface
      * @return Workflow|null
      */
     public function workflowEvent(int $index = 0) : Workflow|null;
-
-
-    /**
-     * Restituisce true/false se la transazione i-esima del carrello contiene elementi sufficienti
-     * @param int $index
-     * @return bool
-     */
-    public function isValid(int $index = 0) : bool;
-
 
     /**
      * Restituisce l'istanza che gestisce il payload dell'evento

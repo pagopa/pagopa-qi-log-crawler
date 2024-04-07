@@ -192,15 +192,6 @@ class activatePaymentNotice extends AbstractEvent
 
     /**
      * @param int $index
-     * @return string
-     */
-    public function getKey(int $index = 0): string
-    {
-        // TODO: Implement getKey() method.
-    }
-
-    /**
-     * @param int $index
      * @return \pagopa\database\sherlock\Transaction|null
      */
     public function transaction(int $index = 0): Transaction|null
@@ -250,22 +241,6 @@ class activatePaymentNotice extends AbstractEvent
         }
 
         return $transaction;
-    }
-
-    /**
-     * @param int $index
-     * @return bool
-     */
-    public function isValid(int $index = 0): bool
-    {
-        // un evento di activatePaymentNotice per essere valido deve contenere 4 valori
-        // data_event + iuv + pa_emittente + token_ccp
-        // se uno di questi 4 non è presente (=null) restituisco false
-        $iuv = $this->getIuv(0);
-        $pa = $this->getPaEmittente(0);
-        $token = $this->getPaymentToken(0);
-        $date = $this->getInsertedTimestamp()->format('Y-m-d');
-        return ($date && $iuv && $pa && $token);
     }
 
     /**

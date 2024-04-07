@@ -5,10 +5,7 @@ namespace pagopa\crawler\paymentlist\req;
 use pagopa\crawler\CacheObject;
 use pagopa\crawler\paymentlist\AbstractPaymentList;
 use pagopa\database\sherlock\TransactionRe;
-use Datetime;
-use pagopa\crawler\CacheInterface;
 use pagopa\database\sherlock\Transaction;
-use pagopa\database\sherlock\Workflow;
 use Illuminate\Database\Capsule\Manager as DB;
 
 class sendPaymentOutcome extends AbstractPaymentList
@@ -22,12 +19,6 @@ class sendPaymentOutcome extends AbstractPaymentList
         $event = new \pagopa\crawler\events\req\sendPaymentOutcome($eventData);
         $this->setEvent($event);
     }
-
-    public function runAnalysisSingleEvent(): void
-    {
-        // TODO: Implement runAnalysisSingleEvent() method.
-    }
-
     /**
      * @inheritDoc
      */
@@ -65,54 +56,6 @@ class sendPaymentOutcome extends AbstractPaymentList
     {
         $cache_key      =   $this->getEvent()->getCacheKeyPayment();
         return $this->hasInCache($cache_key);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function isFoundOnDb(int $index = 0): bool
-    {
-        // TODO: Implement isFoundOnDb() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function runAttemptAlreadyEvaluated(int $index = 0): void
-    {
-        // TODO: Implement runAttemptAlreadyEvaluated() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function runCreateAttempt(int $index = 0): array
-    {
-        // TODO: Implement runCreateAttempt() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function runPaymentAlreadyEvaluated(int $index = 0): void
-    {
-        // TODO: Implement runPaymentAlreadyEvaluated() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function runCreatePayment(int $index = 0): array
-    {
-        // TODO: Implement runCreatePayment() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function runCopyPaymentToday(int $index = 0): void
-    {
-        // TODO: Implement runCopyPaymentToday() method.
     }
 
     /**

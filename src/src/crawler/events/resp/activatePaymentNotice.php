@@ -3,7 +3,6 @@
 namespace pagopa\crawler\events\resp;
 
 use pagopa\crawler\AbstractEvent;
-use pagopa\crawler\FaultInterface;
 use pagopa\crawler\MapEvents;
 use pagopa\crawler\methods\resp\activatePaymentNotice as Payload;
 use pagopa\database\sherlock\Transaction;
@@ -145,15 +144,6 @@ class activatePaymentNotice extends AbstractEvent
         $canale = explode('_', $this->getCanale(), 2);
         return $canale[0];
     }
-
-    /**
-     * @inheritDoc
-     */
-    public function getKey(int $index = 0): string
-    {
-        return '';
-    }
-
     /**
      * @inheritDoc
      */
@@ -260,18 +250,6 @@ class activatePaymentNotice extends AbstractEvent
             $workflow->setOutcomeEvent($this->getMethodInterface()->outcome());
         }
         return $workflow;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function isValid(int $index = 0): bool
-    {
-        $iuv = $this->getIuv(0);
-        $pa = $this->getPaEmittente(0);
-        $token = $this->getPaymentToken(0);
-        $date = $this->getInsertedTimestamp()->format('Y-m-d');
-        return ($date && $iuv && $pa && $token);
     }
 
     /**

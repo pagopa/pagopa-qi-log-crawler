@@ -145,25 +145,9 @@ class nodoInviaCarrelloRPT extends AbstractEvent
     /**
      * @inheritDoc
      */
-    public function getKey(int $index = 0): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function transaction(int $index = 0): Transaction|null
     {
         return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function isValid(int $index = 0): bool
-    {
-        return !empty($this->getColumn('sessionidoriginal'));
     }
 
     /**
