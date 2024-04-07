@@ -358,4 +358,36 @@ class activatePaymentNotice extends AbstractEvent
 
         return base64_encode(sprintf('attempt_%s_%s_%s', $iuv, $pa_emittente, $token));
     }
+
+    /**
+     * @return bool
+     */
+    public function isFaultEvent(): bool
+    {
+        return false;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getFaultCode(): string|null
+    {
+        return null;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getFaultString(): string|null
+    {
+        return null;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getFaultDescription(): string|null
+    {
+        return null;
+    }
 }

@@ -249,4 +249,36 @@ class nodoInviaCarrelloRPT extends AbstractEvent
         $session        = $this->getSessionIdOriginal();
         return base64_encode(sprintf('sessionOriginal_%s', $session));
     }
+
+    /**
+     * @return bool
+     */
+    public function isFaultEvent(): bool
+    {
+        return $this->getMethodInterface()->isFaultEvent();
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getFaultCode(): string|null
+    {
+        return $this->getMethodInterface()->getFaultCode();
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getFaultString(): string|null
+    {
+        return $this->getMethodInterface()->getFaultString();
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getFaultDescription(): string|null
+    {
+        return $this->getMethodInterface()->getFaultDescription();
+    }
 }

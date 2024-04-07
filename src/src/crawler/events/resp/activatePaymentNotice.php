@@ -10,7 +10,7 @@ use pagopa\database\sherlock\Transaction;
 use pagopa\database\sherlock\TransactionDetails;
 use pagopa\database\sherlock\Workflow;
 
-class activatePaymentNotice extends AbstractEvent implements FaultInterface
+class activatePaymentNotice extends AbstractEvent
 {
 
 

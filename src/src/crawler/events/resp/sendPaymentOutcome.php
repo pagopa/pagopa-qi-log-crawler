@@ -11,7 +11,7 @@ use pagopa\database\sherlock\Transaction;
 use pagopa\database\sherlock\TransactionDetails;
 use pagopa\database\sherlock\Workflow;
 
-class sendPaymentOutcome extends AbstractEvent implements FaultInterface
+class sendPaymentOutcome extends AbstractEvent
 {
     /**
      * @var Payload
