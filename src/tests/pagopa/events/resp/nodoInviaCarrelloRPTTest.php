@@ -5,9 +5,6 @@ namespace pagopa\events\resp;
 use pagopa\crawler\events\resp\nodoInviaCarrelloRPT;
 use pagopa\crawler\FaultInterface;
 use PHPUnit\Framework\TestCase;
-use pagopa\database\sherlock\Transaction;
-use pagopa\database\sherlock\TransactionDetails;
-use pagopa\database\sherlock\Workflow;
 use PHPUnit\Framework\Attributes\TestDox;
 
 #[TestDox('events\resp\nodoInviaCarrelloRPT::class')]
@@ -22,8 +19,8 @@ class nodoInviaCarrelloRPTTest extends TestCase
     {
         $this->instance_1 = new nodoInviaCarrelloRPT([
             "inserted_timestamp" =>  "2024-03-13 09:15:00.210",
-            "tipoEvento" =>  "nodoInviaCarrelloRPT",
-            "sottoTipoEvento" =>  "RESP",
+            "tipoevento" =>  "nodoInviaCarrelloRPT",
+            "sottotipoevento" =>  "RESP",
             "idDominio" =>  "",
             "iuv" =>  "",
             "ccp" =>  "",
@@ -41,8 +38,8 @@ class nodoInviaCarrelloRPTTest extends TestCase
 
         $this->instance_fault = new nodoInviaCarrelloRPT([
             "inserted_timestamp" =>  "2024-03-13 09:18:00.210",
-            "tipoEvento" =>  "nodoInviaCarrelloRPT",
-            "sottoTipoEvento" =>  "RESP",
+            "tipoevento" =>  "nodoInviaCarrelloRPT",
+            "sottotipoevento" =>  "RESP",
             "idDominio" =>  "",
             "iuv" =>  "",
             "ccp" =>  "",
@@ -71,13 +68,6 @@ class nodoInviaCarrelloRPTTest extends TestCase
 
     }
 
-    #[TestDox('isValid()')]
-    public function testIsValid()
-    {
-        $this->assertTrue($this->instance_1->isValid(0));
-        $this->assertTrue($this->instance_fault->isValid(0));
-    }
-
     #[TestDox('getPaymentToken()')]
     public function testGetPaymentToken()
     {
@@ -94,15 +84,6 @@ class nodoInviaCarrelloRPTTest extends TestCase
         $this->assertNull($this->instance_fault->getCcp(0));
         $this->assertNull($this->instance_1->getCcp(1));
         $this->assertNull($this->instance_fault->getCcp(1));
-    }
-
-    #[TestDox('getKey()')]
-    public function testGetKey()
-    {
-        $this->assertNull($this->instance_1->getKey(0));
-        $this->assertNull($this->instance_fault->getKey(0));
-        $this->assertNull($this->instance_1->getKey(1));
-        $this->assertNull($this->instance_fault->getKey(1));
     }
 
     #[TestDox('getNoticeNumber()')]

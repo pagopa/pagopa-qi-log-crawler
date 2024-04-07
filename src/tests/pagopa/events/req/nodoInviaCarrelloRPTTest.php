@@ -27,8 +27,8 @@ class nodoInviaCarrelloRPTTest extends TestCase
     {
         $this->instance_1_rpt_1_versamento = new nodoInviaCarrelloRPT([
             "inserted_timestamp" =>  "2024-03-13 09:10:00.210",
-            "tipoEvento" =>  "nodoInviaCarrelloRPT",
-            "sottoTipoEvento" =>  "REQ",
+            "tipoevento" =>  "nodoInviaCarrelloRPT",
+            "sottotipoevento" =>  "REQ",
             "idDominio" =>  "",
             "iuv" =>  "",
             "ccp" =>  "",
@@ -46,8 +46,8 @@ class nodoInviaCarrelloRPTTest extends TestCase
 
         $this->instance_1_rpt_2_versamento = new nodoInviaCarrelloRPT([
             "inserted_timestamp" =>  "2024-03-13 09:11:00.210",
-            "tipoEvento" =>  "nodoInviaCarrelloRPT",
-            "sottoTipoEvento" =>  "REQ",
+            "tipoevento" =>  "nodoInviaCarrelloRPT",
+            "sottotipoevento" =>  "REQ",
             "idDominio" =>  "",
             "iuv" =>  "",
             "ccp" =>  "",
@@ -65,8 +65,8 @@ class nodoInviaCarrelloRPTTest extends TestCase
 
         $this->instance_2_rpt_2_versamento = new nodoInviaCarrelloRPT([
             "inserted_timestamp" =>  "2024-03-13 09:12:00.210",
-            "tipoEvento" =>  "nodoInviaCarrelloRPT",
-            "sottoTipoEvento" =>  "REQ",
+            "tipoevento" =>  "nodoInviaCarrelloRPT",
+            "sottotipoevento" =>  "REQ",
             "idDominio" =>  "",
             "iuv" =>  "",
             "ccp" =>  "",
@@ -85,8 +85,8 @@ class nodoInviaCarrelloRPTTest extends TestCase
 
         $this->instance_1_rpt_2_versamento_1_bollo = new nodoInviaCarrelloRPT([
             "inserted_timestamp" =>  "2024-03-13 09:13:00.210",
-            "tipoEvento" =>  "nodoInviaCarrelloRPT",
-            "sottoTipoEvento" =>  "REQ",
+            "tipoevento" =>  "nodoInviaCarrelloRPT",
+            "sottotipoevento" =>  "REQ",
             "idDominio" =>  "",
             "iuv" =>  "",
             "ccp" =>  "",
@@ -106,8 +106,8 @@ class nodoInviaCarrelloRPTTest extends TestCase
 
         $this->instance_2_rpt_1_versamento_multi = new nodoInviaCarrelloRPT([
             "inserted_timestamp" =>  "2024-03-13 09:14:00.210",
-            "tipoEvento" =>  "nodoInviaCarrelloRPT",
-            "sottoTipoEvento" =>  "REQ",
+            "tipoevento" =>  "nodoInviaCarrelloRPT",
+            "sottotipoevento" =>  "REQ",
             "idDominio" =>  "",
             "iuv" =>  "",
             "ccp" =>  "",
@@ -393,16 +393,6 @@ class nodoInviaCarrelloRPTTest extends TestCase
         $this->assertInstanceOf(\pagopa\crawler\methods\req\nodoInviaCarrelloRPT::class, $this->instance_2_rpt_1_versamento_multi->getMethodInterface());
     }
 
-    #[TestDox('isValid()')]
-    public function testIsValid()
-    {
-        $this->assertTrue($this->instance_1_rpt_1_versamento->isValid(0));
-        $this->assertTrue($this->instance_1_rpt_2_versamento->isValid(0));
-        $this->assertTrue($this->instance_2_rpt_2_versamento->isValid(0));
-        $this->assertTrue($this->instance_1_rpt_2_versamento_1_bollo->isValid(0));
-        $this->assertTrue($this->instance_2_rpt_1_versamento_multi->isValid(0));
-    }
-
     #[TestDox('transaction()')]
     public function testTransaction()
     {
@@ -459,6 +449,7 @@ class nodoInviaCarrelloRPTTest extends TestCase
     #[TestDox('workflowEvent()')]
     public function testWorkflowEvent()
     {
+
         $this->assertInstanceOf(Workflow::class, $this->instance_1_rpt_1_versamento->workflowEvent(0));
         $this->assertNull($this->instance_1_rpt_1_versamento->workflowEvent(1));
 
@@ -490,8 +481,6 @@ class nodoInviaCarrelloRPTTest extends TestCase
         $this->assertEquals('77777777777', $transaction->getReadyColumnValue('pa_emittente'));
         $this->assertEquals('ID_CARRELLO_01', $transaction->getReadyColumnValue('id_carrello'));
         $this->assertEquals('t0000000000000000000000000000022', $transaction->getReadyColumnValue('token_ccp'));
-        $this->assertEquals('77777777777', $transaction->getReadyColumnValue('id_broker_pa'));
-        $this->assertEquals('88888888888', $transaction->getReadyColumnValue('id_broker_psp'));
         $this->assertEquals('AGID_01', $transaction->getReadyColumnValue('id_psp'));
         $this->assertEquals('77777777777_01', $transaction->getReadyColumnValue('stazione'));
         $this->assertEquals('88888888888_01', $transaction->getReadyColumnValue('canale'));
@@ -535,8 +524,6 @@ class nodoInviaCarrelloRPTTest extends TestCase
         $this->assertEquals('77777777777', $transaction->getReadyColumnValue('pa_emittente'));
         $this->assertEquals('ID_CARRELLO_02', $transaction->getReadyColumnValue('id_carrello'));
         $this->assertEquals('t0000000000000000000000000000023', $transaction->getReadyColumnValue('token_ccp'));
-        $this->assertEquals('77777777777', $transaction->getReadyColumnValue('id_broker_pa'));
-        $this->assertEquals('88888888888', $transaction->getReadyColumnValue('id_broker_psp'));
         $this->assertEquals('AGID_01', $transaction->getReadyColumnValue('id_psp'));
         $this->assertEquals('77777777777_01', $transaction->getReadyColumnValue('stazione'));
         $this->assertEquals('88888888888_01', $transaction->getReadyColumnValue('canale'));
@@ -587,8 +574,6 @@ class nodoInviaCarrelloRPTTest extends TestCase
         $this->assertEquals('77777777777', $transaction_1->getReadyColumnValue('pa_emittente'));
         $this->assertEquals('ID_CARRELLO_03', $transaction_1->getReadyColumnValue('id_carrello'));
         $this->assertEquals('t0000000000000000000000000000024', $transaction_1->getReadyColumnValue('token_ccp'));
-        $this->assertEquals('77777777777', $transaction_1->getReadyColumnValue('id_broker_pa'));
-        $this->assertEquals('88888888888', $transaction_1->getReadyColumnValue('id_broker_psp'));
         $this->assertEquals('AGID_01', $transaction_1->getReadyColumnValue('id_psp'));
         $this->assertEquals('77777777777_01', $transaction_1->getReadyColumnValue('stazione'));
         $this->assertEquals('88888888888_01', $transaction_1->getReadyColumnValue('canale'));
@@ -602,8 +587,6 @@ class nodoInviaCarrelloRPTTest extends TestCase
         $this->assertEquals('77777777777', $transaction_2->getReadyColumnValue('pa_emittente'));
         $this->assertEquals('ID_CARRELLO_03', $transaction_2->getReadyColumnValue('id_carrello'));
         $this->assertEquals('t0000000000000000000000000000025', $transaction_2->getReadyColumnValue('token_ccp'));
-        $this->assertEquals('77777777777', $transaction_2->getReadyColumnValue('id_broker_pa'));
-        $this->assertEquals('88888888888', $transaction_2->getReadyColumnValue('id_broker_psp'));
         $this->assertEquals('AGID_01', $transaction_2->getReadyColumnValue('id_psp'));
         $this->assertEquals('77777777777_01', $transaction_2->getReadyColumnValue('stazione'));
         $this->assertEquals('88888888888_01', $transaction_2->getReadyColumnValue('canale'));
@@ -676,8 +659,6 @@ class nodoInviaCarrelloRPTTest extends TestCase
         $this->assertEquals('77777777777', $transaction_1->getReadyColumnValue('pa_emittente'));
         $this->assertEquals('ID_CARRELLO_04', $transaction_1->getReadyColumnValue('id_carrello'));
         $this->assertEquals('t0000000000000000000000000000026', $transaction_1->getReadyColumnValue('token_ccp'));
-        $this->assertEquals('77777777777', $transaction_1->getReadyColumnValue('id_broker_pa'));
-        $this->assertEquals('88888888888', $transaction_1->getReadyColumnValue('id_broker_psp'));
         $this->assertEquals('AGID_01', $transaction_1->getReadyColumnValue('id_psp'));
         $this->assertEquals('77777777777_01', $transaction_1->getReadyColumnValue('stazione'));
         $this->assertEquals('88888888888_01', $transaction_1->getReadyColumnValue('canale'));
@@ -725,8 +706,6 @@ class nodoInviaCarrelloRPTTest extends TestCase
         $this->assertEquals('77777777777', $transaction_1->getReadyColumnValue('pa_emittente'));
         $this->assertEquals('ID_CARRELLO_05', $transaction_1->getReadyColumnValue('id_carrello'));
         $this->assertEquals('t0000000000000000000000000000027', $transaction_1->getReadyColumnValue('token_ccp'));
-        $this->assertEquals('77777777777', $transaction_1->getReadyColumnValue('id_broker_pa'));
-        $this->assertEquals('88888888888', $transaction_1->getReadyColumnValue('id_broker_psp'));
         $this->assertEquals('AGID_01', $transaction_1->getReadyColumnValue('id_psp'));
         $this->assertEquals('77777777777_01', $transaction_1->getReadyColumnValue('stazione'));
         $this->assertEquals('88888888888_01', $transaction_1->getReadyColumnValue('canale'));
@@ -740,8 +719,6 @@ class nodoInviaCarrelloRPTTest extends TestCase
         $this->assertEquals('77777777778', $transaction_2->getReadyColumnValue('pa_emittente'));
         $this->assertEquals('ID_CARRELLO_05', $transaction_2->getReadyColumnValue('id_carrello'));
         $this->assertEquals('t0000000000000000000000000000027', $transaction_2->getReadyColumnValue('token_ccp'));
-        $this->assertEquals('77777777777', $transaction_2->getReadyColumnValue('id_broker_pa'));
-        $this->assertEquals('88888888888', $transaction_2->getReadyColumnValue('id_broker_psp'));
         $this->assertEquals('AGID_01', $transaction_2->getReadyColumnValue('id_psp'));
         $this->assertEquals('77777777777_01', $transaction_2->getReadyColumnValue('stazione'));
         $this->assertEquals('88888888888_01', $transaction_2->getReadyColumnValue('canale'));

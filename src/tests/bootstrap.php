@@ -8,6 +8,7 @@ use pagopa\database\sherlock\Workflow;
 
 
 
+
 class GetInfoFromDb
 {
 
@@ -110,3 +111,7 @@ class GetInfoFromDb
     }
 
 }
+
+$fake_init = new GetInfoFromDb();
+
+\pagopa\crawler\MapEvents::init();
