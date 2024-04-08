@@ -26,7 +26,8 @@ class sendPaymentOutcome extends AbstractEvent
      */
     public function getPaEmittente(int $index = 0): string|null
     {
-        return $this->getColumn('iddominio');
+        $pa = $this->getColumn('iddominio');
+        return (empty($pa)) ? null : $pa;
     }
 
     /**
@@ -34,7 +35,8 @@ class sendPaymentOutcome extends AbstractEvent
      */
     public function getIuv(int $index = 0): string|null
     {
-        return $this->getColumn('iuv');
+        $iuv = $this->getColumn('iuv');
+        return (empty($iuv)) ? null : $iuv;
     }
 
     /**
@@ -42,7 +44,8 @@ class sendPaymentOutcome extends AbstractEvent
      */
     public function getCcp(int $index = 0): string|null
     {
-        return $this->getColumn('ccp');
+        $ccp = $this->getColumn('ccp');
+        return (empty($ccp)) ? null : $ccp;
     }
 
     /**
@@ -50,7 +53,8 @@ class sendPaymentOutcome extends AbstractEvent
      */
     public function getNoticeNumber(int $index = 0): string|null
     {
-        return $this->getColumn('noticenumber');
+        $notice_id = $this->getColumn('noticenumber');
+        return (empty($notice_id)) ? null : $notice_id;
     }
 
     /**
@@ -58,7 +62,8 @@ class sendPaymentOutcome extends AbstractEvent
      */
     public function getCreditorReferenceId(int $index = 0): string|null
     {
-        return $this->getColumn('creditorreferenceid');
+        $iuv = $this->getColumn('creditorreferenceid');
+        return (empty($iuv)) ? null : $iuv;
     }
 
     /**
@@ -66,7 +71,8 @@ class sendPaymentOutcome extends AbstractEvent
      */
     public function getPaymentToken(int $index = 0): string|null
     {
-        return $this->getColumn('paymenttoken');
+        $token = $this->getColumn('paymenttoken');
+        return (empty($token)) ? null : $token;
     }
 
     /**

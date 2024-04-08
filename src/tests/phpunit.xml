@@ -23,7 +23,6 @@
     </php>
     <testsuites>
         <testsuite name="temp_suite">
-            <file>process/crawler/sendPaymentOutcome/T00030_WorkflowPaymentMod3New2TransferSPOOK.php</file>
         </testsuite>
         <testsuite name="crawler">
             <file>process/crawler/activatePaymentNotice/SingleEvent/T00001_CreateAttemptAllInfoInEvent.php</file>
@@ -51,6 +50,10 @@
             <file>process/crawler/nodoInviaCarrelloRPT/BothEvents/T00028_CreateAttemptOneRPTTwoTransferWithFaultCodeInResponse.php</file>
             <file>process/crawler/nodoInviaCarrelloRPT/BothEvents/T00029_CreateAttemptOneRPTTwoTransferWithSessionIdOriginalNotFound.php</file>
             <file>process/crawler/sendPaymentOutcome/T00030_WorkflowPaymentMod3New2TransferSPOOK.php</file>
+            <file>process/crawler/sendPaymentOutcome/T00031_WorkflowPaymentMod3New2TransferSPOKO.php</file>
+            <file>process/crawler/sendPaymentOutcome/T00032_WorkflowPaymentMod3New2TransferSPOOKAndKO.php</file>
+            <file>process/crawler/sendPaymentOutcome/T00033_WorkflowPaymentMod3New1TransferMultipleSPOOK.php</file>
+            <file>process/crawler/sendPaymentOutcome/T00034_WorkflowPaymentMod3New1TransferSPOAnotherDay.php</file>
         </testsuite>
         <testsuite name="unit_tests">
             <file>pagopa/database/SingleRowTest.php</file>
@@ -58,10 +61,14 @@
             <file>pagopa/methods/resp/activatePaymentNoticeTest.php</file>
             <file>pagopa/methods/req/nodoInviaCarrelloRPTTest.php</file>
             <file>pagopa/methods/resp/nodoInviaCarrelloRPTTest.php</file>
+            <file>pagopa/methods/req/sendPaymentOutcomeTest.php</file>
+            <file>pagopa/methods/resp/sendPaymentOutcomeTest.php</file>
             <file>pagopa/events/req/activatePaymentNoticeTest.php</file>
             <file>pagopa/events/resp/activatePaymentNoticeTest.php</file>
             <file>pagopa/events/req/nodoInviaCarrelloRPTTest.php</file>
             <file>pagopa/events/resp/nodoInviaCarrelloRPTTest.php</file>
+            <file>pagopa/events/req/sendPaymentOutcomeTest.php</file>
+            <file>pagopa/events/resp/sendPaymentOutcomeTest.php</file>
         </testsuite>
         <testsuite name="process">
             <file>process/normal/T0001.php</file>

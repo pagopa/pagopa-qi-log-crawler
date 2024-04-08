@@ -77,7 +77,7 @@ class sendPaymentOutcome extends AbstractPaymentList
 
     public function updateTransaction(CacheObject $cache, int $index = 0): array|null
     {
-        if (!$this->getEvent()->isValidPayload())
+        if ((!$this->getEvent()->isValidPayload()) || ($cache->getEsito()))
         {
             return $cache->getCacheData();
         }

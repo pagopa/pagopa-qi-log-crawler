@@ -167,6 +167,7 @@ class sendPaymentOutcome extends AbstractEvent
         $stazione   = $this->getStazione();
         $canale     = $this->getCanale();
         $outcome    = $this->getMethodInterface()->outcome();
+        $faultcode  = $this->getMethodInterface()->getFaultCode();
 
         if (!is_null($id_psp))
         {
@@ -183,6 +184,10 @@ class sendPaymentOutcome extends AbstractEvent
         if (!is_null($outcome))
         {
             $workflow->setOutcomeEvent($outcome);
+        }
+        if (!is_null($faultcode))
+        {
+            $workflow->setFaultCode($faultcode);
         }
 
         return $workflow;

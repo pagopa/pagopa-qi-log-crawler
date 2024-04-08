@@ -1,3 +1,6 @@
 #!/bin/bash
 
-./vendor/bin/phpunit -c tests/phpunit.xml --testsuite unit_tests
+TEST_SUITE="temp_suite"
+TEST_SUITE="unit_tests"
+
+./vendor/bin/phpunit -c tests/phpunit.xml --testsuite ${TEST_SUITE}
