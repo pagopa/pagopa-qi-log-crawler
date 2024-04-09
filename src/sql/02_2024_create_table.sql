@@ -85,10 +85,10 @@ create table if not exists public.metadata_2024 (
     fk_transfer         bigint              not null,
     meta_key            varchar(140)        not null,
     meta_value          varchar(140)        not null,
+    method_name         varchar(30)         not null,
     constraint "METADATA_2024_pk" primary key (date_event, id)
 )
 PARTITION BY RANGE (date_event);
-
 
 create table if not exists public.mapped_events (
     tipo_evento         varchar(50)         not null,
