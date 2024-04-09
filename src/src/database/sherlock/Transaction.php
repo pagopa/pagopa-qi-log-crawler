@@ -199,6 +199,28 @@ class Transaction extends SingleRow
         return $this;
     }
 
+    /**
+     * Configura la commissione della transazione
+     * @param string $fee
+     * @return $this
+     */
+    public function setFee(string $fee) : self
+    {
+        $this->setNewColumnValue('fee', $fee);
+        return $this;
+    }
+
+    /**
+     * Configura il payment type della transazione
+     * @param string $payment_type
+     * @return $this
+     */
+    public function setPaymentType(string $payment_type) : self
+    {
+        $this->setNewColumnValue('payment_type', $payment_type);
+        return $this;
+    }
+
     public function addNewDate($date) : self
     {
         $encode = json_encode($date);
