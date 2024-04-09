@@ -210,4 +210,56 @@ interface MethodInterface
     public function outcome() : string|null;
 
 
+    /**
+     * Restituisce il numero di metadata del pagamento
+     * @param int $index
+     * @return string|null
+     */
+    public function getPaymentMetaDataCount(int $index = 0) : string|null;
+
+    /**
+     * Restituisce il metadata alla posizione $metaKey del pagamento $index gestito dall'evento
+     * @param int $index
+     * @param int $metaKey
+     * @return string|null
+     */
+    public function getPaymentMetaDataKey(int $index = 0, int $metaKey = 0) : string|null;
+
+
+    /**
+     * Restituisce il valore del metadata alla posizione $metakey del pagamento $index gestito dall'evento
+     * @param int $index
+     * @param int $metaKey
+     * @return string|null
+     */
+    public function getPaymentMetaDataValue(int $index = 0, int $metaKey = 0) : string|null;
+
+
+    /**
+     * Restituisce il numero di metadata del transfer $transfer relativo al pagamento $index gestito dall'evento
+     * @param int $transfer
+     * @param int $index
+     * @return string|null
+     */
+    public function getTransferMetaDataCount(int $transfer = 0, int $index = 0) : string|null;
+
+    /**
+     * Restituisce la chiave del metadata alla posizione $metakey del pagamento $index gestito dall'evento relativo al transfer numero $transfer
+     * @param int $transfer
+     * @param int $index
+     * @param int $metaKey
+     * @return string|null
+     */
+    public function getTransferMetaDataKey(int $transfer = 0, int $index = 0, int $metaKey = 0) : string|null;
+
+    /**
+     * Restituisce il valore del metadata alla posizione $metakey del pagamento $index gestito dall'evento relativo al transfer numero $transfer
+     * @param int $transfer
+     * @param int $index
+     * @param int $metaKey
+     * @return string|null
+     */
+    public function getTransferMetaDataValue(int $transfer = 0, int $index = 0, int $metaKey = 0) : string|null;
+
+
 }
