@@ -41,4 +41,5 @@ obj/
 # php composer package
 /src/vendor/
 /src/vendor/**/.git
+/src/tests/.phpunit.result.cache
 
