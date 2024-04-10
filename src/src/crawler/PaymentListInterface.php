@@ -306,4 +306,13 @@ interface PaymentListInterface
      * @return array|null
      */
     public function updateMetadataDetails(CacheObject $cache, int $index = 0): array|null;
+
+
+    /**
+     * Esegue il metodo per aggiungere informazioni extra in formato metadata al pagamento
+     * @param CacheObject $cache
+     * @param int $index
+     * @return array|null
+     */
+    public function createExtraInfo(CacheObject $cache, int $index = 0): array|null;
 }

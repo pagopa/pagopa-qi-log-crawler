@@ -27,6 +27,7 @@ class CacheObject
             'transfer_added'    =>  false,
             'esito'             =>  false,
             'amount_update'     =>  false,
+            'extra_info'        => array(),
             'transfer_list'     => array(),
             'm_payment'         => array(),
             'm_transfer'        => array(),
@@ -333,6 +334,25 @@ class CacheObject
     public function setMetadataTransfer(array $transfer_list_metadata) : void
     {
         $this->setKey('m_transfer', $transfer_list_metadata);
+    }
+
+    /**
+     * Restituisce le info extra presenti nell'oggetto in cache
+     * @return array
+     */
+    public function getExtraInfo() : array
+    {
+        return $this->getKey('extra_info');
+    }
+
+    /**
+     * Configura le extra info aggiunte per il pagamento al fine di salvarle in cache
+     * @param array $extra_info
+     * @return void
+     */
+    public function setExtraInfo(array $extra_info) : void
+    {
+        $this->setKey('extra_info', $extra_info);
     }
 
     public function getCacheData() : array
