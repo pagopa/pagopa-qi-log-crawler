@@ -81,11 +81,11 @@ PARTITION BY RANGE (date_event);
 create table if not exists public.metadata_2024 (
     id                  bigint              default nextval('public.metadata_2024_id_seq'::regclass) not null,
     date_event          date                not null,
-    fk_payment          bigint              not null,
-    fk_transfer         bigint              not null,
+    fk_payment          bigint              null,
+    fk_transfer         bigint              null,
     meta_key            varchar(140)        not null,
     meta_value          varchar(140)        not null,
-    method_name         varchar(30)         not null,
+    method_name         transfer_type       not null,
     constraint "METADATA_2024_pk" primary key (date_event, id)
 )
 PARTITION BY RANGE (date_event);

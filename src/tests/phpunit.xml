@@ -20,6 +20,7 @@
         <const name="TRANSACTION_DETAILS_TABLE" value="transaction_details_%s" />
         <const name="TRANSACTION_EVENTS_TABLE" value="transaction_events_%s" />
         <const name="TRANSACTION_RE_TABLE" value="transaction_re_%s" />
+        <const name="METADATA_TABLE" value="metadata_%s" />
     </php>
     <testsuites>
         <testsuite name="temp_suite">
@@ -39,6 +40,7 @@
             <file>process/crawler/activatePaymentNotice/BothEvents/T00013_CreateAttemptReqRespOneTransferNotAllInfoEvent.php</file>
             <file>process/crawler/activatePaymentNotice/BothEvents/T00014_CreateAttemptReqRespTwoTransferNotAllInfoEvent.php</file>
             <file>process/crawler/activatePaymentNotice/BothEvents/T00015_CreatePaymentReqRespWithAllInfoAndFaultCode.php</file>
+            <file>process/crawler/activatePaymentNotice/BothEvents/T00016_CreateAttemptWith3TransferAndMetadata.php</file>
             <file>process/crawler/nodoInviaCarrelloRPT/SingleEvent/T00020_CreateAttemptOneRPTOneTransfer.php</file>
             <file>process/crawler/nodoInviaCarrelloRPT/SingleEvent/T00021_CreateAttemptOneRPTTwoTransfer.php</file>
             <file>process/crawler/nodoInviaCarrelloRPT/SingleEvent/T00022_CreateAttemptTwoRPTTwoTransfer.php</file>

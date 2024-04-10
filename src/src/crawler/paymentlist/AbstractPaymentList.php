@@ -301,6 +301,7 @@ abstract class AbstractPaymentList implements PaymentListInterface
                             {
                                 $refresh_cache = $this->updateTransaction(new CacheObject($cache_value), $ck);
                                 $refresh_cache = $this->updateDetails(new CacheObject($refresh_cache), $ck);
+                                $refresh_cache = $this->updateMetadataDetails(new CacheObject($refresh_cache), $ck);
                                 $refresh_cache = $this->workflow(new CacheObject($refresh_cache), $ck);
                                 $new_cache_data[] = $refresh_cache;
                                 // add/update details to $cache_value and return new value
@@ -320,6 +321,7 @@ abstract class AbstractPaymentList implements PaymentListInterface
                             {
                                 $refresh_cache = $this->createTransaction($i);
                                 $refresh_cache = $this->detailsTransaction(new CacheObject($refresh_cache), $i);
+                                $refresh_cache = $this->createMetadataDetails(new CacheObject($refresh_cache), $i);
                                 $refresh_cache = $this->workflow(new CacheObject($refresh_cache), $i);
                                 $this->addValueCache($cache_key,$refresh_cache);
                                 // create transaction and return a new cache value
@@ -350,6 +352,7 @@ abstract class AbstractPaymentList implements PaymentListInterface
                         {
                             $refresh_cache = $this->updateTransaction(new CacheObject($cache_value), $ck);
                             $refresh_cache = $this->updateDetails(new CacheObject($refresh_cache), $ck);
+                            $refresh_cache = $this->updateMetadataDetails(new CacheObject($refresh_cache), $ck);
                             $refresh_cache = $this->workflow(new CacheObject($refresh_cache), $ck);
                             $new_cache_data[] = $refresh_cache;
                             // add/update details to $cache_value and return new value
@@ -490,6 +493,29 @@ abstract class AbstractPaymentList implements PaymentListInterface
      * @return array|null
      */
     public function updateTransaction(CacheObject $cache, int $index = 0): array|null
+    {
+        return $cache->getCacheData();
+    }
+
+
+    /**
+     * @inheritDoc
+     * @param CacheObject $cache
+     * @param int $index
+     * @return array|null
+     */
+    public function createMetadataDetails(CacheObject $cache, int $index = 0): array|null
+    {
+        return $cache->getCacheData();
+    }
+
+    /**
+     * @inheritDoc
+     * @param CacheObject $cache
+     * @param int $index
+     * @return array|null
+     */
+    public function updateMetadataDetails(CacheObject $cache, int $index = 0): array|null
     {
         return $cache->getCacheData();
     }

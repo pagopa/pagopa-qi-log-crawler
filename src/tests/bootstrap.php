@@ -5,6 +5,7 @@ use pagopa\database\sherlock\Transaction;
 use pagopa\database\sherlock\TransactionRe;
 use pagopa\database\sherlock\TransactionDetails;
 use pagopa\database\sherlock\Workflow;
+use \pagopa\database\sherlock\Metadata;
 
 
 
@@ -95,6 +96,26 @@ class GetInfoFromDb
             $collect[] = new Workflow($date, (array) $details);
         }
 
+        return (array_key_exists($index, $collect)) ? $collect[$index] : null;
+    }
+
+
+    public function getMetadataTransfer(TransactionDetails $details, int $index) : Metadata|null
+    {
+        $date = new DateTime($details->getColumnValue('date_event'));
+        $ymd = $date->format('Y_m_d');
+        $table = sprintf(METADATA_TABLE, $ymd);
+        $result = Capsule::table($table)
+            ->where('fk_payment', '=', $details->getColumnValue('fk_payment'))
+            ->where('fk_transfer', '=', $details->getColumnValue('id'))
+            ->orderBy('id', 'asc')
+            ->get();
+
+        $collect = [];
+        foreach($result as $details)
+        {
+            $collect[] = new Metadata($date, (array) $details);
+        }
         return (array_key_exists($index, $collect)) ? $collect[$index] : null;
     }
 

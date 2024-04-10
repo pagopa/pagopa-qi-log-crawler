@@ -288,4 +288,22 @@ interface PaymentListInterface
      * @return array|null
      */
     public function detailsPayment(CacheObject $cache, int $index = 0): array|null;
+
+
+    /**
+     * Inserisce i transfer di un tentativo
+     * @param CacheObject $cache
+     * @param int $index
+     * @return array|null
+     */
+    public function createMetadataDetails(CacheObject $cache, int $index = 0): array|null;
+
+
+    /**
+     * Aggiorna i transfer di un tentativo se necessario
+     * @param CacheObject $cache
+     * @param int $index
+     * @return array|null
+     */
+    public function updateMetadataDetails(CacheObject $cache, int $index = 0): array|null;
 }

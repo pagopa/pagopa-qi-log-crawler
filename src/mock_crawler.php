@@ -17,6 +17,8 @@ const TRANSACTION_DETAILS_TABLE     = "transaction_details_%s";
 const TRANSACTION_EVENTS_TABLE      = "transaction_events_%s";
 const TRANSACTION_RE_TABLE          = "transaction_re_%s";
 
+const METADATA_TABLE                = "metadata_%s";
+
 $capsule = new Capsule;
 
 $capsule->addConnection([

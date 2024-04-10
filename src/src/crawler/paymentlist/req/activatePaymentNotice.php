@@ -2,6 +2,7 @@
 
 namespace pagopa\crawler\paymentlist\req;
 
+use pagopa\crawler\CacheObject;
 use pagopa\crawler\paymentlist\AbstractPaymentList;
 use pagopa\database\sherlock\TransactionRe;
 use Illuminate\Database\Capsule\Manager as DB;
@@ -96,18 +97,14 @@ class activatePaymentNotice extends AbstractPaymentList
         DB::statement($transaction->getQuery(), $transaction->getBindParams());
         $last_inserted_id = DB::connection()->getPdo()->lastInsertId();
 
-        $cache_value    =   [
-            'date_event'        =>  $date_event,
-            'id'                =>  $last_inserted_id,
-            'iuv'               =>  $this->getEvent()->getIuv(0),
-            'pa_emittente'      =>  $this->getEvent()->getPaEmittente(0),
-            'token_ccp'         =>  $token,
-            'transfer_added'    =>  false,
-            'esito'             =>  false,
-            'amount_update'     =>  false,
-            'date_wf'           => json_encode(array())
-        ];
-        return $cache_value;
+        $cache_value = CacheObject::createInstance();
+        $cache_value->setDateEvent($date_event);
+        $cache_value->setId($last_inserted_id);
+        $cache_value->setIuv($this->getEvent()->getIuv(0));
+        $cache_value->setPaEmittente($this->getEvent()->getPaEmittente(0));
+        $cache_value->setToken($token);
+
+        return $cache_value->getCacheData();
     }
 
     public function createPayment(int $index = 0): array|null
@@ -124,15 +121,15 @@ class activatePaymentNotice extends AbstractPaymentList
         DB::statement($transaction->getQuery(), $transaction->getBindParams());
         $last_inserted_id = DB::connection()->getPdo()->lastInsertId();
 
-        return [
-            'date_event'        =>  $date_event,
-            'id'                =>  $last_inserted_id,
-            'iuv'               =>  $iuv,
-            'pa_emittente'      =>  $pa_emittente,
-            'transfer_added'    =>  false,
-            'amount_update'     =>  false,
-            'esito'             =>  false,
-            'date_wf'           => json_encode(array())
-        ];
+
+        $cache_value = CacheObject::createInstance();
+        $cache_value->setDateEvent($date_event);
+        $cache_value->setId($last_inserted_id);
+        $cache_value->setIuv($iuv);
+        $cache_value->setPaEmittente($pa_emittente);
+        $cache_value->deleteKey('token_ccp');
+        $cache_value->deleteKey('transfer_list');
+        $cache_value->deleteKey('metadata_payment');
+        return $cache_value->getCacheData();
     }
 }

@@ -518,7 +518,18 @@ class activatePaymentNotice implements MethodInterface, FaultInterface
      */
     public function getTransferMetaDataCount(int $transfer = 0, int $index = 0): string|null
     {
-        return null;
+        $transfer_number = $this->getTransferNumber($transfer);
+        $xml = new XMLReader();
+        $xml->XML($transfer_number);
+        $count = 0;
+        while($xml->read())
+        {
+            if (($xml->nodeType == XMLReader::ELEMENT) && (strtolower($xml->localName) == 'mapentry'))
+            {
+                $count++;
+            }
+        }
+        return $count;
     }
 
     /**
@@ -529,6 +540,21 @@ class activatePaymentNotice implements MethodInterface, FaultInterface
      */
     public function getTransferMetaDataKey(int $transfer = 0, int $index = 0, int $metaKey = 0): string|null
     {
+        $transfer_number = $this->getTransferNumber($transfer);
+        $xml = new XMLReader();
+        $xml->XML($transfer_number);
+        $count = 0;
+        while($xml->read())
+        {
+            if (($xml->nodeType == XMLReader::ELEMENT) && (strtolower($xml->localName) == 'key'))
+            {
+                if ($count == $metaKey)
+                {
+                    return $xml->readString();
+                }
+                $count++;
+            }
+        }
         return null;
     }
 
@@ -540,6 +566,21 @@ class activatePaymentNotice implements MethodInterface, FaultInterface
      */
     public function getTransferMetaDataValue(int $transfer = 0, int $index = 0, int $metaKey = 0): string|null
     {
+        $transfer_number = $this->getTransferNumber($transfer);
+        $xml = new XMLReader();
+        $xml->XML($transfer_number);
+        $count = 0;
+        while($xml->read())
+        {
+            if (($xml->nodeType == XMLReader::ELEMENT) && (strtolower($xml->localName) == 'value'))
+            {
+                if ($count == $metaKey)
+                {
+                    return $xml->readString();
+                }
+                $count++;
+            }
+        }
         return null;
     }
 }
