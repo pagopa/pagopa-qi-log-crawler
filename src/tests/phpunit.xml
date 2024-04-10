@@ -5,6 +5,7 @@
         displayDetailsOnTestsThatTriggerDeprecations="true"
         displayDetailsOnSkippedTests="true"
         displayDetailsOnIncompleteTests="true"
+        beStrictAboutTestsThatDoNotTestAnything="false"
         colors="true"
         testdox="true"
         bootstrap="bootstrap.php">
@@ -24,6 +25,7 @@
     </php>
     <testsuites>
         <testsuite name="temp_suite">
+            <file>process/crawler/pspInviaCarrelloRPT/T00042_UpdatePspWithNodoInviaCarrelloRPT_2_RPT.php</file>
         </testsuite>
         <testsuite name="crawler">
             <file>process/crawler/activatePaymentNotice/SingleEvent/T00001_CreateAttemptAllInfoInEvent.php</file>
@@ -56,6 +58,9 @@
             <file>process/crawler/sendPaymentOutcome/T00032_WorkflowPaymentMod3New2TransferSPOOKAndKO.php</file>
             <file>process/crawler/sendPaymentOutcome/T00033_WorkflowPaymentMod3New1TransferMultipleSPOOK.php</file>
             <file>process/crawler/sendPaymentOutcome/T00034_WorkflowPaymentMod3New1TransferSPOAnotherDay.php</file>
+            <file>process/crawler/pspInviaCarrelloRPT/T00040_UpdatePspWithNodoInviaCarrelloRPT_1_RPT.php</file>
+            <file>process/crawler/pspInviaCarrelloRPT/T00041_UpdatePspWithNodoInviaCarrelloRPT_1_RPT_FaultCode.php</file>
+            <file>process/crawler/pspInviaCarrelloRPT/T00042_UpdatePspWithNodoInviaCarrelloRPT_2_RPT.php</file>
         </testsuite>
         <testsuite name="unit_tests">
             <file>pagopa/database/SingleRowTest.php</file>
@@ -65,12 +70,16 @@
             <file>pagopa/methods/resp/nodoInviaCarrelloRPTTest.php</file>
             <file>pagopa/methods/req/sendPaymentOutcomeTest.php</file>
             <file>pagopa/methods/resp/sendPaymentOutcomeTest.php</file>
+            <file>pagopa/methods/req/pspInviaCarrelloRPTTest.php</file>
+            <file>pagopa/methods/resp/pspInviaCarrelloRPTTest.php</file>
             <file>pagopa/events/req/activatePaymentNoticeTest.php</file>
             <file>pagopa/events/resp/activatePaymentNoticeTest.php</file>
             <file>pagopa/events/req/nodoInviaCarrelloRPTTest.php</file>
             <file>pagopa/events/resp/nodoInviaCarrelloRPTTest.php</file>
             <file>pagopa/events/req/sendPaymentOutcomeTest.php</file>
             <file>pagopa/events/resp/sendPaymentOutcomeTest.php</file>
+            <file>pagopa/events/req/pspInviaCarrelloRPTTest.php</file>
+            <file>pagopa/events/resp/pspInviaCarrelloRPTTest.php</file>
         </testsuite>
         <testsuite name="process">
             <file>process/normal/T0001.php</file>

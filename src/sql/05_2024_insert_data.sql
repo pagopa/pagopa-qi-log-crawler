@@ -4,7 +4,9 @@ INSERT INTO mapped_events(tipo_evento,sotto_tipo_evento ,fk_event) values
     ('nodoInviaCarrelloRPT'     , 'REQ' ,   3),
     ('nodoInviaCarrelloRPT'     , 'RESP',   4),
     ('sendPaymentOutcome'       , 'REQ' ,   5),
-    ('sendPaymentOutcome'       , 'RESP',   6);
+    ('sendPaymentOutcome'       , 'RESP',   6),
+    ('pspInviaCarrelloRPT'      , 'REQ' ,   7),
+    ('pspInviaCarrelloRPT'      , 'RESP',   8);
 
 insert into mapped_payment_methods (tipoversamento, descrizione) values
     ('CC', 'Carta di Credito'),

@@ -6,9 +6,8 @@ use pagopa\crawler\FaultInterface;
 use pagopa\crawler\methods\MethodInterface;
 use \XMLReader;
 
-class nodoInviaCarrelloRPT implements MethodInterface, FaultInterface
+class pspInviaCarrelloRPT implements MethodInterface, FaultInterface
 {
-
 
     /**
      * Rappresenta il payload dell'evento
@@ -21,6 +20,14 @@ class nodoInviaCarrelloRPT implements MethodInterface, FaultInterface
     {
         $this->payload = $payload;
     }
+    /**
+     * @inheritDoc
+     */
+    public function getPaymentsCount(): int|null
+    {
+        return null;
+    }
+
     /**
      * @inheritDoc
      */
@@ -206,6 +213,71 @@ class nodoInviaCarrelloRPT implements MethodInterface, FaultInterface
     }
 
     /**
+     * @inheritDoc
+     */
+    public function outcome(): string|null
+    {
+        $xml = new XMLReader();
+        $xml->XML($this->payload);
+        while($xml->read())
+        {
+            if (($xml->nodeType == XMLReader::ELEMENT) && ($xml->localName == 'esitoComplessivoOperazione'))
+            {
+                return $xml->readString();
+            }
+        }
+        return null;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getPaymentMetaDataCount(int $index = 0): string|null
+    {
+        return null;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getPaymentMetaDataKey(int $index = 0, int $metaKey = 0): string|null
+    {
+        return null;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getPaymentMetaDataValue(int $index = 0, int $metaKey = 0): string|null
+    {
+        return null;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getTransferMetaDataCount(int $transfer = 0, int $index = 0): string|null
+    {
+        return null;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getTransferMetaDataKey(int $transfer = 0, int $index = 0, int $metaKey = 0): string|null
+    {
+        return null;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getTransferMetaDataValue(int $transfer = 0, int $index = 0, int $metaKey = 0): string|null
+    {
+        return null;
+    }
+
+    /**
      * @return bool
      */
     public function isFaultEvent(): bool
@@ -270,83 +342,6 @@ class nodoInviaCarrelloRPT implements MethodInterface, FaultInterface
                 return $xml->readString();
             }
         }
-        return null;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getPaymentsCount(): int|null
-    {
-        return null;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function outcome(): string|null
-    {
-        return ($this->isFaultEvent()) ? 'KO' : 'OK';
-    }
-
-    /**
-     * @param int $index
-     * @return string|null
-     */
-    public function getPaymentMetaDataCount(int $index = 0): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @param int $index
-     * @param int $metaKey
-     * @return string|null
-     */
-    public function getPaymentMetaDataKey(int $index = 0, int $metaKey = 0): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @param int $index
-     * @param int $metaKey
-     * @return string|null
-     */
-    public function getPaymentMetaDataValue(int $index = 0, int $metaKey = 0): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @param int $transfer
-     * @param int $index
-     * @return string|null
-     */
-    public function getTransferMetaDataCount(int $transfer = 0, int $index = 0): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @param int $transfer
-     * @param int $index
-     * @param int $metaKey
-     * @return string|null
-     */
-    public function getTransferMetaDataKey(int $transfer = 0, int $index = 0, int $metaKey = 0): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @param int $transfer
-     * @param int $index
-     * @param int $metaKey
-     * @return string|null
-     */
-    public function getTransferMetaDataValue(int $transfer = 0, int $index = 0, int $metaKey = 0): string|null
-    {
         return null;
     }
 }

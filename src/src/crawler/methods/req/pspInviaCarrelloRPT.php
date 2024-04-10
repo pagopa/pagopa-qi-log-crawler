@@ -6,9 +6,21 @@ use pagopa\crawler\methods\MethodInterface;
 use pagopa\crawler\methods\object\RPT;
 use \XMLReader;
 
-class nodoInviaCarrelloRPT implements MethodInterface
+// portarsi dietro
+// getRPT (return RPT object)
+//
+// getElementFromListaRPT (privato)
+// getelementoListaRPT privato
+//
+// getIdCarrello (non dovrebbe essere ereditato??capire)
+
+class pspInviaCarrelloRPT implements MethodInterface
 {
 
+    /**
+     * Rappresenta il payload dell'evento
+     * @var string
+     */
     protected string $payload;
 
 
@@ -17,9 +29,63 @@ class nodoInviaCarrelloRPT implements MethodInterface
         $this->payload = $payload;
     }
 
+    /**
+     * Restituisce l'elemento tagName della lista i-esima (indicata in $index)
+     * @param int $index
+     * @param string $tagName
+     * @return string|null
+     */
+    private function getElementFromListaRPT(int $index, string $tagName) : string|null
+    {
+        $elementoListaRPT = $this->getElementoListaRPT($index);
+        if ($elementoListaRPT == null)
+        {
+            return null;
+        }
+        $xml = new XMLReader();
+        $xml->XML($elementoListaRPT);
+        while($xml->read())
+        {
+            if (($xml->nodeType == XMLReader::ELEMENT) && ($xml->localName == $tagName))
+            {
+                return $xml->readString();
+            }
+        }
+        return null;
+    }
+
+    private function getElementoListaRPT(int $index) : string|null
+    {
+        if ($index > 4)
+        {
+            return null;
+        }
+        $count = 0;
+        $xml = new XMLReader();
+        $xml->XML($this->payload);
+        while($xml->read())
+        {
+            if (($xml->nodeType == XMLReader::ELEMENT) && ($xml->localName == 'elementoListaCarrelloRPT'))
+            {
+                if ($count == $index)
+                {
+                    return $xml->readOuterXml();
+                }
+                $count++;
+            }
+        }
+        return null;
+    }
+
+
+    public function getRpt(int $index) : RPT|null
+    {
+        $rpt = $this->getElementFromListaRPT($index, 'rpt');
+        return (is_null($rpt)) ? null : new RPT(base64_decode($rpt));
+    }
 
     /**
-     * @return int|null
+     * @inheritDoc
      */
     public function getPaymentsCount(): int|null
     {
@@ -28,7 +94,7 @@ class nodoInviaCarrelloRPT implements MethodInterface
         $count = 0;
         while($xml->read())
         {
-            if (($xml->nodeType == XMLReader::ELEMENT) && ($xml->localName == 'elementoListaRPT'))
+            if (($xml->nodeType == XMLReader::ELEMENT) && ($xml->localName == 'elementoListaCarrelloRPT'))
             {
                 $count++;
             }
@@ -151,7 +217,7 @@ class nodoInviaCarrelloRPT implements MethodInterface
      */
     public function getImportoTotale(): string|null
     {
-        $importo = 0;
+        $importo = 0.00;
         for($i=0;$i<$this->getPaymentsCount();$i++)
         {
             $importo += $this->getRpt($i)->getImportoSingolaRPT();
@@ -175,6 +241,7 @@ class nodoInviaCarrelloRPT implements MethodInterface
     {
         $rpt = $this->getRpt($index);
         return (is_null($rpt)) ? null : $rpt->getImportoSingoloVersamento($transfer);
+
     }
 
     /**
@@ -239,6 +306,7 @@ class nodoInviaCarrelloRPT implements MethodInterface
             }
         }
         return null;
+
     }
 
     /**
@@ -297,105 +365,11 @@ class nodoInviaCarrelloRPT implements MethodInterface
      */
     public function getStazione(): string|null
     {
-        $xml = new XMLReader();
-        $xml->XML($this->payload);
-        while($xml->read())
-        {
-            if (($xml->nodeType == XMLReader::ELEMENT) && ($xml->localName == 'identificativoStazioneIntermediarioPA'))
-            {
-                return $xml->readString();
-            }
-        }
-        return null;
-    }
-
-
-    /**
-     * Restituisce il blocco elementoListaRPT di una nodoInviaCarrelloRPT
-     * @param int $index
-     * @return string|null
-     */
-    private function getElementoListaRPT(int $index) : string|null
-    {
-        if ($index > 4)
-        {
-            return null;
-        }
-        $count = 0;
-        $xml = new XMLReader();
-        $xml->XML($this->payload);
-        while($xml->read())
-        {
-            if (($xml->nodeType == XMLReader::ELEMENT) && ($xml->localName == 'elementoListaRPT'))
-            {
-                if ($count == $index)
-                {
-                    return $xml->readOuterXml();
-                }
-                $count++;
-            }
-        }
         return null;
     }
 
     /**
-     * Restituisce l'elemento tagName della lista i-esima (indicata in $index)
-     * @param int $index
-     * @param string $tagName
-     * @return string|null
-     */
-    private function getElementFromListaRPT(int $index, string $tagName) : string|null
-    {
-        $elementoListaRPT = $this->getElementoListaRPT($index);
-        if ($elementoListaRPT == null)
-        {
-            return null;
-        }
-        $xml = new XMLReader();
-        $xml->XML($elementoListaRPT);
-        while($xml->read())
-        {
-            if (($xml->nodeType == XMLReader::ELEMENT) && ($xml->localName == $tagName))
-            {
-                return $xml->readString();
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Restituisce l'oggetto RPT dell'iesima RPT del carrello
-     * @param int $index
-     * @return RPT|null
-     */
-    public function getRpt(int $index) : RPT|null
-    {
-        $rpt = $this->getElementFromListaRPT($index, 'rpt');
-        return (is_null($rpt)) ? null : new RPT(base64_decode($rpt));
-    }
-
-
-    /**
-     * Restituisce l'id carrello
-     * @return string|null
-     */
-    public function getIdCarrello() : string|null
-    {
-        $xml = new XMLReader();
-        $xml->XML($this->payload);
-        $count = 0;
-        while($xml->read())
-        {
-            if (($xml->nodeType == XMLReader::ELEMENT) && ($xml->localName == 'identificativoCarrello'))
-            {
-                return $xml->readString();
-            }
-        }
-        return null;
-    }
-
-    /**
-     * @return string|null
+     * @inheritDoc
      */
     public function outcome(): string|null
     {
@@ -403,8 +377,7 @@ class nodoInviaCarrelloRPT implements MethodInterface
     }
 
     /**
-     * @param int $index
-     * @return string|null
+     * @inheritDoc
      */
     public function getPaymentMetaDataCount(int $index = 0): string|null
     {
@@ -412,9 +385,7 @@ class nodoInviaCarrelloRPT implements MethodInterface
     }
 
     /**
-     * @param int $index
-     * @param int $metaKey
-     * @return string|null
+     * @inheritDoc
      */
     public function getPaymentMetaDataKey(int $index = 0, int $metaKey = 0): string|null
     {
@@ -422,9 +393,7 @@ class nodoInviaCarrelloRPT implements MethodInterface
     }
 
     /**
-     * @param int $index
-     * @param int $metaKey
-     * @return string|null
+     * @inheritDoc
      */
     public function getPaymentMetaDataValue(int $index = 0, int $metaKey = 0): string|null
     {
@@ -432,9 +401,7 @@ class nodoInviaCarrelloRPT implements MethodInterface
     }
 
     /**
-     * @param int $transfer
-     * @param int $index
-     * @return string|null
+     * @inheritDoc
      */
     public function getTransferMetaDataCount(int $transfer = 0, int $index = 0): string|null
     {
@@ -442,10 +409,7 @@ class nodoInviaCarrelloRPT implements MethodInterface
     }
 
     /**
-     * @param int $transfer
-     * @param int $index
-     * @param int $metaKey
-     * @return string|null
+     * @inheritDoc
      */
     public function getTransferMetaDataKey(int $transfer = 0, int $index = 0, int $metaKey = 0): string|null
     {
@@ -453,13 +417,18 @@ class nodoInviaCarrelloRPT implements MethodInterface
     }
 
     /**
-     * @param int $transfer
-     * @param int $index
-     * @param int $metaKey
-     * @return string|null
+     * @inheritDoc
      */
     public function getTransferMetaDataValue(int $transfer = 0, int $index = 0, int $metaKey = 0): string|null
     {
         return null;
     }
+
+
+    public function getTipoVersamento(int $index = 0) : string|null
+    {
+        return $this->getRpt($index)->getTipoVersamento();
+    }
+
+
 }

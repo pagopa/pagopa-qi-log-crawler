@@ -208,4 +208,23 @@ class RPT
         return false;
     }
 
+
+    /**
+     * Restituisce il tipo versamento del pagamento
+     * @return string|null
+     */
+    public function getTipoVersamento() : string|null
+    {
+        $xml = new XMLReader();
+        $xml->XML($this->payload);
+        while($xml->read())
+        {
+            if (($xml->nodeType == XMLReader::ELEMENT) && ($xml->localName == 'tipoVersamento'))
+            {
+                return $xml->readString();
+            }
+        }
+        return null;
+    }
+
 }

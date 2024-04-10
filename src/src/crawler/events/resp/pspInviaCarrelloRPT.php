@@ -3,19 +3,17 @@
 namespace pagopa\crawler\events\resp;
 
 use pagopa\crawler\AbstractEvent;
-use pagopa\crawler\MapEvents;
 use pagopa\crawler\methods\MethodInterface;
 use pagopa\database\sherlock\Transaction;
-use pagopa\crawler\methods\resp\nodoInviaCarrelloRPT as Payload;
 use pagopa\database\sherlock\TransactionDetails;
 use pagopa\database\sherlock\Workflow;
+use pagopa\crawler\MapEvents;
+use pagopa\crawler\methods\resp\pspInviaCarrelloRPT as Payload;
 
-class nodoInviaCarrelloRPT extends AbstractEvent
+class pspInviaCarrelloRPT extends AbstractEvent
 {
 
     protected Payload $method;
-
-    protected bool $isCart = true;
 
 
     public function __construct(array $eventData)
@@ -150,6 +148,38 @@ class nodoInviaCarrelloRPT extends AbstractEvent
         return null;
     }
 
+    public function transactionDetails(int $transfer, int $index = 0): TransactionDetails|null
+    {
+        return null;
+    }
+
+    public function workflowEvent(int $index = 0): Workflow|null
+    {
+
+        $workflow = new Workflow($this->getInsertedTimestamp());
+        $workflow->setNewColumnValue('date_event', $this->getInsertedTimestamp()->format('Y-m-d'));
+        $workflow->setEventId($this->getUniqueId());
+        $workflow->setEventTimestamp($this->getInsertedTimestamp());
+        if (!is_null($this->getCanale()))
+        {
+            $workflow->setCanale($this->getCanale());
+        }
+        if (!is_null($this->getPsp()))
+        {
+            $workflow->setPsp($this->getPsp());
+        }
+        if ($this->isFaultEvent())
+        {
+            $workflow->setFaultCode($this->getFaultCode());
+        }
+        if (!is_null($this->getMethodInterface()->outcome()))
+        {
+            $workflow->setOutcomeEvent($this->getMethodInterface()->outcome());
+        }
+        $workflow->setFkTipoEvento(MapEvents::getMethodId($this->getTipoEvento(), $this->getSottoTipoEvento()));
+        return $workflow;
+    }
+
     /**
      * @inheritDoc
      */
@@ -175,64 +205,27 @@ class nodoInviaCarrelloRPT extends AbstractEvent
     }
 
     /**
-     * @param int $transfer
-     * @param int $index
-     * @return TransactionDetails|null
-     */
-    public function transactionDetails(int $transfer, int $index = 0): TransactionDetails|null
-    {
-        return null;
-    }
-
-    /**
-     * @param int $index
-     * @return Workflow|null
-     */
-    public function workflowEvent(int $index = 0): Workflow|null
-    {
-        $workflow = new Workflow($this->getInsertedTimestamp());
-        $workflow->setNewColumnValue('date_event', $this->getInsertedTimestamp()->format('Y-m-d'));
-        $workflow->setEventId($this->getUniqueId());
-        $workflow->setEventTimestamp($this->getInsertedTimestamp());
-        $workflow->setFkTipoEvento(MapEvents::getMethodId($this->getTipoEvento(), $this->getSottoTipoEvento()));
-        $stazione = $this->getStazione();
-        $canale = $this->getCanale();
-        $workflow->setOutcomeEvent($this->getMethodInterface()->outcome());
-        if (!is_null($stazione))
-        {
-            $workflow->setStazione($stazione);
-        }
-        if (!is_null($canale))
-        {
-            $workflow->setCanale($canale);
-        }
-        if ($this->getMethodInterface()->isFaultEvent())
-        {
-            $workflow->setFaultCode($this->getMethodInterface()->getFaultCode());
-        }
-        return $workflow;
-    }
-
-    /**
-     * @return string
+     * @inheritDoc
      */
     public function getCacheKeyPayment(): string
     {
         $session        = $this->getSessionIdOriginal();
         return base64_encode(sprintf('sessionOriginal_%s', $session));
+
     }
 
     /**
-     * @return string
+     * @inheritDoc
      */
     public function getCacheKeyAttempt(): string
     {
         $session        = $this->getSessionIdOriginal();
         return base64_encode(sprintf('sessionOriginal_%s', $session));
+
     }
 
     /**
-     * @return bool
+     * @inheritDoc
      */
     public function isFaultEvent(): bool
     {
@@ -240,7 +233,7 @@ class nodoInviaCarrelloRPT extends AbstractEvent
     }
 
     /**
-     * @return string|null
+     * @inheritDoc
      */
     public function getFaultCode(): string|null
     {
@@ -248,7 +241,7 @@ class nodoInviaCarrelloRPT extends AbstractEvent
     }
 
     /**
-     * @return string|null
+     * @inheritDoc
      */
     public function getFaultString(): string|null
     {
@@ -256,10 +249,10 @@ class nodoInviaCarrelloRPT extends AbstractEvent
     }
 
     /**
-     * @return string|null
+     * @inheritDoc
      */
     public function getFaultDescription(): string|null
     {
-        return $this->getMethodInterface()->getFaultDescription();
+        return $this->getMethodInterface()->getFaultString();
     }
 }

@@ -1,35 +1,31 @@
 <?php
 
-namespace pagopa\crawler\events\resp;
+namespace pagopa\crawler\events\req;
 
 use pagopa\crawler\AbstractEvent;
-use pagopa\crawler\MapEvents;
 use pagopa\crawler\methods\MethodInterface;
 use pagopa\database\sherlock\Transaction;
-use pagopa\crawler\methods\resp\nodoInviaCarrelloRPT as Payload;
 use pagopa\database\sherlock\TransactionDetails;
 use pagopa\database\sherlock\Workflow;
+use pagopa\crawler\MapEvents;
+use pagopa\crawler\methods\req\pspInviaCarrelloRPT as Payload;
 
-class nodoInviaCarrelloRPT extends AbstractEvent
+class pspInviaCarrelloRPT extends AbstractEvent
 {
 
     protected Payload $method;
-
-    protected bool $isCart = true;
-
 
     public function __construct(array $eventData)
     {
         parent::__construct($eventData);
         $this->method = new Payload($this->data['payload']);
     }
-
     /**
      * @inheritDoc
      */
     public function getPaEmittente(int $index = 0): string|null
     {
-        return null;
+        return $this->getMethodInterface()->getPaEmittente($index);
     }
 
     /**
@@ -37,7 +33,7 @@ class nodoInviaCarrelloRPT extends AbstractEvent
      */
     public function getIuv(int $index = 0): string|null
     {
-        return null;
+        return $this->getMethodInterface()->getIuv($index);
     }
 
     /**
@@ -45,7 +41,7 @@ class nodoInviaCarrelloRPT extends AbstractEvent
      */
     public function getCcp(int $index = 0): string|null
     {
-        return null;
+        return $this->getMethodInterface()->getCcp($index);
     }
 
     /**
@@ -61,7 +57,7 @@ class nodoInviaCarrelloRPT extends AbstractEvent
      */
     public function getCreditorReferenceId(int $index = 0): string|null
     {
-        return null;
+        return $this->getMethodInterface()->getIuv($index);
     }
 
     /**
@@ -69,7 +65,7 @@ class nodoInviaCarrelloRPT extends AbstractEvent
      */
     public function getPaymentToken(int $index = 0): string|null
     {
-        return null;
+        return $this->getCcp($index);
     }
 
     /**
@@ -77,7 +73,7 @@ class nodoInviaCarrelloRPT extends AbstractEvent
      */
     public function getIuvs(): array|null
     {
-        return null;
+        return $this->getMethodInterface()->getIuvs();
     }
 
     /**
@@ -85,7 +81,7 @@ class nodoInviaCarrelloRPT extends AbstractEvent
      */
     public function getPaEmittenti(): array|null
     {
-        return null;
+        return $this->getMethodInterface()->getPaEmittenti();
     }
 
     /**
@@ -93,7 +89,7 @@ class nodoInviaCarrelloRPT extends AbstractEvent
      */
     public function getCcps(): array|null
     {
-        return null;
+        return $this->getMethodInterface()->getCcps();
     }
 
     /**
@@ -102,7 +98,11 @@ class nodoInviaCarrelloRPT extends AbstractEvent
     public function getPsp(): string|null
     {
         $column = $this->getColumn('psp');
-        return (empty($column)) ? null : $column;
+        if (empty($column))
+        {
+            return $this->getMethodInterface()->getPsp();
+        }
+        return $column;
     }
 
     /**
@@ -110,35 +110,32 @@ class nodoInviaCarrelloRPT extends AbstractEvent
      */
     public function getStazione(): string|null
     {
-        $column = $this->getColumn('stazione');
-        return (empty($column)) ? null : $column;
+        return null;
     }
 
     public function getCanale(): string|null
     {
-        $column = $this->getColumn('canale');
-        return (empty($column)) ? null : $column;
+        $canale = $this->getColumn('canale');
+        if (empty($canale))
+        {
+            return $this->getMethodInterface()->getCanale();
+        }
+        return $canale;
     }
 
     public function getBrokerPa(): string|null
     {
-        $column = $this->getColumn('stazione');
-        if (empty($column))
-        {
-            return null;
-        }
-        $e = explode('_', $column, 2);
-        return $e[0];
+        return null;
     }
 
     public function getBrokerPsp(): string|null
     {
-        $column = $this->getColumn('canale');
-        if (empty($column))
+        $broker = $this->getColumn('canale');
+        if (empty($broker))
         {
-            return null;
+            return $this->getMethodInterface()->getBrokerPsp();
         }
-        $e = explode('_', $column, 2);
+        $e = explode('_', $broker, 2);
         return $e[0];
     }
 
@@ -148,6 +145,34 @@ class nodoInviaCarrelloRPT extends AbstractEvent
     public function transaction(int $index = 0): Transaction|null
     {
         return null;
+    }
+
+    public function transactionDetails(int $transfer, int $index = 0): TransactionDetails|null
+    {
+        return null;
+    }
+
+    public function workflowEvent(int $index = 0): Workflow|null
+    {
+        if (($index + 1) > $this->getPaymentsCount())
+        {
+            return null;
+        }
+
+        $workflow = new Workflow($this->getInsertedTimestamp());
+        $workflow->setNewColumnValue('date_event', $this->getInsertedTimestamp()->format('Y-m-d'));
+        $workflow->setEventId($this->getUniqueId());
+        $workflow->setEventTimestamp($this->getInsertedTimestamp());
+        if (!is_null($this->getCanale()))
+        {
+            $workflow->setCanale($this->getCanale());
+        }
+        if (!is_null($this->getPsp()))
+        {
+            $workflow->setPsp($this->getPsp());
+        }
+        $workflow->setFkTipoEvento(MapEvents::getMethodId($this->getTipoEvento(), $this->getSottoTipoEvento()));
+        return $workflow;
     }
 
     /**
@@ -163,7 +188,7 @@ class nodoInviaCarrelloRPT extends AbstractEvent
      */
     public function getPaymentsCount(): int|null
     {
-        return null;
+        return $this->getMethodInterface()->getPaymentsCount();
     }
 
     /**
@@ -171,50 +196,19 @@ class nodoInviaCarrelloRPT extends AbstractEvent
      */
     public function getTransferCount(int $index = 0): int|null
     {
-        return null;
+        return $this->getMethodInterface()->getTransferCount($index);
     }
 
     /**
-     * @param int $transfer
-     * @param int $index
-     * @return TransactionDetails|null
+     * @return string|null
      */
-    public function transactionDetails(int $transfer, int $index = 0): TransactionDetails|null
+    public function getIdCarrello(): string|null
     {
         return null;
     }
 
     /**
-     * @param int $index
-     * @return Workflow|null
-     */
-    public function workflowEvent(int $index = 0): Workflow|null
-    {
-        $workflow = new Workflow($this->getInsertedTimestamp());
-        $workflow->setNewColumnValue('date_event', $this->getInsertedTimestamp()->format('Y-m-d'));
-        $workflow->setEventId($this->getUniqueId());
-        $workflow->setEventTimestamp($this->getInsertedTimestamp());
-        $workflow->setFkTipoEvento(MapEvents::getMethodId($this->getTipoEvento(), $this->getSottoTipoEvento()));
-        $stazione = $this->getStazione();
-        $canale = $this->getCanale();
-        $workflow->setOutcomeEvent($this->getMethodInterface()->outcome());
-        if (!is_null($stazione))
-        {
-            $workflow->setStazione($stazione);
-        }
-        if (!is_null($canale))
-        {
-            $workflow->setCanale($canale);
-        }
-        if ($this->getMethodInterface()->isFaultEvent())
-        {
-            $workflow->setFaultCode($this->getMethodInterface()->getFaultCode());
-        }
-        return $workflow;
-    }
-
-    /**
-     * @return string
+     * @inheritDoc
      */
     public function getCacheKeyPayment(): string
     {
@@ -223,7 +217,7 @@ class nodoInviaCarrelloRPT extends AbstractEvent
     }
 
     /**
-     * @return string
+     * @inheritDoc
      */
     public function getCacheKeyAttempt(): string
     {
@@ -232,34 +226,34 @@ class nodoInviaCarrelloRPT extends AbstractEvent
     }
 
     /**
-     * @return bool
+     * @inheritDoc
      */
     public function isFaultEvent(): bool
     {
-        return $this->getMethodInterface()->isFaultEvent();
+        return false;
     }
 
     /**
-     * @return string|null
+     * @inheritDoc
      */
     public function getFaultCode(): string|null
     {
-        return $this->getMethodInterface()->getFaultCode();
+        return null;
     }
 
     /**
-     * @return string|null
+     * @inheritDoc
      */
     public function getFaultString(): string|null
     {
-        return $this->getMethodInterface()->getFaultString();
+        return null;
     }
 
     /**
-     * @return string|null
+     * @inheritDoc
      */
     public function getFaultDescription(): string|null
     {
-        return $this->getMethodInterface()->getFaultDescription();
+        return null;
     }
 }

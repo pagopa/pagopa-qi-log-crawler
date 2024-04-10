@@ -296,7 +296,7 @@ class nodoInviaCarrelloRPT extends AbstractEvent
 
     /**
      * Restituisce l'id carrello
-     * @return string
+     * @return string|null
      */
     public function getIdCarrello(): string|null
     {
