@@ -78,8 +78,8 @@ class pspInviaCarrelloRPTTest extends TestCase
     #[TestDox('getImportoTotale()')]
     public function testGetImportoTotale()
     {
-        $this->assertEquals('300', $this->instance_1_RPT->getImportoTotale());
-        $this->assertEquals('500', $this->instance_2_RPT->getImportoTotale());
+        $this->assertEquals('300.00', $this->instance_1_RPT->getImportoTotale());
+        $this->assertEquals('500.00', $this->instance_2_RPT->getImportoTotale());
     }
 
     #[TestDox('getIuv()')]

@@ -58,8 +58,8 @@ class ExtraInfo extends SingleRow
      */
     public function setMetaData(string $key, string $value) : self
     {
-        $this->setNewColumnValue('meta_key', $key);
-        $this->setNewColumnValue('meta_value', $value);
+        $this->setNewColumnValue('info_name', $key);
+        $this->setNewColumnValue('info_value', $value);
         return $this;
     }
 }

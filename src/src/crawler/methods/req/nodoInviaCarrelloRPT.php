@@ -156,7 +156,7 @@ class nodoInviaCarrelloRPT implements MethodInterface
         {
             $importo += $this->getRpt($i)->getImportoSingolaRPT();
         }
-        return $importo;
+        return number_format($importo, 2, '.', '');
     }
 
     /**

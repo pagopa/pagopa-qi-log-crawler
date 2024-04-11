@@ -1,12 +1,14 @@
 INSERT INTO mapped_events(tipo_evento,sotto_tipo_evento ,fk_event) values
-    ('activatePaymentNotice'    , 'REQ' ,   1),
-    ('activatePaymentNotice'    , 'RESP',   2),
-    ('nodoInviaCarrelloRPT'     , 'REQ' ,   3),
-    ('nodoInviaCarrelloRPT'     , 'RESP',   4),
-    ('sendPaymentOutcome'       , 'REQ' ,   5),
-    ('sendPaymentOutcome'       , 'RESP',   6),
-    ('pspInviaCarrelloRPT'      , 'REQ' ,   7),
-    ('pspInviaCarrelloRPT'      , 'RESP',   8);
+    ('activatePaymentNotice'        , 'REQ' ,   1),
+    ('activatePaymentNotice'        , 'RESP',   2),
+    ('nodoInviaCarrelloRPT'         , 'REQ' ,   3),
+    ('nodoInviaCarrelloRPT'         , 'RESP',   4),
+    ('sendPaymentOutcome'           , 'REQ' ,   5),
+    ('sendPaymentOutcome'           , 'RESP',   6),
+    ('pspInviaCarrelloRPT'          , 'REQ' ,   7),
+    ('pspInviaCarrelloRPT'          , 'RESP',   8),
+    ('pspInviaCarrelloRPTCarte'     , 'REQ' ,   9),
+    ('pspInviaCarrelloRPTCarte'     , 'RESP',  10);
 
 insert into mapped_payment_methods (tipoversamento, descrizione) values
     ('CC', 'Carta di Credito'),

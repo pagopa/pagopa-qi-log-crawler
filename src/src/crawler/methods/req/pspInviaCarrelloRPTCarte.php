@@ -6,23 +6,10 @@ use pagopa\crawler\methods\MethodInterface;
 use pagopa\crawler\methods\object\RPT;
 use \XMLReader;
 
-// portarsi dietro
-// getRPT (return RPT object)
-//
-// getElementFromListaRPT (privato)
-// getelementoListaRPT privato
-//
-// getIdCarrello (non dovrebbe essere ereditato??capire)
-
-class pspInviaCarrelloRPT implements MethodInterface
+class pspInviaCarrelloRPTCarte implements MethodInterface
 {
 
-    /**
-     * Rappresenta il payload dell'evento
-     * @var string
-     */
     protected string $payload;
-
 
     public function __construct(string $payload = null)
     {
@@ -54,6 +41,11 @@ class pspInviaCarrelloRPT implements MethodInterface
         return null;
     }
 
+    /**
+     * Restituisce il blocco elementoListaRPT di una nodoInviaCarrelloRPT
+     * @param int $index
+     * @return string|null
+     */
     private function getElementoListaRPT(int $index) : string|null
     {
         if ($index > 4)
@@ -65,7 +57,7 @@ class pspInviaCarrelloRPT implements MethodInterface
         $xml->XML($this->payload);
         while($xml->read())
         {
-            if (($xml->nodeType == XMLReader::ELEMENT) && ($xml->localName == 'elementoListaCarrelloRPT'))
+            if (($xml->nodeType == XMLReader::ELEMENT) && (strtolower($xml->localName) == 'elementolistacarrellorpt'))
             {
                 if ($count == $index)
                 {
@@ -78,6 +70,11 @@ class pspInviaCarrelloRPT implements MethodInterface
     }
 
 
+    /**
+     * Restituisce l'oggetto RPT dell'iesima RPT del carrello
+     * @param int $index
+     * @return RPT|null
+     */
     public function getRpt(int $index) : RPT|null
     {
         $rpt = $this->getElementFromListaRPT($index, 'rpt');
@@ -113,6 +110,7 @@ class pspInviaCarrelloRPT implements MethodInterface
             $iuvs[] = $this->getElementFromListaRPT($i, 'identificativoUnivocoVersamento');
         }
         return (count($iuvs) == 0) ? null : $iuvs;
+
     }
 
     /**
@@ -222,7 +220,7 @@ class pspInviaCarrelloRPT implements MethodInterface
         {
             $importo += $this->getRpt($i)->getImportoSingolaRPT();
         }
-        return number_format($importo, 2, '.', '');
+        return number_format($importo, 2, '.','');
     }
 
     /**
@@ -241,7 +239,6 @@ class pspInviaCarrelloRPT implements MethodInterface
     {
         $rpt = $this->getRpt($index);
         return (is_null($rpt)) ? null : $rpt->getImportoSingoloVersamento($transfer);
-
     }
 
     /**
@@ -306,7 +303,6 @@ class pspInviaCarrelloRPT implements MethodInterface
             }
         }
         return null;
-
     }
 
     /**
@@ -365,6 +361,15 @@ class pspInviaCarrelloRPT implements MethodInterface
      */
     public function getStazione(): string|null
     {
+        $xml = new XMLReader();
+        $xml->XML($this->payload);
+        while($xml->read())
+        {
+            if (($xml->nodeType == XMLReader::ELEMENT) && ($xml->localName == 'identificativoStazioneIntermediarioPA'))
+            {
+                return $xml->readString();
+            }
+        }
         return null;
     }
 
@@ -426,7 +431,26 @@ class pspInviaCarrelloRPT implements MethodInterface
 
 
     /**
-     * Restituisce il tipo versamento della RPT
+     * Restituisce l'RRN della transazione
+     * @return string|null
+     */
+    public function getTransactionRRN() : string|null
+    {
+        $xml = new XMLReader();
+        $xml->XML($this->payload);
+        while($xml->read())
+        {
+            if (($xml->nodeType == XMLReader::ELEMENT) && (strtolower($xml->localName) == 'rrn'))
+            {
+                return $xml->readString();
+            }
+        }
+        return null;
+    }
+
+
+    /**
+     * Restituisce il tipoVersamento della RPT
      * @param int $index
      * @return string|null
      */
@@ -436,4 +460,39 @@ class pspInviaCarrelloRPT implements MethodInterface
     }
 
 
+    /**
+     * Restituisce il codiceAutorizzativo della transazione
+     * @return string|null
+     */
+    public function getTransactionCodeAuth() : string|null
+    {
+        $xml = new XMLReader();
+        $xml->XML($this->payload);
+        while($xml->read())
+        {
+            if (($xml->nodeType == XMLReader::ELEMENT) && (strtolower($xml->localName) == 'codiceautorizzativo'))
+            {
+                return $xml->readString();
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Restituisce l'esitoTransazioneCarta della transazione
+     * @return string|null
+     */
+    public function getEsitoTransazioneCarta() : string|null
+    {
+        $xml = new XMLReader();
+        $xml->XML($this->payload);
+        while($xml->read())
+        {
+            if (($xml->nodeType == XMLReader::ELEMENT) && (strtolower($xml->localName) == 'esitotransazionecarta'))
+            {
+                return $xml->readString();
+            }
+        }
+        return null;
+    }
 }

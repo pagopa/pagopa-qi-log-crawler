@@ -2,23 +2,23 @@
 
 namespace pagopa\events\resp;
 
-use pagopa\crawler\events\resp\pspInviaCarrelloRPT;
+use pagopa\crawler\events\resp\pspInviaCarrelloRPTCarte;
 use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
 
-#[TestDox('events\resp\pspInviaCarrelloRPTTest::class')]
-class pspInviaCarrelloRPTTest extends TestCase
+#[TestDox('events\resp\pspInviaCarrelloRPTCarteTest::class')]
+class pspInviaCarrelloRPTCarteTest extends TestCase
 {
 
-    protected pspInviaCarrelloRPT $instance_OK;
+    protected pspInviaCarrelloRPTCarte $instance_OK;
 
-    protected pspInviaCarrelloRPT $instance_KO;
+    protected pspInviaCarrelloRPTCarte $instance_KO;
 
     protected function setUp(): void
     {
-        $this->instance_OK = new pspInviaCarrelloRPT([
+        $this->instance_OK = new pspInviaCarrelloRPTCarte([
             "inserted_timestamp" =>  "2024-03-13 10:12:00.210",
-            "tipoevento" =>  "pspInviaCarrelloRPT",
+            "tipoevento" =>  "pspInviaCarrelloRPTCarte",
             "sottotipoevento" =>  "RESP",
             "idDominio" =>  "",
             "iuv" =>  "",
@@ -32,13 +32,13 @@ class pspInviaCarrelloRPTTest extends TestCase
             "sessionid" =>  "SESSID_01",
             "sessionidoriginal" =>  "SESSORIGIN_01",
             "uniqueid" =>  "UNIQUE_RPT_1",
-            "payload" => "PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz4KPHNvYXBlbnY6RW52ZWxvcGUgeG1sbnM6c29hcGVudj0iaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvc29hcC9lbnZlbG9wZS8iPgoJPHNvYXBlbnY6Qm9keT4KCQk8bnMyOnBzcEludmlhQ2FycmVsbG9SUFRSZXNwb25zZSB4bWxuczpuczI9Imh0dHA6Ly93cy5wYWdhbWVudGkudGVsZW1hdGljaS5nb3YvIj4KCQkJPHBzcEludmlhQ2FycmVsbG9SUFRSZXNwb25zZSB4bWxuczp4c2k9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1hLWluc3RhbmNlIiB4c2k6dHlwZT0ibnMyOmVzaXRvUHNwSW52aWFDYXJyZWxsb1JQVCI+CgkJCQk8ZXNpdG9Db21wbGVzc2l2b09wZXJhemlvbmU+T0s8L2VzaXRvQ29tcGxlc3Npdm9PcGVyYXppb25lPgoJCQkJPGlkZW50aWZpY2F0aXZvQ2FycmVsbG8+eHh4eHh4eHh4eHh4eDwvaWRlbnRpZmljYXRpdm9DYXJyZWxsbz4KCQkJCTxwYXJhbWV0cmlQYWdhbWVudG9JbW1lZGlhdG8+aWRCcnVjaWF0dXJhPXh4dzIyPC9wYXJhbWV0cmlQYWdhbWVudG9JbW1lZGlhdG8+CgkJCTwvcHNwSW52aWFDYXJyZWxsb1JQVFJlc3BvbnNlPgoJCTwvbnMyOnBzcEludmlhQ2FycmVsbG9SUFRSZXNwb25zZT4KCTwvc29hcGVudjpCb2R5Pgo8L3NvYXBlbnY6RW52ZWxvcGU+"
+            "payload" => "PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz4KPHNvYXBlbnY6RW52ZWxvcGUgeG1sbnM6c29hcGVudj0iaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvc29hcC9lbnZlbG9wZS8iPgoJPHNvYXBlbnY6Qm9keT4KCQk8bnMyOnBzcEludmlhQ2FycmVsbG9SUFRDYXJ0ZVJlc3BvbnNlIHhtbG5zOm5zMj0iaHR0cDovL3dzLnBhZ2FtZW50aS50ZWxlbWF0aWNpLmdvdi8iPgoJCQk8cHNwSW52aWFDYXJyZWxsb1JQVENhcnRlUmVzcG9uc2UgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSIgeHNpOnR5cGU9Im5zMjplc2l0b1BzcEludmlhQ2FycmVsbG9SUFQiPgoJCQkJPGVzaXRvQ29tcGxlc3Npdm9PcGVyYXppb25lPk9LPC9lc2l0b0NvbXBsZXNzaXZvT3BlcmF6aW9uZT4KCQkJCTxpZGVudGlmaWNhdGl2b0NhcnJlbGxvPnh4eHh4eHh4eHh4eHg8L2lkZW50aWZpY2F0aXZvQ2FycmVsbG8+CgkJCQk8cGFyYW1ldHJpUGFnYW1lbnRvSW1tZWRpYXRvPmlkQnJ1Y2lhdHVyYT14eHcyMjwvcGFyYW1ldHJpUGFnYW1lbnRvSW1tZWRpYXRvPgoJCQk8L3BzcEludmlhQ2FycmVsbG9SUFRDYXJ0ZVJlc3BvbnNlPgoJCTwvbnMyOnBzcEludmlhQ2FycmVsbG9SUFRDYXJ0ZVJlc3BvbnNlPgoJPC9zb2FwZW52OkJvZHk+Cjwvc29hcGVudjpFbnZlbG9wZT4="
         ]);
 
 
-        $this->instance_KO = new pspInviaCarrelloRPT([
+        $this->instance_KO = new pspInviaCarrelloRPTCarte([
             "inserted_timestamp" =>  "2024-03-13 10:13:00.210",
-            "tipoevento" =>  "pspInviaCarrelloRPT",
+            "tipoevento" =>  "pspInviaCarrelloRPTCarte",
             "sottotipoevento" =>  "RESP",
             "idDominio" =>  "",
             "iuv" =>  "",
@@ -52,7 +52,7 @@ class pspInviaCarrelloRPTTest extends TestCase
             "sessionid" =>  "SESSID_02",
             "sessionidoriginal" =>  "SESSORIGIN_02",
             "uniqueid" =>  "UNIQUE_RPT_2",
-            "payload" => "PHNvYXA6RW52ZWxvcGUgeG1sbnM6c29hcD0iaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvc29hcC9lbnZlbG9wZS8iPgoJPHNvYXA6Qm9keT4KCQk8bnMzOnBzcEludmlhQ2FycmVsbG9SUFRSZXNwb25zZSB4bWxuczpuczI9Imh0dHA6Ly93d3cuY25pcGEuZ292Lml0L3NjaGVtYXMvMjAxMC9QYWdhbWVudGkvQWNrXzFfMC8iIHhtbG5zOm5zMz0iaHR0cDovL3dzLnBhZ2FtZW50aS50ZWxlbWF0aWNpLmdvdi8iPgoJCQk8cHNwSW52aWFDYXJyZWxsb1JQVFJlc3BvbnNlPgoJCQkJPGVzaXRvQ29tcGxlc3Npdm9PcGVyYXppb25lPktPPC9lc2l0b0NvbXBsZXNzaXZvT3BlcmF6aW9uZT4KCQkJCTxsaXN0YUVycm9yaVJQVD4KCQkJCQk8ZmF1bHQ+CgkJCQkJCTxmYXVsdENvZGU+Q0FOQUxFX1NJTlRBU1NJX1hTRDwvZmF1bHRDb2RlPgoJCQkJCQk8ZmF1bHRTdHJpbmc+RXJyb3JlIGRpIHNpbnRhc3NpIFhTRDwvZmF1bHRTdHJpbmc+CgkJCQkJCTxpZD5BR0lEXzAxPC9pZD4KCQkJCQkJPHNlcmlhbD4xPC9zZXJpYWw+CgkJCQkJPC9mYXVsdD4KCQkJCTwvbGlzdGFFcnJvcmlSUFQ+CgkJCTwvcHNwSW52aWFDYXJyZWxsb1JQVFJlc3BvbnNlPgoJCTwvbnMzOnBzcEludmlhQ2FycmVsbG9SUFRSZXNwb25zZT4KCTwvc29hcDpCb2R5Pgo8L3NvYXA6RW52ZWxvcGU+"
+            "payload" => "PHNvYXA6RW52ZWxvcGUgeG1sbnM6c29hcD0iaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvc29hcC9lbnZlbG9wZS8iPgoJPHNvYXA6Qm9keT4KCQk8bnMzOnBzcEludmlhQ2FycmVsbG9SUFRDYXJ0ZVJlc3BvbnNlIHhtbG5zOm5zMj0iaHR0cDovL3d3dy5jbmlwYS5nb3YuaXQvc2NoZW1hcy8yMDEwL1BhZ2FtZW50aS9BY2tfMV8wLyIgeG1sbnM6bnMzPSJodHRwOi8vd3MucGFnYW1lbnRpLnRlbGVtYXRpY2kuZ292LyI+CgkJCTxwc3BJbnZpYUNhcnJlbGxvUlBUQ2FydGVSZXNwb25zZT4KCQkJCTxlc2l0b0NvbXBsZXNzaXZvT3BlcmF6aW9uZT5LTzwvZXNpdG9Db21wbGVzc2l2b09wZXJhemlvbmU+CgkJCQk8bGlzdGFFcnJvcmlSUFQ+CgkJCQkJPGZhdWx0PgoJCQkJCQk8ZmF1bHRDb2RlPkNBTkFMRV9TSU5UQVNTSV9YU0Q8L2ZhdWx0Q29kZT4KCQkJCQkJPGZhdWx0U3RyaW5nPkVycm9yZSBkaSBzaW50YXNzaSBYU0Q8L2ZhdWx0U3RyaW5nPgoJCQkJCQk8aWQ+QUdJRF8wMTwvaWQ+CgkJCQkJCTxzZXJpYWw+MTwvc2VyaWFsPgoJCQkJCTwvZmF1bHQ+CgkJCQk8L2xpc3RhRXJyb3JpUlBUPgoJCQk8L3BzcEludmlhQ2FycmVsbG9SUFRDYXJ0ZVJlc3BvbnNlPgoJCTwvbnMzOnBzcEludmlhQ2FycmVsbG9SUFRDYXJ0ZVJlc3BvbnNlPgoJPC9zb2FwOkJvZHk+Cjwvc29hcDpFbnZlbG9wZT4="
         ]);
 
     }
@@ -191,8 +191,8 @@ class pspInviaCarrelloRPTTest extends TestCase
     #[TestDox('getMethodInterface()')]
     public function testGetMethodInterface()
     {
-        $this->assertInstanceOf(\pagopa\crawler\methods\resp\pspInviaCarrelloRPT::class, $this->instance_OK->getMethodInterface());
-        $this->assertInstanceOf(\pagopa\crawler\methods\resp\pspInviaCarrelloRPT::class, $this->instance_KO->getMethodInterface());
+        $this->assertInstanceOf(\pagopa\crawler\methods\resp\pspInviaCarrelloRPTCarte::class, $this->instance_OK->getMethodInterface());
+        $this->assertInstanceOf(\pagopa\crawler\methods\resp\pspInviaCarrelloRPTCarte::class, $this->instance_KO->getMethodInterface());
     }
 
     #[TestDox('getPaEmittente()')]

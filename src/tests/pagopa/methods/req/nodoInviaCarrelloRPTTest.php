@@ -252,12 +252,12 @@ class nodoInviaCarrelloRPTTest extends TestCase
     public function testGetImportoTotale()
     {
         // questo metodo non serve..è il totale del carrello.
-        $this->assertEquals('655', $this->instance_1_rpt_1_versamento->getImportoTotale());
-        $this->assertEquals('655', $this->instance_1_rpt_2_versamento->getImportoTotale());
-        $this->assertEquals('1010', $this->instance_2_rpt_1_versamento->getImportoTotale());
-        $this->assertEquals('1010', $this->instance_2_rpt_3_versamento->getImportoTotale());
-        $this->assertEquals('616', $this->instance_1_rpt_2_versamento_1_bollo->getImportoTotale());
-        $this->assertEquals('1010', $this->instance_2_multi_beneficiario->getImportoTotale());
+        $this->assertEquals('655.00', $this->instance_1_rpt_1_versamento->getImportoTotale());
+        $this->assertEquals('655.00', $this->instance_1_rpt_2_versamento->getImportoTotale());
+        $this->assertEquals('1010.00', $this->instance_2_rpt_1_versamento->getImportoTotale());
+        $this->assertEquals('1010.00', $this->instance_2_rpt_3_versamento->getImportoTotale());
+        $this->assertEquals('616.00', $this->instance_1_rpt_2_versamento_1_bollo->getImportoTotale());
+        $this->assertEquals('1010.00', $this->instance_2_multi_beneficiario->getImportoTotale());
     }
 
     #[TestDox('getTransferAmount()')]

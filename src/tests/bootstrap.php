@@ -5,7 +5,8 @@ use pagopa\database\sherlock\Transaction;
 use pagopa\database\sherlock\TransactionRe;
 use pagopa\database\sherlock\TransactionDetails;
 use pagopa\database\sherlock\Workflow;
-use \pagopa\database\sherlock\Metadata;
+use pagopa\database\sherlock\Metadata;
+use pagopa\database\sherlock\ExtraInfo;
 
 
 
@@ -117,6 +118,26 @@ class GetInfoFromDb
             $collect[] = new Metadata($date, (array) $details);
         }
         return (array_key_exists($index, $collect)) ? $collect[$index] : null;
+    }
+
+
+    public function getExtraInfo(Transaction $transaction, string $extra_info) : ExtraInfo|null
+    {
+        $date = new DateTime($transaction->getColumnValue('date_event'));
+        $ymd = $date->format('Y_m_d');
+        $table = sprintf(EXTRA_INFO_TABLE, $ymd);
+        $result = Capsule::table($table)
+            ->where('fk_payment', '=', $transaction->getColumnValue('id'))
+            ->where('date_event', '=', $transaction->getColumnValue('date_event'))
+            ->where('info_name','=', $extra_info)
+            ->get();
+
+        if ($result->count() == 0)
+        {
+            return null;
+        }
+
+        return new ExtraInfo($date, (array) $result->get(0));
     }
 
 

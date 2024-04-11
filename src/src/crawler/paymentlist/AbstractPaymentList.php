@@ -523,7 +523,6 @@ abstract class AbstractPaymentList implements PaymentListInterface
         return $cache->getCacheData();
     }
 
-
     public function createExtraInfo(CacheObject $cache, int $index = 0): array|null
     {
         return $cache->getCacheData();

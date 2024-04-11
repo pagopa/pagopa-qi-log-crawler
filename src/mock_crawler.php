@@ -106,6 +106,12 @@ $a = new \pagopa\crawler\paymentlist\resp\pspInviaCarrelloRPT(new DateTime('2024
 $a->run();
 
 
+$a = new \pagopa\crawler\paymentlist\req\pspInviaCarrelloRPTCarte(new DateTime('2024-03-10'), 'pspInviaCarrelloRPTCarte', 'REQ', $redis_cache);
+$a->run();
+
+$a = new \pagopa\crawler\paymentlist\resp\pspInviaCarrelloRPTCarte(new DateTime('2024-03-10'), 'pspInviaCarrelloRPTCarte', 'RESP', $redis_cache);
+$a->run();
+
 
 die();
 //$a = new \pagopa\crawler\paymentlist\resp\activatePaymentNotice(new \DateTime('2024-03-10'),'activatePaymentNotice', 'RESP', $memcache);

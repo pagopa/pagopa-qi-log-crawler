@@ -99,18 +99,16 @@ class nodoInviaCarrelloRPT extends AbstractPaymentList
         DB::statement($transaction->getQuery(), $transaction->getBindParams());
         $last_inserted_id = DB::connection()->getPdo()->lastInsertId();
 
-        return [
-            'date_event' => $date_event,
-            'id' => $last_inserted_id,
-            'iuv' => $iuv,
-            'pa_emittente' => $pa_emittente,
-            'token_ccp' => $ccp,
-            'id_carrello' => $id_carrello,
-            'transfer_added' => false,
-            'esito' => false,
-            'amount_update' => true,
-            'date_wf' => json_encode(array())
-        ];
+        $cache_value = CacheObject::createInstance();
+        $cache_value->setDateEvent($date_event);
+        $cache_value->setId($last_inserted_id);
+        $cache_value->setIuv($iuv);
+        $cache_value->setPaEmittente($pa_emittente);
+        $cache_value->setToken($ccp);
+        $cache_value->setKey('id_carrello', $id_carrello);
+        $cache_value->setAmountUpdate(true);
+
+        return $cache_value->getCacheData();
 
     }
 

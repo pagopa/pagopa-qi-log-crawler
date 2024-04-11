@@ -3,14 +3,14 @@
 namespace pagopa\crawler\events\resp;
 
 use pagopa\crawler\AbstractEvent;
+use pagopa\crawler\MapEvents;
 use pagopa\crawler\methods\MethodInterface;
 use pagopa\database\sherlock\Transaction;
 use pagopa\database\sherlock\TransactionDetails;
 use pagopa\database\sherlock\Workflow;
-use pagopa\crawler\MapEvents;
-use pagopa\crawler\methods\resp\pspInviaCarrelloRPT as Payload;
+use pagopa\crawler\methods\resp\pspInviaCarrelloRPTCarte as Payload;
 
-class pspInviaCarrelloRPT extends AbstractEvent
+class pspInviaCarrelloRPTCarte extends AbstractEvent
 {
 
     protected Payload $method;
@@ -155,7 +155,6 @@ class pspInviaCarrelloRPT extends AbstractEvent
 
     public function workflowEvent(int $index = 0): Workflow|null
     {
-
         $workflow = new Workflow($this->getInsertedTimestamp());
         $workflow->setNewColumnValue('date_event', $this->getInsertedTimestamp()->format('Y-m-d'));
         $workflow->setEventId($this->getUniqueId());
@@ -220,7 +219,6 @@ class pspInviaCarrelloRPT extends AbstractEvent
     {
         $session        = $this->getSessionIdOriginal();
         return base64_encode(sprintf('sessionOriginal_%s', $session));
-
     }
 
     /**
