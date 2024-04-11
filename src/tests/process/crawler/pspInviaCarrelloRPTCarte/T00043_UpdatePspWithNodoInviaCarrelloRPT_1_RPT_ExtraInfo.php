@@ -81,7 +81,6 @@ class T00043_UpdatePspWithNodoInviaCarrelloRPT_1_RPT_ExtraInfo extends TestCase
         $this->assertEquals('T000085', $workflow->getColumnValue('event_id'));
         $this->assertNull($workflow->getColumnValue('stazione'));
         $this->assertEquals('OK', $workflow->getColumnValue('outcome'));
-
     }
 
     #[TestDox('[EXTRAINFO] Verifica presenza Extra Info')]

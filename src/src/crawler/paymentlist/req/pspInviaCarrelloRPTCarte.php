@@ -42,7 +42,15 @@ class pspInviaCarrelloRPTCarte extends AbstractPaymentList
      */
     public function isAttemptInCache(int $index = 0): bool
     {
-        $key = $this->getEvent()->getCacheKeyAttempt();
+        // se sono valorizzate le colonne
+        $key            = $this->getEvent()->getCacheKeyAttempt();
+        $iuv            = $this->getEvent()->getColumn('iuv');
+        $pa_emittente   = $this->getEvent()->getColumn('iddominio');
+        $token          = $this->getEvent()->getColumn('ccp');
+        if (($iuv) && ($pa_emittente) && ($token))
+        {
+            $key = base64_encode(sprintf('attempt_%s_%s_%s', $iuv, $pa_emittente, $token));
+        }
         return $this->hasInCache($key);
     }
 
@@ -51,7 +59,14 @@ class pspInviaCarrelloRPTCarte extends AbstractPaymentList
      */
     public function isPaymentInCache(int $index = 0): bool
     {
-        $key = $this->getEvent()->getCacheKeyAttempt();
+        $key            = $this->getEvent()->getCacheKeyAttempt();
+        $iuv            = $this->getEvent()->getColumn('iuv');
+        $pa_emittente   = $this->getEvent()->getColumn('iddominio');
+        $token          = $this->getEvent()->getColumn('ccp');
+        if (($iuv) && ($pa_emittente) && ($token))
+        {
+            $key = base64_encode(sprintf('attempt_%s_%s_%s', $iuv, $pa_emittente, $token));
+        }
         return $this->hasInCache($key);
     }
 
