@@ -1,6 +1,6 @@
 <?php
 
-namespace pagopa\crawler\events\req;
+namespace pagopa\crawler\events\resp;
 
 use pagopa\crawler\AbstractEvent;
 use pagopa\crawler\MapEvents;
@@ -8,14 +8,11 @@ use pagopa\crawler\methods\MethodInterface;
 use pagopa\database\sherlock\Transaction;
 use pagopa\database\sherlock\TransactionDetails;
 use pagopa\database\sherlock\Workflow;
-use pagopa\crawler\methods\req\pspInviaCarrelloRPTCarte as Payload;
+use pagopa\crawler\methods\resp\nodoInviaRPT as Payload;
 
-class pspInviaCarrelloRPTCarte extends AbstractEvent
+class nodoInviaRPT extends AbstractEvent
 {
-
     protected Payload $method;
-
-    protected bool $isCart = true;
 
 
     public function __construct(array $eventData)
@@ -29,7 +26,8 @@ class pspInviaCarrelloRPTCarte extends AbstractEvent
      */
     public function getPaEmittente(int $index = 0): string|null
     {
-        return $this->getMethodInterface()->getPaEmittente($index);
+        $column = $this->getColumn('iddominio');
+        return (empty($column)) ? $this->getMethodInterface()->getPaEmittente() : $column;
     }
 
     /**
@@ -37,7 +35,8 @@ class pspInviaCarrelloRPTCarte extends AbstractEvent
      */
     public function getIuv(int $index = 0): string|null
     {
-        return $this->getMethodInterface()->getIuv($index);
+        $column = $this->getColumn('iuv');
+        return (empty($column)) ? $this->getMethodInterface()->getIuv() : $column;
     }
 
     /**
@@ -45,7 +44,8 @@ class pspInviaCarrelloRPTCarte extends AbstractEvent
      */
     public function getCcp(int $index = 0): string|null
     {
-        return $this->getMethodInterface()->getCcp($index);
+        $column = $this->getColumn('ccp');
+        return (empty($column)) ? $this->getMethodInterface()->getCcp() : $column;
     }
 
     /**
@@ -61,7 +61,8 @@ class pspInviaCarrelloRPTCarte extends AbstractEvent
      */
     public function getCreditorReferenceId(int $index = 0): string|null
     {
-        return $this->getMethodInterface()->getIuv($index);
+        $value = $this->getColumn('creditorreferenceid');
+        return (empty($value)) ? null : $value;
     }
 
     /**
@@ -69,7 +70,8 @@ class pspInviaCarrelloRPTCarte extends AbstractEvent
      */
     public function getPaymentToken(int $index = 0): string|null
     {
-        return $this->getCcp($index);
+        $value = $this->getColumn('paymenttoken');
+        return (empty($value)) ? null : $value;
     }
 
     /**
@@ -77,7 +79,8 @@ class pspInviaCarrelloRPTCarte extends AbstractEvent
      */
     public function getIuvs(): array|null
     {
-        return $this->getMethodInterface()->getIuvs();
+        $value = $this->getIuv();
+        return (empty($value)) ? null : array($value);
     }
 
     /**
@@ -85,7 +88,8 @@ class pspInviaCarrelloRPTCarte extends AbstractEvent
      */
     public function getPaEmittenti(): array|null
     {
-        return $this->getMethodInterface()->getPaEmittenti();
+        $value = $this->getPaEmittente();
+        return (empty($value)) ? null : array($value);
     }
 
     /**
@@ -93,7 +97,8 @@ class pspInviaCarrelloRPTCarte extends AbstractEvent
      */
     public function getCcps(): array|null
     {
-        return $this->getMethodInterface()->getCcps();
+        $value = $this->getCcp();
+        return (empty($value)) ? null : array($value);
     }
 
     /**
@@ -101,7 +106,8 @@ class pspInviaCarrelloRPTCarte extends AbstractEvent
      */
     public function getPsp(): string|null
     {
-        return $this->getMethodInterface()->getPsp();
+        $value = $this->getColumn('psp');
+        return (empty($value)) ? null : $value;
     }
 
     /**
@@ -109,33 +115,34 @@ class pspInviaCarrelloRPTCarte extends AbstractEvent
      */
     public function getStazione(): string|null
     {
-        return null;
+        $value = $this->getColumn('stazione');
+        return (empty($value)) ? $this->getMethodInterface()->getStazione() : $value;
     }
 
     public function getCanale(): string|null
     {
-        $canale = $this->getColumn('canale');
-        if (empty($canale))
-        {
-            return $this->getMethodInterface()->getCanale();
-        }
-        return $canale;
+        $value = $this->getColumn('canale');
+        return (empty($value)) ? $this->getMethodInterface()->getStazione() : $value;
     }
 
     public function getBrokerPa(): string|null
     {
-        return null;
+        if (empty($this->getStazione()))
+        {
+            return null;
+        }
+        $stazione = explode('_', $this->getStazione(), 2);
+        return $stazione[0]; // ricavo il broker pa splittando la stazione
     }
 
     public function getBrokerPsp(): string|null
     {
-        $broker = $this->getColumn('canale');
-        if (empty($broker))
+        if (empty($this->getCanale()))
         {
-            return $this->getMethodInterface()->getBrokerPsp();
+            return null;
         }
-        $e = explode('_', $broker, 2);
-        return $e[0];
+        $stazione = explode('_', $this->getCanale(), 2);
+        return $stazione[0]; // ricavo il broker pa splittando la stazione
     }
 
     /**
@@ -153,15 +160,15 @@ class pspInviaCarrelloRPTCarte extends AbstractEvent
 
     public function workflowEvent(int $index = 0): Workflow|null
     {
-        if (($index + 1) > $this->getPaymentsCount())
-        {
-            return null;
-        }
-
         $workflow = new Workflow($this->getInsertedTimestamp());
+        $outcome = $this->getMethodInterface()->outcome();
         $workflow->setNewColumnValue('date_event', $this->getInsertedTimestamp()->format('Y-m-d'));
         $workflow->setEventId($this->getUniqueId());
         $workflow->setEventTimestamp($this->getInsertedTimestamp());
+        if (!is_null($this->getStazione()))
+        {
+            $workflow->setStazione($this->getStazione());
+        }
         if (!is_null($this->getCanale()))
         {
             $workflow->setCanale($this->getCanale());
@@ -169,6 +176,14 @@ class pspInviaCarrelloRPTCarte extends AbstractEvent
         if (!is_null($this->getPsp()))
         {
             $workflow->setPsp($this->getPsp());
+        }
+        if ($this->isFaultEvent())
+        {
+            $workflow->setFaultCode($this->getFaultCode());
+        }
+        if (!is_null($outcome))
+        {
+            $workflow->setOutcomeEvent($outcome);
         }
         $workflow->setFkTipoEvento(MapEvents::getMethodId($this->getTipoEvento(), $this->getSottoTipoEvento()));
         return $workflow;
@@ -187,7 +202,7 @@ class pspInviaCarrelloRPTCarte extends AbstractEvent
      */
     public function getPaymentsCount(): int|null
     {
-        return $this->getMethodInterface()->getPaymentsCount();
+        return null;
     }
 
     /**
@@ -195,7 +210,7 @@ class pspInviaCarrelloRPTCarte extends AbstractEvent
      */
     public function getTransferCount(int $index = 0): int|null
     {
-        return $this->getMethodInterface()->getTransferCount($index);
+        return null;
     }
 
     /**
@@ -203,15 +218,9 @@ class pspInviaCarrelloRPTCarte extends AbstractEvent
      */
     public function getCacheKeyPayment(): string
     {
-        $iuv            = $this->getColumn('iuv');
-        $pa_emittente   = $this->getColumn('iddominio');
-        $token          = $this->getColumn('ccp');
-        $key            = base64_encode(sprintf('sessionOriginal_%s', $this->getSessionIdOriginal()));
-        if (($iuv) && ($pa_emittente) && ($token))
-        {
-            $key = base64_encode(sprintf('attempt_%s_%s_%s', $iuv, $pa_emittente, $token));
-        }
-        return $key;
+        $iuv            = $this->getIuv();
+        $pa_emittente   = $this->getPaEmittente();
+        return base64_encode(sprintf('payment_%s_%s', $iuv, $pa_emittente));
     }
 
     /**
@@ -219,15 +228,10 @@ class pspInviaCarrelloRPTCarte extends AbstractEvent
      */
     public function getCacheKeyAttempt(): string
     {
-        $iuv            = $this->getColumn('iuv');
-        $pa_emittente   = $this->getColumn('iddominio');
-        $token          = $this->getColumn('ccp');
-        $key            = base64_encode(sprintf('sessionOriginal_%s', $this->getSessionIdOriginal()));
-        if (($iuv) && ($pa_emittente) && ($token))
-        {
-            $key = base64_encode(sprintf('attempt_%s_%s_%s', $iuv, $pa_emittente, $token));
-        }
-        return $key;
+        $iuv            = $this->getIuv();
+        $pa_emittente   = $this->getPaEmittente();
+        $token          = $this->getCcp();
+        return base64_encode(sprintf('attempt_%s_%s_%s', $iuv, $pa_emittente, $token));
     }
 
     /**
@@ -235,7 +239,7 @@ class pspInviaCarrelloRPTCarte extends AbstractEvent
      */
     public function isFaultEvent(): bool
     {
-        return false;
+        return $this->getMethodInterface()->isFaultEvent();
     }
 
     /**
@@ -243,7 +247,7 @@ class pspInviaCarrelloRPTCarte extends AbstractEvent
      */
     public function getFaultCode(): string|null
     {
-        return null;
+        return $this->getMethodInterface()->getFaultCode();
     }
 
     /**
@@ -251,7 +255,7 @@ class pspInviaCarrelloRPTCarte extends AbstractEvent
      */
     public function getFaultString(): string|null
     {
-        return null;
+        return $this->getMethodInterface()->getFaultString();
     }
 
     /**
@@ -259,6 +263,6 @@ class pspInviaCarrelloRPTCarte extends AbstractEvent
      */
     public function getFaultDescription(): string|null
     {
-        return null;
+        return $this->getMethodInterface()->getFaultDescription();
     }
 }

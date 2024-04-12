@@ -26,7 +26,7 @@
     </php>
     <testsuites>
         <testsuite name="temp_suite">
-            <file>process/crawler/pspInviaCarrelloRPTCarte/T00043_UpdatePspWithNodoInviaCarrelloRPT_1_RPT_ExtraInfo.php</file>
+            <file>process/crawler/nodoInviaRPT/T00044_nodoInviaRPT_NoPreviousAttivaRPT.php</file>
         </testsuite>
         <testsuite name="crawler">
             <file>process/crawler/activatePaymentNotice/SingleEvent/T00001_CreateAttemptAllInfoInEvent.php</file>
@@ -63,6 +63,7 @@
             <file>process/crawler/pspInviaCarrelloRPT/T00041_UpdatePspWithNodoInviaCarrelloRPT_1_RPT_FaultCode.php</file>
             <file>process/crawler/pspInviaCarrelloRPT/T00042_UpdatePspWithNodoInviaCarrelloRPT_2_RPT.php</file>
             <file>process/crawler/pspInviaCarrelloRPTCarte/T00043_UpdatePspWithNodoInviaCarrelloRPT_1_RPT_ExtraInfo.php</file>
+            <file>process/crawler/nodoInviaRPT/T00044_nodoInviaRPT_NoPreviousAttivaRPT.php</file>
         </testsuite>
         <testsuite name="unit_tests">
             <!-- Request Method Tests -->
@@ -72,6 +73,7 @@
             <file>pagopa/methods/req/sendPaymentOutcomeTest.php</file>
             <file>pagopa/methods/req/pspInviaCarrelloRPTTest.php</file>
             <file>pagopa/methods/req/pspInviaCarrelloRPTCarteTest.php</file>
+            <file>pagopa/methods/req/nodoInviaRPTTest.php</file>
 
             <!-- Response Method Tests -->
             <file>pagopa/methods/resp/activatePaymentNoticeTest.php</file>
@@ -79,6 +81,7 @@
             <file>pagopa/methods/resp/sendPaymentOutcomeTest.php</file>
             <file>pagopa/methods/resp/pspInviaCarrelloRPTTest.php</file>
             <file>pagopa/methods/resp/pspInviaCarrelloRPTCarteTest.php</file>
+            <file>pagopa/methods/resp/nodoInviaRPTTest.php</file>
 
             <!-- Request Event Tests -->
             <file>pagopa/events/req/activatePaymentNoticeTest.php</file>
@@ -86,6 +89,7 @@
             <file>pagopa/events/req/sendPaymentOutcomeTest.php</file>
             <file>pagopa/events/req/pspInviaCarrelloRPTTest.php</file>
             <file>pagopa/events/req/pspInviaCarrelloRPTCarteTest.php</file>
+            <file>pagopa/events/req/nodoInviaRPTTest.php</file>
 
             <!-- Response Event Tests -->
             <file>pagopa/events/resp/activatePaymentNoticeTest.php</file>
@@ -93,6 +97,7 @@
             <file>pagopa/events/resp/sendPaymentOutcomeTest.php</file>
             <file>pagopa/events/resp/pspInviaCarrelloRPTTest.php</file>
             <file>pagopa/events/resp/pspInviaCarrelloRPTCarteTest.php</file>
+            <file>pagopa/events/resp/nodoInviaRPTTest.php</file>
         </testsuite>
         <testsuite name="process">
             <file>process/normal/T0001.php</file>

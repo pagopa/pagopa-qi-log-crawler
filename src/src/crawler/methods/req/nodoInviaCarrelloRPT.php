@@ -344,7 +344,8 @@ class nodoInviaCarrelloRPT implements MethodInterface
      * @param string $tagName
      * @return string|null
      */
-    private function getElementFromListaRPT(int $index, string $tagName) : string|null
+    private function
+    getElementFromListaRPT(int $index, string $tagName) : string|null
     {
         $elementoListaRPT = $this->getElementoListaRPT($index);
         if ($elementoListaRPT == null)
