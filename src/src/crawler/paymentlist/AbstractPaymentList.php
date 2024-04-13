@@ -249,15 +249,24 @@ abstract class AbstractPaymentList implements PaymentListInterface
      */
     abstract public function isAttempt(int $index = 0): bool;
 
-    /**
-     * @inheritDoc
-     */
-    abstract public function isAttemptInCache(int $index = 0): bool;
 
     /**
      * @inheritDoc
      */
-    abstract public function isPaymentInCache(int $index = 0): bool;
+    public function isAttemptInCache(int $index = 0): bool
+    {
+        $key            = $this->getEvent()->getCacheKeyAttempt();
+        return $this->hasInCache($key);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function isPaymentInCache(int $index = 0): bool
+    {
+        $key            = $this->getEvent()->getCacheKeyPayment();
+        return $this->hasInCache($key);
+    }
 
     /**
      * @inheritDoc
@@ -266,15 +275,23 @@ abstract class AbstractPaymentList implements PaymentListInterface
     {
         return $this->search_on_db;
     }
-    /**
-     * @inheritDoc
-     */
-    abstract public function runRejectedEvent(string $message = null): TransactionRe;
 
     /**
      * @inheritDoc
      */
-    abstract public function runCompleteEvent(string $message = null): TransactionRe;
+    public function runRejectedEvent(string $message = null): TransactionRe
+    {
+        return $this->getEvent()->getEventRowInstance()->reject($message)->update();
+
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function runCompleteEvent(string $message = null): TransactionRe
+    {
+        return $this->getEvent()->getEventRowInstance()->loaded($message)->update();
+    }
 
 
     public function runAnalysisSingleEvent() : void

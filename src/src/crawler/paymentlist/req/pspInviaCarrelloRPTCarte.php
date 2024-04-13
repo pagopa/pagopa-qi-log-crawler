@@ -37,54 +37,6 @@ class pspInviaCarrelloRPTCarte extends AbstractPaymentList
         return !is_null($this->getEvent()->getSessionIdOriginal());
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function isAttemptInCache(int $index = 0): bool
-    {
-        // se sono valorizzate le colonne
-        $key            = $this->getEvent()->getCacheKeyAttempt();
-        $iuv            = $this->getEvent()->getColumn('iuv');
-        $pa_emittente   = $this->getEvent()->getColumn('iddominio');
-        $token          = $this->getEvent()->getColumn('ccp');
-        if (($iuv) && ($pa_emittente) && ($token))
-        {
-            $key = base64_encode(sprintf('attempt_%s_%s_%s', $iuv, $pa_emittente, $token));
-        }
-        return $this->hasInCache($key);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function isPaymentInCache(int $index = 0): bool
-    {
-        $key            = $this->getEvent()->getCacheKeyAttempt();
-        $iuv            = $this->getEvent()->getColumn('iuv');
-        $pa_emittente   = $this->getEvent()->getColumn('iddominio');
-        $token          = $this->getEvent()->getColumn('ccp');
-        if (($iuv) && ($pa_emittente) && ($token))
-        {
-            $key = base64_encode(sprintf('attempt_%s_%s_%s', $iuv, $pa_emittente, $token));
-        }
-        return $this->hasInCache($key);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function runRejectedEvent(string $message = null): TransactionRe
-    {
-        return $this->getEvent()->getEventRowInstance()->reject($message)->update();
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function runCompleteEvent(string $message = null): TransactionRe
-    {
-        return $this->getEvent()->getEventRowInstance()->loaded($message)->update();
-    }
 
     public function updateTransaction(CacheObject $cache, int $index = 0): array|null
     {

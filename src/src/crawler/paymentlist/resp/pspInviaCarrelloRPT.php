@@ -34,38 +34,4 @@ class pspInviaCarrelloRPT extends AbstractPaymentList
     {
         return !is_null($this->getEvent()->getSessionIdOriginal());
     }
-
-    /**
-     * @inheritDoc
-     */
-    public function isAttemptInCache(int $index = 0): bool
-    {
-        $key = $this->getEvent()->getCacheKeyAttempt();
-        return $this->hasInCache($key);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function isPaymentInCache(int $index = 0): bool
-    {
-        $key = $this->getEvent()->getCacheKeyAttempt();
-        return $this->hasInCache($key);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function runRejectedEvent(string $message = null): TransactionRe
-    {
-        return $this->getEvent()->getEventRowInstance()->reject($message)->update();
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function runCompleteEvent(string $message = null): TransactionRe
-    {
-        return $this->getEvent()->getEventRowInstance()->loaded($message)->update();
-    }
 }

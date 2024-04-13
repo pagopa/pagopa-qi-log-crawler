@@ -119,11 +119,23 @@ abstract class AbstractEvent implements EventInterface
         return $this->getColumn('payload');
     }
 
+    public function getPaEmittente(int $index = 0): string|null
+    {
+        $column = $this->getColumn('iddominio');
+        if ($index > 0)
+        {
+            // se sto chiedendo una PA interna al payload , chiedo al metodo
+            return $this->getMethodInterface()->getPaEmittente($index);
+        }
+        // altrimenti se $column è vuoto, chiedo al metodo con $index=0, altrimenti restituisco column (che esiste a questo punto)
+        return (empty($column)) ? $this->getMethodInterface()->getPaEmittente(0) : $column;
+    }
+
 
     /**
      * @inheritDoc
      */
-    abstract public function getPaEmittente(int $index = 0): string|null;
+    //abstract public function getPaEmittente(int $index = 0): string|null;
 
     /**
      * @inheritDoc

@@ -37,48 +37,6 @@ class activatePaymentNotice extends AbstractPaymentList
         return ($this->getEvent()->getIuv($index) && $this->getEvent()->getPaEmittente($index) && $this->getEvent()->getPaymentToken($index));
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function isAttemptInCache(int $index = 0): bool
-    {
-        $date       = $this->getEvent()->getInsertedTimestamp()->format('Ymd');
-        $iuv        = $this->getEvent()->getIuv($index);
-        $pa         = $this->getEvent()->getPaEmittente($index);
-        $token      = $this->getEvent()->getPaymentToken($index);
-        $key        = base64_encode(sprintf('attempt_%s_%s_%s', $iuv, $pa, $token));
-        $key        = $this->getEvent()->getCacheKeyAttempt();
-        return $this->hasInCache($key);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function isPaymentInCache(int $index = 0): bool
-    {
-        $date       = $this->getEvent()->getInsertedTimestamp()->format('Ymd');
-        $iuv        = $this->getEvent()->getIuv($index);
-        $pa         = $this->getEvent()->getPaEmittente($index);
-        $key        = base64_encode(sprintf('payment_%s_%s', $iuv, $pa));
-        return $this->hasInCache($key);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function runRejectedEvent(string $message = null): TransactionRe
-    {
-        return $this->getEvent()->getEventRowInstance()->reject($message)->update();
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function runCompleteEvent(string $message = null): TransactionRe
-    {
-        return $this->getEvent()->getEventRowInstance()->loaded($message)->update();
-    }
-
     public function updateTransaction(CacheObject $cache, int $index = 0): array|null
     {
         // una activatePaymentNotice Resp aggiorna la transaction se non rappresenta un fault e pure i transfer

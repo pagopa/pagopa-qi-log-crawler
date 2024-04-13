@@ -37,38 +37,4 @@ class sendPaymentOutcome extends AbstractPaymentList
         }
         return ($this->getEvent()->getIuv(0) && $this->getEvent()->getPaEmittente(0) && $token);
     }
-
-    /**
-     * @inheritDoc
-     */
-    public function isAttemptInCache(int $index = 0): bool
-    {
-        $cache_key      =   $this->getEvent()->getCacheKeyAttempt();
-        return $this->hasInCache($cache_key);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function isPaymentInCache(int $index = 0): bool
-    {
-        $cache_key      =   $this->getEvent()->getCacheKeyPayment();
-        return $this->hasInCache($cache_key);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function runRejectedEvent(string $message = null): TransactionRe
-    {
-        return $this->getEvent()->getEventRowInstance()->reject($message)->update();
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function runCompleteEvent(string $message = null): TransactionRe
-    {
-        return $this->getEvent()->getEventRowInstance()->loaded($message)->update();
-    }
 }
