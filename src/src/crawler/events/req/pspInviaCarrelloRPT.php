@@ -20,29 +20,6 @@ class pspInviaCarrelloRPT extends AbstractEvent
         parent::__construct($eventData);
         $this->method = new Payload($this->data['payload']);
     }
-    /**
-     * @inheritDoc
-     */
-    public function getPaEmittente(int $index = 0): string|null
-    {
-        return $this->getMethodInterface()->getPaEmittente($index);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getIuv(int $index = 0): string|null
-    {
-        return $this->getMethodInterface()->getIuv($index);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getCcp(int $index = 0): string|null
-    {
-        return $this->getMethodInterface()->getCcp($index);
-    }
 
     /**
      * @inheritDoc
@@ -50,22 +27,6 @@ class pspInviaCarrelloRPT extends AbstractEvent
     public function getNoticeNumber(int $index = 0): string|null
     {
         return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getCreditorReferenceId(int $index = 0): string|null
-    {
-        return $this->getMethodInterface()->getIuv($index);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getPaymentToken(int $index = 0): string|null
-    {
-        return $this->getCcp($index);
     }
 
     /**
@@ -92,18 +53,6 @@ class pspInviaCarrelloRPT extends AbstractEvent
         return $this->getMethodInterface()->getCcps();
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getPsp(): string|null
-    {
-        $column = $this->getColumn('psp');
-        if (empty($column))
-        {
-            return $this->getMethodInterface()->getPsp();
-        }
-        return $column;
-    }
 
     /**
      * @inheritDoc
@@ -113,30 +62,9 @@ class pspInviaCarrelloRPT extends AbstractEvent
         return null;
     }
 
-    public function getCanale(): string|null
-    {
-        $canale = $this->getColumn('canale');
-        if (empty($canale))
-        {
-            return $this->getMethodInterface()->getCanale();
-        }
-        return $canale;
-    }
-
     public function getBrokerPa(): string|null
     {
         return null;
-    }
-
-    public function getBrokerPsp(): string|null
-    {
-        $broker = $this->getColumn('canale');
-        if (empty($broker))
-        {
-            return $this->getMethodInterface()->getBrokerPsp();
-        }
-        $e = explode('_', $broker, 2);
-        return $e[0];
     }
 
     /**

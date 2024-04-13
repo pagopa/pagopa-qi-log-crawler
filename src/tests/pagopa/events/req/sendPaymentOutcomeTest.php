@@ -140,7 +140,7 @@ class sendPaymentOutcomeTest extends TestCase
     {
         $this->assertEquals('t0000000000000000000000000000034', $this->instance_1_SPO_OK->getPaymentToken());
         $this->assertEquals('t0000000000000000000000000000035', $this->instance_1_SPO_KO->getPaymentToken());
-        $this->assertNull($this->instance_no_token->getPaymentToken());
+        $this->assertEquals('t0000000000000000000000000000036', $this->instance_no_token->getPaymentToken());
     }
 
 
@@ -149,7 +149,7 @@ class sendPaymentOutcomeTest extends TestCase
     {
         $this->assertEquals('t0000000000000000000000000000034', $this->instance_1_SPO_OK->getCcp());
         $this->assertEquals('t0000000000000000000000000000035', $this->instance_1_SPO_KO->getCcp());
-        $this->assertNull($this->instance_no_token->getCcp());
+        $this->assertEquals('t0000000000000000000000000000036', $this->instance_no_token->getCcp());
     }
 
     #[TestDox('getBrokerPa()')]
@@ -230,7 +230,7 @@ class sendPaymentOutcomeTest extends TestCase
     {
         $this->assertEquals(['t0000000000000000000000000000034'], $this->instance_1_SPO_OK->getCcps());
         $this->assertEquals(['t0000000000000000000000000000035'], $this->instance_1_SPO_KO->getCcps());
-        $this->assertNull($this->instance_no_token->getCcps());
+        $this->assertEquals(['t0000000000000000000000000000036'], $this->instance_no_token->getCcps());
     }
 
 

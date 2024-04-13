@@ -21,33 +21,6 @@ class nodoInviaRPT extends AbstractEvent
         parent::__construct($eventData);
         $this->method = new Payload($this->data['payload']);
     }
-    /**
-     * @inheritDoc
-     */
-    public function getPaEmittente(int $index = 0): string|null
-    {
-        $column = $this->getColumn('iddominio');
-        return (empty($column)) ? $this->getMethodInterface()->getPaEmittente() : $column;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getIuv(int $index = 0): string|null
-    {
-        $column = $this->getColumn('iuv');
-        return (empty($column)) ? $this->getMethodInterface()->getIuv() : $column;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getCcp(int $index = 0): string|null
-    {
-        $column = $this->getColumn('ccp');
-        return (empty($column)) ? $this->getMethodInterface()->getCcp() : $column;
-
-    }
 
     /**
      * @inheritDoc
@@ -56,27 +29,6 @@ class nodoInviaRPT extends AbstractEvent
     {
         return null;
     }
-
-    /**
-     * @inheritDoc
-     */
-    public function getCreditorReferenceId(int $index = 0): string|null
-    {
-        $column = $this->getColumn('iuv');
-        return (empty($column)) ? $this->getMethodInterface()->getIuv() : $column;
-
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getPaymentToken(int $index = 0): string|null
-    {
-        $column = $this->getColumn('ccp');
-        return (empty($column)) ? $this->getMethodInterface()->getToken() : $column;
-
-    }
-
     /**
      * @inheritDoc
      */
@@ -102,52 +54,6 @@ class nodoInviaRPT extends AbstractEvent
     {
         $value = $this->getCcp();
         return (is_null($value)) ? null : array($value);
-
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getPsp(): string|null
-    {
-        $column = $this->getColumn('psp');
-        return (empty($column)) ? $this->getMethodInterface()->getPsp() : $column;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getStazione(): string|null
-    {
-        $column = $this->getColumn('stazione');
-        return (empty($column)) ? $this->getMethodInterface()->getStazione() : $column;
-    }
-
-    public function getCanale(): string|null
-    {
-        $column = $this->getColumn('canale');
-        return (empty($column)) ? $this->getMethodInterface()->getCanale() : $column;
-
-    }
-
-    public function getBrokerPa(): string|null
-    {
-        if (empty($this->getStazione()))
-        {
-            return null;
-        }
-        $stazione = explode('_', $this->getStazione(), 2);
-        return $stazione[0]; // ricavo il broker pa splittando la stazione
-    }
-
-    public function getBrokerPsp(): string|null
-    {
-        if (empty($this->getCanale()))
-        {
-            return null;
-        }
-        $stazione = explode('_', $this->getCanale(), 2);
-        return $stazione[0]; // ricavo il broker pa splittando la stazione
     }
 
     /**

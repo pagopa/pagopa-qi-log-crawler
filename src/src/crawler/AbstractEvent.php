@@ -119,6 +119,11 @@ abstract class AbstractEvent implements EventInterface
         return $this->getColumn('payload');
     }
 
+    /**
+     * @inheritDoc
+     * @param int $index
+     * @return string|null
+     */
     public function getPaEmittente(int $index = 0): string|null
     {
         $column = $this->getColumn('iddominio');
@@ -131,36 +136,81 @@ abstract class AbstractEvent implements EventInterface
         return (empty($column)) ? $this->getMethodInterface()->getPaEmittente(0) : $column;
     }
 
+    /**
+     * @param int $index
+     * @return string|null
+     */
+    public function getIuv(int $index = 0): string|null
+    {
+        $column = $this->getColumn('iuv');
+        if ($index > 0)
+        {
+            // se sto chiedendo una PA interna al payload , chiedo al metodo
+            return $this->getMethodInterface()->getIuv($index);
+        }
+        // altrimenti se $column è vuoto, chiedo al metodo con $index=0, altrimenti restituisco column (che esiste a questo punto)
+        return (empty($column)) ? $this->getMethodInterface()->getIuv(0) : $column;
+    }
 
     /**
      * @inheritDoc
      */
-    //abstract public function getPaEmittente(int $index = 0): string|null;
+    public function getCcp(int $index = 0): string|null
+    {
+        $column = $this->getColumn('ccp');
+        if ($index > 0)
+        {
+            // se sto chiedendo una PA interna al payload , chiedo al metodo
+            return $this->getMethodInterface()->getCcp($index);
+        }
+        // altrimenti se $column è vuoto, chiedo al metodo con $index=0, altrimenti restituisco column (che esiste a questo punto)
+        return (empty($column)) ? $this->getMethodInterface()->getCcp(0) : $column;
+    }
 
     /**
      * @inheritDoc
      */
-    abstract public function getIuv(int $index = 0): string|null;
+    public function getNoticeNumber(int $index = 0): string|null
+    {
+        $column = $this->getColumn('noticenumber');
+        if ($index > 0)
+        {
+            // se sto chiedendo una PA interna al payload , chiedo al metodo
+            return $this->getMethodInterface()->getNoticeNumber($index);
+        }
+        // altrimenti se $column è vuoto, chiedo al metodo con $index=0, altrimenti restituisco column (che esiste a questo punto)
+        return (empty($column)) ? $this->getMethodInterface()->getNoticeNumber(0) : $column;
+    }
 
     /**
      * @inheritDoc
      */
-    abstract public function getCcp(int $index = 0): string|null;
+    public function getCreditorReferenceId(int $index = 0): string|null
+    {
+        $column = $this->getColumn('creditorreferenceid');
+        if ($index > 0)
+        {
+            // se sto chiedendo una PA interna al payload , chiedo al metodo
+            return $this->getMethodInterface()->getIuv($index);
+        }
+        // altrimenti se $column è vuoto, chiedo al metodo con $index=0, altrimenti restituisco column (che esiste a questo punto)
+        return (empty($column)) ? $this->getMethodInterface()->getIuv(0) : $column;
+    }
 
     /**
      * @inheritDoc
      */
-    abstract public function getNoticeNumber(int $index = 0): string|null;
-
-    /**
-     * @inheritDoc
-     */
-    abstract public function getCreditorReferenceId(int $index = 0): string|null;
-
-    /**
-     * @inheritDoc
-     */
-    abstract public function getPaymentToken(int $index = 0): string|null;
+    public function getPaymentToken(int $index = 0): string|null
+    {
+        $column = $this->getColumn('paymenttoken');
+        if ($index > 0)
+        {
+            // se sto chiedendo una PA interna al payload , chiedo al metodo
+            return $this->getMethodInterface()->getToken($index);
+        }
+        // altrimenti se $column è vuoto, chiedo al metodo con $index=0, altrimenti restituisco column (che esiste a questo punto)
+        return (empty($column)) ? $this->getMethodInterface()->getToken(0) : $column;
+    }
 
     /**
      * @inheritDoc
@@ -181,22 +231,52 @@ abstract class AbstractEvent implements EventInterface
      * Restituisce il psp dell'evento. Sarà la classe che implementa la AbstractEvent a decidere se usare l'evento o il payload
      * @return string|null
      */
-    abstract public function getPsp(): string|null;
+    public function getPsp(): string|null
+    {
+        $column = $this->getColumn('psp');
+        return (empty($column)) ? $this->getMethodInterface()->getPsp() : $column;
+    }
 
     /**
      * Restituisce la stazione dell'evento. Sarà la classe che implementa la AbstractEvent a decidere se usare l'evento o il payload
      * @return string|null
      */
-    abstract public function getStazione(): string|null;
+    public function getStazione(): string|null
+    {
+        $column = $this->getColumn('stazione');
+        return (empty($column)) ? $this->getMethodInterface()->getStazione() : $column;
+    }
 
 
-    abstract public function getCanale(): string|null;
+    public function getCanale(): string|null
+    {
+        $column = $this->getColumn('canale');
+        return (empty($column)) ? $this->getMethodInterface()->getCanale() : $column;
+    }
 
 
-    abstract public function getBrokerPa(): string|null;
+    public function getBrokerPa(): string|null
+    {
+        // se il campo stazione è vuoto, allora chiedo al payload
+        // altrimenti prendo il campo stazione e me lo splitto
+        if (empty($this->getStazione()))
+        {
+            return $this->getMethodInterface()->getBrokerPa();
+        }
+        $stazione = explode('_', $this->getStazione(), 2);
+        return $stazione[0]; // ricavo il broker pa splittando la stazione
+    }
 
 
-    abstract public function getBrokerPsp(): string|null;
+    public function getBrokerPsp(): string|null
+    {
+        if (empty($this->getCanale()))
+        {
+            return $this->getMethodInterface()->getCanale();
+        }
+        $canale = explode('_', $this->getCanale(), 2);
+        return $canale[0];
+    }
 
 
     /**

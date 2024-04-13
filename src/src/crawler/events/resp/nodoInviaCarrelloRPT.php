@@ -27,54 +27,6 @@ class nodoInviaCarrelloRPT extends AbstractEvent
     /**
      * @inheritDoc
      */
-    public function getPaEmittente(int $index = 0): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getIuv(int $index = 0): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getCcp(int $index = 0): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getNoticeNumber(int $index = 0): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getCreditorReferenceId(int $index = 0): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getPaymentToken(int $index = 0): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function getIuvs(): array|null
     {
         return null;
@@ -94,52 +46,6 @@ class nodoInviaCarrelloRPT extends AbstractEvent
     public function getCcps(): array|null
     {
         return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getPsp(): string|null
-    {
-        $column = $this->getColumn('psp');
-        return (empty($column)) ? null : $column;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getStazione(): string|null
-    {
-        $column = $this->getColumn('stazione');
-        return (empty($column)) ? null : $column;
-    }
-
-    public function getCanale(): string|null
-    {
-        $column = $this->getColumn('canale');
-        return (empty($column)) ? null : $column;
-    }
-
-    public function getBrokerPa(): string|null
-    {
-        $column = $this->getColumn('stazione');
-        if (empty($column))
-        {
-            return null;
-        }
-        $e = explode('_', $column, 2);
-        return $e[0];
-    }
-
-    public function getBrokerPsp(): string|null
-    {
-        $column = $this->getColumn('canale');
-        if (empty($column))
-        {
-            return null;
-        }
-        $e = explode('_', $column, 2);
-        return $e[0];
     }
 
     /**

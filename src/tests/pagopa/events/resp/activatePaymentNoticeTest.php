@@ -252,7 +252,7 @@ class activatePaymentNoticeTest extends TestCase
         $this->assertEquals(['06655971007'], $this->instance_all_field->getPaEmittenti());
         $this->assertEquals(['06655971007'], $this->instance_no_stazione_canale_in_evento->getPaEmittenti());
         $this->assertEquals(['06655971007'], $this->instance_no_iuv_in_evento->getPaEmittenti());
-        $this->assertNull($this->instance_no_dominio_in_evento->getPaEmittenti());
+        $this->assertEquals(['06655971007'], $this->instance_no_dominio_in_evento->getPaEmittenti());
         $this->assertEquals(['06655971007'], $this->instance_no_token_in_evento->getPaEmittenti());
         $this->assertEquals(['06655971007'], $this->instance_no_nav_in_evento->getPaEmittenti());
         $this->assertEquals(['06655971007'], $this->faultInstance->getPaEmittenti());
@@ -264,7 +264,7 @@ class activatePaymentNoticeTest extends TestCase
     {
         $this->assertEquals(['04100435542586389'], $this->instance_all_field->getIuvs());
         $this->assertEquals(['04100435542586389'], $this->instance_no_stazione_canale_in_evento->getIuvs());
-        $this->assertNull($this->instance_no_iuv_in_evento->getIuvs());
+        $this->assertEquals(['04100435542586389'], $this->instance_no_iuv_in_evento->getIuvs());
         $this->assertEquals(['04100435542586389'], $this->instance_no_dominio_in_evento->getIuvs());
         $this->assertEquals(['04100435542586389'], $this->instance_no_token_in_evento->getIuvs());
         $this->assertEquals(['04100435542586389'], $this->instance_no_nav_in_evento->getIuvs());
@@ -278,7 +278,7 @@ class activatePaymentNoticeTest extends TestCase
         $this->assertEquals(['0a8ef4f0194f4886942cbc8da8fdbe04'], $this->instance_no_stazione_canale_in_evento->getCCps());
         $this->assertEquals(['0a8ef4f0194f4886942cbc8da8fdbe04'], $this->instance_no_iuv_in_evento->getCCps());
         $this->assertEquals(['0a8ef4f0194f4886942cbc8da8fdbe04'], $this->instance_no_dominio_in_evento->getCCps());
-        $this->assertNull($this->instance_no_token_in_evento->getCCps());
+        $this->assertEquals(['0a8ef4f0194f4886942cbc8da8fdbe04'], $this->instance_no_token_in_evento->getCCps());
         $this->assertEquals(['0a8ef4f0194f4886942cbc8da8fdbe04'], $this->instance_no_nav_in_evento->getCCps());
         $this->assertEquals(['0a8ef4f0194f4886942cbc8da8fdbe04'], $this->faultInstance->getCCps());
     }
@@ -289,7 +289,7 @@ class activatePaymentNoticeTest extends TestCase
         $this->assertEquals('06655971007', $this->instance_all_field->getPaEmittente());
         $this->assertEquals('06655971007', $this->instance_no_stazione_canale_in_evento->getPaEmittente());
         $this->assertEquals('06655971007', $this->instance_no_iuv_in_evento->getPaEmittente());
-        $this->assertNull($this->instance_no_dominio_in_evento->getPaEmittente());
+        $this->assertEquals('06655971007', $this->instance_no_dominio_in_evento->getPaEmittente());
         $this->assertEquals('06655971007', $this->instance_no_token_in_evento->getPaEmittente());
         $this->assertEquals('06655971007', $this->instance_no_nav_in_evento->getPaEmittente());
         $this->assertEquals('06655971007', $this->faultInstance->getPaEmittente());
@@ -301,7 +301,7 @@ class activatePaymentNoticeTest extends TestCase
     {
         $this->assertEquals('04100435542586389', $this->instance_all_field->getIuv());
         $this->assertEquals('04100435542586389', $this->instance_no_stazione_canale_in_evento->getIuv());
-        $this->assertNull($this->instance_no_iuv_in_evento->getIuv());
+        $this->assertEquals('04100435542586389', $this->instance_no_iuv_in_evento->getIuv());
         $this->assertEquals('04100435542586389', $this->instance_no_dominio_in_evento->getIuv());
         $this->assertEquals('04100435542586389', $this->instance_no_token_in_evento->getIuv());
         $this->assertEquals('04100435542586389', $this->instance_no_nav_in_evento->getIuv());
@@ -314,7 +314,7 @@ class activatePaymentNoticeTest extends TestCase
     {
         $this->assertEquals('04100435542586389', $this->instance_all_field->getCreditorReferenceId());
         $this->assertEquals('04100435542586389', $this->instance_no_stazione_canale_in_evento->getCreditorReferenceId());
-        $this->assertNull($this->instance_no_iuv_in_evento->getCreditorReferenceId());
+        $this->assertEquals('04100435542586389', $this->instance_no_iuv_in_evento->getCreditorReferenceId());
         $this->assertEquals('04100435542586389', $this->instance_no_dominio_in_evento->getCreditorReferenceId());
         $this->assertEquals('04100435542586389', $this->instance_no_token_in_evento->getCreditorReferenceId());
         $this->assertEquals('04100435542586389', $this->instance_no_nav_in_evento->getCreditorReferenceId());
@@ -328,7 +328,7 @@ class activatePaymentNoticeTest extends TestCase
         $this->assertEquals('0a8ef4f0194f4886942cbc8da8fdbe04', $this->instance_no_stazione_canale_in_evento->getCcp());
         $this->assertEquals('0a8ef4f0194f4886942cbc8da8fdbe04', $this->instance_no_iuv_in_evento->getCcp());
         $this->assertEquals('0a8ef4f0194f4886942cbc8da8fdbe04', $this->instance_no_dominio_in_evento->getCcp());
-        $this->assertNull($this->instance_no_token_in_evento->getCcp());
+        $this->assertEquals('0a8ef4f0194f4886942cbc8da8fdbe04', $this->instance_no_token_in_evento->getCcp());
         $this->assertEquals('0a8ef4f0194f4886942cbc8da8fdbe04', $this->instance_no_nav_in_evento->getCcp());
         $this->assertEquals('0a8ef4f0194f4886942cbc8da8fdbe04', $this->faultInstance->getCcp());
     }
@@ -340,7 +340,7 @@ class activatePaymentNoticeTest extends TestCase
         $this->assertEquals('0a8ef4f0194f4886942cbc8da8fdbe04', $this->instance_no_stazione_canale_in_evento->getPaymentToken());
         $this->assertEquals('0a8ef4f0194f4886942cbc8da8fdbe04', $this->instance_no_iuv_in_evento->getPaymentToken());
         $this->assertEquals('0a8ef4f0194f4886942cbc8da8fdbe04', $this->instance_no_dominio_in_evento->getPaymentToken());
-        $this->assertNull($this->instance_no_token_in_evento->getPaymentToken());
+        $this->assertEquals('0a8ef4f0194f4886942cbc8da8fdbe04', $this->instance_no_token_in_evento->getPaymentToken());
         $this->assertEquals('0a8ef4f0194f4886942cbc8da8fdbe04', $this->instance_no_nav_in_evento->getPaymentToken());
         $this->assertEquals('0a8ef4f0194f4886942cbc8da8fdbe04', $this->faultInstance->getPaymentToken());
     }

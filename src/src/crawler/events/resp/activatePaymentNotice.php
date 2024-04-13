@@ -21,59 +21,6 @@ class activatePaymentNotice extends AbstractEvent
         $this->method = new Payload($this->data['payload']);
     }
     /**
-     * @inheritDoc
-     */
-    public function getPaEmittente(int $index = 0): string|null
-    {
-        $pa = $this->getColumn('iddominio');
-        return (empty($pa)) ? null : $pa;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getIuv(int $index = 0): string|null
-    {
-        $iuv = $this->getColumn('iuv');
-        return (empty($iuv)) ? null : $iuv;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getCcp(int $index = 0): string|null
-    {
-        $ccp = $this->getColumn('ccp');
-        return (empty($ccp)) ? null : $ccp;
-    }
-
-    /**
-     * Restituisce il notice number dalle info dell'evento. Nel payload non c'è
-     */
-    public function getNoticeNumber(int $index = 0): string|null
-    {
-        return (empty($this->getColumn('noticenumber'))) ? null : $this->getColumn('noticenumber');
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getCreditorReferenceId(int $index = 0): string|null
-    {
-        $iuv = $this->getColumn('creditorreferenceid');
-        return (empty($iuv)) ? null : $iuv;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getPaymentToken(int $index = 0): string|null
-    {
-        $token = $this->getColumn('paymenttoken');
-        return (empty($token)) ? null : $token;
-    }
-
-    /**
      * Chiedo al mio metodo, che preleva o dall'evento o dal payload.
      * Sarà sempre e solo 1 lo IUV
      */
@@ -98,52 +45,6 @@ class activatePaymentNotice extends AbstractEvent
         return (is_null($this->getCcp(0))) ? null : [$this->getCcp(0)];
     }
 
-    /**
-     * Nel payload non c'è
-     */
-    public function getPsp(): string|null
-    {
-//        echo $this->getColumn('unique_id') . ' => ' .$this->getColumn('psp') .PHP_EOL;
-        return (empty($this->getColumn('psp'))) ? null : $this->getColumn('psp');
-    }
-
-    /**
-     * Nel payload non c'è
-     */
-    public function getStazione(): string|null
-    {
-        return (empty($this->getColumn('stazione'))) ? null : $this->getColumn('stazione');
-    }
-
-    /**
-     * Nel payload non c'è
-     * @return string|null
-     */
-    public function getCanale(): string|null
-    {
-        return (empty($this->getColumn('canale'))) ? null : $this->getColumn('canale');
-    }
-
-
-    public function getBrokerPa(): string|null
-    {
-        if (is_null($this->getStazione()))
-        {
-            return null;
-        }
-        $stazione = explode('_', $this->getStazione(), 2);
-        return $stazione[0];
-    }
-
-    public function getBrokerPsp(): string|null
-    {
-        if (is_null($this->getCanale()))
-        {
-            return null;
-        }
-        $canale = explode('_', $this->getCanale(), 2);
-        return $canale[0];
-    }
     /**
      * @inheritDoc
      */
@@ -316,7 +217,6 @@ class activatePaymentNotice extends AbstractEvent
     {
         $iuv            =   $this->getIuv(0);
         $pa_emittente   =   $this->getPaEmittente(0);
-
         return base64_encode(sprintf('payment_%s_%s', $iuv, $pa_emittente));
     }
 
@@ -328,7 +228,6 @@ class activatePaymentNotice extends AbstractEvent
         $iuv            =   $this->getIuv(0);
         $pa_emittente   =   $this->getPaEmittente(0);
         $token          =   $this->getPaymentToken(0);
-
         return base64_encode(sprintf('attempt_%s_%s_%s', $iuv, $pa_emittente, $token));
     }
 }
