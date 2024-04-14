@@ -353,7 +353,7 @@ abstract class AbstractPaymentList implements PaymentListInterface
                         {
                             // se non è in cache e non riguarda un tentativo, c'è un problema
                             $state      = 'TO_SEARCH';
-                            $message    = 'Evento non associabile a nessun pagamento in cache, va ricercato';
+                            $message    = 'Evento non associabile a nessun tentativo in cache, va ricercato';
                         }
                     }
                 }

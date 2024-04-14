@@ -5,6 +5,7 @@ namespace pagopa\crawler\paymentlist\req;
 use Illuminate\Database\Capsule\Manager as DB;
 use pagopa\crawler\CacheObject;
 use pagopa\crawler\paymentlist\AbstractPaymentList;
+use pagopa\database\sherlock\Transaction;
 use pagopa\database\sherlock\TransactionRe;
 
 class nodoInviaRPT extends AbstractPaymentList
@@ -124,14 +125,16 @@ class nodoInviaRPT extends AbstractPaymentList
                     'pa_transfer' => $this->getEvent()->getMethodInterface()->getTransferPa($i, $index),
                     'bollo' => true,
                     'amount_transfer' => $this->getEvent()->getMethodInterface()->getTransferAmount($i, $index),
-                    'iban_transfer' => ''
+                    'iban_transfer' => '',
+                    'id' => $last_inserted_transfer_id
                 ];
             } else {
                 $transfer_add[] = [
                     'pa_transfer' => $this->getEvent()->getMethodInterface()->getTransferPa($i, $index),
                     'bollo' => false,
                     'amount_transfer' => $this->getEvent()->getMethodInterface()->getTransferAmount($i, $index),
-                    'iban_transfer' => $this->getEvent()->getMethodInterface()->getTransferIban($i, $index)
+                    'iban_transfer' => $this->getEvent()->getMethodInterface()->getTransferIban($i, $index),
+                    'id' => $last_inserted_transfer_id
                 ];
             }
         }
@@ -139,6 +142,24 @@ class nodoInviaRPT extends AbstractPaymentList
         $cache->setTransferAdded(true);
         $cache->setTransferList($transfer_add);
 
+        return $cache->getCacheData();
+    }
+
+
+    public function updateTransaction(CacheObject $cache, int $index = 0): array|null
+    {
+        if ($cache->getAmountUpdate())
+        {
+            return $cache->getCacheData();
+        }
+
+        $id = $cache->getId();
+        $date_event = $cache->getDateEvent();
+        $transaction = Transaction::getTransactionByIdAndDateEvent($id, $date_event);
+        $transaction->setImporto($this->getEvent()->getMethodInterface()->getImporto());
+        $transaction->update();
+        DB::statement($transaction->getQuery(), $transaction->getBindParams());
+        $cache->setAmountUpdate(true);
         return $cache->getCacheData();
     }
 }

@@ -85,6 +85,13 @@ $a = new \pagopa\crawler\paymentlist\resp\nodoInviaCarrelloRPT(new \DateTime('20
 $a->run();
 
 
+$a = new \pagopa\crawler\paymentlist\req\nodoAttivaRPT(new \DateTime('2024-03-10'), 'nodoAttivaRPT', 'REQ', $redis_cache);
+$a->run();
+
+$a = new \pagopa\crawler\paymentlist\resp\nodoAttivaRPT(new \DateTime('2024-03-10'), 'nodoAttivaRPT', 'RESP', $redis_cache);
+$a->run();
+
+
 $a = new \pagopa\crawler\paymentlist\req\nodoInviaRPT(new \DateTime('2024-03-10'), 'nodoInviaRPT', 'REQ', $redis_cache);
 $a->run();
 

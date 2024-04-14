@@ -4,13 +4,15 @@ namespace pagopa\crawler\events\resp;
 
 use pagopa\crawler\AbstractEvent;
 use pagopa\crawler\MapEvents;
+use pagopa\crawler\methods\MethodInterface;
 use pagopa\database\sherlock\Transaction;
 use pagopa\database\sherlock\TransactionDetails;
 use pagopa\database\sherlock\Workflow;
-use pagopa\crawler\methods\resp\nodoInviaRPT as Payload;
+use pagopa\crawler\methods\resp\nodoAttivaRPT as Payload;
 
-class nodoInviaRPT extends AbstractEvent
+class nodoAttivaRPT extends AbstractEvent
 {
+
     protected Payload $method;
 
 
@@ -23,18 +25,10 @@ class nodoInviaRPT extends AbstractEvent
     /**
      * @inheritDoc
      */
-    public function getNoticeNumber(int $index = 0): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function getIuvs(): array|null
     {
         $value = $this->getIuv();
-        return (empty($value)) ? null : array($value);
+        return (is_null($value)) ? $this->getMethodInterface()->getIuvs() : array($value);
     }
 
     /**
@@ -43,7 +37,7 @@ class nodoInviaRPT extends AbstractEvent
     public function getPaEmittenti(): array|null
     {
         $value = $this->getPaEmittente();
-        return (empty($value)) ? null : array($value);
+        return (is_null($value)) ? $this->getMethodInterface()->getPaEmittenti() : array($value);
     }
 
     /**
@@ -52,7 +46,7 @@ class nodoInviaRPT extends AbstractEvent
     public function getCcps(): array|null
     {
         $value = $this->getCcp();
-        return (empty($value)) ? null : array($value);
+        return (is_null($value)) ? $this->getMethodInterface()->getCcps() : array($value);
     }
 
     /**
@@ -65,37 +59,43 @@ class nodoInviaRPT extends AbstractEvent
 
     public function transactionDetails(int $transfer, int $index = 0): TransactionDetails|null
     {
-        return null;
+       return null;
     }
 
     public function workflowEvent(int $index = 0): Workflow|null
     {
         $workflow = new Workflow($this->getInsertedTimestamp());
-        $outcome = $this->getMethodInterface()->outcome();
         $workflow->setNewColumnValue('date_event', $this->getInsertedTimestamp()->format('Y-m-d'));
-        $workflow->setEventId($this->getUniqueId());
         $workflow->setEventTimestamp($this->getInsertedTimestamp());
-        if (!is_null($this->getStazione()))
+        $workflow->setEventId($this->getUniqueId());
+        $workflow->setFkTipoEvento(MapEvents::getMethodId($this->getTipoEvento(), $this->getSottoTipoEvento()));
+
+        $id_psp     = $this->getPsp();
+        $stazione   = $this->getStazione();
+        $canale     = $this->getCanale();
+        $outcome    = $this->getMethodInterface()->outcome();
+        $faultcode  = $this->getFaultCode();
+
+        if (!is_null($id_psp))
         {
-            $workflow->setStazione($this->getStazione());
+            $workflow->setPsp($id_psp);
         }
-        if (!is_null($this->getCanale()))
+        if (!is_null($stazione))
         {
-            $workflow->setCanale($this->getCanale());
+            $workflow->setStazione($stazione);
         }
-        if (!is_null($this->getPsp()))
+        if (!is_null($canale))
         {
-            $workflow->setPsp($this->getPsp());
-        }
-        if ($this->isFaultEvent())
-        {
-            $workflow->setFaultCode($this->getFaultCode());
+            $workflow->setCanale($canale);
         }
         if (!is_null($outcome))
         {
             $workflow->setOutcomeEvent($outcome);
         }
-        $workflow->setFkTipoEvento(MapEvents::getMethodId($this->getTipoEvento(), $this->getSottoTipoEvento()));
+        if (!is_null($faultcode))
+        {
+            $workflow->setFaultCode($faultcode);
+        }
         return $workflow;
     }
 
@@ -112,7 +112,7 @@ class nodoInviaRPT extends AbstractEvent
      */
     public function getPaymentsCount(): int|null
     {
-        return null;
+        return 1;
     }
 
     /**
@@ -120,7 +120,7 @@ class nodoInviaRPT extends AbstractEvent
      */
     public function getTransferCount(int $index = 0): int|null
     {
-        return null;
+        return 1;
     }
 
     /**
@@ -128,8 +128,9 @@ class nodoInviaRPT extends AbstractEvent
      */
     public function getCacheKeyPayment(): string
     {
-        $iuv            = $this->getIuv();
-        $pa_emittente   = $this->getPaEmittente();
+        $iuv            =   $this->getIuv(0);
+        $pa_emittente   =   $this->getPaEmittente(0);
+
         return base64_encode(sprintf('payment_%s_%s', $iuv, $pa_emittente));
     }
 
@@ -138,9 +139,10 @@ class nodoInviaRPT extends AbstractEvent
      */
     public function getCacheKeyAttempt(): string
     {
-        $iuv            = $this->getIuv();
-        $pa_emittente   = $this->getPaEmittente();
-        $token          = $this->getCcp();
+        $iuv            =   $this->getIuv(0);
+        $pa_emittente   =   $this->getPaEmittente(0);
+        $token          =   $this->getCcp(0);
+
         return base64_encode(sprintf('attempt_%s_%s_%s', $iuv, $pa_emittente, $token));
     }
 
