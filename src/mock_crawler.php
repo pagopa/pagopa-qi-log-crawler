@@ -99,18 +99,10 @@ $a = new \pagopa\crawler\paymentlist\resp\nodoInviaRPT(new \DateTime('2024-03-10
 $a->run();
 
 
-
-$a = new \pagopa\crawler\paymentlist\req\sendPaymentOutcome(new DateTime('2024-03-10'), 'sendPaymentOutcome', 'REQ', $redis_cache);
+$a = new \pagopa\crawler\paymentlist\req\pspNotifyPayment(new \DateTime('2024-03-10'), 'pspNotifyPayment', 'REQ', $redis_cache);
 $a->run();
 
-$a = new \pagopa\crawler\paymentlist\resp\sendPaymentOutcome(new DateTime('2024-03-10'), 'sendPaymentOutcome', 'RESP', $redis_cache);
-$a->run();
-
-$a = new \pagopa\crawler\paymentlist\req\sendPaymentOutcome(new DateTime('2024-03-11'), 'sendPaymentOutcome', 'REQ', $redis_cache);
-$a->run();
-
-
-$a = new \pagopa\crawler\paymentlist\resp\sendPaymentOutcome(new DateTime('2024-03-11'), 'sendPaymentOutcome', 'RESP', $redis_cache);
+$a = new \pagopa\crawler\paymentlist\resp\pspNotifyPayment(new \DateTime('2024-03-10'), 'pspNotifyPayment', 'RESP', $redis_cache);
 $a->run();
 
 
@@ -125,6 +117,20 @@ $a = new \pagopa\crawler\paymentlist\req\pspInviaCarrelloRPTCarte(new DateTime('
 $a->run();
 
 $a = new \pagopa\crawler\paymentlist\resp\pspInviaCarrelloRPTCarte(new DateTime('2024-03-10'), 'pspInviaCarrelloRPTCarte', 'RESP', $redis_cache);
+$a->run();
+
+
+$a = new \pagopa\crawler\paymentlist\req\sendPaymentOutcome(new DateTime('2024-03-10'), 'sendPaymentOutcome', 'REQ', $redis_cache);
+$a->run();
+
+$a = new \pagopa\crawler\paymentlist\resp\sendPaymentOutcome(new DateTime('2024-03-10'), 'sendPaymentOutcome', 'RESP', $redis_cache);
+$a->run();
+
+$a = new \pagopa\crawler\paymentlist\req\sendPaymentOutcome(new DateTime('2024-03-11'), 'sendPaymentOutcome', 'REQ', $redis_cache);
+$a->run();
+
+
+$a = new \pagopa\crawler\paymentlist\resp\sendPaymentOutcome(new DateTime('2024-03-11'), 'sendPaymentOutcome', 'RESP', $redis_cache);
 $a->run();
 
 

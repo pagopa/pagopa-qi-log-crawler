@@ -8,11 +8,13 @@ INSERT INTO mapped_events(tipo_evento,sotto_tipo_evento ,fk_event) values
     ('pspInviaCarrelloRPT'          , 'REQ' ,   7),
     ('pspInviaCarrelloRPT'          , 'RESP',   8),
     ('pspInviaCarrelloRPTCarte'     , 'REQ' ,   9),
-    ('pspInviaCarrelloRPTCarte'     , 'RESP',  10);
-    ('nodoInviaRPT'                 , 'REQ' ,  11);
-    ('nodoInviaRPT'                 , 'RESP',  12);
-    ('nodoAttivaRPT'                , 'REQ' ,  13);
-    ('nodoAttivaRPT'                , 'RESP',  14);
+    ('pspInviaCarrelloRPTCarte'     , 'RESP',  10),
+    ('nodoInviaRPT'                 , 'REQ' ,  11),
+    ('nodoInviaRPT'                 , 'RESP',  12),
+    ('nodoAttivaRPT'                , 'REQ' ,  13),
+    ('nodoAttivaRPT'                , 'RESP',  14),
+    ('pspNotifyPayment'             , 'REQ' ,  15);
+    ('pspNotifyPayment'             , 'RESP',  16);
 
 insert into mapped_payment_methods (tipoversamento, descrizione) values
     ('CC', 'Carta di Credito'),
