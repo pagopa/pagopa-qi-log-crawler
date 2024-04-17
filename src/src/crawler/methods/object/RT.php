@@ -129,4 +129,20 @@ class RT
         return false;
     }
 
+    public function getVersamentiCount() : int
+    {
+        $block = $this->getBlockXml($this->payload, 'datiPagamento');
+        $count = 0;
+        $xml = new XMLReader();
+        $xml->XML($block);
+        while($xml->read())
+        {
+            if (($xml->nodeType == XMLReader::ELEMENT) && (strtolower($xml->localName) == strtolower('datiSingoloPagamento')))
+            {
+                $count++;
+            }
+        }
+        return $count;
+    }
+
 }

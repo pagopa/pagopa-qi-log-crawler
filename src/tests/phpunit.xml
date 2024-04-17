@@ -26,7 +26,7 @@
     </php>
     <testsuites>
         <testsuite name="temp_suite">
-            <file>pagopa/methods/objects/RTTest.php</file>
+            <file>process/crawler/nodoInviaRT/T00051_nodoInviaRT_Cart2RPT.php</file>
         </testsuite>
         <testsuite name="crawler">
             <file>process/crawler/activatePaymentNotice/SingleEvent/T00001_CreateAttemptAllInfoInEvent.php</file>
@@ -69,6 +69,8 @@
             <file>process/crawler/pspNotifyPayment/T00047_WorkFlow_WithPspNotifyPayment_CreditCard.php</file>
             <file>process/crawler/pspNotifyPayment/T00048_WorkFlow_WithPspNotifyPayment_BancomatPay.php</file>
             <file>process/crawler/pspNotifyPayment/T00049_WorkFlow_WithPspNotifyPayment_Paypal.php</file>
+            <file>process/crawler/nodoInviaRT/T00050_nodoInviaRT_Cart1RPT.php</file>
+            <file>process/crawler/nodoInviaRT/T00051_nodoInviaRT_Cart2RPT.php</file>
         </testsuite>
         <testsuite name="unit_tests">
             <!-- Object Method Tests -->
@@ -84,6 +86,7 @@
             <file>pagopa/methods/req/nodoInviaRPTTest.php</file>
             <file>pagopa/methods/req/nodoAttivaRPTTest.php</file>
             <file>pagopa/methods/req/pspNotifyPaymentTest.php</file>
+            <file>pagopa/methods/req/nodoInviaRTTest.php</file>
 
             <!-- Response Method Tests -->
             <file>pagopa/methods/resp/activatePaymentNoticeTest.php</file>
@@ -94,6 +97,7 @@
             <file>pagopa/methods/resp/nodoInviaRPTTest.php</file>
             <file>pagopa/methods/resp/nodoAttivaRPTTest.php</file>
             <file>pagopa/methods/resp/pspNotifyPaymentTest.php</file>
+            <file>pagopa/methods/resp/nodoInviaRTTest.php</file>
 
             <!-- Request Event Tests -->
             <file>pagopa/events/req/activatePaymentNoticeTest.php</file>
@@ -104,6 +108,7 @@
             <file>pagopa/events/req/nodoInviaRPTTest.php</file>
             <file>pagopa/events/req/nodoAttivaRPTTest.php</file>
             <file>pagopa/events/req/pspNotifyPaymentTest.php</file>
+            <file>pagopa/events/req/nodoInviaRTTest.php</file>
 
             <!-- Response Event Tests -->
             <file>pagopa/events/resp/activatePaymentNoticeTest.php</file>
@@ -114,6 +119,7 @@
             <file>pagopa/events/resp/nodoInviaRPTTest.php</file>
             <file>pagopa/events/resp/nodoAttivaRPTTest.php</file>
             <file>pagopa/events/resp/pspNotifyPaymentTest.php</file>
+            <file>pagopa/events/resp/nodoInviaRTTest.php</file>
         </testsuite>
         <testsuite name="process">
             <file>process/normal/T0001.php</file>

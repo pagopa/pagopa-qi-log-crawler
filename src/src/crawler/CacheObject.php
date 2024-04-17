@@ -27,6 +27,7 @@ class CacheObject
             'transfer_added'    =>  false,
             'esito'             =>  false,
             'amount_update'     =>  false,
+            'iur_update'        =>  false,
             'extra_info'        => array(),
             'transfer_list'     => array(),
             'm_payment'         => array(),
@@ -222,6 +223,25 @@ class CacheObject
     public function setAmountUpdate(bool $amount_update) : void
     {
         $this->setKey('amount_update', $amount_update);
+    }
+
+    /**
+     * Restituisce true/false l'aggiornamento dei transfer
+     * @return bool
+     */
+    public function getIurUpdate() : bool
+    {
+        return $this->getKey('iur_update');
+    }
+
+    /**
+     * Configura true/false l'aggiornamento dei transfer
+     * @param bool $iur_update
+     * @return void
+     */
+    public function setIurUpdate(bool $iur_update) : void
+    {
+        $this->setKey('iur_update', $iur_update);
     }
     /**
      * Restituisce la lista dei transfer

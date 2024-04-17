@@ -109,4 +109,11 @@ class TransactionDetails extends SingleRow
         return $this;
     }
 
+
+    public static function getDetailsByIdAndDateEvent(string $id, string $date_event) : TransactionDetails
+    {
+        $datetime = new \DateTime($date_event);
+        return new TransactionDetails($datetime, ['id' => $id, 'date_event' => $date_event]);
+    }
+
 }
