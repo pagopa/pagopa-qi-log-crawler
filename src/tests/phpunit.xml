@@ -26,7 +26,7 @@
     </php>
     <testsuites>
         <testsuite name="temp_suite">
-            <file>process/crawler/pspNotifyPayment/T00049_WorkFlow_WithPspNotifyPayment_Paypal.php</file>
+            <file>pagopa/methods/objects/RTTest.php</file>
         </testsuite>
         <testsuite name="crawler">
             <file>process/crawler/activatePaymentNotice/SingleEvent/T00001_CreateAttemptAllInfoInEvent.php</file>
@@ -71,6 +71,9 @@
             <file>process/crawler/pspNotifyPayment/T00049_WorkFlow_WithPspNotifyPayment_Paypal.php</file>
         </testsuite>
         <testsuite name="unit_tests">
+            <!-- Object Method Tests -->
+            <file>pagopa/methods/objects/RTTest.php</file>
+
             <!-- Request Method Tests -->
             <file>pagopa/database/SingleRowTest.php</file>
             <file>pagopa/methods/req/activatePaymentNoticeTest.php</file>
