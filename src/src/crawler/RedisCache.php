@@ -53,7 +53,7 @@ class RedisCache implements CacheInterface
     /**
      * @inheritDoc
      */
-    public function addValue(string $key, mixed $value): void
+    public function addValue(string $key, mixed $value, $ttl = 86400): void
     {
         $cached = $this->client->get($key);
         // se cached esiste
@@ -77,7 +77,7 @@ class RedisCache implements CacheInterface
         {
             $to_add = json_encode(array($value));
         }
-        $this->client->set($key, $to_add, 'EX', 86400);
+        $this->client->set($key, $to_add, 'EX', $ttl);
     }
 
     /**

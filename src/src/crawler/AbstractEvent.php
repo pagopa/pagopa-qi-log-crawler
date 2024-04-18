@@ -43,8 +43,12 @@ abstract class AbstractEvent implements EventInterface
         $payload = '';
         if (array_key_exists('payload', $eventData))
         {
-            $payload = (is_resource($eventData["payload"])) ? base64_decode(stream_get_contents($eventData["payload"])) : base64_decode($eventData["payload"]);
-            $this->data["payload"] = $payload;
+            $payload = (is_resource($eventData["payload"])) ? stream_get_contents($eventData["payload"]) : $eventData["payload"];
+            if ((empty($payload)))
+            {
+                $payload = base64_encode("NO_PAYLOAD");
+            }
+            $this->data["payload"] = base64_decode($payload);
         }
         $date = new \DateTime($eventData['inserted_timestamp']);
         $this->instance = new TransactionRe($date, $eventData);
@@ -88,7 +92,8 @@ abstract class AbstractEvent implements EventInterface
      */
     public function getSessionId() : string|null
     {
-        return $this->getColumn('sessionid');
+        $value = $this->getColumn('sessionid');
+        return (empty($value)) ? null : $value;
     }
 
 
@@ -98,7 +103,8 @@ abstract class AbstractEvent implements EventInterface
      */
     public function getSessionIdOriginal(): string|null
     {
-        return $this->getColumn('sessionidoriginal');
+        $value = $this->getColumn('sessionidoriginal');
+        return (empty($value)) ? null : $value;
     }
 
     /**

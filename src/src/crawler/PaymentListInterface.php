@@ -149,7 +149,7 @@ interface PaymentListInterface
      * @param mixed $value
      * @return void
      */
-    public function addValueCache(string $key, mixed $value) : void;
+    public function addValueCache(string $key, mixed $value, int $ttl = 86400) : void;
 
 
     /**

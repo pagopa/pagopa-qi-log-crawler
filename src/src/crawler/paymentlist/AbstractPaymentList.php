@@ -192,6 +192,7 @@ abstract class AbstractPaymentList implements PaymentListInterface
             ->limit($limit)
             ->get();
 
+        echo 'Lancio la procedura per ' .$this->getMethodName() . ' ' .$this->getType() .PHP_EOL;
             foreach($events as $event)
             {
                 $this->createEventInstance((array) $event);
@@ -234,9 +235,9 @@ abstract class AbstractPaymentList implements PaymentListInterface
     /**
      * @inheritDoc
      */
-    public function addValueCache(string $key, mixed $value): void
+    public function addValueCache(string $key, mixed $value, int $ttl = 86400): void
     {
-        $this->cache->addValue($key, $value, 86400);
+        $this->cache->addValue($key, $value, $ttl);
     }
 
     /**
@@ -299,6 +300,11 @@ abstract class AbstractPaymentList implements PaymentListInterface
         try {
             $state      = 'LOADED';
             $message    = null;
+            $session_key = null;
+            if (!is_null($this->getEvent()->getSessionId()))
+            {
+                $session_key = base64_encode(sprintf('session_id_%s_%s', $this->getEvent()->getSessionId(), $this->getMethodName()));
+            }
             if ($this->isValidPayment())
             {
                 // l'evento può essere associato ad uno o più pagamente e/o tentativi?
@@ -326,6 +332,7 @@ abstract class AbstractPaymentList implements PaymentListInterface
                                 // add workflow to $cache_value and return new value
                             }
                             $this->setCache($cache_key, $new_cache_data);
+                            $this->addSessionIdInCache($cache_key);
                             // store new cache in $cache_key
                     }
                     else
@@ -347,6 +354,7 @@ abstract class AbstractPaymentList implements PaymentListInterface
                                 // add details to cache value and return a new cache value
                                 // add workflow to cache_value and return a new cache value
                                 // save cache_value in $cache_data
+                                $this->addSessionIdInCache($cache_key);
                             }
                         }
                         else
@@ -379,6 +387,7 @@ abstract class AbstractPaymentList implements PaymentListInterface
                             // add workflow to $cache_value and return new value
                         }
                         $this->setCache($cache_key, $new_cache_data);
+                        $this->addSessionIdInCache($cache_key);
 
                         // store new cache in $cache_key
                     }
@@ -395,6 +404,7 @@ abstract class AbstractPaymentList implements PaymentListInterface
                                 $cached_object = new CacheObject($this->detailsPayment($cached_object, $i));
                                 $cached_object = $this->workflow($cached_object, $i);
                                 $this->addValueCache($cache_key, $cached_object);
+                                $this->addSessionIdInCache($cache_key);
                                 // store cache
                             }
                         }
@@ -405,6 +415,31 @@ abstract class AbstractPaymentList implements PaymentListInterface
                             $message    = 'Evento non associabile a nessun pagamento in cache, va ricercato manualmente';
                         }
                     }
+                }
+            }
+            else if (($this->isSessionIdInCache()))
+            {
+                // se non è un pagamento valido (ovvero non ha uno tra iuv e id dominio, provo a verificare se c'è la sessione
+                $key = $this->getSessionIdCacheKey();
+                $cache_data = $this->getFromCache($key);
+                foreach($cache_data as $payment_key)
+                {
+                    // per ogni cache key associata a questo session id, mi prendo i dati della chiave ($payment_key)
+                    $payment_in_cache = $this->getFromCache($payment_key);
+                    $new_cache_data = [];
+                    foreach($payment_in_cache as $ck => $payment)
+                    {
+                        // ed effettuo aggiornamento dati e cache
+                        $refresh_cache = $this->updateTransaction(new CacheObject($payment), $ck);
+                        $refresh_cache = $this->updateDetails(new CacheObject($refresh_cache), $ck);
+                        $refresh_cache = $this->updateMetadataDetails(new CacheObject($refresh_cache), $ck);
+                        $refresh_cache = $this->createExtraInfo(new CacheObject($refresh_cache), $ck);
+                        $refresh_cache = $this->workflow(new CacheObject($refresh_cache), $ck);
+                        $new_cache_data[] = $refresh_cache;
+                    }
+                    $this->setCache($payment_key, $new_cache_data); // aggiorno la cache per quanto riguarda i pagamenti
+                    // dovrei eliminare la chiave $payment_key da $key
+                    $this->deletePaymentKeyFromSessionCache($payment_key, $key);
                 }
             }
             else
@@ -546,4 +581,88 @@ abstract class AbstractPaymentList implements PaymentListInterface
     }
 
 
+    /**
+     * Restituisce true/false se una chiave session id è in cache
+     * @return bool
+     */
+    public function isSessionIdInCache() : bool
+    {
+        $value = $this->getEvent()->getSessionId();
+        if (is_null($value))
+        {
+            return false;
+        }
+        $key = base64_encode(sprintf('session_id_%s_%s', $value, $this->getMethodName()));
+        return $this->hasInCache($key);
+    }
+
+    /**
+     * Restituisce la chiave dove storicizzare tutte le chiavi della cache relative ai pagamenti impattati dal session id
+     * @return string|null
+     */
+    public function getSessionIdCacheKey() : string|null
+    {
+        $value = $this->getEvent()->getSessionId();
+        if (is_null($value))
+        {
+            return null;
+        }
+        return base64_encode(sprintf('session_id_%s_%s', $value, $this->getMethodName()));
+    }
+
+
+    /**
+     * Aggiunge una chiave cache, relativa ad una lista di pagamenti, al session id dell'evento analizzato
+     * @param string $key
+     * @return void
+     */
+    public function addSessionIdInCache(string $key) : void
+    {
+        $session = $this->getEvent()->getSessionId();
+        if (!is_null($session)) {
+            if ($this->isSessionIdInCache())
+            {
+                // esiste già una chiave in cache con i pagamenti associati al session id
+                $cache_data = $this->getFromCache($this->getSessionIdCacheKey());
+                if (!in_array($key, $cache_data))
+                {
+                    $this->addValueCache($this->getSessionIdCacheKey(), $key, 1200);
+                }
+            }
+            else
+            {
+                // non esiste una chiave in cache con i pagamenti associati al session id
+                $this->addValueCache($this->getSessionIdCacheKey(), $key, 1200);
+            }
+        }
+    }
+
+
+    /**
+     * Elimina una chiave $payment_key dalla lista dei pagamenti associati al session id $key
+     * @param string $payment_key
+     * @param string $key
+     * @return void
+     */
+    public function deletePaymentKeyFromSessionCache(string $payment_key, string $key) : void
+    {
+        $value = $this->getFromCache($key);
+        if (is_array($value))
+        {
+            // se è un array , lo ciclo ed elimino $payment_key
+            $found = array_search($payment_key, $value);
+            if ($found !== false)
+            {
+                unset($value[$found]);
+            }
+            if (count($value) == 0)
+            {
+                $this->delFromCache($key);
+            }
+            else
+            {
+                $this->setCache($key, array_values($value));
+            }
+        }
+    }
 }
