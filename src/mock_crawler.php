@@ -139,6 +139,12 @@ $a->run();
 $a = new \pagopa\crawler\paymentlist\resp\nodoInviaRT(new DateTime('2024-03-10'), 'nodoInviaRT', 'RESP', $redis_cache);
 $a->run();
 
+$a = new \pagopa\crawler\paymentlist\req\paaInviaRT(new DateTime('2024-03-10'), 'paaInviaRT', 'REQ', $redis_cache);
+$a->run();
+
+$a = new \pagopa\crawler\paymentlist\resp\paaInviaRT(new DateTime('2024-03-10'), 'paaInviaRT', 'RESP', $redis_cache);
+$a->run();
+
 die();
 //$a = new \pagopa\crawler\paymentlist\resp\activatePaymentNotice(new \DateTime('2024-03-10'),'activatePaymentNotice', 'RESP', $memcache);
 //$a->run();

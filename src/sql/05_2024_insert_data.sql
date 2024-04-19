@@ -16,7 +16,9 @@ INSERT INTO mapped_events(tipo_evento,sotto_tipo_evento ,fk_event) values
     ('pspNotifyPayment'             , 'REQ' ,  15),
     ('pspNotifyPayment'             , 'RESP',  16),
     ('nodoInviaRT'                  , 'REQ' ,  17),
-    ('nodoInviaRT'                  , 'RESP',  18);
+    ('nodoInviaRT'                  , 'RESP',  18),
+    ('paaInviaRT'                   , 'REQ' ,  19),
+    ('paaInviaRT'                   , 'RESP',  20);
 
 insert into mapped_payment_methods (tipoversamento, descrizione) values
     ('CC', 'Carta di Credito'),

@@ -6,6 +6,7 @@ use pagopa\crawler\events\req\nodoInviaRT;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\TestDox;
 
+#[TestDox('events\req\nodoInviaRT::class')]
 class nodoInviaRTTest extends TestCase
 {
 

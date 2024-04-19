@@ -2,13 +2,13 @@
 
 namespace pagopa\crawler\paymentlist\req;
 
+use Illuminate\Database\Capsule\Manager as DB;
 use pagopa\crawler\CacheObject;
 use pagopa\crawler\paymentlist\AbstractPaymentList;
 use pagopa\database\sherlock\Transaction;
-use Illuminate\Database\Capsule\Manager as DB;
 use pagopa\database\sherlock\TransactionDetails;
 
-class nodoInviaRT extends AbstractPaymentList
+class paaInviaRT extends AbstractPaymentList
 {
 
     /**
@@ -16,7 +16,7 @@ class nodoInviaRT extends AbstractPaymentList
      */
     public function createEventInstance(array $eventData): void
     {
-        $event = new \pagopa\crawler\events\req\nodoInviaRT($eventData);
+        $event = new \pagopa\crawler\events\req\paaInviaRT($eventData);
         $this->setEvent($event);
     }
 
@@ -35,7 +35,6 @@ class nodoInviaRT extends AbstractPaymentList
     {
         return ($this->getEvent()->getIuv(0) && $this->getEvent()->getPaEmittente(0) && $this->getEvent()->getCcp(0));
     }
-
 
     public function updateTransaction(CacheObject $cache, int $index = 0): array|null
     {
@@ -60,7 +59,6 @@ class nodoInviaRT extends AbstractPaymentList
         }
         return $cache->getCacheData();
     }
-
 
     public function updateDetails(CacheObject $cache, int $index = 0): array|null
     {

@@ -1,12 +1,12 @@
 <?php
 
-namespace pagopa\crawler\methods\req;
+namespace pagopa\crawler\methods\resp;
 
+use pagopa\crawler\FaultInterface;
 use pagopa\crawler\methods\MethodInterface;
-use pagopa\crawler\methods\object\RT;
 use \XMLReader;
 
-class nodoInviaRT implements MethodInterface
+class paaInviaRT implements MethodInterface, FaultInterface
 {
 
 
@@ -16,21 +16,9 @@ class nodoInviaRT implements MethodInterface
      */
     protected string $payload;
 
-
-    protected RT $object;
-
-    private function getBlockXml(string $block, string $element) : string|null
+    public function __construct(string $payload = null)
     {
-        $xml = new XMLReader();
-        $xml->XML($block);
-        while($xml->read())
-        {
-            if (($xml->nodeType == XMLReader::ELEMENT) && (strtolower($xml->localName) == strtolower($element)))
-            {
-                return $xml->readOuterXml();
-            }
-        }
-        return null;
+        $this->payload = $payload;
     }
 
     private function getElementXml(string $block, string $element) : string|null
@@ -47,20 +35,12 @@ class nodoInviaRT implements MethodInterface
         return null;
     }
 
-
-
-    public function __construct(string $payload = null)
-    {
-        $this->payload = $payload;
-        $rt_payload = $this->getElementXml($payload, 'rt');
-        $this->object = new RT(base64_decode($rt_payload));
-    }
     /**
      * @inheritDoc
      */
     public function getPaymentsCount(): int|null
     {
-        return 1;
+        return null;
     }
 
     /**
@@ -68,8 +48,7 @@ class nodoInviaRT implements MethodInterface
      */
     public function getIuvs(): array|null
     {
-        $value = $this->getElementXml($this->payload, 'identificativoUnivocoVersamento');
-        return (is_null($value)) ? null : array($value);
+        return null;
     }
 
     /**
@@ -77,8 +56,7 @@ class nodoInviaRT implements MethodInterface
      */
     public function getPaEmittenti(): array|null
     {
-        $value = $this->getElementXml($this->payload, 'identificativoDominio');
-        return (is_null($value)) ? null : array($value);
+        return null;
     }
 
     /**
@@ -86,8 +64,7 @@ class nodoInviaRT implements MethodInterface
      */
     public function getCcps(): array|null
     {
-        $value = $this->getElementXml($this->payload, 'codiceContestoPagamento');
-        return (is_null($value)) ? null : array($value);
+        return null;
     }
 
     /**
@@ -95,7 +72,7 @@ class nodoInviaRT implements MethodInterface
      */
     public function getAllTokens(): array|null
     {
-        return $this->getCcps();
+        return null;
     }
 
     /**
@@ -111,7 +88,7 @@ class nodoInviaRT implements MethodInterface
      */
     public function getIuv(int $index = 0): string|null
     {
-        return $this->getElementXml($this->payload, 'identificativoUnivocoVersamento');
+        return null;
     }
 
     /**
@@ -119,7 +96,7 @@ class nodoInviaRT implements MethodInterface
      */
     public function getPaEmittente(int $index = 0): string|null
     {
-        return $this->getElementXml($this->payload, 'identificativoDominio');
+        return null;
     }
 
     /**
@@ -127,7 +104,7 @@ class nodoInviaRT implements MethodInterface
      */
     public function getCcp(int $index = 0): string|null
     {
-        return $this->getElementXml($this->payload, 'codiceContestoPagamento');
+        return null;
     }
 
     /**
@@ -135,7 +112,7 @@ class nodoInviaRT implements MethodInterface
      */
     public function getToken(int $index = 0): string|null
     {
-        return $this->getCcp();
+        return null;
     }
 
     /**
@@ -151,7 +128,7 @@ class nodoInviaRT implements MethodInterface
      */
     public function getImportoTotale(): string|null
     {
-        return $this->object->getImporto();
+        return null;
     }
 
     /**
@@ -159,7 +136,7 @@ class nodoInviaRT implements MethodInterface
      */
     public function getImporto(int $index = 0): string|null
     {
-        return $this->object->getImporto();
+        return null;
     }
 
     /**
@@ -167,7 +144,7 @@ class nodoInviaRT implements MethodInterface
      */
     public function getTransferAmount(int $transfer = 0, int $index = 0): string|null
     {
-        return $this->object->getImportoVersamento($transfer);
+        return null;
     }
 
     /**
@@ -175,10 +152,6 @@ class nodoInviaRT implements MethodInterface
      */
     public function getTransferPa(int $transfer = 0, int $index = 0): string|null
     {
-        if ($transfer < $this->getTransferCount())
-        {
-            return $this->getPaEmittente();
-        }
         return null;
     }
 
@@ -203,7 +176,7 @@ class nodoInviaRT implements MethodInterface
      */
     public function getTransferCount(int $index = 0): int|null
     {
-        return $this->object->getVersamentiCount();
+        return null;
     }
 
     /**
@@ -211,7 +184,7 @@ class nodoInviaRT implements MethodInterface
      */
     public function isBollo(int $transfer = 0, int $index = 0): bool
     {
-        return $this->object->isBollo($transfer);
+        return false;
     }
 
     /**
@@ -219,7 +192,7 @@ class nodoInviaRT implements MethodInterface
      */
     public function getPsp(): string|null
     {
-        return $this->getElementXml($this->payload, 'identificativoPSP');
+        return null;
     }
 
     /**
@@ -227,7 +200,7 @@ class nodoInviaRT implements MethodInterface
      */
     public function getBrokerPsp(): string|null
     {
-        return $this->getElementXml($this->payload, 'identificativoIntermediarioPSP');
+        return null;
     }
 
     /**
@@ -235,7 +208,7 @@ class nodoInviaRT implements MethodInterface
      */
     public function getCanale(): string|null
     {
-        return $this->getElementXml($this->payload, 'identificativoCanale');
+        return null;
     }
 
     /**
@@ -259,7 +232,7 @@ class nodoInviaRT implements MethodInterface
      */
     public function outcome(): string|null
     {
-        return $this->object->getEsito();
+        return $this->getElementXml($this->payload, 'esito');
     }
 
     /**
@@ -310,8 +283,36 @@ class nodoInviaRT implements MethodInterface
         return null;
     }
 
-    public function getRT() : RT
+    /**
+     * @return bool
+     */
+    public function isFaultEvent(): bool
     {
-        return $this->object;
+        $faultcode = $this->getElementXml($this->payload, 'faultCode');
+        return !is_null($faultcode);
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getFaultCode(): string|null
+    {
+        return $this->getElementXml($this->payload, 'faultCode');
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getFaultString(): string|null
+    {
+        return $this->getElementXml($this->payload, 'faultString');
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getFaultDescription(): string|null
+    {
+        return $this->getElementXml($this->payload, 'description');
     }
 }
