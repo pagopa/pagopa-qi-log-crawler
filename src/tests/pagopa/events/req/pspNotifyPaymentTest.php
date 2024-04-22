@@ -3,6 +3,7 @@
 namespace pagopa\events\req;
 
 use pagopa\crawler\events\req\pspNotifyPayment;
+use pagopa\database\sherlock\TransactionDetails;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\TestDox;
 
@@ -255,10 +256,10 @@ class pspNotifyPaymentTest extends TestCase
     #[TestDox('transactionDetails()')]
     public function testTransactionDetails()
     {
-        $this->assertNull($this->pspNotifyPayment_credit_cart->transactionDetails(0));
-        $this->assertNull($this->pspNotifyPayment_bancomat->transactionDetails(0));
-        $this->assertNull($this->pspNotifyPayment_paypal->transactionDetails(0));
-        $this->assertNull($this->pspNotifyPayment_additionalPayment->transactionDetails(0));
+        $this->assertInstanceOf(TransactionDetails::class, $this->pspNotifyPayment_credit_cart->transactionDetails(0));
+        $this->assertInstanceOf(TransactionDetails::class, $this->pspNotifyPayment_bancomat->transactionDetails(0));
+        $this->assertInstanceOf(TransactionDetails::class, $this->pspNotifyPayment_paypal->transactionDetails(0));
+        $this->assertInstanceOf(TransactionDetails::class, $this->pspNotifyPayment_additionalPayment->transactionDetails(0));
     }
 
     #[TestDox('getPaymentsCount()')]

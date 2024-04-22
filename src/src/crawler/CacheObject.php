@@ -24,6 +24,7 @@ class CacheObject
             'iuv'               =>  '',
             'pa_emittente'      =>  '',
             'token_ccp'         =>  '',
+            'touchpoint'        =>  '',
             'transfer_added'    =>  false,
             'esito'             =>  false,
             'amount_update'     =>  false,
@@ -373,6 +374,37 @@ class CacheObject
     public function setExtraInfo(array $extra_info) : void
     {
         $this->setKey('extra_info', $extra_info);
+    }
+
+
+    /**
+     * Configura il valore del touchpoint
+     * @param string $touchpoint
+     * @return void
+     */
+
+    public function setTouchPoint(string $touchpoint) : void
+    {
+        $this->setKey('touchpoint', $touchpoint);
+    }
+
+    /**
+     * Restituisce il valore del campo touchpoint
+     * @return string
+     */
+    public function getTouchPoint() : string
+    {
+        return $this->getKey('touchpoint');
+    }
+
+    /**
+     * Restituisce true/false se il campo touchpoint è stato già configurato
+     * @return bool
+     */
+    public function hasTouchPoint() : bool
+    {
+        $touchpoint = $this->getKey('touchpoint');
+        return !empty($touchpoint);
     }
 
     public function getCacheData() : array

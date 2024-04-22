@@ -8,9 +8,9 @@ use pagopa\crawler\methods\MethodInterface;
 use pagopa\database\sherlock\Transaction;
 use pagopa\database\sherlock\TransactionDetails;
 use pagopa\database\sherlock\Workflow;
-use pagopa\crawler\methods\req\pspNotifyPayment as Payload;
+use pagopa\crawler\methods\req\activateIOPayment as Payload;
 
-class pspNotifyPayment extends AbstractEvent
+class activateIOPayment extends AbstractEvent
 {
 
     protected Payload $method;
@@ -21,14 +21,12 @@ class pspNotifyPayment extends AbstractEvent
         parent::__construct($eventData);
         $this->method = new Payload($this->data['payload']);
     }
-
     /**
      * @inheritDoc
      */
     public function getIuvs(): array|null
     {
-        $value = $this->getIuv();
-        return (is_null($value)) ? $this->getMethodInterface()->getIuvs() : array($value);
+        return (is_null($this->getIuv(0))) ? $this->getMethodInterface()->getIuvs() : [$this->getIuv(0)];
     }
 
     /**
@@ -36,8 +34,7 @@ class pspNotifyPayment extends AbstractEvent
      */
     public function getPaEmittenti(): array|null
     {
-        $value = $this->getPaEmittente();
-        return (is_null($value)) ? $this->getMethodInterface()->getPaEmittenti() : array($value);
+        return (is_null($this->getPaEmittente())) ? $this->getMethodInterface()->getPaEmittenti() : [$this->getPaEmittente()];
     }
 
     /**
@@ -45,8 +42,7 @@ class pspNotifyPayment extends AbstractEvent
      */
     public function getCcps(): array|null
     {
-        $value = $this->getCcp();
-        return (is_null($value)) ? $this->getMethodInterface()->getCcps() : array($value);
+        return (is_null($this->getCcp())) ? $this->getMethodInterface()->getCcps() : [$this->getCcp()];
     }
 
     /**
@@ -54,18 +50,56 @@ class pspNotifyPayment extends AbstractEvent
      */
     public function transaction(int $index = 0): Transaction|null
     {
-        return null;
+        $iuv            =   $this->getIuv($index);
+        $pa_emittente   =   $this->getPaEmittente($index);
+        $date_event     =   $this->getInsertedTimestamp()->format('Y-m-d');
+
+        $notice_id      =   $this->getNoticeNumber($index);
+
+        $psp_id         =   $this->getPsp();
+        $canale         =   $this->getCanale();
+        $stazione       =   $this->getStazione();
+
+        $importo        =   $this->getMethodInterface()->getImporto(0);
+
+        $transaction = new Transaction($this->getInsertedTimestamp());
+        $transaction->setIuv($iuv);
+        $transaction->setPaEmittente($pa_emittente);
+        $transaction->setInsertedTimestamp($this->getInsertedTimestamp());
+        $transaction->setNewColumnValue('date_event', $date_event);
+        $transaction->setTouchPoint('APP_IO');
+
+        if (!is_null($notice_id))
+        {
+            $transaction->setNoticeId($notice_id);
+        }
+
+        if (!is_null($psp_id))
+        {
+            $transaction->setPsp($psp_id);
+        }
+
+        if (!is_null($canale))
+        {
+            $transaction->setCanale($canale);
+        }
+
+        if (!is_null($stazione))
+        {
+            $transaction->setStazione($stazione);
+        }
+
+        if (!is_null($importo))
+        {
+            $transaction->setImporto($importo);
+        }
+
+        return $transaction;
     }
 
     public function transactionDetails(int $transfer, int $index = 0): TransactionDetails|null
     {
-        $transaction_details = new TransactionDetails($this->getInsertedTimestamp());
-        $transaction_details->setNewColumnValue('date_event', $this->getInsertedTimestamp()->format('Y-m-d'));
-        $transaction_details->setPaTransfer($this->getMethodInterface()->getTransferPa($transfer, $index));
-        $transaction_details->setAmountTransfer($this->getMethodInterface()->getTransferAmount($transfer, $index));
-        $transaction_details->setTransferIban($this->getMethodInterface()->getTransferIban($transfer, $index));
-        $transaction_details->setIdTransfer($this->getMethodInterface()->getTransferId($transfer, $index));
-        return $transaction_details;
+        return null;
     }
 
     public function workflowEvent(int $index = 0): Workflow|null
@@ -92,7 +126,6 @@ class pspNotifyPayment extends AbstractEvent
         {
             $workflow->setCanale($canale);
         }
-
         return $workflow;
     }
 
@@ -117,7 +150,7 @@ class pspNotifyPayment extends AbstractEvent
      */
     public function getTransferCount(int $index = 0): int|null
     {
-        return $this->getMethodInterface()->getTransferCount();
+        return null;
     }
 
     /**
@@ -138,7 +171,7 @@ class pspNotifyPayment extends AbstractEvent
     {
         $iuv            =   $this->getIuv(0);
         $pa_emittente   =   $this->getPaEmittente(0);
-        $token          =   $this->getCcp(0);
+        $token          =   $this->getPaymentToken(0);
 
         return base64_encode(sprintf('attempt_%s_%s_%s', $iuv, $pa_emittente, $token));
     }

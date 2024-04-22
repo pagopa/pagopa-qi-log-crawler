@@ -1,6 +1,6 @@
 <?php
 
-namespace pagopa\crawler\events\req;
+namespace pagopa\crawler\events\resp;
 
 use pagopa\crawler\AbstractEvent;
 use pagopa\crawler\MapEvents;
@@ -8,9 +8,9 @@ use pagopa\crawler\methods\MethodInterface;
 use pagopa\database\sherlock\Transaction;
 use pagopa\database\sherlock\TransactionDetails;
 use pagopa\database\sherlock\Workflow;
-use pagopa\crawler\methods\req\pspNotifyPayment as Payload;
+use pagopa\crawler\methods\resp\activateIOPayment as Payload;
 
-class pspNotifyPayment extends AbstractEvent
+class activateIOPayment extends AbstractEvent
 {
 
     protected Payload $method;
@@ -27,8 +27,7 @@ class pspNotifyPayment extends AbstractEvent
      */
     public function getIuvs(): array|null
     {
-        $value = $this->getIuv();
-        return (is_null($value)) ? $this->getMethodInterface()->getIuvs() : array($value);
+        return (is_null($this->getIuv(0))) ? $this->getMethodInterface()->getIuvs() : [$this->getIuv(0)];
     }
 
     /**
@@ -36,8 +35,7 @@ class pspNotifyPayment extends AbstractEvent
      */
     public function getPaEmittenti(): array|null
     {
-        $value = $this->getPaEmittente();
-        return (is_null($value)) ? $this->getMethodInterface()->getPaEmittenti() : array($value);
+        return (is_null($this->getPaEmittente(0))) ? $this->getMethodInterface()->getPaEmittenti() : [$this->getPaEmittente(0)];
     }
 
     /**
@@ -45,8 +43,7 @@ class pspNotifyPayment extends AbstractEvent
      */
     public function getCcps(): array|null
     {
-        $value = $this->getCcp();
-        return (is_null($value)) ? $this->getMethodInterface()->getCcps() : array($value);
+        return (is_null($this->getCcp())) ? $this->getMethodInterface()->getCcps() : [$this->getCcp()];
     }
 
     /**
@@ -59,13 +56,7 @@ class pspNotifyPayment extends AbstractEvent
 
     public function transactionDetails(int $transfer, int $index = 0): TransactionDetails|null
     {
-        $transaction_details = new TransactionDetails($this->getInsertedTimestamp());
-        $transaction_details->setNewColumnValue('date_event', $this->getInsertedTimestamp()->format('Y-m-d'));
-        $transaction_details->setPaTransfer($this->getMethodInterface()->getTransferPa($transfer, $index));
-        $transaction_details->setAmountTransfer($this->getMethodInterface()->getTransferAmount($transfer, $index));
-        $transaction_details->setTransferIban($this->getMethodInterface()->getTransferIban($transfer, $index));
-        $transaction_details->setIdTransfer($this->getMethodInterface()->getTransferId($transfer, $index));
-        return $transaction_details;
+        return null;
     }
 
     public function workflowEvent(int $index = 0): Workflow|null
@@ -92,6 +83,14 @@ class pspNotifyPayment extends AbstractEvent
         {
             $workflow->setCanale($canale);
         }
+        if ($this->getMethodInterface()->isFaultEvent())
+        {
+            $workflow->setFaultCode($this->getMethodInterface()->getFaultCode());
+        }
+        if (!is_null($this->getMethodInterface()->outcome()))
+        {
+            $workflow->setOutcomeEvent($this->getMethodInterface()->outcome());
+        }
 
         return $workflow;
     }
@@ -117,7 +116,7 @@ class pspNotifyPayment extends AbstractEvent
      */
     public function getTransferCount(int $index = 0): int|null
     {
-        return $this->getMethodInterface()->getTransferCount();
+        return null;
     }
 
     /**
@@ -138,7 +137,7 @@ class pspNotifyPayment extends AbstractEvent
     {
         $iuv            =   $this->getIuv(0);
         $pa_emittente   =   $this->getPaEmittente(0);
-        $token          =   $this->getCcp(0);
+        $token          =   $this->getPaymentToken(0);
 
         return base64_encode(sprintf('attempt_%s_%s_%s', $iuv, $pa_emittente, $token));
     }
@@ -148,7 +147,7 @@ class pspNotifyPayment extends AbstractEvent
      */
     public function isFaultEvent(): bool
     {
-        return false;
+        return $this->method->isFaultEvent();
     }
 
     /**
@@ -156,7 +155,7 @@ class pspNotifyPayment extends AbstractEvent
      */
     public function getFaultCode(): string|null
     {
-        return null;
+        return $this->method->getFaultCode();
     }
 
     /**
@@ -164,7 +163,7 @@ class pspNotifyPayment extends AbstractEvent
      */
     public function getFaultString(): string|null
     {
-        return null;
+        return $this->method->getFaultString();
     }
 
     /**
@@ -172,6 +171,6 @@ class pspNotifyPayment extends AbstractEvent
      */
     public function getFaultDescription(): string|null
     {
-        return null;
+        return $this->method->getFaultDescription();
     }
 }
