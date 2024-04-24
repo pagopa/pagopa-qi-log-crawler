@@ -2,10 +2,9 @@
 
 namespace pagopa\crawler\methods\req;
 
-use pagopa\crawler\AbstractMethod;
-use pagopa\crawler\methods\MethodInterface;
+use pagopa\crawler\methods\AbstractMethod;
 use pagopa\crawler\methods\object\RT;
-use \XMLReader;
+use XMLReader;
 
 class paaInviaRT extends AbstractMethod
 {

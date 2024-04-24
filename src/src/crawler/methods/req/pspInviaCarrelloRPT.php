@@ -2,10 +2,9 @@
 
 namespace pagopa\crawler\methods\req;
 
-use pagopa\crawler\AbstractMethod;
-use pagopa\crawler\methods\MethodInterface;
+use pagopa\crawler\methods\AbstractMethod;
 use pagopa\crawler\methods\object\RPT;
-use \XMLReader;
+use XMLReader;
 
 // portarsi dietro
 // getRPT (return RPT object)

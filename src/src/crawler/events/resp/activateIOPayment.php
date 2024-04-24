@@ -2,13 +2,12 @@
 
 namespace pagopa\crawler\events\resp;
 
-use pagopa\crawler\AbstractEvent;
+use pagopa\crawler\events\AbstractEvent;
 use pagopa\crawler\MapEvents;
-use pagopa\crawler\methods\MethodInterface;
+use pagopa\crawler\methods\resp\activateIOPayment as Payload;
 use pagopa\database\sherlock\Transaction;
 use pagopa\database\sherlock\TransactionDetails;
 use pagopa\database\sherlock\Workflow;
-use pagopa\crawler\methods\resp\activateIOPayment as Payload;
 
 class activateIOPayment extends AbstractEvent
 {

@@ -1,7 +1,8 @@
 <?php
 
-namespace pagopa\crawler;
+namespace pagopa\crawler\events;
 
+use pagopa\crawler\EventInterface;
 use pagopa\crawler\methods\MethodInterface;
 use pagopa\database\sherlock\Transaction;
 use pagopa\database\sherlock\TransactionDetails;

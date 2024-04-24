@@ -2,13 +2,12 @@
 
 namespace pagopa\crawler\events\req;
 
-use pagopa\crawler\AbstractEvent;
-use pagopa\crawler\methods\MethodInterface;
+use pagopa\crawler\events\AbstractEvent;
+use pagopa\crawler\MapEvents;
+use pagopa\crawler\methods\req\pspInviaCarrelloRPT as Payload;
 use pagopa\database\sherlock\Transaction;
 use pagopa\database\sherlock\TransactionDetails;
 use pagopa\database\sherlock\Workflow;
-use pagopa\crawler\MapEvents;
-use pagopa\crawler\methods\req\pspInviaCarrelloRPT as Payload;
 
 class pspInviaCarrelloRPT extends AbstractEvent
 {

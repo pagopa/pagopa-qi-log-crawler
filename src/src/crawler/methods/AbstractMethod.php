@@ -1,8 +1,8 @@
 <?php
 
-namespace pagopa\crawler;
+namespace pagopa\crawler\methods;
 
-use pagopa\crawler\methods\MethodInterface;
+use pagopa\crawler\methods;
 use SimpleXMLElement;
 
 /**

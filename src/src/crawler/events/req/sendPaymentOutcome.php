@@ -2,7 +2,7 @@
 
 namespace pagopa\crawler\events\req;
 
-use pagopa\crawler\AbstractEvent;
+use pagopa\crawler\events\AbstractEvent;
 use pagopa\crawler\MapEvents;
 use pagopa\crawler\methods\MethodInterface;
 use pagopa\crawler\methods\req\sendPaymentOutcome as Payload;

@@ -2,9 +2,8 @@
 
 namespace pagopa\crawler\events\resp;
 
-use pagopa\crawler\AbstractEvent;
+use pagopa\crawler\events\AbstractEvent;
 use pagopa\crawler\MapEvents;
-use pagopa\crawler\methods\MethodInterface;
 use pagopa\crawler\methods\resp\nodoInviaRT as Payload;
 use pagopa\database\sherlock\Transaction;
 use pagopa\database\sherlock\TransactionDetails;

@@ -2,7 +2,7 @@
 
 namespace pagopa\crawler\methods\req;
 
-use pagopa\crawler\AbstractMethod;
+use pagopa\crawler\methods\AbstractMethod;
 
 class activatePaymentNoticeV2 extends AbstractMethod
 {

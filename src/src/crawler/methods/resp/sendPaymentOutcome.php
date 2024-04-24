@@ -2,10 +2,8 @@
 
 namespace pagopa\crawler\methods\resp;
 
-use pagopa\crawler\AbstractResponseMethod;
-use pagopa\crawler\FaultInterface;
-use pagopa\crawler\methods\MethodInterface;
-use XMLReader;
+use pagopa\crawler\methods\AbstractResponseMethod;
+
 class sendPaymentOutcome extends AbstractResponseMethod
 {
 

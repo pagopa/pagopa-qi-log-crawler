@@ -2,11 +2,10 @@
 
 namespace pagopa\crawler\events\resp;
 
-use pagopa\crawler\AbstractEvent;
+use pagopa\crawler\events\AbstractEvent;
 use pagopa\crawler\MapEvents;
-use pagopa\crawler\methods\MethodInterface;
-use pagopa\database\sherlock\Transaction;
 use pagopa\crawler\methods\resp\nodoInviaCarrelloRPT as Payload;
+use pagopa\database\sherlock\Transaction;
 use pagopa\database\sherlock\TransactionDetails;
 use pagopa\database\sherlock\Workflow;
 

@@ -1,9 +1,8 @@
 <?php
 
-namespace pagopa\crawler;
+namespace pagopa\crawler\methods;
 
-use pagopa\crawler\methods\MethodInterface;
-use SimpleXMLElement;
+use pagopa\crawler\FaultInterface;
 
 /**
  * La classe AbstractMethod offre constanti di configurazione usate dai corrispondenti metodi per ricavare

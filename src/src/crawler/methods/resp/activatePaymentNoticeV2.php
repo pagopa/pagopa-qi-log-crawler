@@ -2,7 +2,7 @@
 
 namespace pagopa\crawler\methods\resp;
 
-use pagopa\crawler\AbstractResponseMethod;
+use pagopa\crawler\methods\AbstractResponseMethod;
 
 class activatePaymentNoticeV2 extends AbstractResponseMethod
 {
