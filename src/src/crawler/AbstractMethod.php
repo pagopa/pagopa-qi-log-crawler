@@ -527,7 +527,8 @@ class AbstractMethod implements methods\MethodInterface
             return null;
         }
         $render_xpath = vsprintf(static::XPATH_TRANSFER_COUNT, [$p]);
-        return $this->getElementCount($render_xpath);
+        $value = $this->getElementCount($render_xpath);
+        return ($value == 0) ? null : $value;
     }
 
     /**
@@ -545,7 +546,7 @@ class AbstractMethod implements methods\MethodInterface
         {
             return false;
         }
-        $render_xpath = vsprintf(static::XPATH_SINGLE_TRANSFER_ID, [$t, $p]);
+        $render_xpath = vsprintf(static::XPATH_IS_BOLLO_TRANSFER, [$t, $p]);
         return !is_null($this->getElement($render_xpath));
     }
 
@@ -612,7 +613,8 @@ class AbstractMethod implements methods\MethodInterface
             return null;
         }
         $render_xpath = vsprintf(static::XPATH_PAYMENT_METADATA, [$p]);
-        return $this->getElementCount($render_xpath);
+        $value = $this->getElementCount($render_xpath);
+        return ($value == 0) ? null : $value;
     }
 
     /**
@@ -669,7 +671,8 @@ class AbstractMethod implements methods\MethodInterface
             return null;
         }
         $render_xpath = vsprintf(static::XPATH_TRANSFER_METADATA, [$t, $p]);
-        return $this->getElementCount($render_xpath);
+        $value = $this->getElementCount($render_xpath);
+        return ($value == 0) ? null : $value;
     }
 
     /**
@@ -704,7 +707,10 @@ class AbstractMethod implements methods\MethodInterface
         $p = $index + 1;
         $t = $transfer + 1;
         $m = $metaKey + 1;
-
+        if ($p > $this->getPaymentsCount())
+        {
+            return null;
+        }
         $render_xpath = vsprintf(static::XPATH_TRANSFER_METADATA_VALUE, [$m, $t, $p]);
         return $this->getElement($render_xpath);
     }

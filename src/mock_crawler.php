@@ -78,6 +78,13 @@ $a->run();
 $a = new \pagopa\crawler\paymentlist\resp\activateIOPayment(new \DateTime('2024-03-10'), 'activateIOPayment', 'RESP', $redis_cache);
 $a->run();
 
+$a = new \pagopa\crawler\paymentlist\req\activatePaymentNoticeV2(new \DateTime('2024-03-10'), 'activatePaymentNoticeV2', 'REQ', $redis_cache);
+$a->run();
+
+$a = new \pagopa\crawler\paymentlist\resp\activatePaymentNoticeV2(new \DateTime('2024-03-10'), 'activatePaymentNoticeV2', 'RESP', $redis_cache);
+$a->run();
+
+
 $a = new \pagopa\crawler\paymentlist\req\nodoInviaCarrelloRPT(new \DateTime('2024-03-10'),'nodoInviaCarrelloRPT', 'REQ', $redis_cache);
 $a->run();
 

@@ -120,6 +120,25 @@ class GetInfoFromDb
         return (array_key_exists($index, $collect)) ? $collect[$index] : null;
     }
 
+    public function getMetadataPayment(Transaction $transaction, int $index) : Metadata|null
+    {
+        $date = new DateTime($transaction->getColumnValue('date_event'));
+        $ymd = $date->format('Y_m_d');
+        $table = sprintf(METADATA_TABLE, $ymd);
+        $result = Capsule::table($table)
+            ->where('fk_payment', '=', $transaction->getColumnValue('id'))
+            ->whereNull('fk_transfer')
+            ->orderBy('id', 'asc')
+            ->get();
+
+        $collect = [];
+        foreach($result as $details)
+        {
+            $collect[] = new Metadata($date, (array) $details);
+        }
+        return (array_key_exists($index, $collect)) ? $collect[$index] : null;
+    }
+
 
     public function getExtraInfo(Transaction $transaction, string $extra_info) : ExtraInfo|null
     {
