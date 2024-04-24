@@ -67,6 +67,7 @@ class activatePaymentNotice extends AbstractPaymentList
 
         $id             =   $cache->getId();
         $transfer_list  =   array();
+
         for($i=0;$i<$this->getEvent()->getTransferCount($index);$i++)
         {
             $transaction_details = $this->getEvent()->transactionDetails($i, $index);

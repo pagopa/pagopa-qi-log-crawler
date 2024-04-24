@@ -146,7 +146,7 @@ class nodoAttivaRPTTest extends TestCase
     #[TestDox('getPaymentsCount()')]
     public function testGetPaymentsCount()
     {
-        $this->assertNull($this->instance->getPaymentsCount());
+        $this->assertEquals(1, $this->instance->getPaymentsCount());
     }
 
     #[TestDox('getPaEmittente()')]

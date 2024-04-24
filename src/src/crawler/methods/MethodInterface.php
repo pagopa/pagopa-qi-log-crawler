@@ -10,6 +10,9 @@ interface MethodInterface
 
     /**
      * Restituisce il numero di pagamenti gestiti da questo evento
+     * Per numero di pagamenti si intende l'occorrenza di ALMENO una di queste tre info (iuv, token, pa, notice_number)
+     * Se nel payload dell'evento non sono presenti queste 4 informazioni, restituisce null.
+     * Se almeno una è presente, restituisce 1, altrimenti se è un carrello restituisce il numero di pagamenti presenti nel carrello
      * @return int|null
      */
     public function getPaymentsCount() : int|null;
@@ -54,7 +57,7 @@ interface MethodInterface
 
 
     /**
-     * Restituisce l'i-esimo iuv del carrello. Se l'evento gestisce un solo pagamento, restituisce il singolo iuv
+     * Restituisce l'i-esimo iuv del carrello. Se l'evento gestisce un solo pagamento, restituisce il singolo iuv ignorando il valore di $index
      * Restituisce null se non vi è la presenza del dato nel payload
      * @param int $index
      * @return string|null

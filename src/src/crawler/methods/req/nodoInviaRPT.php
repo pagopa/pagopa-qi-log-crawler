@@ -2,19 +2,23 @@
 
 namespace pagopa\crawler\methods\req;
 
+use pagopa\crawler\AbstractMethod;
 use pagopa\crawler\methods\MethodInterface;
 use pagopa\crawler\methods\object\RPT;
 use \XMLReader;
 
-class nodoInviaRPT implements MethodInterface
+class nodoInviaRPT extends AbstractMethod
 {
-    protected string $payload;
+
+    protected $prefix_xpath = 'nodoInviaRPT';
 
 
-    public function __construct(string $payload = null)
-    {
-        $this->payload = $payload;
-    }
+    const XPATH_PSP = '/identificativoPSP';
+
+    const XPATH_BROKER_PSP = '/identificativoIntermediarioPSP';
+
+    const XPATH_CHANNEL = '/identificativoCanale';
+
 
     private function getRpt() : RPT|null
     {
@@ -82,14 +86,6 @@ class nodoInviaRPT implements MethodInterface
     /**
      * @inheritDoc
      */
-    public function getAllNoticesNumbers(): array|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function getIuv(int $index = 0): string|null
     {
         return $this->getElemento('identificativoUnivocoVersamento');
@@ -117,14 +113,6 @@ class nodoInviaRPT implements MethodInterface
     public function getToken(int $index = 0): string|null
     {
         return $this->getCcp();
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getNoticeNumber(int $index = 0): string|null
-    {
-        return null;
     }
 
     /**
@@ -203,30 +191,6 @@ class nodoInviaRPT implements MethodInterface
     /**
      * @inheritDoc
      */
-    public function getPsp(): string|null
-    {
-        return $this->getElemento('identificativoPSP');
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getBrokerPsp(): string|null
-    {
-        return $this->getElemento('identificativoIntermediarioPSP');
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getCanale(): string|null
-    {
-        return $this->getElemento('identificativoCanale');
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function getBrokerPa(): string|null
     {
         return $this->getElemento('identificativoIntermediarioPA');
@@ -240,59 +204,4 @@ class nodoInviaRPT implements MethodInterface
         return $this->getElemento('identificativoStazioneIntermediarioPA');
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function outcome(): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getPaymentMetaDataCount(int $index = 0): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getPaymentMetaDataKey(int $index = 0, int $metaKey = 0): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getPaymentMetaDataValue(int $index = 0, int $metaKey = 0): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getTransferMetaDataCount(int $transfer = 0, int $index = 0): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getTransferMetaDataKey(int $transfer = 0, int $index = 0, int $metaKey = 0): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getTransferMetaDataValue(int $transfer = 0, int $index = 0, int $metaKey = 0): string|null
-    {
-        return null;
-    }
 }

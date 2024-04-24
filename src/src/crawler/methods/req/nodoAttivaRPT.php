@@ -2,23 +2,31 @@
 
 namespace pagopa\crawler\methods\req;
 
+use pagopa\crawler\AbstractMethod;
 use pagopa\crawler\methods\MethodInterface;
 use \XMLReader;
 
-class nodoAttivaRPT implements MethodInterface
+class nodoAttivaRPT extends AbstractMethod
 {
 
-    /**
-     * Rappresenta il payload dell'evento
-     * @var string
-     */
-    protected string $payload;
+    protected $prefix_xpath = 'nodoAttivaRPT';
 
 
-    public function __construct(string $payload = null)
-    {
-        $this->payload = $payload;
-    }
+    const XPATH_IUV = '/codiceIdRPT/QrCode/CodIUV';
+
+    const XPATH_PA_EMITTENTE = '/codiceIdRPT/QrCode/CF';
+    const XPATH_TOKEN_CCP = '/codiceContestoPagamento';
+
+    const XPATH_TOTAL_CART_AMOUNT = '/datiPagamentoPSP/importoSingoloVersamento';
+
+    const XPATH_SINGLE_PAYMENT_IMPORT = '/datiPagamentoPSP/importoSingoloVersamento';
+
+
+    const XPATH_PSP = '/identificativoPSP';
+
+    const XPATH_BROKER_PSP = '/identificativoIntermediarioPSP';
+
+    const XPATH_CHANNEL = '/identificativoCanale';
 
 
     private function getElementFromPayload(string $element) : string|null
@@ -40,84 +48,7 @@ class nodoAttivaRPT implements MethodInterface
      */
     public function getPaymentsCount(): int|null
     {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getIuvs(): array|null
-    {
-        $value = $this->getIuv();
-        return (is_null($value)) ? null : array($value);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getPaEmittenti(): array|null
-    {
-        $value = $this->getPaEmittente();
-        return (is_null($value)) ? null : array($value);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getCcps(): array|null
-    {
-        $value = $this->getCcp();
-        return (is_null($value)) ? null : array($value);
-
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getAllTokens(): array|null
-    {
-        return $this->getCcps();
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getAllNoticesNumbers(): array|null
-    {
-        $value = $this->getNoticeNumber();
-        return (is_null($value)) ? null : array($value);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getIuv(int $index = 0): string|null
-    {
-        return $this->getElementFromPayload('CodIUV');
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getPaEmittente(int $index = 0): string|null
-    {
-        return $this->getElementFromPayload('CF');
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getCcp(int $index = 0): string|null
-    {
-        return $this->getElementFromPayload('codiceContestoPagamento');
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getToken(int $index = 0): string|null
-    {
-        return $this->getCcp();
+        return 1;
     }
 
     /**
@@ -137,160 +68,10 @@ class nodoAttivaRPT implements MethodInterface
     /**
      * @inheritDoc
      */
-    public function getImportoTotale(): string|null
+    public function getAllNoticesNumbers(): array|null
     {
-        return $this->getElementFromPayload('importoSingoloVersamento');
+        $value = $this->getNoticeNumber();
+        return (is_null($value)) ? null : array($value);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getImporto(int $index = 0): string|null
-    {
-        return $this->getElementFromPayload('importoSingoloVersamento');
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getTransferAmount(int $transfer = 0, int $index = 0): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getTransferPa(int $transfer = 0, int $index = 0): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getTransferIban(int $transfer = 0, int $index = 0): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getTransferId(int $transfer = 0, int $index = 0): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getTransferCount(int $index = 0): int|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function isBollo(int $transfer = 0, int $index = 0): bool
-    {
-        return false;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getPsp(): string|null
-    {
-        return $this->getElementFromPayload('identificativoPSP');
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getBrokerPsp(): string|null
-    {
-        return $this->getElementFromPayload('identificativoIntermediarioPSP');
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getCanale(): string|null
-    {
-        return $this->getElementFromPayload('identificativoCanale');
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getBrokerPa(): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getStazione(): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function outcome(): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getPaymentMetaDataCount(int $index = 0): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getPaymentMetaDataKey(int $index = 0, int $metaKey = 0): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getPaymentMetaDataValue(int $index = 0, int $metaKey = 0): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getTransferMetaDataCount(int $transfer = 0, int $index = 0): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getTransferMetaDataKey(int $transfer = 0, int $index = 0, int $metaKey = 0): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getTransferMetaDataValue(int $transfer = 0, int $index = 0, int $metaKey = 0): string|null
-    {
-        return null;
-    }
 }

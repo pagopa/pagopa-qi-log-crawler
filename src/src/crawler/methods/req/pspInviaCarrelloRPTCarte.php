@@ -2,19 +2,41 @@
 
 namespace pagopa\crawler\methods\req;
 
+use pagopa\crawler\AbstractMethod;
 use pagopa\crawler\methods\MethodInterface;
 use pagopa\crawler\methods\object\RPT;
 use \XMLReader;
 
-class pspInviaCarrelloRPTCarte implements MethodInterface
+class pspInviaCarrelloRPTCarte extends AbstractMethod
 {
 
-    protected string $payload;
+    protected $prefix_xpath = 'pspInviaCarrelloRPTCarte';
 
-    public function __construct(string $payload = null)
-    {
-        $this->payload = $payload;
-    }
+
+    const XPATH_PAYMENT_COUNT = '/listaRPT/elementoListaCarrelloRPT';
+
+    const XPATH_IUV = '/listaRPT/elementoListaCarrelloRPT[%1$d]/identificativoUnivocoVersamento';
+
+    const XPATH_PA_EMITTENTE = '/listaRPT/elementoListaCarrelloRPT[%1$d]/identificativoDominio';
+
+    const XPATH_TOKEN_CCP = '/listaRPT/elementoListaCarrelloRPT[%1$d]/codiceContestoPagamento';
+
+    const XPATH_PSP = '/identificativoPSP';
+
+    const XPATH_BROKER_PSP = '/identificativoIntermediarioPSP';
+
+    const XPATH_CHANNEL = '/identificativoCanale';
+
+
+    const XPATH_RRN = '/rrn';
+
+    const XPATH_TRANSACTION_CODE_AUTH = '/codiceAutorizzativo';
+
+    const XPATH_ESITO_TRANSAZIONE_CARTA = '/esitoTransazioneCarta';
+
+
+
+
 
     /**
      * Restituisce l'elemento tagName della lista i-esima (indicata in $index)
@@ -86,128 +108,7 @@ class pspInviaCarrelloRPTCarte implements MethodInterface
      */
     public function getPaymentsCount(): int|null
     {
-        $xml = new XMLReader();
-        $xml->XML($this->payload);
-        $count = 0;
-        while($xml->read())
-        {
-            if (($xml->nodeType == XMLReader::ELEMENT) && ($xml->localName == 'elementoListaCarrelloRPT'))
-            {
-                $count++;
-            }
-        }
-        return $count;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getIuvs(): array|null
-    {
-        $iuvs = [];
-        for($i=0;$i<$this->getPaymentsCount();$i++)
-        {
-            $iuvs[] = $this->getElementFromListaRPT($i, 'identificativoUnivocoVersamento');
-        }
-        return (count($iuvs) == 0) ? null : $iuvs;
-
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getPaEmittenti(): array|null
-    {
-        $pa_emittenti = [];
-        for($i=0;$i<$this->getPaymentsCount();$i++)
-        {
-            $pa_emittenti[] = $this->getElementFromListaRPT($i, 'identificativoDominio');
-        }
-        return (count($pa_emittenti) == 0) ? null : $pa_emittenti;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getCcps(): array|null
-    {
-        $ccps = [];
-        for($i=0;$i<$this->getPaymentsCount();$i++)
-        {
-            $ccps[] = $this->getElementFromListaRPT($i, 'codiceContestoPagamento');
-        }
-        return (count($ccps) == 0) ? null : $ccps;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getAllTokens(): array|null
-    {
-        return $this->getCcps();
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getAllNoticesNumbers(): array|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getIuv(int $index = 0): string|null
-    {
-        $iuvs = $this->getIuvs();
-        if (is_null($iuvs))
-        {
-            return null;
-        }
-        return (!array_key_exists($index, $iuvs)) ? null : $iuvs[$index];
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getPaEmittente(int $index = 0): string|null
-    {
-        $pa_emittente = $this->getPaEmittenti();
-        if (is_null($pa_emittente))
-        {
-            return null;
-        }
-        return (!array_key_exists($index, $pa_emittente)) ? null : $pa_emittente[$index];
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getCcp(int $index = 0): string|null
-    {
-        $ccps = $this->getCCps();
-        if (is_null($ccps))
-        {
-            return null;
-        }
-        return (!array_key_exists($index, $ccps)) ? null : $ccps[$index];
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getToken(int $index = 0): string|null
-    {
-        return $this->getCcp($index);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getNoticeNumber(int $index = 0): string|null
-    {
-        return null;
+        return $this->getElementCount(static::XPATH_PAYMENT_COUNT);
     }
 
     /**
@@ -289,163 +190,12 @@ class pspInviaCarrelloRPTCarte implements MethodInterface
     }
 
     /**
-     * @inheritDoc
-     */
-    public function getPsp(): string|null
-    {
-        $xml = new XMLReader();
-        $xml->XML($this->payload);
-        while($xml->read())
-        {
-            if (($xml->nodeType == XMLReader::ELEMENT) && ($xml->localName == 'identificativoPSP'))
-            {
-                return $xml->readString();
-            }
-        }
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getBrokerPsp(): string|null
-    {
-        $xml = new XMLReader();
-        $xml->XML($this->payload);
-        while($xml->read())
-        {
-            if (($xml->nodeType == XMLReader::ELEMENT) && ($xml->localName == 'identificativoIntermediarioPSP'))
-            {
-                return $xml->readString();
-            }
-        }
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getCanale(): string|null
-    {
-        $xml = new XMLReader();
-        $xml->XML($this->payload);
-        while($xml->read())
-        {
-            if (($xml->nodeType == XMLReader::ELEMENT) && ($xml->localName == 'identificativoCanale'))
-            {
-                return $xml->readString();
-            }
-        }
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getBrokerPa(): string|null
-    {
-        $xml = new XMLReader();
-        $xml->XML($this->payload);
-        while($xml->read())
-        {
-            if (($xml->nodeType == XMLReader::ELEMENT) && ($xml->localName == 'identificativoIntermediarioPA'))
-            {
-                return $xml->readString();
-            }
-        }
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getStazione(): string|null
-    {
-        $xml = new XMLReader();
-        $xml->XML($this->payload);
-        while($xml->read())
-        {
-            if (($xml->nodeType == XMLReader::ELEMENT) && ($xml->localName == 'identificativoStazioneIntermediarioPA'))
-            {
-                return $xml->readString();
-            }
-        }
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function outcome(): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getPaymentMetaDataCount(int $index = 0): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getPaymentMetaDataKey(int $index = 0, int $metaKey = 0): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getPaymentMetaDataValue(int $index = 0, int $metaKey = 0): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getTransferMetaDataCount(int $transfer = 0, int $index = 0): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getTransferMetaDataKey(int $transfer = 0, int $index = 0, int $metaKey = 0): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getTransferMetaDataValue(int $transfer = 0, int $index = 0, int $metaKey = 0): string|null
-    {
-        return null;
-    }
-
-
-    /**
      * Restituisce l'RRN della transazione
      * @return string|null
      */
     public function getTransactionRRN() : string|null
     {
-        $xml = new XMLReader();
-        $xml->XML($this->payload);
-        while($xml->read())
-        {
-            if (($xml->nodeType == XMLReader::ELEMENT) && (strtolower($xml->localName) == 'rrn'))
-            {
-                return $xml->readString();
-            }
-        }
-        return null;
+        return $this->getElement(static::XPATH_RRN);
     }
 
 
@@ -466,16 +216,7 @@ class pspInviaCarrelloRPTCarte implements MethodInterface
      */
     public function getTransactionCodeAuth() : string|null
     {
-        $xml = new XMLReader();
-        $xml->XML($this->payload);
-        while($xml->read())
-        {
-            if (($xml->nodeType == XMLReader::ELEMENT) && (strtolower($xml->localName) == 'codiceautorizzativo'))
-            {
-                return $xml->readString();
-            }
-        }
-        return null;
+        return $this->getElement(static::XPATH_TRANSACTION_CODE_AUTH);
     }
 
     /**
@@ -484,15 +225,6 @@ class pspInviaCarrelloRPTCarte implements MethodInterface
      */
     public function getEsitoTransazioneCarta() : string|null
     {
-        $xml = new XMLReader();
-        $xml->XML($this->payload);
-        while($xml->read())
-        {
-            if (($xml->nodeType == XMLReader::ELEMENT) && (strtolower($xml->localName) == 'esitotransazionecarta'))
-            {
-                return $xml->readString();
-            }
-        }
-        return null;
+        return $this->getElement(static::XPATH_ESITO_TRANSAZIONE_CARTA);
     }
 }

@@ -13,7 +13,7 @@ class pspInviaCarrelloRPTCarte extends AbstractPaymentList
      */
     public function createEventInstance(array $eventData): void
     {
-        $event = new \pagopa\crawler\events\resp\pspInviaCarrelloRPT($eventData);
+        $event = new \pagopa\crawler\events\resp\pspInviaCarrelloRPTCarte($eventData);
         $this->setEvent($event);
     }
 

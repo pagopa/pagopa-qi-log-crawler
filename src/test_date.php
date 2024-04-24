@@ -2,6 +2,99 @@
 require_once './vendor/autoload.php';
 
 
+$string = 'la prima stringa è %1sla seconda %2s';
+
+
+
+class test extends \pagopa\crawler\AbstractMethod
+{
+
+    const XPATH_PA_EMITTENTE = '//activatePaymentNoticeReq/qrCode/fiscalCode';
+
+    const XPATH_SINGLE_TRANSFER_AMOUNT = '//pspNotifyPaymentReq/transferList/transfer[%1$d]/transferAmount';
+
+
+    const XPATH_TRANSFER_COUNT = '//pspNotifyPaymentReq/transferList/transfer';
+
+
+    const XPATH_TRANSFER_METADATA = '//pspNotifyPaymentReq/transferList/transfer[%1$d]/metadata/mapEntry';
+    const XPATH_TRANSFER_METADATA_KEY = '//pspNotifyPaymentReq/transferList/transfer[%2$d]/metadata/mapEntry[%1$d]/key';
+
+    const XPATH_TRANSFER_METADATA_VALUE = '//pspNotifyPaymentReq/transferList/transfer[%2$d]/metadata/mapEntry[%1$d]/value';
+
+
+
+}
+
+
+
+
+$test = new \pagopa\crawler\methods\resp\nodoAttivaRPT(base64_decode('PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIiA/Pgo8c29hcGVudjpFbnZlbG9wZSB4bWxuczpiYz0iaHR0cDovL1B1bnRvQWNjZXNzb1BTUC5zcGNvb3AuZ292Lml0L0JhckNvZGVfR1MxXzEyOF9Nb2RpZmllZCIgeG1sbnM6cGF5X2k9Imh0dHA6Ly93d3cuZGlnaXRwYS5nb3YuaXQvc2NoZW1hcy8yMDExL1BhZ2FtZW50aS8iIHhtbG5zOnBwdD0iaHR0cDovL3dzLnBhZ2FtZW50aS50ZWxlbWF0aWNpLmdvdi8iIHhtbG5zOnFyYz0iaHR0cDovL1B1bnRvQWNjZXNzb1BTUC5zcGNvb3AuZ292Lml0L1FyQ29kZSIgeG1sbnM6c29hcGVudj0iaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvc29hcC9lbnZlbG9wZS8iIHhtbG5zOnRucz0iaHR0cDovL1B1bnRvQWNjZXNzb1BTUC5zcGNvb3AuZ292Lml0L3NlcnZpemkvUGFnYW1lbnRpVGVsZW1hdGljaVBzcE5vZG8iIHhtbG5zOnhzPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYSIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSI+Cgk8c29hcGVudjpCb2R5PgoJCTxwcHQ6bm9kb0F0dGl2YVJQVFJpc3Bvc3RhPgoJCQk8bm9kb0F0dGl2YVJQVFJpc3Bvc3RhPgoJCQkJPGZhdWx0PgoJCQkJCTxmYXVsdENvZGU+UFBUX01VTFRJX0JFTkVGSUNJQVJJTzwvZmF1bHRDb2RlPgoJCQkJCTxmYXVsdFN0cmluZz5MYSBjaGlhbWF0YSBub24gw6ggY29tcGF0aWJpbGUgY29uIGlsIG51b3ZvIG1vZGVsbG8gUFNQLjwvZmF1bHRTdHJpbmc+CgkJCQkJPGlkPk5vZG9EZWlQYWdhbWVudGlTUEM8L2lkPgoJCQkJCTxkZXNjcmlwdGlvbj5MYSBjaGlhbWF0YSBub24gw6ggY29tcGF0aWJpbGUgY29uIGlsIG51b3ZvIG1vZGVsbG8gUFNQLjwvZGVzY3JpcHRpb24+CgkJCQk8L2ZhdWx0PgoJCQkJPGVzaXRvPktPPC9lc2l0bz4KCQkJPC9ub2RvQXR0aXZhUlBUUmlzcG9zdGE+CgkJPC9wcHQ6bm9kb0F0dGl2YVJQVFJpc3Bvc3RhPgoJPC9zb2FwZW52OkJvZHk+Cjwvc29hcGVudjpFbnZlbG9wZT4='));
+
+print_r($test->getFaultCode());
+
+echo PHP_EOL;
+
+die();
+
+$payload = base64_decode('PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIiA/Pgo8c29hcGVudjpFbnZlbG9wZSB4bWxuczpjb21tb249Imh0dHA6Ly9wYWdvcGEtYXBpLnBhZ29wYS5nb3YuaXQveHNkL2NvbW1vbi10eXBlcy92MS4wLjAvIiB4bWxuczpuZnA9Imh0dHA6Ly9wYWdvcGEtYXBpLnBhZ29wYS5nb3YuaXQvbm9kZS9ub2RlRm9yUHNwLnhzZCIgeG1sbnM6c29hcGVudj0iaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvc29hcC9lbnZlbG9wZS8iIHhtbG5zOnhzPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYSIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSI+Cgk8c29hcGVudjpCb2R5PgoJCTxuZnA6YWN0aXZhdGVQYXltZW50Tm90aWNlUmVzPgoJCQk8b3V0Y29tZT5PSzwvb3V0Y29tZT4KCQkJPHRvdGFsQW1vdW50PjE4My44NTwvdG90YWxBbW91bnQ+CgkJCTxwYXltZW50RGVzY3JpcHRpb24+RU5FTCBFTkVSR0lBL05VTURPQz00MzU1NDI1ODYzL0RBVEFET0M9MDguMDguMjAyMy9BVlZJU089MzA0MTAwNDM1NTQyNTg2Mzg5L0lNUE9SVE89MTgzLDg1LzwvcGF5bWVudERlc2NyaXB0aW9uPgoJCQk8ZmlzY2FsQ29kZVBBPjA2NjU1OTcxMDA3PC9maXNjYWxDb2RlUEE+CgkJCTxjb21wYW55TmFtZT5FbmVsIEVuZXJnaWEgUy5wLkEuPC9jb21wYW55TmFtZT4KCQkJPHBheW1lbnRUb2tlbj4wYThlZjRmMDE5NGY0ODg2OTQyY2JjOGRhOGZkYmUwNDwvcGF5bWVudFRva2VuPgoJCQk8dHJhbnNmZXJMaXN0PgoJCQkJPHRyYW5zZmVyPgoJCQkJCTxpZFRyYW5zZmVyPjE8L2lkVHJhbnNmZXI+CgkJCQkJPHRyYW5zZmVyQW1vdW50PjE4My44NTwvdHJhbnNmZXJBbW91bnQ+CgkJCQkJPGZpc2NhbENvZGVQQT4wNjY1NTk3MTAwNzwvZmlzY2FsQ29kZVBBPgoJCQkJCTxJQkFOPklUMThVMDMwNjkwOTQwMDEwMDAwMDAwOTEzODwvSUJBTj4KCQkJCQk8cmVtaXR0YW5jZUluZm9ybWF0aW9uPi9SRkIvMDQxMDA0MzU1NDI1ODYzODkvVFhUL0VORUwgRU5FUkdJQS9OVU1ET0M9NDM1NTQyNTg2My9EQVRBRE9DPTA4LjA4LjIwMjMvQVZWSVNPPTMwNDEwMDQzNTU0MjU4NjM4OS9JTVBPUlRPPTE4Myw4NS88L3JlbWl0dGFuY2VJbmZvcm1hdGlvbj4KCQkJCTwvdHJhbnNmZXI+CgkJCTwvdHJhbnNmZXJMaXN0PgoJCQk8Y3JlZGl0b3JSZWZlcmVuY2VJZD4wNDEwMDQzNTU0MjU4NjM4OTwvY3JlZGl0b3JSZWZlcmVuY2VJZD4KCQk8L25mcDphY3RpdmF0ZVBheW1lbnROb3RpY2VSZXM+Cgk8L3NvYXBlbnY6Qm9keT4KPC9zb2FwZW52OkVudmVsb3BlPg==');
+
+$xml = new SimpleXMLElement($payload);
+
+$namespaces = $xml->getDocNamespaces(true);
+$namespaces = array_filter(array_keys($namespaces), function($k){return !empty($k);});
+$namespaces = array_map(function($ns){return "$ns:";}, $namespaces);
+$ns_clean_xml = str_replace("xmlns=", "ns=", $payload);
+$ns_clean_xml = str_replace($namespaces, array_fill(0, count($namespaces), ''), $ns_clean_xml);
+
+$xml = new SimpleXMLElement($ns_clean_xml);
+
+
+$a = $xml->xpath('//pspNotifyPaymentReq/transferList/transfer[2]');
+
+print_r($a);
+
+
+die();
+class test extends \pagopa\crawler\AbstractMethod
+{
+
+    const XPATH_PA_EMITTENTE = '//activatePaymentNoticeReq/qrCode/fiscalCode';
+
+
+
+}
+
+$payload = base64_decode('PHNvYXBlbnY6RW52ZWxvcGUgeG1sbnM6bm9kPSJodHRwOi8vcGFnb3BhLWFwaS5wYWdvcGEuZ292Lml0L25vZGUvbm9kZUZvclBzcC54c2QiIHhtbG5zOnNvYXBlbnY9Imh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3NvYXAvZW52ZWxvcGUvIj4KCTxzb2FwZW52OkhlYWRlci8+Cgk8c29hcGVudjpCb2R5PgoJCTxub2Q6YWN0aXZhdGVQYXltZW50Tm90aWNlUmVxPgoJCQk8aWRQU1A+QUJJMDMwNjk8L2lkUFNQPgoJCQk8aWRCcm9rZXJQU1A+OTcyNDk2NDA1ODg8L2lkQnJva2VyUFNQPgoJCQk8aWRDaGFubmVsPjk3MjQ5NjQwNTg4XzAxPC9pZENoYW5uZWw+CgkJCTxwYXNzd29yZD5DQkkxMUFnaWRQcm9kPC9wYXNzd29yZD4KCQkJPGlkZW1wb3RlbmN5S2V5Pjk3MjQ5NjQwNTg4XzI0MUtFM0lFODg8L2lkZW1wb3RlbmN5S2V5PgoJCQk8cXJDb2RlPgoJCQkJPGZpc2NhbENvZGU+MTM3NTY4ODEwMDI8L2Zpc2NhbENvZGU+CgkJCQk8bm90aWNlTnVtYmVyPjE4MDAyNTUwMDM2MDQzMzI1MDwvbm90aWNlTnVtYmVyPgoJCQk8L3FyQ29kZT4KCQkJPGV4cGlyYXRpb25UaW1lPjM2MDAwMDwvZXhwaXJhdGlvblRpbWU+CgkJCTxhbW91bnQ+MjIuNDY8L2Ftb3VudD4KCQk8L25vZDphY3RpdmF0ZVBheW1lbnROb3RpY2VSZXE+Cgk8L3NvYXBlbnY6Qm9keT4KPC9zb2FwZW52OkVudmVsb3BlPg==');
+
+$a = new test($payload);
+
+print_r($a->getPaEmittenti());
+
+
+
+
+die();
+
+
+$xml = new SimpleXMLElement($payload);
+
+$namespaces = $xml->getDocNamespaces(true);
+$namespaces = array_filter(array_keys($namespaces), function($k){return !empty($k);});
+$namespaces = array_map(function($ns){return "$ns:";}, $namespaces);
+$ns_clean_xml = str_replace("xmlns=", "ns=", $payload);
+$ns_clean_xml = str_replace($namespaces, array_fill(0, count($namespaces), ''), $ns_clean_xml);
+$xml = simplexml_load_string($ns_clean_xml);
+
+//The line bellow fetches default namespace with empty key, like this: '' => 'url'
+//So we remove any default namespace from the array
+
+print_r($xml->xpath("//pspNotifyPaymentReq/transferList/transfer"));
+
+
+
+die();
+
 
 $a = [
     [

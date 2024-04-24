@@ -26,7 +26,7 @@
     </php>
     <testsuites>
         <testsuite name="temp_suite">
-            <file>process/crawler/activateIOPayment/T00053_activateIOPaymentNotice_2Transfer.php</file>
+            <file>pagopa/methods/resp/pspInviaCarrelloRPTCarteTest.php</file>
         </testsuite>
         <testsuite name="crawler">
             <file>process/crawler/activatePaymentNotice/SingleEvent/T00001_CreateAttemptAllInfoInEvent.php</file>

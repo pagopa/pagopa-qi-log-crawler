@@ -2,36 +2,30 @@
 
 namespace pagopa\crawler\methods\req;
 
+use pagopa\crawler\AbstractMethod;
 use pagopa\crawler\methods\MethodInterface;
 use pagopa\crawler\methods\object\RT;
 use \XMLReader;
 
-class nodoInviaRT implements MethodInterface
+class nodoInviaRT extends AbstractMethod
 {
-
-
-    /**
-     * Rappresenta il payload dell'evento
-     * @var string
-     */
-    protected string $payload;
-
-
     protected RT $object;
 
-    private function getBlockXml(string $block, string $element) : string|null
-    {
-        $xml = new XMLReader();
-        $xml->XML($block);
-        while($xml->read())
-        {
-            if (($xml->nodeType == XMLReader::ELEMENT) && (strtolower($xml->localName) == strtolower($element)))
-            {
-                return $xml->readOuterXml();
-            }
-        }
-        return null;
-    }
+
+    protected $prefix_xpath = 'nodoInviaRT';
+
+
+    const XPATH_IUV = '/identificativoUnivocoVersamento';
+
+    const XPATH_PA_EMITTENTE = '/identificativoDominio';
+    const XPATH_TOKEN_CCP = '/codiceContestoPagamento';
+
+    const XPATH_PSP = '/identificativoPSP';
+
+    const XPATH_BROKER_PSP = '/identificativoIntermediarioPSP';
+
+    const XPATH_CHANNEL = '/identificativoCanale';
+
 
     private function getElementXml(string $block, string $element) : string|null
     {
@@ -47,11 +41,9 @@ class nodoInviaRT implements MethodInterface
         return null;
     }
 
-
-
     public function __construct(string $payload = null)
     {
-        $this->payload = $payload;
+        parent::__construct($payload);
         $rt_payload = $this->getElementXml($payload, 'rt');
         $this->object = new RT(base64_decode($rt_payload));
     }
@@ -63,85 +55,11 @@ class nodoInviaRT implements MethodInterface
         return 1;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getIuvs(): array|null
-    {
-        $value = $this->getElementXml($this->payload, 'identificativoUnivocoVersamento');
-        return (is_null($value)) ? null : array($value);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getPaEmittenti(): array|null
-    {
-        $value = $this->getElementXml($this->payload, 'identificativoDominio');
-        return (is_null($value)) ? null : array($value);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getCcps(): array|null
-    {
-        $value = $this->getElementXml($this->payload, 'codiceContestoPagamento');
-        return (is_null($value)) ? null : array($value);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getAllTokens(): array|null
-    {
-        return $this->getCcps();
-    }
 
     /**
      * @inheritDoc
      */
     public function getAllNoticesNumbers(): array|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getIuv(int $index = 0): string|null
-    {
-        return $this->getElementXml($this->payload, 'identificativoUnivocoVersamento');
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getPaEmittente(int $index = 0): string|null
-    {
-        return $this->getElementXml($this->payload, 'identificativoDominio');
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getCcp(int $index = 0): string|null
-    {
-        return $this->getElementXml($this->payload, 'codiceContestoPagamento');
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getToken(int $index = 0): string|null
-    {
-        return $this->getCcp();
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getNoticeNumber(int $index = 0): string|null
     {
         return null;
     }
@@ -217,97 +135,9 @@ class nodoInviaRT implements MethodInterface
     /**
      * @inheritDoc
      */
-    public function getPsp(): string|null
-    {
-        return $this->getElementXml($this->payload, 'identificativoPSP');
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getBrokerPsp(): string|null
-    {
-        return $this->getElementXml($this->payload, 'identificativoIntermediarioPSP');
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getCanale(): string|null
-    {
-        return $this->getElementXml($this->payload, 'identificativoCanale');
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getBrokerPa(): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getStazione(): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function outcome(): string|null
     {
         return $this->object->getEsito();
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getPaymentMetaDataCount(int $index = 0): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getPaymentMetaDataKey(int $index = 0, int $metaKey = 0): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getPaymentMetaDataValue(int $index = 0, int $metaKey = 0): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getTransferMetaDataCount(int $transfer = 0, int $index = 0): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getTransferMetaDataKey(int $transfer = 0, int $index = 0, int $metaKey = 0): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getTransferMetaDataValue(int $transfer = 0, int $index = 0, int $metaKey = 0): string|null
-    {
-        return null;
     }
 
     public function getRT() : RT

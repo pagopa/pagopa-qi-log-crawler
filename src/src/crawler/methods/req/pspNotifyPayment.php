@@ -2,167 +2,99 @@
 
 namespace pagopa\crawler\methods\req;
 
+use pagopa\crawler\AbstractMethod;
 use pagopa\crawler\methods\MethodInterface;
 use \XMLReader;
 
-class pspNotifyPayment implements MethodInterface
+class pspNotifyPayment extends AbstractMethod
 {
 
-    /**
-     * Rappresenta il payload dell'evento
-     * @var string
-     */
-    protected string $payload;
+    protected $prefix_xpath = 'pspNotifyPaymentReq';
+
+    const XPATH_IUV = '/creditorReferenceId';
+
+    const XPATH_PA_EMITTENTE = '/fiscalCodePA';
+
+    const XPATH_TOKEN_CCP = '/paymentToken';
+
+    const XPATH_TOTAL_CART_AMOUNT = '/debtAmount';
+
+    const XPATH_SINGLE_PAYMENT_IMPORT = '/debtAmount';
 
 
-    public function __construct(string $payload = null)
-    {
-        $this->payload = $payload;
-    }
+    const XPATH_SINGLE_TRANSFER_AMOUNT = '/transferList/transfer[%1$d]/transferAmount';
+
+    const XPATH_SINGLE_TRANSFER_PA = '/transferList/transfer[%1$d]/fiscalCodePA';
+
+    const XPATH_SINGLE_IBAN_PA = '/transferList/transfer[%1$d]/IBAN';
+
+    const XPATH_SINGLE_TRANSFER_ID = '/transferList/transfer[%1$d]/idTransfer';
+
+    const XPATH_TRANSFER_COUNT = '/transferList/transfer';
+
+    const XPATH_TRANSFER_METADATA = '/transferList/transfer[%2$d]/metadata/mapEntry';
+
+    const XPATH_TRANSFER_METADATA_KEY = '/transferList/transfer[%2$d]/metadata/mapEntry[%1$d]/key';
+
+    const XPATH_TRANSFER_METADATA_VALUE = '/transferList/transfer[%2$d]/metadata/mapEntry[%1$d]/value';
+
+
+    const XPATH_PAYMENT_METADATA = '/additionalPaymentInformations/metadata/mapEntry';
+
+    const XPATH_PAYMENT_METADATA_KEY = '/additionalPaymentInformations/metadata/mapEntry[%1$d]/key';
+
+    const XPATH_PAYMENT_METADATA_VALUE = '/additionalPaymentInformations/metadata/mapEntry[%1$d]/value';
+
+
+    const XPATH_PSP = '/idPSP';
+
+    const XPATH_BROKER_PSP = '/idBrokerPSP';
+
+    const XPATH_CHANNEL = '/idChannel';
+
+    const XPATH_RRN = '/creditCardPayment/rrn';
+
+    const XPATH_AUTH_CODE = '/%1$s/authorizationCode';
+
+    const XPATH_TRANSACTION_ID = '/%1$s/transactionId';
+
+    const XPATH_PSP_TRANSACTION_ID = '/%1$s/pspTransactionId';
+
+
+    const XPATH_CREDIT_CARD_PAYMENT = '/creditCardPayment';
+
+    const XPATH_BANCOMAT_PAY_PAYMENT = '/bancomatpayPayment';
+
+    const XPATH_PAYPAL_PAYMENT = '/paypalPayment';
+
+    const XPATH_ADDITIOTNAL_INFO_PAYMENT = '/additionalPaymentInformations';
 
     public function getChoiceAdditionalPayment() : string|null
     {
-        $element = $this->getElemento('creditCardPayment');
+        $element = $this->getElement(static::XPATH_CREDIT_CARD_PAYMENT);
         if (!is_null($element))
         {
             return 'creditCardPayment';
         }
-        $element = $this->getElemento('paypalPayment');
+        $element = $this->getElement(static::XPATH_PAYPAL_PAYMENT);
         if (!is_null($element))
         {
             return 'paypalPayment';
         }
 
-        $element = $this->getElemento('bancomatpayPayment');
+        $element = $this->getElement(static::XPATH_BANCOMAT_PAY_PAYMENT);
         if (!is_null($element))
         {
             return 'bancomatpayPayment';
         }
 
-        $element = $this->getElemento('additionalPaymentInformations');
+        $element = $this->getElement(static::XPATH_ADDITIOTNAL_INFO_PAYMENT);
         if (!is_null($element))
         {
             return 'additionalPaymentInformations';
         }
         return null;
     }
-
-    private function getElemento(string $elemento) : string|null
-    {
-        $xml = new \XMLReader();
-        $xml->XML($this->payload);
-        while($xml->read())
-        {
-            if (($xml->nodeType == XMLReader::ELEMENT) && (strtolower($xml->localName) == strtolower($elemento)))
-            {
-                return $xml->readString();
-            }
-        }
-        return null;
-    }
-
-    private function getTransferListBlock() : string|null
-    {
-        $xml = new \XMLReader();
-        $xml->XML($this->payload);
-        while($xml->read())
-        {
-            if (($xml->nodeType == XMLReader::ELEMENT) && (strtolower($xml->localName) == strtolower('transferList')))
-            {
-                return $xml->readOuterXml();
-            }
-        }
-        return null;
-    }
-
-    private function getTransferNumber(int $index = 0) : string|null
-    {
-        $block = $this->getTransferListBlock();
-        $count = 0;
-        $xml = new \XMLReader();
-        $xml->XML($block);
-        while($xml->read())
-        {
-            if (($xml->nodeType == XMLReader::ELEMENT) && (strtolower($xml->localName) == strtolower('transfer')))
-            {
-                if ($count == $index)
-                {
-                    return $xml->readOuterXml();
-                }
-                $count++;
-            }
-        }
-        return null;
-    }
-
-    private function getTransferElement(string $element, int $index = 0) : string|null
-    {
-        $block = $this->getTransferNumber($index);
-        if (is_null($block))
-        {
-            return null;
-        }
-        $xml = new XMLReader();
-        $xml->XML($block);
-        while($xml->read())
-        {
-            if (($xml->nodeType == XMLReader::ELEMENT) && (strtolower($xml->localName) == strtolower($element)))
-            {
-                return $xml->readString();
-            }
-        }
-        return null;
-    }
-
-    private function getMetadataBlock(int $index = 0) : string|null
-    {
-        $block = $this->getTransferNumber($index);
-        $xml = new XMLReader();
-        $xml->XML($block);
-        while($xml->read())
-        {
-            if (($xml->nodeType == XMLreader::ELEMENT) && (strtolower($xml->localName) == strtolower('metadata')))
-            {
-                return $xml->readOuterXml();
-            }
-        }
-        return null;
-    }
-
-    private function getAdditionalInfoBlock() : string|null
-    {
-        $xml = new XMLReader();
-        $xml->XML($this->payload);
-        while($xml->read())
-        {
-            if (($xml->nodeType == XMLReader::ELEMENT) && (strtolower($xml->localName) == strtolower('additionalPaymentInformations')))
-            {
-                return $xml->readOuterXml();
-            }
-        }
-        return null;
-    }
-
-
-    private function getMetadataPaymentBlock() : string|null
-    {
-        $block = $this->getAdditionalInfoBlock();
-        if (is_null($block))
-        {
-            return null;
-        }
-        $xml = new XMLReader();
-        $xml->XML($block);
-        while($xml->read())
-        {
-            if (($xml->nodeType == XMLReader::ELEMENT) && (strtolower($xml->localName) == strtolower('metadata')))
-            {
-                return $xml->readOuterXml();
-            }
-        }
-        return null;
-    }
-
 
     /**
      * @inheritDoc
@@ -172,383 +104,31 @@ class pspNotifyPayment implements MethodInterface
         return 1;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getIuvs(): array|null
-    {
-        $value = $this->getElemento('creditorReferenceId');
-        return (is_null($value)) ? null : array($value);
-    }
 
-    /**
-     * @inheritDoc
-     */
-    public function getPaEmittenti(): array|null
-    {
-        $value = $this->getElemento('fiscalCodePA');
-        return (is_null($value)) ? null : array($value);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getCcps(): array|null
-    {
-        $value = $this->getElemento('paymentToken');
-        return (is_null($value)) ? null : array($value);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getAllTokens(): array|null
-    {
-        return $this->getCcps();
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getAllNoticesNumbers(): array|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getIuv(int $index = 0): string|null
-    {
-        return $this->getElemento('creditorReferenceId');
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getPaEmittente(int $index = 0): string|null
-    {
-        return $this->getElemento('fiscalCodePA');
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getCcp(int $index = 0): string|null
-    {
-        return $this->getElemento('paymentToken');
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getToken(int $index = 0): string|null
-    {
-        return $this->getElemento('paymentToken');
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getNoticeNumber(int $index = 0): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getImportoTotale(): string|null
-    {
-        return $this->getElemento('debtAmount');
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getImporto(int $index = 0): string|null
-    {
-        return $this->getElemento('debtAmount');
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getTransferAmount(int $transfer = 0, int $index = 0): string|null
-    {
-        return $this->getTransferElement('transferAmount', $transfer);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getTransferPa(int $transfer = 0, int $index = 0): string|null
-    {
-        return $this->getTransferElement('fiscalCodePA', $transfer);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getTransferIban(int $transfer = 0, int $index = 0): string|null
-    {
-        return $this->getTransferElement('IBAN', $transfer);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getTransferId(int $transfer = 0, int $index = 0): string|null
-    {
-        return $this->getTransferElement('idTransfer', $transfer);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getTransferCount(int $index = 0): int|null
-    {
-        $xmlPart = $this->getTransferListBlock();
-        $count = 0;
-        $xml = new XMLReader();
-        $xml->XML($xmlPart);
-        while($xml->read())
-        {
-            if (($xml->nodeType == XMLReader::ELEMENT) && (strtolower($xml->localName) == strtolower('transfer')))
-            {
-                $count++;
-            }
-        }
-        return $count;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function isBollo(int $transfer = 0, int $index = 0): bool
-    {
-        return false;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getPsp(): string|null
-    {
-        return $this->getElemento('idPSP');
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getBrokerPsp(): string|null
-    {
-        return $this->getElemento('idBrokerPSP');
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getCanale(): string|null
-    {
-        return $this->getElemento('idChannel');
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getBrokerPa(): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getStazione(): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function outcome(): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getPaymentMetaDataCount(int $index = 0): string|null
-    {
-        $metadata_block = $this->getMetadataPaymentBlock();
-        if (is_null($metadata_block))
-        {
-            return 0;
-        }
-        $count = 0;
-        $xml = new XMLReader();
-        $xml->XML($metadata_block);
-        while($xml->read())
-        {
-            if (($xml->nodeType == XMLReader::ELEMENT) && ($xml->localName == 'mapEntry'))
-            {
-                $count++;
-            }
-        }
-        return $count;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getPaymentMetaDataKey(int $index = 0, int $metaKey = 0): string|null
-    {
-        $block = $this->getMetadataPaymentBlock();
-        if (is_null($block))
-        {
-            return null;
-        }
-        $count = 0;
-        $xml = new XMLReader();
-        $xml->XML($block);
-        while($xml->read())
-        {
-            if (($xml->nodeType == XMLReader::ELEMENT) && ($xml->localName == 'key'))
-            {
-                if ($count == $metaKey)
-                {
-                    return $xml->readString();
-                }
-                $count++;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getPaymentMetaDataValue(int $index = 0, int $metaKey = 0): string|null
-    {
-        $block = $this->getMetadataPaymentBlock();
-        if (is_null($block))
-        {
-            return null;
-        }
-        $count = 0;
-        $xml = new XMLReader();
-        $xml->XML($block);
-        while($xml->read())
-        {
-            if (($xml->nodeType == XMLReader::ELEMENT) && ($xml->localName == 'value'))
-            {
-                if ($count == $metaKey)
-                {
-                    return $xml->readString();
-                }
-                $count++;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getTransferMetaDataCount(int $transfer = 0, int $index = 0): string|null
-    {
-        $block = $this->getMetadataBlock($transfer);
-        if (is_null($block))
-        {
-            return 0;
-        }
-        $count = 0;
-        $xml = new XMLReader();
-        $xml->XML($block);
-        while($xml->read())
-        {
-            if (($xml->nodeType == XMLReader::ELEMENT) && (strtolower($xml->localName) == strtolower('key')))
-            {
-                $count++;
-            }
-        }
-        return $count;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getTransferMetaDataKey(int $transfer = 0, int $index = 0, int $metaKey = 0): string|null
-    {
-        $block = $this->getMetadataBlock($transfer);
-        if (is_null($block))
-        {
-            return null;
-        }
-        $count = 0;
-        $xml = new XMLReader();
-        $xml->XML($block);
-        while($xml->read())
-        {
-            if (($xml->nodeType == XMLReader::ELEMENT) && (strtolower($xml->localName) == strtolower('key')))
-            {
-                if ($count == $metaKey)
-                {
-                    return $xml->readString();
-                }
-                $count++;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getTransferMetaDataValue(int $transfer = 0, int $index = 0, int $metaKey = 0): string|null
-    {
-        $block = $this->getMetadataBlock($transfer);
-        if (is_null($block))
-        {
-            return null;
-        }
-        $count = 0;
-        $xml = new XMLReader();
-        $xml->XML($block);
-        while($xml->read())
-        {
-            if (($xml->nodeType == XMLReader::ELEMENT) && (strtolower($xml->localName) == strtolower('value')))
-            {
-                if ($count == $metaKey)
-                {
-                    return $xml->readString();
-                }
-                $count++;
-            }
-        }
-        return null;
-    }
     public function getRRN() : string|null
     {
-        return $this->getElemento('rrn');
+        return $this->getElement(static::XPATH_RRN);
     }
 
     public function getAuthCode() : string|null
     {
-        return $this->getElemento('authorizationCode');
+        $prefix = $this->getChoiceAdditionalPayment();
+        $render_xpath = vsprintf(static::XPATH_AUTH_CODE, [$prefix]);
+        return $this->getElement($render_xpath);
     }
 
     public function getTransactionId() : string|null
     {
-        return $this->getElemento('transactionId');
+        $prefix = $this->getChoiceAdditionalPayment();
+        $render_xpath = vsprintf(static::XPATH_TRANSACTION_ID, [$prefix]);
+        return $this->getElement($render_xpath);
     }
 
     public function getPspTransactionId() : string|null
     {
-        return $this->getElemento('pspTransactionId');
+        $prefix = $this->getChoiceAdditionalPayment();
+        $render_xpath = vsprintf(static::XPATH_PSP_TRANSACTION_ID, [$prefix]);
+        return $this->getElement($render_xpath);
     }
 
 }

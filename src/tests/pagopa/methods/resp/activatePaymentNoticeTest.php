@@ -86,8 +86,8 @@ class activatePaymentNoticeTest extends TestCase
         $this->assertEquals('06655971007', $this->two_transfer->getPaEmittente(0));
         $this->assertNull($this->fault_response->getPaEmittente(0));
 
-        $this->assertEquals('06655971007', $this->one_transfer->getPaEmittente(1));
-        $this->assertEquals('06655971007', $this->two_transfer->getPaEmittente(1));
+        $this->assertNull($this->one_transfer->getPaEmittente(1));
+        $this->assertNull($this->two_transfer->getPaEmittente(1));
     }
 
     #[TestDox('getIuv()')]
@@ -97,8 +97,8 @@ class activatePaymentNoticeTest extends TestCase
         $this->assertEquals('04100435542586389', $this->two_transfer->getIuv(0));
         $this->assertNull($this->fault_response->getIuv(0));
 
-        $this->assertEquals('04100435542586389', $this->one_transfer->getIuv(1));
-        $this->assertEquals('04100435542586389', $this->two_transfer->getIuv(1));
+        $this->assertNull($this->one_transfer->getIuv(1));
+        $this->assertNull($this->two_transfer->getIuv(1));
 
     }
 
@@ -109,8 +109,8 @@ class activatePaymentNoticeTest extends TestCase
         $this->assertEquals('0a8ef4f0194f4886942cbc8da8fdbe04', $this->two_transfer->getCcp(0));
         $this->assertNull($this->fault_response->getCcp(0));
 
-        $this->assertEquals('0a8ef4f0194f4886942cbc8da8fdbe04', $this->one_transfer->getCcp(1));
-        $this->assertEquals('0a8ef4f0194f4886942cbc8da8fdbe04', $this->two_transfer->getCcp(1));
+        $this->assertNull($this->one_transfer->getCcp(1));
+        $this->assertNull($this->two_transfer->getCcp(1));
 
     }
 
@@ -121,8 +121,8 @@ class activatePaymentNoticeTest extends TestCase
         $this->assertEquals('0a8ef4f0194f4886942cbc8da8fdbe04', $this->two_transfer->getToken(0));
         $this->assertNull($this->fault_response->getToken(0));
 
-        $this->assertEquals('0a8ef4f0194f4886942cbc8da8fdbe04', $this->one_transfer->getToken(1));
-        $this->assertEquals('0a8ef4f0194f4886942cbc8da8fdbe04', $this->two_transfer->getToken(1));
+        $this->assertNull($this->one_transfer->getToken(1));
+        $this->assertNull($this->two_transfer->getToken(1));
 
     }
 

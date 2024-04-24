@@ -448,7 +448,7 @@ class pspInviaCarrelloRPTCarteTest extends TestCase
 
     }
 
-    #[TestDox('getCcps()')]
+    #[TestDox('getAllTokens()')]
     public function testGetAllTokens()
     {
         $this->assertEquals(['t0000000000000000000000000000000020'], $this->instance_1_RPT->getCcps());
@@ -456,7 +456,7 @@ class pspInviaCarrelloRPTCarteTest extends TestCase
         $this->assertEquals(['t0000000000000000000000000000000022', 't0000000000000000000000000000000022'], $this->instance_3_RPT->getCcps());
     }
 
-    #[TestDox('getCcps()')]
+    #[TestDox('getTransactionRRN()')]
     public function testGeTransactionRRN()
     {
         $this->assertEquals('000000000001', $this->instance_1_RPT->getTransactionRRN());
@@ -464,7 +464,7 @@ class pspInviaCarrelloRPTCarteTest extends TestCase
         $this->assertEquals('000000000003', $this->instance_3_RPT->getTransactionRRN());
     }
 
-    #[TestDox('getCcps()')]
+    #[TestDox('getTransactionCodeAuth()')]
     public function testGetTransactionCodeAuth()
     {
         $this->assertEquals('000001', $this->instance_1_RPT->getTransactionCodeAuth());
@@ -472,7 +472,7 @@ class pspInviaCarrelloRPTCarteTest extends TestCase
         $this->assertEquals('000003', $this->instance_3_RPT->getTransactionCodeAuth());
     }
 
-    #[TestDox('getCcps()')]
+    #[TestDox('getEsitoTransazioneCarta()')]
     public function testGetEsitoTransazioneCarta()
     {
         $this->assertEquals('00', $this->instance_1_RPT->getEsitoTransazioneCarta());

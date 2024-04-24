@@ -6,7 +6,7 @@ use pagopa\crawler\methods\resp\nodoAttivaRPT;
 use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
 
-#[TestDox('methods\req\nodoAttivaRPT::class')]
+#[TestDox('methods\resp\nodoAttivaRPT::class')]
 class nodoAttivaRPTTest extends TestCase
 {
 
