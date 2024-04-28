@@ -2,9 +2,9 @@
 
 namespace pagopa\crawler\methods\resp;
 
-use pagopa\crawler\methods\AbstractResponseMethod;
+use pagopa\crawler\methods\AbstractResponseXmlPayload;
 
-class pspInviaCarrelloRPTCarte extends AbstractResponseMethod
+class pspInviaCarrelloRPTCarte extends AbstractResponseXmlPayload
 {
 
     protected $prefix_xpath = 'pspInviaCarrelloRPTCarteResponse';

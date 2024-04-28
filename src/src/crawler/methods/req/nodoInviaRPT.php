@@ -2,11 +2,11 @@
 
 namespace pagopa\crawler\methods\req;
 
-use pagopa\crawler\methods\AbstractMethod;
+use pagopa\crawler\methods\AbstractXmlPayload;
 use pagopa\crawler\methods\object\RPT;
 use XMLReader;
 
-class nodoInviaRPT extends AbstractMethod
+class nodoInviaRPT extends AbstractXmlPayload
 {
 
     protected $prefix_xpath = 'nodoInviaRPT';

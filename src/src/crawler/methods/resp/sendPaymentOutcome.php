@@ -2,9 +2,9 @@
 
 namespace pagopa\crawler\methods\resp;
 
-use pagopa\crawler\methods\AbstractResponseMethod;
+use pagopa\crawler\methods\AbstractResponseXmlPayload;
 
-class sendPaymentOutcome extends AbstractResponseMethod
+class sendPaymentOutcome extends AbstractResponseXmlPayload
 {
 
     protected $prefix_xpath = 'sendPaymentOutcomeRes';

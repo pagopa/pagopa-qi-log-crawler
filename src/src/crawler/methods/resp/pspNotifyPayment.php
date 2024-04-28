@@ -2,9 +2,9 @@
 
 namespace pagopa\crawler\methods\resp;
 
-use pagopa\crawler\methods\AbstractResponseMethod;
+use pagopa\crawler\methods\AbstractResponseXmlPayload;
 
-class pspNotifyPayment extends AbstractResponseMethod
+class pspNotifyPayment extends AbstractResponseXmlPayload
 {
 
     protected $prefix_xpath = 'pspNotifyPaymentRes';

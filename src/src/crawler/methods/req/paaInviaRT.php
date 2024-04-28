@@ -2,11 +2,11 @@
 
 namespace pagopa\crawler\methods\req;
 
-use pagopa\crawler\methods\AbstractMethod;
+use pagopa\crawler\methods\AbstractXmlPayload;
 use pagopa\crawler\methods\object\RT;
 use XMLReader;
 
-class paaInviaRT extends AbstractMethod
+class paaInviaRT extends AbstractXmlPayload
 {
 
     protected RT $object;

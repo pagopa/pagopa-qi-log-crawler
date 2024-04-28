@@ -6,6 +6,7 @@ use pagopa\crawler\methods\req\pspNotifyPayment;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\TestDox;
 
+#[TestDox('methods\req\pspNotifyPayment::class')]
 class pspNotifyPaymentTest extends TestCase
 {
 

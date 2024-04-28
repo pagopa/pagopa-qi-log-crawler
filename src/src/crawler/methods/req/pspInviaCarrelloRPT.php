@@ -2,7 +2,7 @@
 
 namespace pagopa\crawler\methods\req;
 
-use pagopa\crawler\methods\AbstractMethod;
+use pagopa\crawler\methods\AbstractXmlPayload;
 use pagopa\crawler\methods\object\RPT;
 use XMLReader;
 
@@ -14,7 +14,7 @@ use XMLReader;
 //
 // getIdCarrello (non dovrebbe essere ereditato??capire)
 
-class pspInviaCarrelloRPT extends AbstractMethod
+class pspInviaCarrelloRPT extends AbstractXmlPayload
 {
 
     protected $prefix_xpath = 'pspInviaCarrelloRPT';

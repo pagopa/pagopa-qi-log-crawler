@@ -19,14 +19,14 @@ use pagopa\crawler\FaultInterface;
  * Le sostituzioni sono 3 e riguardano la posizione iesima del pagamento (nel carrello), la posizione iesima del transfer, la posizione iesima del metadata (key, value)
  * Ogni costante usa i placeholder a modo suo (alcune costanti usano %1$d per l'iesimo transfer, altri per l'iesimo payment)
  */
-class AbstractResponseMethod extends AbstractMethod implements FaultInterface
+class AbstractResponseJsonPayload extends AbstractJsonPayload implements FaultInterface
 {
 
-    const XPATH_FAULT_CODE = '/fault/faultCode';
+    const JPATH_FAULT_CODE = null;
 
-    const XPATH_FAULT_STRING = '/fault/faultString';
+    const JPATH_FAULT_STRING = null;
 
-    const XPATH_FAULT_DESCRIPTION = '/fault/description';
+    const JPATH_FAULT_DESCRIPTION = null;
 
 
     /**
@@ -34,11 +34,11 @@ class AbstractResponseMethod extends AbstractMethod implements FaultInterface
      */
     public function isFaultEvent(): bool
     {
-        if (static::XPATH_FAULT_CODE == null)
+        if (static::JPATH_FAULT_CODE == null)
         {
             return false;
         }
-        return !(is_null($this->getElement(static::XPATH_FAULT_CODE)));
+        return !(is_null($this->getElement(static::JPATH_FAULT_CODE)));
     }
 
     /**
@@ -46,11 +46,11 @@ class AbstractResponseMethod extends AbstractMethod implements FaultInterface
      */
     public function getFaultCode(): string|null
     {
-        if (static::XPATH_FAULT_CODE == null)
+        if (static::JPATH_FAULT_CODE == null)
         {
-            return false;
+            return null;
         }
-        return $this->getElement(static::XPATH_FAULT_CODE);
+        return $this->getElement(static::JPATH_FAULT_CODE);
     }
 
     /**
@@ -58,11 +58,11 @@ class AbstractResponseMethod extends AbstractMethod implements FaultInterface
      */
     public function getFaultString(): string|null
     {
-        if (static::XPATH_FAULT_STRING == null)
+        if (static::JPATH_FAULT_STRING == null)
         {
-            return false;
+            return null;
         }
-        return $this->getElement(static::XPATH_FAULT_STRING);
+        return $this->getElement(static::JPATH_FAULT_STRING);
     }
 
     /**
@@ -70,10 +70,10 @@ class AbstractResponseMethod extends AbstractMethod implements FaultInterface
      */
     public function getFaultDescription(): string|null
     {
-        if (static::XPATH_FAULT_DESCRIPTION == null)
+        if (static::JPATH_FAULT_DESCRIPTION == null)
         {
-            return false;
+            return null;
         }
-        return $this->getElement(static::XPATH_FAULT_DESCRIPTION);
+        return $this->getElement(static::JPATH_FAULT_DESCRIPTION);
     }
 }

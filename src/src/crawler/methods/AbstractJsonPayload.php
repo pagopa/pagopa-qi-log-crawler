@@ -20,129 +20,124 @@ use SimpleXMLElement;
  * Le sostituzioni sono 3 e riguardano la posizione iesima del pagamento (nel carrello), la posizione iesima del transfer, la posizione iesima del metadata (key, value)
  * Ogni costante usa i placeholder a modo suo (alcune costanti usano %1$d per l'iesimo transfer, altri per l'iesimo payment)
  */
-class AbstractMethod implements methods\MethodInterface
+class AbstractJsonPayload extends AbstractPayload
 {
 
-    protected $prefix_xpath = '';
-
-    const XML_PAYLOAD = 'xml';
-    const JSON_PAYLOAD = 'json';
-
-    protected string $typePayload = self::XML_PAYLOAD;
+    protected string $typePayload = self::JSON_PAYLOAD;
 
 
-    protected string $payload;
+    protected mixed $payload;
 
 
     /**
      * Constante che definisce l'XPATH dove trovare lo IUV
      */
-    const XPATH_IUV                     = null;
+    const JPATH_IUV                     = null;
 
     /**
      * Constante che definisce l'XPATH dove trovare la PA Emittente
      */
-    const XPATH_PA_EMITTENTE            = null;
+    const JPATH_PA_EMITTENTE            = null;
 
     /**
      * Constante che definisce l'XPATH dove trovare il TOKEN / CCP
      */
-    const XPATH_TOKEN_CCP               = null;
+    const JPATH_TOKEN_CCP               = null;
 
     /**
      * Constante che definisce l'XPATH dove trovare il notice Number
      */
-    const XPATH_NOTICE_NUMBER           = null;
+    const JPATH_NOTICE_NUMBER           = null;
 
     /**
      * Constante che definisce l'XPATH dove trovare l'id carrello
      */
-    const XPATH_ID_CART                 = null;
+    const JPATH_ID_CART                 = null;
 
     /**
      * Constante che definisce dove trovare il totale del carrello
      */
-    const XPATH_TOTAL_CART_AMOUNT       = null;
+    const JPATH_TOTAL_CART_AMOUNT       = null;
 
     /**
      * Constante che definisce l'XPATH dove trovare il blocco di un payment
      */
-    const XPATH_PAYMENT_COUNT           = null;
+    const JPATH_PAYMENT_COUNT           = null;
 
 
     /**
      * XPATH utilizzato per contare i transfer di un pagamento di un carrello.
      * %1$d corrisponde alla variabile $index passata al metodo
      */
-    const XPATH_TRANSFER_COUNT          = null;
+    const JPATH_TRANSFER_COUNT          = null;
 
     /**
      * XPATH utilizzato per l'importo del singolo pagamento di un carrello (o singolo avviso)
      * %1$d corrisponde alla variabile $index passata al metodo)
      */
-    const XPATH_SINGLE_PAYMENT_IMPORT   = null;
+    const JPATH_SINGLE_PAYMENT_IMPORT   = null;
 
     /**
      * XPATH utilizzato per l'importo del singolo transfer di un pagamento
      * %1$d corrisponde alla variabile $transfer
      * %2$d corrisponde alla variabile $index
      */
-    const XPATH_SINGLE_TRANSFER_AMOUNT  = null;
+    const JPATH_SINGLE_TRANSFER_AMOUNT  = null;
 
     /**
      * XPATH utilizzato per la PA del singolo transfer di un pagamento
      * %1$d corrisponde alla variabile $transfer
      * %2$d corrisponde alla variabile $index
      */
-    const XPATH_SINGLE_TRANSFER_PA      = null;
+    const JPATH_SINGLE_TRANSFER_PA      = null;
 
     /**
      * XPATH utilizzato per l'IBAN del singolo transfer di un pagamento
      * %1$d corrisponde alla variabile $transfer
      * %2$d corrisponde alla variabile $index
      */
-    const XPATH_SINGLE_IBAN_PA          = null;
+    const JPATH_SINGLE_IBAN_PA          = null;
 
     /**
      * XPATH utilizzato per l'id transfer del singolo transfer di un pagamento
      * %1$d corrisponde alla variabile $transfer
      * %2$d corrisponde alla variabile $index
      */
-    const XPATH_SINGLE_TRANSFER_ID      = null;
+    const JPATH_SINGLE_TRANSFER_ID      = null;
 
     /**
      * XPATH utilizzato per capire se il transfer di un pagamento è un bollo o meno
      * %1$d corrisponde alla variabile $transfer
      * %2$d corrisponde alla variabile $index
      */
-    const XPATH_IS_BOLLO_TRANSFER       = null;
+    const JPATH_IS_BOLLO_TRANSFER       = null;
 
     /**
      * XPATH utilizzato per la count metadata del payment (fuori alla transferList)
      * %1$d corrisponde alla variabile $index
      */
-    const XPATH_PAYMENT_METADATA        = null;
+    const JPATH_PAYMENT_METADATA        = null;
 
     /**
      * XPATH utilizzato per la chiave del metadata del singolo pagamento
      * %1$d corrisponde alla variabile $metaKey
      * %2$d corrisponde alla variabile $index
      */
-    const XPATH_PAYMENT_METADATA_KEY    = null;
+    const JPATH_PAYMENT_METADATA_KEY    = null;
 
     /**
      * XPATH utilizzato per il valore della metadata del singolo pagamento
      * %1$d corrisponde alla variabile $metaKey
      * %2$d corrisponde alla variabile $index
      */
-    const XPATH_PAYMENT_METADATA_VALUE  = null;
+    const JPATH_PAYMENT_METADATA_VALUE  = null;
 
     /**
      * XPATH utilizzato per i metadata del transfer di un payment
      * %1$d corrisponde alla variabile $transfer
      * %2$d corrisponde alla variabile $index
      */
-    const XPATH_TRANSFER_METADATA       = null;
+    const JPATH_TRANSFER_METADATA       = null;
 
     /**
      * XPATH utilizzato per la chiave del metadata del transfer di un payment
@@ -150,7 +145,7 @@ class AbstractMethod implements methods\MethodInterface
      * %2$d corrisponde alla variabile $transfer
      * %3$d corrisponde alla variabile $index
      */
-    const XPATH_TRANSFER_METADATA_KEY   = null;
+    const JPATH_TRANSFER_METADATA_KEY   = null;
 
 
     /**
@@ -159,53 +154,37 @@ class AbstractMethod implements methods\MethodInterface
      * %2$d corrisponde alla variabile $transfer
      * %3$d corrisponde alla variabile $index
      */
-    const XPATH_TRANSFER_METADATA_VALUE = null;
+    const JPATH_TRANSFER_METADATA_VALUE = null;
 
     /**
      * XPATH utilizzato per recuperare il PSP di un payload
      */
-    const XPATH_PSP                     = null;
+    const JPATH_PSP                     = null;
 
-    const XPATH_BROKER_PSP              = null;
+    const JPATH_BROKER_PSP              = null;
 
-    const XPATH_CHANNEL                 = null;
+    const JPATH_CHANNEL                 = null;
 
-    const XPATH_STATION                 = null;
+    const JPATH_STATION                 = null;
 
-    const XPATH_BROKER_PA               = null;
+    const JPATH_BROKER_PA               = null;
 
-    const XPATH_OUTCOME_ESITO           = null;
+    const JPATH_OUTCOME_ESITO           = null;
+
+
+    protected bool $isValidPayload = true;
 
 
     public function __construct(string $payload, string $type = self::XML_PAYLOAD)
     {
-        $this->typePayload = $type;
-        $xml = new SimpleXMLElement($payload);
-
-        $namespaces = $xml->getDocNamespaces(true);
-        $namespaces = array_filter(array_keys($namespaces), function($k){return !empty($k);});
-        $namespaces = array_map(function($ns){return "$ns:";}, $namespaces);
-        $ns_clean_xml = str_replace("xmlns=", "ns=", $payload);
-        $ns_clean_xml = str_replace($namespaces, array_fill(0, count($namespaces), ''), $ns_clean_xml);
-        $this->payload = $ns_clean_xml;
+        $this->payload = json_decode($payload);
+        $this->isValidPayload = (json_last_error() === JSON_ERROR_NONE);
     }
 
 
     public function isValidPayload(): bool
     {
-        $payload = $this->payload;
-        if ($this->typePayload == self::XML_PAYLOAD) {
-            libxml_use_internal_errors(true);
-            simplexml_load_string($payload);
-            $errors = libxml_get_errors();
-            libxml_clear_errors();
-            return empty($errors);
-        }
-        if ($this->typePayload == self::JSON_PAYLOAD) {
-            json_decode($payload);
-            return json_last_error() === JSON_ERROR_NONE;
-        }
-        return false;
+        return $this->isValidPayload;
     }
 
     /**
@@ -217,10 +196,26 @@ class AbstractMethod implements methods\MethodInterface
      */
     public function getElementCount(string $xpath): string|null
     {
-        $xml = new SimpleXMLElement($this->payload);
-        $render_xpath = '//' .$this->prefix_xpath . $xpath;
-        $query = $xml->xpath($render_xpath);
-        return ((is_null($query)) || ($query === false)) ? null : count($query);
+        $return = $this->jsonPath($xpath);
+        return (is_null($return)) ? null : count($return);
+    }
+
+    public function jsonPath(string $path) : mixed
+    {
+        $payload = $this->payload;
+        $prop_arr = explode('->',$path);
+        foreach($prop_arr as $p)
+        {
+            if (isset($payload->{$p}))
+            {
+                $payload = $payload->{$p};
+            }
+            else
+            {
+                return null;
+            }
+        }
+        return $payload;
     }
 
     /**
@@ -236,14 +231,16 @@ class AbstractMethod implements methods\MethodInterface
         {
             return null;
         }
-        $xml = new SimpleXMLElement($this->payload);
-        $render_path = '//' .$this->prefix_xpath . $xpath;
-        $query = $xml->xpath($render_path);
-        if ((is_null($query)) || ($query === false) || (count($query) === 0))
+        $return = $this->jsonPath($xpath);
+        if (is_array($return))
         {
-            return null;
+            if (count($return) === 0)
+            {
+                return null;
+            }
+            return (array_key_exists($number, $return)) ? $return[$number] : null;
         }
-        return (array_key_exists($number, $query)) ? $query[$number] : null;
+        return (empty($return)) ? null : $return;
     }
 
     /**
@@ -259,7 +256,7 @@ class AbstractMethod implements methods\MethodInterface
      */
     public function getIuvs(): array|null
     {
-        if (static::XPATH_IUV == null)
+        if (static::JPATH_IUV == null)
         {
             return null;
         }
@@ -280,7 +277,7 @@ class AbstractMethod implements methods\MethodInterface
      */
     public function getPaEmittenti(): array|null
     {
-        if (static::XPATH_PA_EMITTENTE == null)
+        if (static::JPATH_PA_EMITTENTE == null)
         {
             return null;
         }
@@ -301,7 +298,7 @@ class AbstractMethod implements methods\MethodInterface
      */
     public function getCcps(): array|null
     {
-        if (static::XPATH_TOKEN_CCP == null)
+        if (static::JPATH_TOKEN_CCP == null)
         {
             return null;
         }
@@ -322,7 +319,7 @@ class AbstractMethod implements methods\MethodInterface
      */
     public function getAllTokens(): array|null
     {
-        if (static::XPATH_TOKEN_CCP == null)
+        if (static::JPATH_TOKEN_CCP == null)
         {
             return null;
         }
@@ -343,12 +340,12 @@ class AbstractMethod implements methods\MethodInterface
      */
     public function getAllNoticesNumbers(): array|null
     {
-        if (static::XPATH_NOTICE_NUMBER == null)
+        if (static::JPATH_NOTICE_NUMBER == null)
         {
             return null;
         }
         $return = array();
-        for($i=0;$i<$this->getElementCount(static::XPATH_NOTICE_NUMBER);$i++)
+        for($i=0;$i<$this->getElementCount(static::JPATH_NOTICE_NUMBER);$i++)
         {
             $value = $this->getNoticeNumber($i);
             if (!is_null($value))
@@ -365,12 +362,11 @@ class AbstractMethod implements methods\MethodInterface
     public function getIuv(int $index = 0): string|null
     {
         $p = $index + 1;
-        if (($p > $this->getPaymentsCount()) || (static::XPATH_IUV == null))
+        if (($p > $this->getPaymentsCount()) || (static::JPATH_IUV == null))
         {
             return null;
         }
-        $render_xpath = vsprintf(static::XPATH_IUV, [$p]);
-        return $this->getElement($render_xpath);
+        return $this->getElement(static::JPATH_IUV, $p);
     }
 
     /**
@@ -379,12 +375,11 @@ class AbstractMethod implements methods\MethodInterface
     public function getPaEmittente(int $index = 0): string|null
     {
         $p = $index + 1;
-        if (($p > $this->getPaymentsCount()) || (static::XPATH_PA_EMITTENTE == null))
+        if (($p > $this->getPaymentsCount()) || (static::JPATH_PA_EMITTENTE == null))
         {
             return null;
         }
-        $render_xpath = vsprintf(static::XPATH_PA_EMITTENTE, [$p]);
-        return $this->getElement($render_xpath);
+        return $this->getElement(static::JPATH_PA_EMITTENTE, $index);
     }
 
     /**
@@ -393,13 +388,12 @@ class AbstractMethod implements methods\MethodInterface
     public function getCcp(int $index = 0): string|null
     {
         $p = $index + 1;
-        if (($p > $this->getPaymentsCount()) || (static::XPATH_TOKEN_CCP == null))
+        if (($p > $this->getPaymentsCount()) || (static::JPATH_TOKEN_CCP == null))
         {
             return null;
         }
 
-        $render_xpath = vsprintf(static::XPATH_TOKEN_CCP, [$p]);
-        return $this->getElement($render_xpath);
+        return $this->getElement(static::JPATH_TOKEN_CCP, $index);
     }
 
     /**
@@ -408,12 +402,12 @@ class AbstractMethod implements methods\MethodInterface
     public function getToken(int $index = 0): string|null
     {
         $p = $index + 1;
-        if (($p > $this->getPaymentsCount()) || (static::XPATH_TOKEN_CCP == null))
+        if (($p > $this->getPaymentsCount()) || (static::JPATH_TOKEN_CCP == null))
         {
             return null;
         }
-        $render_xpath = vsprintf(static::XPATH_TOKEN_CCP, [$p]);
-        return $this->getElement($render_xpath);
+        return $this->getElement(static::JPATH_TOKEN_CCP, $index);
+
     }
 
     /**
@@ -422,12 +416,11 @@ class AbstractMethod implements methods\MethodInterface
     public function getNoticeNumber(int $index = 0): string|null
     {
         $p = $index + 1;
-        if (($p > $this->getPaymentsCount()) || (static::XPATH_NOTICE_NUMBER == null))
+        if (($p > $this->getPaymentsCount()) || (static::JPATH_NOTICE_NUMBER == null))
         {
             return null;
         }
-        $render_xpath = vsprintf(static::XPATH_NOTICE_NUMBER, [$p]);
-        return (static::XPATH_NOTICE_NUMBER == null) ? null : $this->getElement($render_xpath);
+        return (static::JPATH_NOTICE_NUMBER == null) ? null : $this->getElement(static::JPATH_NOTICE_NUMBER, $index);
     }
 
     /**
@@ -435,7 +428,7 @@ class AbstractMethod implements methods\MethodInterface
      */
     public function getImportoTotale(): string|null
     {
-        return (static::XPATH_TOTAL_CART_AMOUNT == null) ? null : $this->getElement(static::XPATH_TOTAL_CART_AMOUNT);
+        return (static::JPATH_TOTAL_CART_AMOUNT == null) ? null : $this->getElement(static::JPATH_TOTAL_CART_AMOUNT);
     }
 
     /**
@@ -446,9 +439,9 @@ class AbstractMethod implements methods\MethodInterface
         $p = $index + 1;
         if ($p > $this->getPaymentsCount())
         {
-            $index = 0;
+            return null;
         }
-        return (static::XPATH_SINGLE_PAYMENT_IMPORT == null) ? null : $this->getElement(static::XPATH_SINGLE_PAYMENT_IMPORT, $index);
+        return (static::JPATH_SINGLE_PAYMENT_IMPORT == null) ? null : $this->getElement(static::JPATH_SINGLE_PAYMENT_IMPORT, $index);
     }
 
     /**
@@ -456,15 +449,7 @@ class AbstractMethod implements methods\MethodInterface
      */
     public function getTransferAmount(int $transfer = 0, int $index = 0): string|null
     {
-        if (static::XPATH_SINGLE_TRANSFER_AMOUNT == null)
-        {
-            return null;
-        }
-        $p = $index + 1;
-        $t = $transfer + 1;
-        $render_xpath = vsprintf(static::XPATH_SINGLE_TRANSFER_AMOUNT, [$t, $p]);
-        return $this->getElement($render_xpath);
-
+        return null;
     }
 
     /**
@@ -472,14 +457,7 @@ class AbstractMethod implements methods\MethodInterface
      */
     public function getTransferPa(int $transfer = 0, int $index = 0): string|null
     {
-        if (static::XPATH_SINGLE_TRANSFER_PA == null)
-        {
-            return null;
-        }
-        $p = $index + 1;
-        $t = $transfer + 1;
-        $render_xpath = vsprintf(static::XPATH_SINGLE_TRANSFER_PA, [$t, $p]);
-        return $this->getElement($render_xpath);
+        return null;
     }
 
     /**
@@ -487,14 +465,7 @@ class AbstractMethod implements methods\MethodInterface
      */
     public function getTransferIban(int $transfer = 0, int $index = 0): string|null
     {
-        if (static::XPATH_SINGLE_IBAN_PA == null)
-        {
-            return null;
-        }
-        $p = $index + 1;
-        $t = $transfer + 1;
-        $render_xpath = vsprintf(static::XPATH_SINGLE_IBAN_PA, [$t, $p]);
-        return $this->getElement($render_xpath);
+        return null;
     }
 
     /**
@@ -502,14 +473,7 @@ class AbstractMethod implements methods\MethodInterface
      */
     public function getTransferId(int $transfer = 0, int $index = 0): string|null
     {
-        if (static::XPATH_SINGLE_TRANSFER_ID == null)
-        {
-            return null;
-        }
-        $p = $index + 1;
-        $t = $transfer + 1;
-        $render_xpath = vsprintf(static::XPATH_SINGLE_TRANSFER_ID, [$t, $p]);
-        return $this->getElement($render_xpath);
+        return null;
     }
 
     /**
@@ -517,18 +481,7 @@ class AbstractMethod implements methods\MethodInterface
      */
     public function getTransferCount(int $index = 0): int|null
     {
-        if (static::XPATH_TRANSFER_COUNT == null)
-        {
-            return null;
-        }
-        $p = $index + 1;
-        if ($p > $this->getPaymentsCount())
-        {
-            return null;
-        }
-        $render_xpath = vsprintf(static::XPATH_TRANSFER_COUNT, [$p]);
-        $value = $this->getElementCount($render_xpath);
-        return ($value == 0) ? null : $value;
+        return null;
     }
 
     /**
@@ -536,18 +489,7 @@ class AbstractMethod implements methods\MethodInterface
      */
     public function isBollo(int $transfer = 0, int $index = 0): bool
     {
-        if (static::XPATH_IS_BOLLO_TRANSFER == null)
-        {
-            return false;
-        }
-        $p = $index + 1;
-        $t = $transfer + 1;
-        if ($p > $this->getPaymentsCount())
-        {
-            return false;
-        }
-        $render_xpath = vsprintf(static::XPATH_IS_BOLLO_TRANSFER, [$t, $p]);
-        return !is_null($this->getElement($render_xpath));
+        return false;
     }
 
     /**
@@ -555,7 +497,7 @@ class AbstractMethod implements methods\MethodInterface
      */
     public function getPsp(): string|null
     {
-        return $this->getElement(static::XPATH_PSP);
+        return $this->getElement(static::JPATH_PSP);
     }
 
     /**
@@ -563,7 +505,7 @@ class AbstractMethod implements methods\MethodInterface
      */
     public function getBrokerPsp(): string|null
     {
-        return $this->getElement(static::XPATH_BROKER_PSP);
+        return $this->getElement(static::JPATH_BROKER_PSP);
     }
 
     /**
@@ -571,7 +513,7 @@ class AbstractMethod implements methods\MethodInterface
      */
     public function getCanale(): string|null
     {
-        return $this->getElement(static::XPATH_CHANNEL);
+        return $this->getElement(static::JPATH_CHANNEL);
     }
 
     /**
@@ -579,7 +521,7 @@ class AbstractMethod implements methods\MethodInterface
      */
     public function getBrokerPa(): string|null
     {
-        return $this->getElement(static::XPATH_BROKER_PA);
+        return $this->getElement(static::JPATH_BROKER_PA);
     }
 
     /**
@@ -587,7 +529,7 @@ class AbstractMethod implements methods\MethodInterface
      */
     public function getStazione(): string|null
     {
-        return $this->getElement(static::XPATH_STATION);
+        return $this->getElement(static::JPATH_STATION);
     }
 
     /**
@@ -595,7 +537,7 @@ class AbstractMethod implements methods\MethodInterface
      */
     public function outcome(): string|null
     {
-        return $this->getElement(static::XPATH_OUTCOME_ESITO);
+        return $this->getElement(static::JPATH_OUTCOME_ESITO);
     }
 
     /**
@@ -603,18 +545,7 @@ class AbstractMethod implements methods\MethodInterface
      */
     public function getPaymentMetaDataCount(int $index = 0): string|null
     {
-        if (static::XPATH_PAYMENT_METADATA == null)
-        {
-            return null;
-        }
-        $p = $index + 1;
-        if ($p > $this->getPaymentsCount())
-        {
-            return null;
-        }
-        $render_xpath = vsprintf(static::XPATH_PAYMENT_METADATA, [$p]);
-        $value = $this->getElementCount($render_xpath);
-        return ($value == 0) ? null : $value;
+        return null;
     }
 
     /**
@@ -622,18 +553,7 @@ class AbstractMethod implements methods\MethodInterface
      */
     public function getPaymentMetaDataKey(int $index = 0, int $metaKey = 0): string|null
     {
-        if (static::XPATH_PAYMENT_METADATA_KEY == null)
-        {
-            return null;
-        }
-        $p = $index + 1;
-        $m = $metaKey + 1;
-        if ($p > $this->getPaymentsCount())
-        {
-            return null;
-        }
-        $render_xpath = vsprintf(static::XPATH_PAYMENT_METADATA_KEY,[$m, $p]);
-        return $this->getElement($render_xpath);
+        return null;
     }
 
     /**
@@ -641,18 +561,7 @@ class AbstractMethod implements methods\MethodInterface
      */
     public function getPaymentMetaDataValue(int $index = 0, int $metaKey = 0): string|null
     {
-        if (static::XPATH_PAYMENT_METADATA_VALUE == null)
-        {
-            return null;
-        }
-        $p = $index + 1;
-        $m = $metaKey + 1;
-        if ($p > $this->getPaymentsCount())
-        {
-            return null;
-        }
-        $render_xpath = vsprintf(static::XPATH_PAYMENT_METADATA_VALUE,[$m, $p]);
-        return $this->getElement($render_xpath);
+        return null;
     }
 
     /**
@@ -660,19 +569,7 @@ class AbstractMethod implements methods\MethodInterface
      */
     public function getTransferMetaDataCount(int $transfer = 0, int $index = 0): string|null
     {
-        if (static::XPATH_TRANSFER_METADATA == null)
-        {
-            return null;
-        }
-        $p = $index + 1;
-        $t = $transfer + 1;
-        if ($p > $this->getPaymentsCount())
-        {
-            return null;
-        }
-        $render_xpath = vsprintf(static::XPATH_TRANSFER_METADATA, [$t, $p]);
-        $value = $this->getElementCount($render_xpath);
-        return ($value == 0) ? null : $value;
+        return null;
     }
 
     /**
@@ -680,19 +577,7 @@ class AbstractMethod implements methods\MethodInterface
      */
     public function getTransferMetaDataKey(int $transfer = 0, int $index = 0, int $metaKey = 0): string|null
     {
-        if (static::XPATH_TRANSFER_METADATA_KEY == null)
-        {
-            return null;
-        }
-        $p = $index + 1;
-        $t = $transfer + 1;
-        $m = $metaKey + 1;
-        if ($p > $this->getPaymentsCount())
-        {
-            return null;
-        }
-        $render_xpath = vsprintf(static::XPATH_TRANSFER_METADATA_KEY, [$m, $t, $p]);
-        return $this->getElement($render_xpath);
+        return null;
     }
 
     /**
@@ -700,18 +585,6 @@ class AbstractMethod implements methods\MethodInterface
      */
     public function getTransferMetaDataValue(int $transfer = 0, int $index = 0, int $metaKey = 0): string|null
     {
-        if (static::XPATH_TRANSFER_METADATA_VALUE == null)
-        {
-            return null;
-        }
-        $p = $index + 1;
-        $t = $transfer + 1;
-        $m = $metaKey + 1;
-        if ($p > $this->getPaymentsCount())
-        {
-            return null;
-        }
-        $render_xpath = vsprintf(static::XPATH_TRANSFER_METADATA_VALUE, [$m, $t, $p]);
-        return $this->getElement($render_xpath);
+        return null;
     }
 }

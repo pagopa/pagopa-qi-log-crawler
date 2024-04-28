@@ -2,9 +2,9 @@
 
 namespace pagopa\crawler\methods\resp;
 
-use pagopa\crawler\methods\AbstractResponseMethod;
+use pagopa\crawler\methods\AbstractResponseXmlPayload;
 
-class pspInviaCarrelloRPT extends AbstractResponseMethod
+class pspInviaCarrelloRPT extends AbstractResponseXmlPayload
 {
 
 

@@ -182,8 +182,8 @@ class activatePaymentNoticeTest extends TestCase
         $this->assertEquals('183.85', $this->two_transfer->getImporto(0));
         $this->assertNull($this->fault_response->getImporto());
 
-        $this->assertEquals('183.85', $this->one_transfer->getImporto(1));
-        $this->assertEquals('183.85', $this->two_transfer->getImporto(1));
+        $this->assertNull($this->one_transfer->getImporto(1));
+        $this->assertNull($this->two_transfer->getImporto(1));
     }
 
     #[TestDox('getTransferPa()')]

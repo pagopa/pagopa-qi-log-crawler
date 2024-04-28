@@ -111,10 +111,26 @@ $a = new \pagopa\crawler\paymentlist\resp\nodoInviaRPT(new \DateTime('2024-03-10
 $a->run();
 
 
+$a = new \pagopa\crawler\paymentlist\req\closePaymentV2(new \DateTime('2024-03-10'), 'closePayment-v2', 'REQ', $redis_cache);
+$a->run();
+
+
+$a = new \pagopa\crawler\paymentlist\resp\closePaymentV2(new \DateTime('2024-03-10'), 'closePayment-v2', 'RESP', $redis_cache);
+$a->run();
+
+
+
 $a = new \pagopa\crawler\paymentlist\req\pspNotifyPayment(new \DateTime('2024-03-10'), 'pspNotifyPayment', 'REQ', $redis_cache);
 $a->run();
 
 $a = new \pagopa\crawler\paymentlist\resp\pspNotifyPayment(new \DateTime('2024-03-10'), 'pspNotifyPayment', 'RESP', $redis_cache);
+$a->run();
+
+
+$a = new \pagopa\crawler\paymentlist\req\pspNotifyPaymentV2(new \DateTime('2024-03-10'), 'pspNotifyPaymentV2', 'REQ', $redis_cache);
+$a->run();
+
+$a = new \pagopa\crawler\paymentlist\resp\pspNotifyPaymentV2(new \DateTime('2024-03-10'), 'pspNotifyPaymentV2', 'RESP', $redis_cache);
 $a->run();
 
 

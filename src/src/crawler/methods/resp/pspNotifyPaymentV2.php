@@ -4,20 +4,15 @@ namespace pagopa\crawler\methods\resp;
 
 use pagopa\crawler\methods\AbstractResponseXmlPayload;
 
-class nodoInviaRPT extends AbstractResponseXmlPayload
+class pspNotifyPaymentV2 extends AbstractResponseXmlPayload
 {
+    protected $prefix_xpath = 'pspNotifyPaymentV2Res';
 
-    protected $prefix_xpath = 'nodoInviaRPTRisposta';
-
-    const XPATH_OUTCOME_ESITO = '/esito';
+    const XPATH_OUTCOME_ESITO = '/outcome';
 
 
-    /**
-     * @inheritDoc
-     */
     public function getPaymentsCount(): int|null
     {
         return null;
     }
-
 }

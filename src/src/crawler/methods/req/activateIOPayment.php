@@ -2,9 +2,9 @@
 
 namespace pagopa\crawler\methods\req;
 
-use pagopa\crawler\methods\AbstractMethod;
+use pagopa\crawler\methods\AbstractXmlPayload;
 
-class activateIOPayment extends AbstractMethod
+class activateIOPayment extends AbstractXmlPayload
 {
     protected $prefix_xpath = 'activateIOPaymentReq';
 

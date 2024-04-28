@@ -2,9 +2,9 @@
 
 namespace pagopa\crawler\methods\req;
 
-use pagopa\crawler\methods\AbstractMethod;
+use pagopa\crawler\methods\AbstractXmlPayload;
 
-class sendPaymentOutcome extends AbstractMethod
+class sendPaymentOutcome extends AbstractXmlPayload
 {
 
 

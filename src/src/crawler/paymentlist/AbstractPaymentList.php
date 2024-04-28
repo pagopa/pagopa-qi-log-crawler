@@ -355,6 +355,8 @@ abstract class AbstractPaymentList implements PaymentListInterface
                                 // add workflow to cache_value and return a new cache value
                                 // save cache_value in $cache_data
                                 $this->addSessionIdInCache($cache_key);
+                                $cache_obj = new CacheObject($refresh_cache);
+                                $this->refreshTokenCache($cache_obj->getToken(), $cache_obj);
                             }
                         }
                         else
@@ -434,7 +436,7 @@ abstract class AbstractPaymentList implements PaymentListInterface
                         $refresh_cache = $this->updateDetails(new CacheObject($refresh_cache), $ck);
                         $refresh_cache = $this->updateMetadataDetails(new CacheObject($refresh_cache), $ck);
                         $refresh_cache = $this->createExtraInfo(new CacheObject($refresh_cache), $ck);
-                        $refresh_cache = $this->workflow(new CacheObject($refresh_cache), $ck);
+                            $refresh_cache = $this->workflow(new CacheObject($refresh_cache), $ck);
                         $new_cache_data[] = $refresh_cache;
                     }
                     $this->setCache($payment_key, $new_cache_data); // aggiorno la cache per quanto riguarda i pagamenti
@@ -664,5 +666,13 @@ abstract class AbstractPaymentList implements PaymentListInterface
                 $this->setCache($key, array_values($value));
             }
         }
+    }
+
+
+    public function refreshTokenCache(string $token, CacheObject $cache, int $index = 0) : void
+    {
+        $key = sprintf('token_%s', $token);
+        $cache_to_add = $cache->getCacheData();
+        $this->setCache($key, $cache_to_add);
     }
 }
