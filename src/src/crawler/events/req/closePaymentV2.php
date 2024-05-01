@@ -123,19 +123,23 @@ class closePaymentV2 extends AbstractEvent
     /**
      * @inheritDoc
      */
-    public function getCacheKeyPayment(): string
+    public function getCacheKeyPayment(int $index = 0): string|null
     {
-        $session        = $this->getSessionIdOriginal();
-        return base64_encode(sprintf('sessionOriginal_%s', $session));
+        // la closePaymentV2 non può restituire tutte le chiavi dei pagamenti in quanto
+        // nel payload sono presenti solo i token , e le chiavi cache hanno iuv+dominio+token
+        // si fa quindi l'override del metodo getListOfCacheKey() della classe closePaymentV2 (estensione della AbstractPaymentList)
+        // e si restituiscono lì le chiavi dei pagamenti del carrello gestito
+        // come chiave offerta per storicizzare i pagamenti, viene offerta la sessionIdOriginal_cart_checkout con il metodo getCacheKeyList()
+        // la closePaymentV2 non potrà mai gestire dei Payment (iuv+dominio)
+        return null;
     }
 
     /**
      * @inheritDoc
      */
-    public function getCacheKeyAttempt(): string
+    public function getCacheKeyAttempt(int $index = 0): string|null
     {
-        $session        = $this->getSessionIdOriginal();
-        return base64_encode(sprintf('sessionOriginal_%s', $session));
+        return null;
     }
 
     /**
@@ -168,5 +172,19 @@ class closePaymentV2 extends AbstractEvent
     public function getFaultDescription(): string|null
     {
         return null;
+    }
+
+    /**
+     * @return array
+     */
+    public function getCacheKeyList(): array
+    {
+        $return = array();
+        if (!is_null($this->getSessionIdOriginal()))
+        {
+            $key = sprintf('sessionOriginal_%s', $this->getSessionIdOriginal());
+            $return[] = $key;
+        }
+        return $return;
     }
 }

@@ -36,13 +36,6 @@ class closePaymentV2Test extends TestCase
         ]);
     }
 
-    #[TestDox('getCacheKeyAttempt()')]
-    public function testGetCacheKeyAttempt()
-    {
-        $key = base64_encode(sprintf('sessionOriginal_%s', $this->ok_instance->getSessionIdOriginal()));
-        $this->assertEquals($key, $this->ok_instance->getCacheKeyAttempt());
-    }
-
     #[TestDox('getIuvs()')]
     public function testGetIuvs()
     {
@@ -91,13 +84,6 @@ class closePaymentV2Test extends TestCase
     public function testGetMethodInterface()
     {
         $this->assertInstanceOf(\pagopa\crawler\methods\req\closePaymentV2::class, $this->ok_instance->getMethodInterface());
-    }
-
-    #[TestDox('getCacheKeyPayment()')]
-    public function testGetCacheKeyPayment()
-    {
-        $key = base64_encode(sprintf('sessionOriginal_%s', $this->ok_instance->getSessionIdOriginal()));
-        $this->assertEquals($key, $this->ok_instance->getCacheKeyPayment());
     }
 
     #[TestDox('getPaymentsCount()')]

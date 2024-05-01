@@ -36,13 +36,6 @@ class paaInviaRTTest extends TestCase
         ]);
     }
 
-    #[TestDox('getCacheKeyPayment()')]
-    public function testGetCacheKeyPayment()
-    {
-        $value = base64_encode(sprintf('sessionOriginal_%s', $this->instance->getSessionIdOriginal()));
-        $this->assertEquals($value, $this->instance->getCacheKeyPayment());
-    }
-
     #[TestDox('isFaultEvent()')]
     public function testIsFaultEvent()
     {
@@ -71,13 +64,6 @@ class paaInviaRTTest extends TestCase
     public function testGetTransferCount()
     {
         $this->assertEquals(1, $this->instance->getTransferCount());
-    }
-
-    #[TestDox('getCacheKeyAttempt()')]
-    public function testGetCacheKeyAttempt()
-    {
-        $value = base64_encode(sprintf('sessionOriginal_%s', $this->instance->getSessionIdOriginal()));
-        $this->assertEquals($value, $this->instance->getCacheKeyAttempt());
     }
 
     #[TestDox('getIuvs()')]

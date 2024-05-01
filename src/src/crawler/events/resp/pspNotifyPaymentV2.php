@@ -126,19 +126,19 @@ class pspNotifyPaymentV2 extends AbstractEvent implements FaultInterface
     /**
      * @inheritDoc
      */
-    public function getCacheKeyPayment(): string
+    public function getCacheKeyPayment(int $index = 0): string|null
     {
-        $session        = $this->getSessionIdOriginal();
-        return base64_encode(sprintf('sessionOriginal_%s', $session));
+        // non ci sono elementi per associare la Resp della pspNotifyPayment a tutti i pagamenti impattati
+        // sarà la getCacheKeyList() che fornirà la chiave giusta
+        return null;
     }
 
     /**
      * @inheritDoc
      */
-    public function getCacheKeyAttempt(): string
+    public function getCacheKeyAttempt(int $index = 0): string|null
     {
-        $session        = $this->getSessionIdOriginal();
-        return base64_encode(sprintf('sessionOriginal_%s', $session));
+        return null;
     }
 
     /**
@@ -171,5 +171,19 @@ class pspNotifyPaymentV2 extends AbstractEvent implements FaultInterface
     public function getFaultDescription(): string|null
     {
         return $this->getMethodInterface()->getFaultDescription();
+    }
+
+    /**
+     * @return array
+     */
+    public function getCacheKeyList(): array
+    {
+        $return = array();
+        if (!is_null($this->getSessionIdOriginal()))
+        {
+            $key = sprintf('sessionOriginal_%s', $this->getSessionIdOriginal());
+            $return[] = $key;
+        }
+        return $return;
     }
 }

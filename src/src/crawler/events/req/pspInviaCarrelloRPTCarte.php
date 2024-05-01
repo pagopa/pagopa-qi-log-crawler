@@ -200,12 +200,18 @@ class pspInviaCarrelloRPTCarte extends AbstractEvent
     /**
      * @inheritDoc
      */
-    public function getCacheKeyPayment(): string
+    public function getCacheKeyPayment(int $index = 0): string|null
     {
+        // la pspInviaCarrelloRPT carte mette i pagamenti in cache quando si tratta di pagamento POS
+        // in questo caso le colonne di iuv/dominio/ccp sono valorizzate e il pagamento non è nato con
+        // una nodoInviaCarrelloRPT/nodoInviaRPT.
+        // nel caso in cui queste informazioni non siano presenti nell'evento, restituisce null
+        // e i pagamenti vengono recuperati dal sessionIdOriginal , perchè il pagamento è nato con una
+        // nodoInviaCarrelloRPT/nodoInviaRPT
         $iuv            = $this->getColumn('iuv');
         $pa_emittente   = $this->getColumn('iddominio');
         $token          = $this->getColumn('ccp');
-        $key            = base64_encode(sprintf('sessionOriginal_%s', $this->getSessionIdOriginal()));
+        $key            = null;
         if (($iuv) && ($pa_emittente) && ($token))
         {
             $key = base64_encode(sprintf('attempt_%s_%s_%s', $iuv, $pa_emittente, $token));
@@ -216,12 +222,12 @@ class pspInviaCarrelloRPTCarte extends AbstractEvent
     /**
      * @inheritDoc
      */
-    public function getCacheKeyAttempt(): string
+    public function getCacheKeyAttempt(int $index = 0): string|null
     {
         $iuv            = $this->getColumn('iuv');
         $pa_emittente   = $this->getColumn('iddominio');
         $token          = $this->getColumn('ccp');
-        $key            = base64_encode(sprintf('sessionOriginal_%s', $this->getSessionIdOriginal()));
+        $key            = null;
         if (($iuv) && ($pa_emittente) && ($token))
         {
             $key = base64_encode(sprintf('attempt_%s_%s_%s', $iuv, $pa_emittente, $token));
@@ -259,5 +265,24 @@ class pspInviaCarrelloRPTCarte extends AbstractEvent
     public function getFaultDescription(): string|null
     {
         return null;
+    }
+
+    /**
+     * @return array
+     */
+    public function getCacheKeyList(): array
+    {
+        $return = array();
+        if (!is_null($this->getSessionIdOriginal()))
+        {
+            $key = sprintf('sessionOriginal_%s', $this->getSessionIdOriginal());
+            $return[] = $key;
+        }
+        if (!is_null($this->getSessionId()))
+        {
+            $key = sprintf('session_id_%s_%s_%s', $this->getSessionId(), $this->getTipoEvento(), $this->getSottoTipoEvento());
+            $return[] = $key;
+        }
+        return $return;
     }
 }

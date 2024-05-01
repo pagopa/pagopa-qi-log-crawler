@@ -106,21 +106,6 @@ class nodoInviaRTTest extends TestCase
         $this->assertEquals(1, $this->iuv_instance->getPaymentsCount());
     }
 
-    #[TestDox('getCacheKeyAttempt()')]
-    public function testGetCacheKeyAttempt()
-    {
-        $string_session = base64_encode(sprintf('sessionOriginal_%s', $this->session_instance->getSessionIdOriginal()));
-        $this->assertEquals($string_session, $this->session_instance->getCacheKeyAttempt());
-
-        $iuv            =   $this->iuv_instance->getIuv();
-        $pa_emittente   =   $this->iuv_instance->getPaEmittente(0);
-        $token          =   $this->iuv_instance->getCcp(0);
-        $string_iuv     =   base64_encode(sprintf('attempt_%s_%s_%s', $iuv, $pa_emittente, $token));
-
-        $this->assertEquals($string_iuv, $this->iuv_instance->getCacheKeyAttempt());
-
-    }
-
     #[TestDox('getIuvs()')]
     public function testGetIuvs()
     {
@@ -184,19 +169,5 @@ class nodoInviaRTTest extends TestCase
     {
         $this->assertFalse($this->session_instance->isFaultEvent());
         $this->assertFalse($this->iuv_instance->isFaultEvent());
-    }
-
-    #[TestDox('getCacheKeyPayment()')]
-    public function testGetCacheKeyPayment()
-    {
-        $string_session = base64_encode(sprintf('sessionOriginal_%s', $this->session_instance->getSessionIdOriginal()));
-        $this->assertEquals($string_session, $this->session_instance->getCacheKeyAttempt());
-
-        $iuv            =   $this->iuv_instance->getIuv();
-        $pa_emittente   =   $this->iuv_instance->getPaEmittente(0);
-        $token          =   $this->iuv_instance->getCcp(0);
-        $string_iuv     =   base64_encode(sprintf('attempt_%s_%s_%s', $iuv, $pa_emittente, $token));
-
-        $this->assertEquals($string_iuv, $this->iuv_instance->getCacheKeyAttempt());
     }
 }

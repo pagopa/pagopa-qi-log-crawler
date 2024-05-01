@@ -119,21 +119,23 @@ class nodoInviaCarrelloRPT extends AbstractEvent
     }
 
     /**
-     * @return string
+     * @inheritDoc
      */
-    public function getCacheKeyPayment(): string
+    public function getCacheKeyPayment(int $index = 0): string|null
     {
-        $session        = $this->getSessionIdOriginal();
-        return base64_encode(sprintf('sessionOriginal_%s', $session));
+        // restituisco null tanto la Resp della nodoInviaCarrelloRPT non ha informazioni dentro
+        // la chiave cache per recuperare i pagamenti associati a questa Resp è il sessionIdOriginal
+        // generato con la REQ corrispondente
+        // la nodoInviaCarrelloRPT non può avere solo iuv+dominio
+        return null;
     }
 
     /**
-     * @return string
+     * @inheritDoc
      */
-    public function getCacheKeyAttempt(): string
+    public function getCacheKeyAttempt(int $index = 0): string|null
     {
-        $session        = $this->getSessionIdOriginal();
-        return base64_encode(sprintf('sessionOriginal_%s', $session));
+        return null;
     }
 
     /**
@@ -166,5 +168,19 @@ class nodoInviaCarrelloRPT extends AbstractEvent
     public function getFaultDescription(): string|null
     {
         return $this->getMethodInterface()->getFaultDescription();
+    }
+
+    /**
+     * @return array
+     */
+    public function getCacheKeyList(): array
+    {
+        $return = array();
+        if (!is_null($this->getSessionIdOriginal()))
+        {
+            $key = sprintf('sessionOriginal_%s', $this->getSessionIdOriginal());
+            $return[] = $key;
+        }
+        return $return;
     }
 }

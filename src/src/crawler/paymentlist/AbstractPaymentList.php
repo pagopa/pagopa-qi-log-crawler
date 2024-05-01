@@ -196,7 +196,7 @@ abstract class AbstractPaymentList implements PaymentListInterface
             foreach($events as $event)
             {
                 $this->createEventInstance((array) $event);
-                $this->runAnalysisSingleEvent();
+                $this->runnew();
             }
     }
 
@@ -674,5 +674,292 @@ abstract class AbstractPaymentList implements PaymentListInterface
         $key = sprintf('token_%s', $token);
         $cache_to_add = $cache->getCacheData();
         $this->setCache($key, $cache_to_add);
+    }
+
+
+    public function isValidEvent() : bool
+    {
+        return true;
+    }
+
+    public function newrun()
+    {
+        try {
+            $state      = 'LOADED';
+            $message    = null;
+
+            if ($this->isValidEvent())
+            {
+                if ($this->isValidPayment())
+                {
+                    if ($this->isAttempt())
+                    {
+                        if ($this->isAttemptInCache())
+                        {
+                            // sono qui perchè l'evento è già in cache, quindi genera o meno transazioni, non lo creo. Aggiorno però
+                            // i dati
+                            $list_keys = $this->getListOfCacheKey();
+                            if (count($list_keys) == 0)
+                            {
+                                $state      = 'TO_SEARCH';
+                                $message    = 'Evento non associabile a nessun pagamento/tentativo';
+                            }
+                            else
+                            {
+                                foreach($this->getListOfCacheKey() as $ck => $cache_key)
+                                {
+                                    $cache_value = $this->getFromCache($cache_key);
+                                    $refresh_cache = $this->updateTransaction(new CacheObject($cache_value), $ck);
+                                    $refresh_cache = $this->updateDetails(new CacheObject($refresh_cache), $ck);
+                                    $refresh_cache = $this->updateMetadataDetails(new CacheObject($refresh_cache), $ck);
+                                    $refresh_cache = $this->createExtraInfo(new CacheObject($refresh_cache), $ck);
+                                    $refresh_cache = $this->workflow(new CacheObject($refresh_cache), $ck);
+                                    $this->setCache($cache_key, $refresh_cache);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if ($this->isCreateTransactionEvent())
+                            {
+                                // sono qui perchè l'evento genera transazioni (attivazioni di pagamento) e non è in cache
+                                $list_keys = array();
+                                for($i=0;$i<$this->getEvent()->getPaymentsCount();$i++)
+                                {
+                                    $key_cache     = $this->getEvent()->getCacheKeyAttempt($i);
+                                    $refresh_cache = $this->createTransaction($i);
+                                    $refresh_cache = $this->detailsTransaction(new CacheObject($refresh_cache), $i);
+                                    $refresh_cache = $this->createMetadataDetails(new CacheObject($refresh_cache), $i);
+                                    $refresh_cache = $this->createExtraInfo(new CacheObject($refresh_cache), $i);
+                                    $refresh_cache = $this->workflow(new CacheObject($refresh_cache), $i);
+                                    $this->setCache($key_cache, $refresh_cache);
+                                    $list_keys[] = $key_cache;
+                                }
+                                foreach($this->getEvent()->getCacheKeyList() as $other_key_cache)
+                                {
+                                    $this->setCache($other_key_cache, $list_keys);
+                                }
+                            }
+                            else
+                            {
+                                $state      = 'TO_SEARCH';
+                                $message    = 'Evento non associabile a nessun tentativo';
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if ($this->isPaymentInCache())
+                        {
+                            $list_keys = $this->getListOfCacheKey();
+                            if (count($list_keys) == 0)
+                            {
+                                $state      = 'TO_SEARCH';
+                                $message    = 'Evento non associabile a nessun pagamento/tentativo';
+                            }
+                            else
+                            {
+                                foreach($this->getListOfCacheKey() as $ck => $cache_key)
+                                {
+                                    $cache_value = $this->getFromCache($cache_key);
+                                    $refresh_cache = $this->workflow(new CacheObject($cache_value), $ck);
+                                    $this->setCache($cache_key, $refresh_cache);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if ($this->isCreateTransactionEvent())
+                            {
+                                $list_keys = array();
+                                for($i=0;$i<$this->getEvent()->getPaymentsCount();$i++)
+                                {
+                                    $key_cache = $this->getEvent()->getCacheKeyPayment($i);
+                                    $cached_object = $this->createPayment($i);
+                                    $cached_object = $this->detailsPayment(new CacheObject($cached_object), $i);
+                                    $cached_object = $this->workflow(new CacheObject($cached_object), $i);
+                                    $this->setCache($key_cache, $cached_object);
+                                    $list_keys[] = $key_cache;
+                                }
+                                foreach($this->getEvent()->getCacheKeyList() as $other_key_cache)
+                                {
+                                    $this->setCache($other_key_cache, $list_keys);
+                                }
+                            }
+                            else
+                            {
+                                $state      = 'TO_SEARCH';
+                                $message    = 'Evento non associabile a nessun pagamento';
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    $state      = 'TO_SEARCH';
+                    $message    = 'Evento non associabile a nessun tentativo';
+                }
+
+            }
+
+            $rowid = $this->getEvent()->getEventRowInstance()->setState($state, $message)->update();
+            DB::statement($rowid->getQuery(), $rowid->getBindParams());
+        }
+        catch (\Exception $e)
+        {
+            $state      = 'ERROR';
+            $message    = $e->getMessage();
+            $rowid = $this->getEvent()->getEventRowInstance()->setState($state, $message)->update();
+            DB::statement($rowid->getQuery(), $rowid->getBindParams());
+        }
+    }
+
+
+    public function runnew()
+    {
+        try {
+            $state      = 'LOADED';
+            $message    = null;
+            if ($this->isValidPayment())
+            {
+                if ($this->isAttempt())
+                {
+                    if ($this->hasKeyInCache())
+                    {
+                        $list_cache_key = $this->getListOfCacheKey(); // dammi la lista delle chiavi in cache impattate da questo evento
+                        foreach($list_cache_key as $ck => $cache_key)
+                        {
+                            $refresh_cache = $this->getFromCache($cache_key);
+                            $refresh_cache = $this->updateTransaction(new CacheObject($refresh_cache), $ck);
+                            $refresh_cache = $this->updateDetails(new CacheObject($refresh_cache), $ck);
+                            $refresh_cache = $this->updateMetadataDetails(new CacheObject($refresh_cache), $ck);
+                            $refresh_cache = $this->createExtraInfo(new CacheObject($refresh_cache), $ck);
+                            $refresh_cache = $this->workflow(new CacheObject($refresh_cache), $ck);
+                            $this->setCache($cache_key, $refresh_cache);
+                        }
+                        foreach($this->getEvent()->getCacheKeyList() as $other_key_cache)
+                        {
+                            $this->setCache($other_key_cache, $list_cache_key);
+                        }
+                    }
+                    else
+                    {
+                        if ($this->isCreateTransactionEvent())
+                        {
+                            $list_keys = array();
+                            for($i=0;$i<$this->getEvent()->getPaymentsCount();$i++)
+                            {
+                                $key_cache     = $this->getEvent()->getCacheKeyAttempt($i);
+                                $refresh_cache = $this->createTransaction($i);
+                                $refresh_cache = $this->detailsTransaction(new CacheObject($refresh_cache), $i);
+                                $refresh_cache = $this->createMetadataDetails(new CacheObject($refresh_cache), $i);
+                                $refresh_cache = $this->createExtraInfo(new CacheObject($refresh_cache), $i);
+                                $refresh_cache = $this->workflow(new CacheObject($refresh_cache), $i);
+                                $this->setCache($key_cache, $refresh_cache);
+                                $list_keys[] = $key_cache;
+                            }
+                            foreach($this->getEvent()->getCacheKeyList() as $other_key_cache)
+                            {
+                                $this->setCache($other_key_cache, $list_keys);
+                            }
+                        }
+                        else
+                        {
+                            $state      = 'TO_SEARCH';
+                            $message    = 'Evento non associabile a nessun tentativo';
+                        }
+                    }
+                }
+                else
+                {
+                    // è un pagamento (ovvero solo iuv+dominio)
+                    if ($this->hasKeyInCache())
+                    {
+                        $list_cache_key = $this->getListOfCacheKey(); // dammi la lista delle chiavi in cache impattate da questo evento
+                        foreach($list_cache_key as $ck => $cache_key)
+                        {
+                            $refresh_cache = $this->getFromCache($cache_key);
+                            $refresh_cache = $this->workflow(new CacheObject($refresh_cache), $ck);
+                            $this->setCache($cache_key, $refresh_cache);
+                        }
+                    }
+                    else
+                    {
+                        if ($this->isCreateTransactionEvent())
+                        {
+                            $key_cache     = $this->getEvent()->getCacheKeyPayment(0);
+                            $cached_object = $this->createPayment(0);
+                            $cached_object = $this->detailsPayment(new CacheObject($cached_object), 0);
+                            $cached_object = $this->workflow(new CacheObject($cached_object), 0);
+                            $this->setCache($key_cache, $cached_object);
+                            foreach($this->getEvent()->getCacheKeyList() as $other_key_cache)
+                            {
+                                $this->setCache($other_key_cache, array($key_cache));
+                            }
+                        }
+                        else
+                        {
+                            $state = 'TO_SEARCH';
+                            $message = 'Evento non associabile a nessun pagamento';
+                        }
+                    }
+                }
+            }
+            else
+            {
+                $state      = 'REJECTED';
+                $message    = 'Evento non valido';
+            }
+            $rowid = $this->getEvent()->getEventRowInstance()->setState($state, $message)->update();
+            DB::statement($rowid->getQuery(), $rowid->getBindParams());
+        }
+        catch (\Exception $e)
+        {
+            $state      = 'ERROR';
+            $message    = $e->getMessage();
+            $rowid = $this->getEvent()->getEventRowInstance()->setState($state, $message)->update();
+            DB::statement($rowid->getQuery(), $rowid->getBindParams());
+
+        }
+
+    }
+
+    public function hasKeyInCache() : bool
+    {
+        return (count($this->getListOfCacheKey()) > 0);
+    }
+
+
+    // questo mi da la lista dei pagamenti impattati
+    // nel caso di singolo tentativo, mi da un array con il singolo tentativo
+    // nel caso di chiavi nella lista, prendo la prima che è in cache
+    // le chiavi della lista (getCacheKeyList()) è la lista di tutte le chiavi che "contengono"
+    // i pagamenti impattati
+    // quindi nel caso in cui non si tratta di tentativo/pagamento, mi viene dato il sessionId o token (nel caso di activate)
+    public function getListOfCacheKey() : array
+    {
+        // provo prima a prendere la chiave del tentativo
+        // se non c'è, prendo quella del pagamento
+        // se non c'è , prendo la prima disponibile tra quelle alternative
+        $return = array();
+        $key_attempt = $this->getEvent()->getCacheKeyAttempt();
+        $key_payment = $this->getEvent()->getCacheKeyPayment();
+        if ((!is_null($key_attempt)) && ($this->hasInCache($key_attempt)))
+        {
+            return array($key_attempt);
+        }
+        if ((!is_null($key_payment)) && ($this->hasInCache($key_payment)))
+        {
+            return array($key_payment);
+        }
+
+        foreach($this->getEvent()->getCacheKeyList() as $key)
+        {
+            if ($this->hasInCache($key))
+            {
+                return $this->getFromCache($key);
+            }
+        }
+        return array();
     }
 }

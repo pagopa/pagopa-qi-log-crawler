@@ -117,33 +117,31 @@ class paaInviaRT extends AbstractEvent
     /**
      * @inheritDoc
      */
-    public function getCacheKeyPayment(): string
+    public function getCacheKeyPayment(int $index = 0): string|null
     {
         if ((is_null($this->getSessionIdOriginal())) || (empty($this->getSessionIdOriginal())))
         {
             $iuv            =   $this->getIuv(0);
             $pa_emittente   =   $this->getPaEmittente(0);
             $token          =   $this->getCcp(0);
-            return base64_encode(sprintf('attempt_%s_%s_%s', $iuv, $pa_emittente, $token));
+            return sprintf('attempt_%s_%s_%s', $iuv, $pa_emittente, $token);
         }
-        $session        = $this->getSessionIdOriginal();
-        return base64_encode(sprintf('sessionOriginal_%s', $session));
+        return null;
     }
 
     /**
      * @inheritDoc
      */
-    public function getCacheKeyAttempt(): string
+    public function getCacheKeyAttempt(int $index = 0): string|null
     {
         if ((is_null($this->getSessionIdOriginal())) || (empty($this->getSessionIdOriginal())))
         {
             $iuv            =   $this->getIuv(0);
             $pa_emittente   =   $this->getPaEmittente(0);
             $token          =   $this->getCcp(0);
-            return base64_encode(sprintf('attempt_%s_%s_%s', $iuv, $pa_emittente, $token));
+            return sprintf('attempt_%s_%s_%s', $iuv, $pa_emittente, $token);
         }
-        $session        = $this->getSessionIdOriginal();
-        return base64_encode(sprintf('sessionOriginal_%s', $session));
+        return null;
     }
 
     /**
@@ -176,5 +174,19 @@ class paaInviaRT extends AbstractEvent
     public function getFaultDescription(): string|null
     {
         return null;
+    }
+
+    /**
+     * @return array
+     */
+    public function getCacheKeyList(): array
+    {
+        $return = array();
+        if (!is_null($this->getSessionIdOriginal()))
+        {
+            $key = sprintf('sessionOriginal_%s', $this->getSessionIdOriginal());
+            $return[] = $key;
+        }
+        return $return;
     }
 }

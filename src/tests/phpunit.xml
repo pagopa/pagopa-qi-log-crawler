@@ -26,7 +26,6 @@
     </php>
     <testsuites>
         <testsuite name="temp_suite">
-            <file>process/crawler/pspNotifyPaymentV2/T00058_pspNotifyPaymentV2_2Payment.php</file>
         </testsuite>
         <testsuite name="crawler">
             <file>process/crawler/activatePaymentNotice/SingleEvent/T00001_CreateAttemptAllInfoInEvent.php</file>

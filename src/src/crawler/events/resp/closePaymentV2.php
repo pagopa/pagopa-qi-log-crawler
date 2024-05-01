@@ -128,19 +128,19 @@ class closePaymentV2 extends AbstractEvent implements FaultInterface
     /**
      * @inheritDoc
      */
-    public function getCacheKeyPayment(): string
+    public function getCacheKeyPayment(int $index = 0): string|null
     {
-        $session        = $this->getSessionIdOriginal();
-        return base64_encode(sprintf('sessionOriginal_%s', $session));
+        // nella Resp non restituisco nulla tanto con la getCacheKeyList recupero il sessionIdOriginal
+        // generato con la corrispondente Request
+        return null;
     }
 
     /**
      * @inheritDoc
      */
-    public function getCacheKeyAttempt(): string
+    public function getCacheKeyAttempt(int $index = 0): string|null
     {
-        $session        = $this->getSessionIdOriginal();
-        return base64_encode(sprintf('sessionOriginal_%s', $session));
+        return null;
     }
 
     /**
@@ -173,5 +173,19 @@ class closePaymentV2 extends AbstractEvent implements FaultInterface
     public function getFaultDescription(): string|null
     {
         return null;
+    }
+
+    /**
+     * @return array
+     */
+    public function getCacheKeyList(): array
+    {
+        $return = array();
+        if (!is_null($this->getSessionIdOriginal()))
+        {
+            $key = sprintf('sessionOriginal_%s', $this->getSessionIdOriginal());
+            $return[] = $key;
+        }
+        return $return;
     }
 }

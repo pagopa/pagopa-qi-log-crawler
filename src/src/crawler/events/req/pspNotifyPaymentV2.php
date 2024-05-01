@@ -116,19 +116,23 @@ class pspNotifyPaymentV2 extends AbstractEvent
     /**
      * @inheritDoc
      */
-    public function getCacheKeyPayment(int $index = 0): string
+    public function getCacheKeyPayment(int $index = 0): string|null
     {
-        $session        = $this->getSessionIdOriginal();
-        return base64_encode(sprintf('sessionOriginal_%s', $session));
+        // la pspNotifyPaymentV2 non restituisce chiavi anche se potrebbe
+        // Questo perchè arriva dopo la closePayment-V2 che genera il sessionIdOriginal
+        // sarà lei a creare la chiave cache del sessionIdOriginal con i pagamenti impattati al suo interno
+        // quindi in fase di analisi di una pspNotifyPayumentV2 verrà utilizzata la chiave di getCacheKeyList
+        // i Payment (solo iuv+dominio) non possono esistere nella pspNotifyPayment/pspNotifyPaymentV2
+        // questa logica è applicabile perchè il crawler analizza prima le closePayment-V2
+        return null;
     }
 
     /**
      * @inheritDoc
      */
-    public function getCacheKeyAttempt(int $index = 0): string
+    public function getCacheKeyAttempt(int $index = 0): string|null
     {
-        $session        = $this->getSessionIdOriginal();
-        return base64_encode(sprintf('sessionOriginal_%s', $session));
+        return null;
     }
 
     /**
@@ -161,5 +165,19 @@ class pspNotifyPaymentV2 extends AbstractEvent
     public function getFaultDescription(): string|null
     {
         return null;
+    }
+
+    /**
+     * @return array
+     */
+    public function getCacheKeyList(): array
+    {
+        $return = array();
+        if (!is_null($this->getSessionIdOriginal()))
+        {
+            $key = sprintf('sessionOriginal_%s', $this->getSessionIdOriginal());
+            $return[] = $key;
+        }
+        return $return;
     }
 }

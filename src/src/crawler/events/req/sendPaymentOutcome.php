@@ -119,25 +119,25 @@ class sendPaymentOutcome extends AbstractEvent
     /**
      * @inheritDoc
      */
-    public function getCacheKeyPayment(): string
+    public function getCacheKeyPayment(int $index = 0): string
     {
         $iuv            =   $this->getIuv(0);
         $pa_emittente   =   $this->getPaEmittente(0);
 
-        return base64_encode(sprintf('payment_%s_%s', $iuv, $pa_emittente));
+        return sprintf('payment_%s_%s', $iuv, $pa_emittente);
 
     }
 
     /**
      * @inheritDoc
      */
-    public function getCacheKeyAttempt(): string
+    public function getCacheKeyAttempt(int $index = 0): string
     {
         $iuv            =   $this->getIuv(0);
         $pa_emittente   =   $this->getPaEmittente(0);
         $token          =   $this->getPaymentToken(0);
 
-        return base64_encode(sprintf('attempt_%s_%s_%s', $iuv, $pa_emittente, $token));
+        return sprintf('attempt_%s_%s_%s', $iuv, $pa_emittente, $token);
     }
 
     /**
@@ -170,5 +170,24 @@ class sendPaymentOutcome extends AbstractEvent
     public function getFaultDescription(): string|null
     {
         return null;
+    }
+
+    /**
+     * @return array
+     */
+    public function getCacheKeyList(): array
+    {
+        $return = array();
+        if (!is_null($this->getPaymentToken()))
+        {
+            $key = sprintf('token_%s', $this->getPaymentToken());
+            $return[] = $key;
+        }
+        if (!is_null($this->getSessionId()))
+        {
+            $key = sprintf('session_id_%s_%s_%s', $this->getSessionId(), $this->getTipoEvento(), $this->getSottoTipoEvento());
+            $return[] = $key;
+        }
+        return $return;
     }
 }

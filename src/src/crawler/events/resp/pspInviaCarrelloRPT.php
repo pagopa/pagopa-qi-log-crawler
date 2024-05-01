@@ -119,20 +119,20 @@ class pspInviaCarrelloRPT extends AbstractEvent
     /**
      * @inheritDoc
      */
-    public function getCacheKeyPayment(): string
+    public function getCacheKeyPayment(int $index = 0): string|null
     {
-        $session        = $this->getSessionIdOriginal();
-        return base64_encode(sprintf('sessionOriginal_%s', $session));
+        // la Resp della pspInviaCarrelloRPT offre solo il sessionIdOriginal, ed è così che viene associato
+        // ai pagamenti
+        return null;
     }
 
     /**
      * @inheritDoc
      */
-    public function getCacheKeyAttempt(): string
+    public function getCacheKeyAttempt(int $index = 0): string|null
     {
-        $session        = $this->getSessionIdOriginal();
-        return base64_encode(sprintf('sessionOriginal_%s', $session));
-
+        // non restituisco chiavi perchè è tutto cachato con il sessionIdOriginal
+        return null;
     }
 
     /**
@@ -165,5 +165,19 @@ class pspInviaCarrelloRPT extends AbstractEvent
     public function getFaultDescription(): string|null
     {
         return $this->getMethodInterface()->getFaultDescription();
+    }
+
+    /**
+     * @return array
+     */
+    public function getCacheKeyList(): array
+    {
+        $return = array();
+        if (!is_null($this->getSessionIdOriginal()))
+        {
+            $key = sprintf('sessionOriginal_%s', $this->getSessionIdOriginal());
+            $return[] = $key;
+        }
+        return $return;
     }
 }

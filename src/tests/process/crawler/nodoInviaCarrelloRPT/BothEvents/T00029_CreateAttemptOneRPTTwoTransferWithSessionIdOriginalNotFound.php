@@ -207,7 +207,7 @@ class T00029_CreateAttemptOneRPTTwoTransferWithSessionIdOriginalNotFound extends
 
         $event = self::$db->getReEvent(new \DateTime('2024-03-10'), 36);
         $this->assertEquals('TO_SEARCH', $event->getColumnValue('state'));
-        $this->assertEquals('Evento non associabile a nessun tentativo in cache, va ricercato', $event->getColumnValue('message'));
+        $this->assertEquals('Evento non associabile a nessun tentativo', $event->getColumnValue('message'));
     }
 
 

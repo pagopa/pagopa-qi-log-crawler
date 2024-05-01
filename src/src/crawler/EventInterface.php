@@ -235,14 +235,22 @@ interface EventInterface
      * Restituisce la chiave cache dove sono presenti tutti pagamenti impattati da questo evento
      * @return string
      */
-    public function getCacheKeyPayment() : string;
+    public function getCacheKeyPayment(int $index = 0) : string|null;
 
 
     /**
-     * Restituisce la chiave cache dove sono presenti tutti i pagamenti impattati da questo tentativo associato all'evnto
+     * Restituisce la chiave cache dove sono presenti tutti i pagamenti impattati da questo tentativo associato all'evento
      * @return string
      */
-    public function getCacheKeyAttempt() : string;
+    public function getCacheKeyAttempt(int $index = 0) : string|null;
+
+
+    /**
+     * Restituisce la lista di chiavi dove andare a memorizzare le chiavi associate ai pagamenti gestiti dall'evento
+     * @return array
+     */
+    public function getCacheKeyList() : array;
+
 
 
     /**

@@ -194,21 +194,27 @@ class nodoInviaCarrelloRPT extends AbstractEvent
     }
 
     /**
-     * @return string
+     * @inheritDoc
      */
-    public function getCacheKeyPayment(): string
+    public function getCacheKeyPayment(int $index = 0): string
     {
-        $session        = $this->getSessionIdOriginal();
-        return base64_encode(sprintf('sessionOriginal_%s', $session));
+
+        $iuv            =   $this->getIuv($index);
+        $pa_emittente   =   $this->getPaEmittente($index);
+
+        return sprintf('payment_%s_%s', $iuv, $pa_emittente);
     }
 
     /**
-     * @return string
+     * @inheritDoc
      */
-    public function getCacheKeyAttempt(): string
+    public function getCacheKeyAttempt(int $index = 0): string
     {
-        $session        = $this->getSessionIdOriginal();
-        return base64_encode(sprintf('sessionOriginal_%s', $session));
+        $iuv            =   $this->getIuv($index);
+        $pa_emittente   =   $this->getPaEmittente($index);
+        $token          =   $this->getPaymentToken($index);
+
+        return sprintf('attempt_%s_%s_%s', $iuv, $pa_emittente, $token);
 
     }
 
@@ -242,5 +248,19 @@ class nodoInviaCarrelloRPT extends AbstractEvent
     public function getFaultDescription(): string|null
     {
         return null;
+    }
+
+    /**
+     * @return array
+     */
+    public function getCacheKeyList(): array
+    {
+        $return = array();
+        if (!is_null($this->getSessionIdOriginal()))
+        {
+            $key = sprintf('sessionOriginal_%s', $this->getSessionIdOriginal());
+            $return[] = $key;
+        }
+        return $return;
     }
 }

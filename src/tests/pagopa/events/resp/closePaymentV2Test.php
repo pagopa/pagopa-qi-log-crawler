@@ -64,24 +64,10 @@ class closePaymentV2Test extends TestCase
         $this->assertNull($this->payment->getPaymentsCount());
     }
 
-    #[TestDox('getCacheKeyPayment()')]
-    public function testGetCacheKeyPayment()
-    {
-        $key = base64_encode(sprintf('sessionOriginal_%s', $this->payment->getSessionIdOriginal()));
-        $this->assertEquals($key, $this->payment->getCacheKeyPayment());
-    }
-
     #[TestDox('getFaultCode()')]
     public function testGetFaultCode()
     {
         $this->assertNull($this->payment->getFaultCode());
-    }
-
-    #[TestDox('getCacheKeyAttempt()')]
-    public function testGetCacheKeyAttempt()
-    {
-        $key = base64_encode(sprintf('sessionOriginal_%s', $this->payment->getSessionIdOriginal()));
-        $this->assertEquals($key, $this->payment->getCacheKeyAttempt());
     }
 
     #[TestDox('getPaEmittenti()')]

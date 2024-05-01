@@ -24,7 +24,14 @@ class sendPaymentOutcome extends AbstractPaymentList
      */
     public function isValidPayment(int $index = 0): bool
     {
-        return ($this->getEvent()->getIuv(0) && $this->getEvent()->getPaEmittente(0));
+        // una SPO senza token non può esistere
+        $token = (is_null($this->getEvent()->getPaymentToken($index))) ? $this->getEvent()->getMethodInterface()->getToken($index) : $this->getEvent()->getPaymentToken($index);
+        if (is_null($token))
+        {
+            return false;
+        }
+        return true;
+
     }
 
     /**
@@ -37,7 +44,7 @@ class sendPaymentOutcome extends AbstractPaymentList
         {
             return false;
         }
-        return ($this->getEvent()->getIuv(0) && $this->getEvent()->getPaEmittente(0) && $token);
+        return true;
     }
 
     public function updateTransaction(CacheObject $cache, int $index = 0): array|null

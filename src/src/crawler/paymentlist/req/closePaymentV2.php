@@ -34,7 +34,7 @@ class closePaymentV2 extends AbstractPaymentList
         return true;
     }
 
-    public function isAttemptInCache(int $index = 0): bool
+    /*public function isAttemptInCache(int $index = 0): bool
     {
         $key = sprintf('token_%s', $this->getEvent()->getMethodInterface()->getToken($index));
         return $this->hasInCache($key);
@@ -44,10 +44,10 @@ class closePaymentV2 extends AbstractPaymentList
     {
         $key = sprintf('token_%s', $this->getEvent()->getMethodInterface()->getToken($index));
         return $this->getFromCache($key);
-    }
+    }*/
 
 
-    public function runAnalysisSingleEvent(): void
+    public function arunAnalysisSingleEvent(): void
     {
         try {
             $state      = 'LOADED';
@@ -89,5 +89,25 @@ class closePaymentV2 extends AbstractPaymentList
             $rowid = $this->getEvent()->getEventRowInstance()->setState($state, $message)->update();
             DB::statement($rowid->getQuery(), $rowid->getBindParams());
         }
+    }
+
+    public function getListOfCacheKey() : array
+    {
+        // provo prima a prendere la chiave del tentativo
+        // se non c'è, prendo quella del pagamento
+        // se non c'è , prendo la prima disponibile tra quelle alternative
+        $token_list = array();
+        $key_token_cache = 'token_%s';
+        for($i=0;$i<$this->getEvent()->getPaymentsCount();$i++)
+        {
+            $token = $this->getEvent()->getMethodInterface()->getToken($i);
+            $render_key = sprintf($key_token_cache, $token);
+            if ($this->hasInCache($render_key))
+            {
+                $token_list = array_merge($token_list, $this->getFromCache($render_key));
+            }
+        }
+
+        return $token_list;
     }
 }

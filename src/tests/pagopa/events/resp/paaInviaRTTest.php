@@ -113,26 +113,6 @@ class paaInviaRTTest extends TestCase
         $this->assertTrue($this->ko_instance->isFaultEvent());
     }
 
-    #[TestDox('getCacheKeyPayment()')]
-    public function testGetCacheKeyPayment()
-    {
-        $value = base64_encode(sprintf('sessionOriginal_%s', $this->ok_instance->getSessionIdOriginal()));
-        $this->assertEquals($value, $this->ok_instance->getCacheKeyPayment());
-
-        $value = base64_encode(sprintf('sessionOriginal_%s', $this->ko_instance->getSessionIdOriginal()));
-        $this->assertEquals($value, $this->ko_instance->getCacheKeyPayment());
-    }
-
-    #[TestDox('getCacheKeyAttempt()')]
-    public function testGetCacheKeyAttempt()
-    {
-        $value = base64_encode(sprintf('sessionOriginal_%s', $this->ok_instance->getSessionIdOriginal()));
-        $this->assertEquals($value, $this->ok_instance->getCacheKeyAttempt());
-
-        $value = base64_encode(sprintf('sessionOriginal_%s', $this->ko_instance->getSessionIdOriginal()));
-        $this->assertEquals($value, $this->ko_instance->getCacheKeyAttempt());
-    }
-
     #[TestDox('getFaultString()')]
     public function testGetFaultString()
     {
