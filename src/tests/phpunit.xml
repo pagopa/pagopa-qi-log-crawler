@@ -26,6 +26,7 @@
     </php>
     <testsuites>
         <testsuite name="temp_suite">
+            <file>process/crawler/nodoChiediInformazioniPagamento/T00059_WorkFlowWithNodoChiediInformazioniPagamento.php</file>
         </testsuite>
         <testsuite name="crawler">
             <file>process/crawler/activatePaymentNotice/SingleEvent/T00001_CreateAttemptAllInfoInEvent.php</file>
@@ -98,6 +99,8 @@
             <file>pagopa/methods/req/activatePaymentNoticeV2Test.php</file>
             <file>pagopa/methods/req/pspNotifyPaymentV2Test.php</file>
             <file>pagopa/methods/req/closePaymentV2Test.php</file>
+            <file>pagopa/methods/req/closePaymentV1Test.php</file>
+            <file>pagopa/methods/req/nodoChiediInformazioniPagamentoTest.php</file>
 
             <!-- Response Method Tests -->
             <file>pagopa/methods/resp/activatePaymentNoticeTest.php</file>
@@ -114,6 +117,9 @@
             <file>pagopa/methods/resp/activatePaymentNoticeV2Test.php</file>
             <file>pagopa/methods/resp/pspNotifyPaymentV2Test.php</file>
             <file>pagopa/methods/resp/closePaymentV2Test.php</file>
+            <file>pagopa/methods/resp/closePaymentV1Test.php</file>
+            <file>pagopa/methods/resp/nodoChiediInformazioniPagamentoTest.php</file>
+
 
             <!-- Request Event Tests -->
             <file>pagopa/events/req/activatePaymentNoticeTest.php</file>
@@ -130,6 +136,7 @@
             <file>pagopa/events/req/activatePaymentNoticeV2Test.php</file>
             <file>pagopa/events/req/pspNotifyPaymentV2Test.php</file>
             <file>pagopa/events/req/closePaymentV2Test.php</file>
+            <file>pagopa/events/req/nodoChiediInformazioniPagamentoTest.php</file>
 
             <!-- Response Event Tests -->
             <file>pagopa/events/resp/activatePaymentNoticeTest.php</file>
@@ -145,6 +152,7 @@
             <file>pagopa/events/resp/activateIOPaymentTest.php</file>
             <file>pagopa/events/resp/pspNotifyPaymentV2Test.php</file>
             <file>pagopa/events/resp/closePaymentV2Test.php</file>
+            <file>pagopa/events/resp/nodoChiediInformazioniPagamentoTest.php</file>
         </testsuite>
         <testsuite name="process">
             <file>process/normal/T0001.php</file>

@@ -3,22 +3,21 @@
 namespace pagopa\crawler\methods\req;
 
 use pagopa\crawler\methods\AbstractJsonPayload;
-use pagopa\crawler\methods\AbstractXmlPayload;
 
-class closePaymentV2 extends AbstractJsonPayload
+class closePaymentV1 extends AbstractJsonPayload
 {
+
 
     protected string $typePayload = 'json';
 
 
     const JPATH_TOKEN_CCP = 'paymentTokens';
 
+    const JPATH_PSP = 'identificativoPsp';
 
-    const JPATH_PSP = 'idPSP';
+    const JPATH_CHANNEL = 'identificativoCanale';
 
-    const JPATH_CHANNEL = 'idChannel';
-
-    const JPATH_BROKER_PSP = 'idBrokerPSP';
+    const JPATH_BROKER_PSP = 'identificativoIntermediario';
 
     const JPATH_OUTCOME_ESITO = 'outcome';
 
@@ -29,7 +28,6 @@ class closePaymentV2 extends AbstractJsonPayload
         parent::__construct($payload, self::JSON_PAYLOAD);
     }
 
-
     public function getImportoTotale(): string|null
     {
         $totalAmount = (float) $this->getElement(self::JPATH_TOTAL_CART_AMOUNT);
@@ -38,21 +36,26 @@ class closePaymentV2 extends AbstractJsonPayload
         return number_format($onlyPayment, 2, '.', '');
     }
 
+    public function getImporto(int $index = 0): string|null
+    {
+        return $this->getImportoTotale();
+    }
 
     public function getPaymentsCount(): int|null
     {
-        return $this->getElementCount(static::JPATH_TOKEN_CCP);
+        return 1;
     }
-
 
     public function getRRN() : string|null
     {
-        return $this->getElement('additionalPaymentInformations->rrn');
+        return null;
     }
 
     public function getAuthCode() : string|null
     {
         return $this->getElement('additionalPaymentInformations->authorizationCode');
     }
+
+
 
 }

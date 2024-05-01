@@ -428,7 +428,12 @@ class AbstractJsonPayload extends AbstractPayload
      */
     public function getImportoTotale(): string|null
     {
-        return (static::JPATH_TOTAL_CART_AMOUNT == null) ? null : $this->getElement(static::JPATH_TOTAL_CART_AMOUNT);
+        if (static::JPATH_TOTAL_CART_AMOUNT == null)
+        {
+            return null;
+        }
+        $value = $this->getElement(static::JPATH_TOTAL_CART_AMOUNT);
+        return ($value == null) ? null : number_format($value, 2, '.', '');
     }
 
     /**
@@ -441,7 +446,7 @@ class AbstractJsonPayload extends AbstractPayload
         {
             return null;
         }
-        return (static::JPATH_SINGLE_PAYMENT_IMPORT == null) ? null : $this->getElement(static::JPATH_SINGLE_PAYMENT_IMPORT, $index);
+        return (static::JPATH_SINGLE_PAYMENT_IMPORT == null) ? null : number_format($this->getElement(static::JPATH_SINGLE_PAYMENT_IMPORT, $index), 2, '.', '');
     }
 
     /**

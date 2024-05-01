@@ -57,7 +57,7 @@ create table if not exists public.transaction_re_2024 (
     id                  bigint              default nextval('public.transaction_re_2024_id_seq'::regclass) not null,
     date_event          date                not null,
     inserted_timestamp  timestamp           not null,
-    tipoevento          varchar(30)         null,
+    tipoevento          varchar(40)         null,
     sottotipoevento     varchar(15)         null,
     iddominio           varchar(30)         null,
     iuv                 varchar(50)         null,
