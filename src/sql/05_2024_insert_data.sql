@@ -32,7 +32,9 @@ INSERT INTO mapped_events(tipo_evento,sotto_tipo_evento ,fk_event) values
     ('nodoChiediInformazioniPagamento'       , 'REQ' ,  31),
     ('nodoChiediInformazioniPagamento'       , 'RESP',  32),
     ('nodoInoltraEsitoPagamentoCarta'        , 'REQ' ,  33),
-    ('nodoInoltraEsitoPagamentoCarta'        , 'RESP',  34);
+    ('nodoInoltraEsitoPagamentoCarta'        , 'RESP',  34),
+    ('nodoChiediAvanzamentoPagamento'        , 'REQ' ,  35),
+    ('nodoChiediAvanzamentoPagamento'        , 'RESP',  36);
 
 insert into mapped_payment_methods (tipoversamento, descrizione) values
     ('CC', 'Carta di Credito'),
