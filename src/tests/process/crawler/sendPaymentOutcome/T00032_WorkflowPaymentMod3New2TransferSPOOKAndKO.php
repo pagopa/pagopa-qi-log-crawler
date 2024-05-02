@@ -3,6 +3,7 @@
 namespace process\crawler\sendPaymentOutcome;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
+use pagopa\crawler\MapEvents;
 use pagopa\database\sherlock\Transaction;
 use pagopa\database\sherlock\TransactionRe;
 use pagopa\database\sherlock\Workflow;
@@ -195,7 +196,7 @@ class T00032_WorkflowPaymentMod3New2TransferSPOOKAndKO extends TestCase
         $transaction = self::$db->getTransaction(new \DateTime('2024-03-10'), '01000000000000032' );
 
         $event = self::$db->getWorkFlow($transaction, 0);
-        $this->assertEquals('1', $event->getColumnValue('fk_tipoevento'));
+        $this->assertEquals(MapEvents::getMethodId('activatePaymentNotice', 'REQ'), $event->getColumnValue('fk_tipoevento'));
         $this->assertEquals('2024-03-10 13:30:00.197', $event->getColumnValue('event_timestamp'));
         $this->assertEquals('T000048', $event->getColumnValue('event_id'));
         $this->assertEquals('77777777777_01', $event->getColumnValue('stazione'));
@@ -203,7 +204,7 @@ class T00032_WorkflowPaymentMod3New2TransferSPOOKAndKO extends TestCase
         $this->assertEquals('AGID_01', $event->getColumnValue('id_psp'));
 
         $event = self::$db->getWorkFlow($transaction, 1);
-        $this->assertEquals('2', $event->getColumnValue('fk_tipoevento'));
+        $this->assertEquals(MapEvents::getMethodId('activatePaymentNotice', 'RESP'), $event->getColumnValue('fk_tipoevento'));
         $this->assertEquals('2024-03-10 13:31:00.197', $event->getColumnValue('event_timestamp'));
         $this->assertEquals('T000049', $event->getColumnValue('event_id'));
         $this->assertEquals('77777777777_01', $event->getColumnValue('stazione'));
@@ -212,7 +213,7 @@ class T00032_WorkflowPaymentMod3New2TransferSPOOKAndKO extends TestCase
         $this->assertEquals('OK', $event->getColumnValue('outcome'));
 
         $event = self::$db->getWorkFlow($transaction, 2);
-        $this->assertEquals('5', $event->getColumnValue('fk_tipoevento'));
+        $this->assertEquals(MapEvents::getMethodId('sendPaymentOutcome', 'REQ'), $event->getColumnValue('fk_tipoevento'));
         $this->assertEquals('2024-03-10 13:32:00.197', $event->getColumnValue('event_timestamp'));
         $this->assertEquals('T000050', $event->getColumnValue('event_id'));
         $this->assertEquals('77777777777_01', $event->getColumnValue('stazione'));
@@ -220,7 +221,7 @@ class T00032_WorkflowPaymentMod3New2TransferSPOOKAndKO extends TestCase
         $this->assertEquals('AGID_01', $event->getColumnValue('id_psp'));
 
         $event = self::$db->getWorkFlow($transaction, 3);
-        $this->assertEquals('6', $event->getColumnValue('fk_tipoevento'));
+        $this->assertEquals(MapEvents::getMethodId('sendPaymentOutcome', 'RESP'), $event->getColumnValue('fk_tipoevento'));
         $this->assertEquals('2024-03-10 13:33:00.197', $event->getColumnValue('event_timestamp'));
         $this->assertEquals('T000051', $event->getColumnValue('event_id'));
         $this->assertEquals('77777777777_01', $event->getColumnValue('stazione'));
@@ -230,7 +231,7 @@ class T00032_WorkflowPaymentMod3New2TransferSPOOKAndKO extends TestCase
 
 
         $event = self::$db->getWorkFlow($transaction, 4);
-        $this->assertEquals('5', $event->getColumnValue('fk_tipoevento'));
+        $this->assertEquals(MapEvents::getMethodId('sendPaymentOutcome', 'REQ'), $event->getColumnValue('fk_tipoevento'));
         $this->assertEquals('2024-03-10 13:34:00.197', $event->getColumnValue('event_timestamp'));
         $this->assertEquals('T000052', $event->getColumnValue('event_id'));
         $this->assertEquals('77777777777_01', $event->getColumnValue('stazione'));
@@ -238,7 +239,7 @@ class T00032_WorkflowPaymentMod3New2TransferSPOOKAndKO extends TestCase
         $this->assertEquals('AGID_01', $event->getColumnValue('id_psp'));
 
         $event = self::$db->getWorkFlow($transaction, 5);
-        $this->assertEquals('6', $event->getColumnValue('fk_tipoevento'));
+        $this->assertEquals(MapEvents::getMethodId('sendPaymentOutcome', 'RESP'), $event->getColumnValue('fk_tipoevento'));
         $this->assertEquals('2024-03-10 13:35:00.197', $event->getColumnValue('event_timestamp'));
         $this->assertEquals('T000053', $event->getColumnValue('event_id'));
         $this->assertEquals('77777777777_01', $event->getColumnValue('stazione'));

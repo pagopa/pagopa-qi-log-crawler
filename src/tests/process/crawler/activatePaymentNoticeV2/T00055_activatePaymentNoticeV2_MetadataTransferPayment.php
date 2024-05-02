@@ -2,6 +2,7 @@
 
 namespace process\crawler\activatePaymentNoticeV2;
 
+use pagopa\crawler\MapEvents;
 use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
 
@@ -68,7 +69,7 @@ class T00055_activatePaymentNoticeV2_MetadataTransferPayment extends TestCase
         $transaction = self::$db->getTransaction(new \DateTime('2024-03-10'), '01000000000000162');
 
         $workflow = self::$db->getWorkFlow($transaction, 0);
-        $this->assertEquals('23', $workflow->getColumnValue('fk_tipoevento'));
+        $this->assertEquals(MapEvents::getMethodId('activatePaymentNoticeV2', 'REQ'), $workflow->getColumnValue('fk_tipoevento'));
         $this->assertEquals('2024-03-10 10:53:00.197', $workflow->getColumnValue('event_timestamp'));
         $this->assertEquals('T000168', $workflow->getColumnValue('event_id'));
         $this->assertEquals('77777777777_01', $workflow->getColumnValue('stazione'));
@@ -77,7 +78,7 @@ class T00055_activatePaymentNoticeV2_MetadataTransferPayment extends TestCase
         $this->assertNull($workflow->getColumnValue('outcome'));
 
         $workflow = self::$db->getWorkFlow($transaction, 1);
-        $this->assertEquals('24', $workflow->getColumnValue('fk_tipoevento'));
+        $this->assertEquals(MapEvents::getMethodId('activatePaymentNoticeV2', 'RESP'), $workflow->getColumnValue('fk_tipoevento'));
         $this->assertEquals('2024-03-10 10:53:01.197', $workflow->getColumnValue('event_timestamp'));
         $this->assertEquals('T000169', $workflow->getColumnValue('event_id'));
         $this->assertEquals('77777777777_01', $workflow->getColumnValue('stazione'));

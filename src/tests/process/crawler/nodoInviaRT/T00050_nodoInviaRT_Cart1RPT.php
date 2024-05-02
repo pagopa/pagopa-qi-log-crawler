@@ -2,6 +2,7 @@
 
 namespace process\crawler\nodoInviaRT;
 
+use pagopa\crawler\MapEvents;
 use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
 
@@ -77,27 +78,27 @@ class T00050_nodoInviaRT_Cart1RPT extends TestCase
         $transaction = self::$db->getTransaction(new \DateTime('2024-03-10'), '01000000000000110');
 
         $workflow = self::$db->getWorkFlow($transaction, 0);
-        $this->assertEquals('3', $workflow->getColumnValue('fk_tipoevento'));
+        $this->assertEquals(MapEvents::getMethodId('nodoInviaCarrelloRPT', 'REQ'), $workflow->getColumnValue('fk_tipoevento'));
         $this->assertEquals('2024-03-10 08:30:00.197', $workflow->getColumnValue('event_timestamp'));
         $this->assertEquals('T000130', $workflow->getColumnValue('event_id'));
         $this->assertEquals('77777777777_01', $workflow->getColumnValue('stazione'));
 
         $workflow = self::$db->getWorkFlow($transaction, 1);
-        $this->assertEquals('4', $workflow->getColumnValue('fk_tipoevento'));
+        $this->assertEquals(MapEvents::getMethodId('nodoInviaCarrelloRPT', 'RESP'), $workflow->getColumnValue('fk_tipoevento'));
         $this->assertEquals('2024-03-10 08:30:01.197', $workflow->getColumnValue('event_timestamp'));
         $this->assertEquals('T000131', $workflow->getColumnValue('event_id'));
         $this->assertEquals('77777777777_01', $workflow->getColumnValue('stazione'));
         $this->assertEquals('OK', $workflow->getColumnValue('outcome'));
 
         $workflow = self::$db->getWorkFlow($transaction, 2);
-        $this->assertEquals('17', $workflow->getColumnValue('fk_tipoevento'));
+        $this->assertEquals(MapEvents::getMethodId('nodoInviaRT', 'REQ'), $workflow->getColumnValue('fk_tipoevento'));
         $this->assertEquals('2024-03-10 08:35:00.197', $workflow->getColumnValue('event_timestamp'));
         $this->assertEquals('T000132', $workflow->getColumnValue('event_id'));
         $this->assertEquals('77777777777_01', $workflow->getColumnValue('stazione'));
         $this->assertEquals('OK', $workflow->getColumnValue('outcome'));
 
         $workflow = self::$db->getWorkFlow($transaction, 3);
-        $this->assertEquals('18', $workflow->getColumnValue('fk_tipoevento'));
+        $this->assertEquals(MapEvents::getMethodId('nodoInviaRT', 'RESP'), $workflow->getColumnValue('fk_tipoevento'));
         $this->assertEquals('2024-03-10 08:35:01.197', $workflow->getColumnValue('event_timestamp'));
         $this->assertEquals('T000133', $workflow->getColumnValue('event_id'));
         $this->assertEquals('77777777777_01', $workflow->getColumnValue('stazione'));

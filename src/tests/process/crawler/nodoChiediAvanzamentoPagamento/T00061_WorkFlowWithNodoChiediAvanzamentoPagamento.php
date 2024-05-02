@@ -2,6 +2,7 @@
 
 namespace process\crawler\nodoChiediAvanzamentoPagamento;
 
+use pagopa\crawler\MapEvents;
 use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
 
@@ -58,7 +59,7 @@ class T00061_WorkFlowWithNodoChiediAvanzamentoPagamento extends TestCase
         $transaction = self::$db->getTransaction(new \DateTime('2024-03-10'), '01000000000000182');
 
         $workflow = self::$db->getWorkFlow($transaction, 0);
-        $this->assertEquals('1', $workflow->getColumnValue('fk_tipoevento'));
+        $this->assertEquals(MapEvents::getMethodId('activatePaymentNotice', 'REQ'), $workflow->getColumnValue('fk_tipoevento'));
         $this->assertEquals('2024-03-10 12:38:00.197', $workflow->getColumnValue('event_timestamp'));
         $this->assertEquals('T000198', $workflow->getColumnValue('event_id'));
         $this->assertEquals('77777777777_01', $workflow->getColumnValue('stazione'));
@@ -67,7 +68,7 @@ class T00061_WorkFlowWithNodoChiediAvanzamentoPagamento extends TestCase
         $this->assertNull($workflow->getColumnValue('outcome'));
 
         $workflow = self::$db->getWorkFlow($transaction, 1);
-        $this->assertEquals('2', $workflow->getColumnValue('fk_tipoevento'));
+        $this->assertEquals(MapEvents::getMethodId('activatePaymentNotice', 'RESP'), $workflow->getColumnValue('fk_tipoevento'));
         $this->assertEquals('2024-03-10 12:38:01.197', $workflow->getColumnValue('event_timestamp'));
         $this->assertEquals('T000199', $workflow->getColumnValue('event_id'));
         $this->assertEquals('77777777777_01', $workflow->getColumnValue('stazione'));
@@ -76,7 +77,7 @@ class T00061_WorkFlowWithNodoChiediAvanzamentoPagamento extends TestCase
         $this->assertEquals('OK', $workflow->getColumnValue('outcome'));
 
         $workflow = self::$db->getWorkFlow($transaction, 2);
-        $this->assertEquals('35', $workflow->getColumnValue('fk_tipoevento'));
+        $this->assertEquals(MapEvents::getMethodId('nodoChiediAvanzamentoPagamento', 'REQ'), $workflow->getColumnValue('fk_tipoevento'));
         $this->assertEquals('2024-03-10 12:39:00.197', $workflow->getColumnValue('event_timestamp'));
         $this->assertEquals('T000200', $workflow->getColumnValue('event_id'));
         $this->assertEquals('77777777777_01', $workflow->getColumnValue('stazione'));
@@ -85,7 +86,7 @@ class T00061_WorkFlowWithNodoChiediAvanzamentoPagamento extends TestCase
         $this->assertNull($workflow->getColumnValue('outcome'));
 
         $workflow = self::$db->getWorkFlow($transaction, 3);
-        $this->assertEquals('36', $workflow->getColumnValue('fk_tipoevento'));
+        $this->assertEquals(MapEvents::getMethodId('nodoChiediAvanzamentoPagamento', 'RESP'), $workflow->getColumnValue('fk_tipoevento'));
         $this->assertEquals('2024-03-10 12:39:01.197', $workflow->getColumnValue('event_timestamp'));
         $this->assertEquals('T000201', $workflow->getColumnValue('event_id'));
         $this->assertEquals('77777777777_01', $workflow->getColumnValue('stazione'));
@@ -94,7 +95,7 @@ class T00061_WorkFlowWithNodoChiediAvanzamentoPagamento extends TestCase
         $this->assertEquals('OK', $workflow->getColumnValue('outcome'));
 
         $workflow = self::$db->getWorkFlow($transaction, 4);
-        $this->assertEquals('15', $workflow->getColumnValue('fk_tipoevento'));
+        $this->assertEquals(MapEvents::getMethodId('pspNotifyPayment', 'REQ'), $workflow->getColumnValue('fk_tipoevento'));
         $this->assertEquals('2024-03-10 12:40:00.197', $workflow->getColumnValue('event_timestamp'));
         $this->assertEquals('T000202', $workflow->getColumnValue('event_id'));
         $this->assertEquals('77777777777_01', $workflow->getColumnValue('stazione'));
@@ -103,7 +104,7 @@ class T00061_WorkFlowWithNodoChiediAvanzamentoPagamento extends TestCase
         $this->assertNull($workflow->getColumnValue('outcome'));
 
         $workflow = self::$db->getWorkFlow($transaction, 5);
-        $this->assertEquals('16', $workflow->getColumnValue('fk_tipoevento'));
+        $this->assertEquals(MapEvents::getMethodId('pspNotifyPayment', 'RESP'), $workflow->getColumnValue('fk_tipoevento'));
         $this->assertEquals('2024-03-10 12:40:01.197', $workflow->getColumnValue('event_timestamp'));
         $this->assertEquals('T000203', $workflow->getColumnValue('event_id'));
         $this->assertEquals('77777777777_01', $workflow->getColumnValue('stazione'));
@@ -112,7 +113,7 @@ class T00061_WorkFlowWithNodoChiediAvanzamentoPagamento extends TestCase
         $this->assertEquals('OK', $workflow->getColumnValue('outcome'));
 
         $workflow = self::$db->getWorkFlow($transaction, 6);
-        $this->assertEquals('5', $workflow->getColumnValue('fk_tipoevento'));
+        $this->assertEquals(MapEvents::getMethodId('sendPaymentOutcome', 'REQ'), $workflow->getColumnValue('fk_tipoevento'));
         $this->assertEquals('2024-03-10 12:41:00.197', $workflow->getColumnValue('event_timestamp'));
         $this->assertEquals('T000204', $workflow->getColumnValue('event_id'));
         $this->assertEquals('77777777777_01', $workflow->getColumnValue('stazione'));
@@ -121,7 +122,7 @@ class T00061_WorkFlowWithNodoChiediAvanzamentoPagamento extends TestCase
         $this->assertEquals('OK', $workflow->getColumnValue('outcome'));
 
         $workflow = self::$db->getWorkFlow($transaction, 7);
-        $this->assertEquals('6', $workflow->getColumnValue('fk_tipoevento'));
+        $this->assertEquals(MapEvents::getMethodId('sendPaymentOutcome', 'RESP'), $workflow->getColumnValue('fk_tipoevento'));
         $this->assertEquals('2024-03-10 12:41:01.197', $workflow->getColumnValue('event_timestamp'));
         $this->assertEquals('T000205', $workflow->getColumnValue('event_id'));
         $this->assertEquals('77777777777_01', $workflow->getColumnValue('stazione'));

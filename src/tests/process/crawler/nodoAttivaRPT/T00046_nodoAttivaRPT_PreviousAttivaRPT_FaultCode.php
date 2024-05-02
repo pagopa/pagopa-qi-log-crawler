@@ -2,6 +2,7 @@
 
 namespace process\crawler\nodoAttivaRPT;
 
+use pagopa\crawler\MapEvents;
 use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
 
@@ -53,13 +54,13 @@ class T00046_nodoAttivaRPT_PreviousAttivaRPT_FaultCode extends TestCase
         $transaction = self::$db->getTransaction(new \DateTime('2024-03-10'), '01000000000000091');
 
         $workflow = self::$db->getWorkFlow($transaction, 0);
-        $this->assertEquals('13', $workflow->getColumnValue('fk_tipoevento'));
+        $this->assertEquals(MapEvents::getMethodId('nodoAttivaRPT', 'REQ'), $workflow->getColumnValue('fk_tipoevento'));
         $this->assertEquals('2024-03-10 12:51:00.197', $workflow->getColumnValue('event_timestamp'));
         $this->assertEquals('T000096', $workflow->getColumnValue('event_id'));
         $this->assertEquals('77777777777_01', $workflow->getColumnValue('stazione'));
 
         $workflow = self::$db->getWorkFlow($transaction, 1);
-        $this->assertEquals('14', $workflow->getColumnValue('fk_tipoevento'));
+        $this->assertEquals(MapEvents::getMethodId('nodoAttivaRPT', 'RESP'), $workflow->getColumnValue('fk_tipoevento'));
         $this->assertEquals('2024-03-10 12:52:01.197', $workflow->getColumnValue('event_timestamp'));
         $this->assertEquals('T000097', $workflow->getColumnValue('event_id'));
         $this->assertEquals('77777777777_01', $workflow->getColumnValue('stazione'));

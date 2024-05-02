@@ -3,6 +3,7 @@
 namespace process\crawler\nodoInviaCarrelloRPT\BothEvents;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
+use pagopa\crawler\MapEvents;
 use pagopa\database\sherlock\Transaction;
 use pagopa\database\sherlock\TransactionRe;
 use pagopa\database\sherlock\Workflow;
@@ -243,19 +244,19 @@ class T00027_CreateAttemptTwoRPTTwoTransferForRPTWithResponseDifferentData exten
         $workflow = self::$db->getWorkFlow($transaction, 0);
 
 
-        $this->assertEquals('3', $workflow->getColumnValue('fk_tipoevento'));
+        $this->assertEquals(MapEvents::getMethodId('nodoInviaCarrelloRPT', 'REQ'), $workflow->getColumnValue('fk_tipoevento'));
         $this->assertEquals('2024-03-10 10:38:00.197', $workflow->getColumnValue('event_timestamp'));
         $this->assertEquals('T000030', $workflow->getColumnValue('event_id'));
         $this->assertEquals('77777777777_01', $workflow->getColumnValue('stazione'));
 
         $workflow = self::$db->getWorkFlow($transaction, 1);
-        $this->assertEquals('4', $workflow->getColumnValue('fk_tipoevento'));
+        $this->assertEquals(MapEvents::getMethodId('nodoInviaCarrelloRPT', 'RESP'), $workflow->getColumnValue('fk_tipoevento'));
         $this->assertEquals('2024-03-10 10:39:00.197', $workflow->getColumnValue('event_timestamp'));
         $this->assertEquals('T000031', $workflow->getColumnValue('event_id'));
         $this->assertEquals('77777777777_01', $workflow->getColumnValue('stazione'));
 
         $workflow = self::$db->getWorkFlow($transaction, 2);
-        $this->assertEquals('4', $workflow->getColumnValue('fk_tipoevento'));
+        $this->assertEquals(MapEvents::getMethodId('nodoInviaCarrelloRPT', 'RESP'), $workflow->getColumnValue('fk_tipoevento'));
         $this->assertEquals('2024-03-11 10:40:00.197', $workflow->getColumnValue('event_timestamp'));
         $this->assertEquals('T000032', $workflow->getColumnValue('event_id'));
         $this->assertEquals('77777777777_01', $workflow->getColumnValue('stazione'));
@@ -265,19 +266,19 @@ class T00027_CreateAttemptTwoRPTTwoTransferForRPTWithResponseDifferentData exten
         $workflow = self::$db->getWorkFlow($transaction, 0);
 
 
-        $this->assertEquals('3', $workflow->getColumnValue('fk_tipoevento'));
+        $this->assertEquals(MapEvents::getMethodId('nodoInviaCarrelloRPT', 'REQ'), $workflow->getColumnValue('fk_tipoevento'));
         $this->assertEquals('2024-03-10 10:38:00.197', $workflow->getColumnValue('event_timestamp'));
         $this->assertEquals('T000030', $workflow->getColumnValue('event_id'));
         $this->assertEquals('77777777777_01', $workflow->getColumnValue('stazione'));
 
         $workflow = self::$db->getWorkFlow($transaction, 1);
-        $this->assertEquals('4', $workflow->getColumnValue('fk_tipoevento'));
+        $this->assertEquals(MapEvents::getMethodId('nodoInviaCarrelloRPT', 'RESP'), $workflow->getColumnValue('fk_tipoevento'));
         $this->assertEquals('2024-03-10 10:39:00.197', $workflow->getColumnValue('event_timestamp'));
         $this->assertEquals('T000031', $workflow->getColumnValue('event_id'));
         $this->assertEquals('77777777777_01', $workflow->getColumnValue('stazione'));
 
         $workflow = self::$db->getWorkFlow($transaction, 2);
-        $this->assertEquals('4', $workflow->getColumnValue('fk_tipoevento'));
+        $this->assertEquals(MapEvents::getMethodId('nodoInviaCarrelloRPT', 'RESP'), $workflow->getColumnValue('fk_tipoevento'));
         $this->assertEquals('2024-03-11 10:40:00.197', $workflow->getColumnValue('event_timestamp'));
         $this->assertEquals('T000032', $workflow->getColumnValue('event_id'));
         $this->assertEquals('77777777777_01', $workflow->getColumnValue('stazione'));

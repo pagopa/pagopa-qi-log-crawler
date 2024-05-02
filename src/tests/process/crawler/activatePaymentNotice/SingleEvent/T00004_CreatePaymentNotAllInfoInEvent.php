@@ -3,6 +3,7 @@
 namespace process\crawler\activatePaymentNotice\SingleEvent;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
+use pagopa\crawler\MapEvents;
 use pagopa\database\sherlock\Transaction;
 use pagopa\database\sherlock\TransactionRe;
 use pagopa\database\sherlock\Workflow;
@@ -141,7 +142,7 @@ class T00004_CreatePaymentNotAllInfoInEvent extends TestCase
         $event = self::$db->getWorkFlow($transaction, 0);
 
         $this->assertEquals('T000004', $event->getColumnValue('event_id'));
-        $this->assertEquals('1', $event->getColumnValue('fk_tipoevento'));
+        $this->assertEquals(MapEvents::getMethodId('activatePaymentNotice', 'REQ'), $event->getColumnValue('fk_tipoevento'));
         $this->assertEquals('2024-03-10 09:41:00.232', $event->getColumnValue('event_timestamp'));
         $this->assertEquals('T000004', $event->getColumnValue('event_id'));
         $this->assertEquals('77777777777_01', $event->getColumnValue('stazione'));
@@ -151,7 +152,7 @@ class T00004_CreatePaymentNotAllInfoInEvent extends TestCase
         $event = self::$db->getWorkFlow($transaction, 1);
 
         $this->assertEquals('T000009', $event->getColumnValue('event_id'));
-        $this->assertEquals('1', $event->getColumnValue('fk_tipoevento'));
+        $this->assertEquals(MapEvents::getMethodId('activatePaymentNotice', 'REQ'), $event->getColumnValue('fk_tipoevento'));
         $this->assertEquals('2024-03-11 09:42:25.232', $event->getColumnValue('event_timestamp'));
         $this->assertEquals('T000009', $event->getColumnValue('event_id'));
         $this->assertEquals('77777777777_01', $event->getColumnValue('stazione'));

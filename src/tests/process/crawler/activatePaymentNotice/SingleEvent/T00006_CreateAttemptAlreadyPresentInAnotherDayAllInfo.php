@@ -2,6 +2,7 @@
 namespace process\crawler\activatePaymentNotice\SingleEvent;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
+use pagopa\crawler\MapEvents;
 use pagopa\database\sherlock\Transaction;
 use pagopa\database\sherlock\TransactionRe;
 use pagopa\database\sherlock\Workflow;
@@ -122,7 +123,7 @@ class T00006_CreateAttemptAlreadyPresentInAnotherDayAllInfo extends TestCase
         $transaction = self::$db->getTransaction(new \DateTime('2024-03-10'), '01000000000000001', 't0000000000000000000000000000001');
         $workflow = self::$db->getWorkFlow($transaction, 1);
 
-        $this->assertEquals('1', $workflow->getColumnValue('fk_tipoevento'));
+        $this->assertEquals(MapEvents::getMethodId('activatePaymentNotice', 'REQ'), $workflow->getColumnValue('fk_tipoevento'));
         $this->assertEquals('2024-03-11 09:29:25.232', $workflow->getColumnValue('event_timestamp'));
         $this->assertEquals('T000006', $workflow->getColumnValue('event_id'));
         $this->assertEquals('AGID_01', $workflow->getColumnValue('id_psp'));

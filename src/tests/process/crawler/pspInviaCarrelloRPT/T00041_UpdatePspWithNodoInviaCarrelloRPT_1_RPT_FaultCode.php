@@ -2,6 +2,7 @@
 
 namespace process\crawler\pspInviaCarrelloRPT;
 
+use pagopa\crawler\MapEvents;
 use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
 
@@ -57,26 +58,26 @@ class T00041_UpdatePspWithNodoInviaCarrelloRPT_1_RPT_FaultCode extends TestCase
         $transaction = self::$db->getTransaction(new \DateTime('2024-03-10'), '01000000000000042');
 
         $workflow = self::$db->getWorkFlow($transaction, 0);
-        $this->assertEquals('3', $workflow->getColumnValue('fk_tipoevento'));
+        $this->assertEquals(MapEvents::getMethodId('nodoInviaCarrelloRPT', 'REQ'), $workflow->getColumnValue('fk_tipoevento'));
         $this->assertEquals('2024-03-10 10:45:00.197', $workflow->getColumnValue('event_timestamp'));
         $this->assertEquals('T000074', $workflow->getColumnValue('event_id'));
         $this->assertEquals('77777777777_01', $workflow->getColumnValue('stazione'));
 
         $workflow = self::$db->getWorkFlow($transaction, 1);
-        $this->assertEquals('4', $workflow->getColumnValue('fk_tipoevento'));
+        $this->assertEquals(MapEvents::getMethodId('nodoInviaCarrelloRPT', 'RESP'), $workflow->getColumnValue('fk_tipoevento'));
         $this->assertEquals('2024-03-10 10:45:01.197', $workflow->getColumnValue('event_timestamp'));
         $this->assertEquals('T000075', $workflow->getColumnValue('event_id'));
         $this->assertEquals('77777777777_01', $workflow->getColumnValue('stazione'));
         $this->assertEquals('OK', $workflow->getColumnValue('outcome'));
 
         $workflow = self::$db->getWorkFlow($transaction, 2);
-        $this->assertEquals('7', $workflow->getColumnValue('fk_tipoevento'));
+        $this->assertEquals(MapEvents::getMethodId('pspInviaCarrelloRPT', 'REQ'), $workflow->getColumnValue('fk_tipoevento'));
         $this->assertEquals('2024-03-10 10:46:00.197', $workflow->getColumnValue('event_timestamp'));
         $this->assertEquals('T000076', $workflow->getColumnValue('event_id'));
         $this->assertNull($workflow->getColumnValue('stazione'));
 
         $workflow = self::$db->getWorkFlow($transaction, 3);
-        $this->assertEquals('8', $workflow->getColumnValue('fk_tipoevento'));
+        $this->assertEquals(MapEvents::getMethodId('pspInviaCarrelloRPT', 'RESP'), $workflow->getColumnValue('fk_tipoevento'));
         $this->assertEquals('2024-03-10 10:46:01.197', $workflow->getColumnValue('event_timestamp'));
         $this->assertEquals('T000077', $workflow->getColumnValue('event_id'));
         $this->assertNull($workflow->getColumnValue('stazione'));

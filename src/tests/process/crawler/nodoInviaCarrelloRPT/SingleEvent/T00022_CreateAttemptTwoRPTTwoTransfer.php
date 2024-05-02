@@ -3,6 +3,7 @@
 namespace process\crawler\nodoInviaCarrelloRPT\SingleEvent;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
+use pagopa\crawler\MapEvents;
 use pagopa\database\sherlock\Transaction;
 use pagopa\database\sherlock\TransactionRe;
 use pagopa\database\sherlock\Workflow;
@@ -228,7 +229,7 @@ class T00022_CreateAttemptTwoRPTTwoTransfer extends TestCase
         $workflow = self::$db->getWorkFlow($transaction, 0);
 
 
-        $this->assertEquals('3', $workflow->getColumnValue('fk_tipoevento'));
+        $this->assertEquals(MapEvents::getMethodId('nodoInviaCarrelloRPT', 'REQ'), $workflow->getColumnValue('fk_tipoevento'));
         $this->assertEquals('2024-03-10 10:25:00.197', $workflow->getColumnValue('event_timestamp'));
         $this->assertEquals('T000022', $workflow->getColumnValue('event_id'));
         $this->assertEquals('77777777777_01', $workflow->getColumnValue('stazione'));
@@ -239,7 +240,7 @@ class T00022_CreateAttemptTwoRPTTwoTransfer extends TestCase
         $workflow = self::$db->getWorkFlow($transaction, 0);
 
 
-        $this->assertEquals('3', $workflow->getColumnValue('fk_tipoevento'));
+        $this->assertEquals(MapEvents::getMethodId('nodoInviaCarrelloRPT', 'REQ'), $workflow->getColumnValue('fk_tipoevento'));
         $this->assertEquals('2024-03-10 10:25:00.197', $workflow->getColumnValue('event_timestamp'));
         $this->assertEquals('T000022', $workflow->getColumnValue('event_id'));
         $this->assertEquals('77777777777_01', $workflow->getColumnValue('stazione'));
