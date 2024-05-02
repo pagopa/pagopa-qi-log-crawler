@@ -26,7 +26,7 @@
     </php>
     <testsuites>
         <testsuite name="temp_suite">
-            <file>process/crawler/nodoChiediAvanzamentoPagamento/T00061_WorkFlowWithNodoChiediAvanzamentoPagamento.php</file>
+            <file>process/crawler/closePaymentV1/T00062_WorkFlowWithClosePaymentV1.php</file>
         </testsuite>
         <testsuite name="crawler">
             <file>process/crawler/activatePaymentNotice/SingleEvent/T00001_CreateAttemptAllInfoInEvent.php</file>
@@ -81,6 +81,7 @@
             <file>process/crawler/nodoChiediInformazioniPagamento/T00059_WorkFlowWithNodoChiediInformazioniPagamento.php</file>
             <file>process/crawler/nodoInoltraEsitoPagamentoCarta/T00060_WorkFlowWithNodoInoltraEsitoPagamento.php</file>
             <file>process/crawler/nodoChiediAvanzamentoPagamento/T00061_WorkFlowWithNodoChiediAvanzamentoPagamento.php</file>
+            <file>process/crawler/closePaymentV1/T00062_WorkFlowWithClosePaymentV1.php</file>
         </testsuite>
         <testsuite name="unit_tests">
             <!-- Object Method Tests -->
@@ -143,6 +144,7 @@
             <file>pagopa/events/req/activatePaymentNoticeV2Test.php</file>
             <file>pagopa/events/req/pspNotifyPaymentV2Test.php</file>
             <file>pagopa/events/req/closePaymentV2Test.php</file>
+            <file>pagopa/events/req/closePaymentV1Test.php</file>
             <file>pagopa/events/req/nodoChiediInformazioniPagamentoTest.php</file>
             <file>pagopa/events/req/nodoInoltraEsitoPagamentoCartaTest.php</file>
             <file>pagopa/events/req/nodoChiediAvanzamentoPagamentoTest.php</file>
@@ -161,6 +163,7 @@
             <file>pagopa/events/resp/activateIOPaymentTest.php</file>
             <file>pagopa/events/resp/pspNotifyPaymentV2Test.php</file>
             <file>pagopa/events/resp/closePaymentV2Test.php</file>
+            <file>pagopa/events/resp/closePaymentV1Test.php</file>
             <file>pagopa/events/resp/nodoChiediInformazioniPagamentoTest.php</file>
             <file>pagopa/events/resp/nodoInoltraEsitoPagamentoCartaTest.php</file>
             <file>pagopa/events/resp/nodoChiediAvanzamentoPagamentoTest.php</file>

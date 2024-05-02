@@ -147,6 +147,12 @@ $a = new \pagopa\crawler\paymentlist\resp\nodoChiediAvanzamentoPagamento(new Dat
 $a->run();
 
 
+$a = new \pagopa\crawler\paymentlist\req\closePaymentV1(new DateTime('2024-03-10'), 'closePayment-v1', 'REQ', $redis_cache);
+$a->run();
+
+$a = new \pagopa\crawler\paymentlist\resp\closePaymentV1(new DateTime('2024-03-10'), 'closePayment-v1', 'RESP', $redis_cache);
+$a->run();
+
 $a = new \pagopa\crawler\paymentlist\req\pspNotifyPayment(new \DateTime('2024-03-10'), 'pspNotifyPayment', 'REQ', $redis_cache);
 $a->run();
 

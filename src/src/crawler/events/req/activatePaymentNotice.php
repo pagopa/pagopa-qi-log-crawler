@@ -173,7 +173,6 @@ class activatePaymentNotice extends AbstractEvent
         $pa_emittente   =   $this->getPaEmittente();
 
         return sprintf('payment_%s_%s', $iuv, $pa_emittente);
-
     }
 
     /**

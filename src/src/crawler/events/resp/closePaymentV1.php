@@ -1,6 +1,6 @@
 <?php
 
-namespace pagopa\crawler\events\req;
+namespace pagopa\crawler\events\resp;
 
 use pagopa\crawler\events\AbstractEvent;
 use pagopa\crawler\MapEvents;
@@ -8,10 +8,11 @@ use pagopa\crawler\methods\MethodInterface;
 use pagopa\database\sherlock\Transaction;
 use pagopa\database\sherlock\TransactionDetails;
 use pagopa\database\sherlock\Workflow;
-use pagopa\crawler\methods\req\closePaymentV1 as Payload;
+use pagopa\crawler\methods\resp\closePaymentV1 as Payload;
 
 class closePaymentV1 extends AbstractEvent
 {
+
 
     protected Payload $method;
 
@@ -21,6 +22,7 @@ class closePaymentV1 extends AbstractEvent
         parent::__construct($eventData);
         $this->method = new Payload($this->data['payload']);
     }
+
     /**
      * @inheritDoc
      */
@@ -72,6 +74,7 @@ class closePaymentV1 extends AbstractEvent
         $id_psp     = $this->getPsp();
         $stazione   = $this->getStazione();
         $canale     = $this->getCanale();
+        $outcome    = $this->getMethodInterface()->outcome();
 
         if (!is_null($id_psp))
         {
@@ -84,6 +87,10 @@ class closePaymentV1 extends AbstractEvent
         if (!is_null($canale))
         {
             $workflow->setCanale($canale);
+        }
+        if (!is_null($outcome))
+        {
+            $workflow->setOutcomeEvent($outcome);
         }
 
         return $workflow;
@@ -143,14 +150,14 @@ class closePaymentV1 extends AbstractEvent
     public function getCacheKeyList(): array
     {
         $return = array();
-        if (!is_null($this->getPaymentToken()))
-        {
-            $key = sprintf('token_%s', $this->getPaymentToken());
-            $return[] = $key;
-        }
         if (!is_null($this->getSessionIdOriginal()))
         {
             $key = sprintf('sessionOriginal_%s', $this->getSessionIdOriginal());
+            $return[] = $key;
+        }
+        if (!is_null($this->getPaymentToken()))
+        {
+            $key = sprintf('token_%s', $this->getPaymentToken());
             $return[] = $key;
         }
         return $return;
