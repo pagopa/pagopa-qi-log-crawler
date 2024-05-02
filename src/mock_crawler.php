@@ -133,6 +133,11 @@ $a->run();
 $a = new \pagopa\crawler\paymentlist\resp\nodoChiediInformazioniPagamento(new DateTime('2024-03-10'), 'nodoChiediInformazioniPagamento', 'RESP', $redis_cache);
 $a->run();
 
+$a = new \pagopa\crawler\paymentlist\req\nodoInoltraEsitoPagamentoCarta(new DateTime('2024-03-10'), 'nodoInoltraEsitoPagamentoCarta', 'REQ', $redis_cache);
+$a->run();
+
+$a = new \pagopa\crawler\paymentlist\resp\nodoInoltraEsitoPagamentoCarta(new DateTime('2024-03-10'), 'nodoInoltraEsitoPagamentoCarta', 'RESP', $redis_cache);
+$a->run();
 
 $a = new \pagopa\crawler\paymentlist\req\pspNotifyPayment(new \DateTime('2024-03-10'), 'pspNotifyPayment', 'REQ', $redis_cache);
 $a->run();

@@ -4,7 +4,7 @@ namespace pagopa\crawler\paymentlist\req;
 
 use pagopa\crawler\paymentlist\AbstractPaymentList;
 
-class nodoChiediInformazioniPagamento extends AbstractPaymentList
+class nodoInoltraEsitoPagamentoCarta extends AbstractPaymentList
 {
 
     /**
@@ -12,7 +12,7 @@ class nodoChiediInformazioniPagamento extends AbstractPaymentList
      */
     public function createEventInstance(array $eventData): void
     {
-        $event = new \pagopa\crawler\events\req\nodoChiediInformazioniPagamento($eventData);
+        $event = new \pagopa\crawler\events\req\nodoInoltraEsitoPagamentoCarta($eventData);
         $this->setEvent($event);
     }
 
@@ -22,9 +22,9 @@ class nodoChiediInformazioniPagamento extends AbstractPaymentList
     public function isValidPayment(int $index = 0): bool
     {
         if ((!is_null($this->getEvent()->getSessionIdOriginal())) || (!empty($this->getEvent()->getSessionIdOriginal())))
-            {
-                return true;
-            }
+        {
+            return true;
+        }
         return ($this->getEvent()->getIuv(0) && $this->getEvent()->getPaEmittente(0));
     }
 
