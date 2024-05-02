@@ -27,12 +27,7 @@ function randomString($n = 15)
 
 $redis_cache = new \pagopa\crawler\RedisCache($connection);
 
-foreach($redis_cache->getAllKeys() as $key)
-{
-    print_r($key);
-    echo PHP_EOL;
-    print_r($redis_cache->getValue($key));
-}
+echo "Ci sono " . count($redis_cache->getAllKeys()) . " keys nella cache " .PHP_EOL;
 
 
 

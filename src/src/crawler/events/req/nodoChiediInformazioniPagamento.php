@@ -163,7 +163,7 @@ class nodoChiediInformazioniPagamento extends AbstractEvent
         }
         if (!is_null($this->getPaymentToken()))
         {
-            $key = sprintf('token_%s', $this->getPaymentToken());
+            $key = sprintf('token_%s', $this->getCcp());
             $return[] = $key;
         }
         return $return;

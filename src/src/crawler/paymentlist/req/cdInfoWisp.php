@@ -1,10 +1,10 @@
 <?php
 
-namespace pagopa\crawler\paymentlist\resp;
+namespace pagopa\crawler\paymentlist\req;
 
 use pagopa\crawler\paymentlist\AbstractPaymentList;
 
-class nodoChiediInformazioniPagamento extends AbstractPaymentList
+class cdInfoWisp extends AbstractPaymentList
 {
 
     /**
@@ -12,7 +12,7 @@ class nodoChiediInformazioniPagamento extends AbstractPaymentList
      */
     public function createEventInstance(array $eventData): void
     {
-        $event = new \pagopa\crawler\events\resp\nodoChiediInformazioniPagamento($eventData);
+        $event = new \pagopa\crawler\events\req\cdInfoWisp($eventData);
         $this->setEvent($event);
     }
 
@@ -21,10 +21,6 @@ class nodoChiediInformazioniPagamento extends AbstractPaymentList
      */
     public function isValidPayment(int $index = 0): bool
     {
-        if ((!is_null($this->getEvent()->getSessionIdOriginal())) || (!empty($this->getEvent()->getSessionIdOriginal())))
-        {
-            return true;
-        }
         return ($this->getEvent()->getIuv(0) && $this->getEvent()->getPaEmittente(0));
     }
 
@@ -33,10 +29,6 @@ class nodoChiediInformazioniPagamento extends AbstractPaymentList
      */
     public function isAttempt(int $index = 0): bool
     {
-        if ((!is_null($this->getEvent()->getSessionIdOriginal())) || (!empty($this->getEvent()->getSessionIdOriginal())))
-        {
-            return true;
-        }
         return ($this->getEvent()->getIuv(0) && $this->getEvent()->getPaEmittente(0) && $this->getEvent()->getPaymentToken(0));
     }
 }

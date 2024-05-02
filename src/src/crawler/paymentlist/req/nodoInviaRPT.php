@@ -61,14 +61,18 @@ class nodoInviaRPT extends AbstractPaymentList
                     'pa_transfer' => $this->getEvent()->getMethodInterface()->getTransferPa($i, $index),
                     'bollo' => true,
                     'amount_transfer' => $this->getEvent()->getMethodInterface()->getTransferAmount($i, $index),
-                    'iban_transfer' => ''
+                    'iban_transfer' => '',
+                    'id' => $last_inserted_transfer_id,
+                    'date_event' => $cache->getDateEvent()
                 ];
             } else {
                 $transfer_add[] = [
                     'pa_transfer' => $this->getEvent()->getMethodInterface()->getTransferPa($i, $index),
                     'bollo' => false,
                     'amount_transfer' => $this->getEvent()->getMethodInterface()->getTransferAmount($i, $index),
-                    'iban_transfer' => $this->getEvent()->getMethodInterface()->getTransferIban($i, $index)
+                    'iban_transfer' => $this->getEvent()->getMethodInterface()->getTransferIban($i, $index),
+                    'id' => $last_inserted_transfer_id,
+                    'date_event' => $cache->getDateEvent()
                 ];
             }
         }

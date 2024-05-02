@@ -112,6 +112,12 @@ $a = new \pagopa\crawler\paymentlist\resp\nodoInviaRPT(new \DateTime('2024-03-10
 $a->run();
 
 
+$a = new \pagopa\crawler\paymentlist\req\cdInfoWisp(new \DateTime('2024-03-10'), 'cdInfoWisp', 'REQ', $redis_cache);
+$a->run();
+
+$a = new \pagopa\crawler\paymentlist\resp\cdInfoWisp(new \DateTime('2024-03-10'), 'cdInfoWisp', 'RESP', $redis_cache);
+$a->run();
+
 
 $a = new \pagopa\crawler\paymentlist\req\pspInviaCarrelloRPT(new DateTime('2024-03-10'), 'pspInviaCarrelloRPT', 'REQ', $redis_cache);
 $a->run();

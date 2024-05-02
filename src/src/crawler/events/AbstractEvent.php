@@ -336,9 +336,41 @@ abstract class AbstractEvent implements EventInterface
         if ($this->typePayload == 'json')
         {
             return $this->getMethodInterface()->isValidPayload();
-            return json_last_error() === JSON_ERROR_NONE;
         }
         return false;
 
+    }
+
+    /**
+     * @inheritDoc
+     */
+
+    public function isFaultEvent(): bool
+    {
+        return false;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getFaultCode(): string|null
+    {
+        return null;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getFaultString(): string|null
+    {
+        return null;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getFaultDescription(): string|null
+    {
+        return null;
     }
 }

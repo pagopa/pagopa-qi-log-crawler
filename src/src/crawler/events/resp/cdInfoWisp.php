@@ -5,28 +5,31 @@ namespace pagopa\crawler\events\resp;
 use pagopa\crawler\events\AbstractEvent;
 use pagopa\crawler\MapEvents;
 use pagopa\crawler\methods\MethodInterface;
-use pagopa\crawler\methods\resp\nodoChiediInformazioniPagamento as Payload;
 use pagopa\database\sherlock\Transaction;
 use pagopa\database\sherlock\TransactionDetails;
 use pagopa\database\sherlock\Workflow;
+use pagopa\crawler\methods\resp\cdInfoWisp as Payload;
 
-class nodoChiediInformazioniPagamento extends AbstractEvent
+class cdInfoWisp extends AbstractEvent
 {
 
     protected Payload $method;
+
 
     public function __construct(array $eventData)
     {
         parent::__construct($eventData);
         $this->method = new Payload($this->data['payload']);
     }
+
+
     /**
      * @inheritDoc
      */
     public function getIuvs(): array|null
     {
         $value = $this->getIuv();
-        return (is_null($value)) ? null : array($value);
+        return (is_null($value)) ? $this->getMethodInterface()->getIuvs() : array($value);
     }
 
     /**
@@ -35,7 +38,7 @@ class nodoChiediInformazioniPagamento extends AbstractEvent
     public function getPaEmittenti(): array|null
     {
         $value = $this->getPaEmittente();
-        return (is_null($value)) ? null : array($value);
+        return (is_null($value)) ? $this->getMethodInterface()->getPaEmittenti() : array($value);
     }
 
     /**
@@ -44,7 +47,7 @@ class nodoChiediInformazioniPagamento extends AbstractEvent
     public function getCcps(): array|null
     {
         $value = $this->getCcp();
-        return (is_null($value)) ? null : array($value);
+        return (is_null($value)) ? $this->getMethodInterface()->getCcps() : array($value);
     }
 
     /**
@@ -71,6 +74,7 @@ class nodoChiediInformazioniPagamento extends AbstractEvent
         $id_psp     = $this->getPsp();
         $stazione   = $this->getStazione();
         $canale     = $this->getCanale();
+        $outcome    = $this->getMethodInterface()->outcome();
 
         if (!is_null($id_psp))
         {
@@ -83,6 +87,10 @@ class nodoChiediInformazioniPagamento extends AbstractEvent
         if (!is_null($canale))
         {
             $workflow->setCanale($canale);
+        }
+        if (!is_null($outcome))
+        {
+            $workflow->setOutcomeEvent($outcome);
         }
 
         return $workflow;
@@ -117,15 +125,11 @@ class nodoChiediInformazioniPagamento extends AbstractEvent
      */
     public function getCacheKeyPayment(int $index = 0): string|null
     {
-        $iuv            = $this->getColumn('iuv');
-        $pa_emittente   = $this->getColumn('iddominio');
-        $token          = $this->getColumn('ccp');
-        $key            = null;
-        if (($iuv) && ($pa_emittente) && ($token))
-        {
-            $key = base64_encode(sprintf('attempt_%s_%s_%s', $iuv, $pa_emittente, $token));
-        }
-        return $key;
+        $iuv            =   $this->getIuv();
+        $pa_emittente   =   $this->getPaEmittente();
+        $token          =   $this->getPaymentToken();
+
+        return sprintf('attempt_%s_%s_%s', $iuv, $pa_emittente, $token);
     }
 
     /**
@@ -133,15 +137,11 @@ class nodoChiediInformazioniPagamento extends AbstractEvent
      */
     public function getCacheKeyAttempt(int $index = 0): string|null
     {
-        $iuv            = $this->getColumn('iuv');
-        $pa_emittente   = $this->getColumn('iddominio');
-        $token          = $this->getColumn('ccp');
-        $key            = null;
-        if (($iuv) && ($pa_emittente) && ($token))
-        {
-            $key = base64_encode(sprintf('attempt_%s_%s_%s', $iuv, $pa_emittente, $token));
-        }
-        return $key;
+        $iuv            =   $this->getIuv();
+        $pa_emittente   =   $this->getPaEmittente();
+        $token          =   $this->getPaymentToken();
+
+        return sprintf('attempt_%s_%s_%s', $iuv, $pa_emittente, $token);
     }
 
     /**
@@ -155,48 +155,17 @@ class nodoChiediInformazioniPagamento extends AbstractEvent
             $key = sprintf('sessionOriginal_%s', $this->getSessionIdOriginal());
             $return[] = $key;
         }
+        if (!is_null($this->getPaymentToken()))
+        {
+            $key = sprintf('token_%s', $this->getPaymentToken());
+            $return[] = $key;
+        }
         if (!is_null($this->getSessionId()))
         {
             $key = sprintf('session_id_%s_%s_%s', $this->getSessionId(), $this->getTipoEvento(), $this->getSottoTipoEvento());
             $return[] = $key;
         }
-        if (!is_null($this->getPaymentToken()))
-        {
-            $key = sprintf('token_%s', $this->getCcp());
-            $return[] = $key;
-        }
         return $return;
-    }
 
-    /**
-     * @inheritDoc
-     */
-    public function isFaultEvent(): bool
-    {
-        return false;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getFaultCode(): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getFaultString(): string|null
-    {
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getFaultDescription(): string|null
-    {
-        return null;
     }
 }

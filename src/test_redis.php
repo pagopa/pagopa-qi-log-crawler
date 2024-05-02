@@ -29,7 +29,6 @@ function randomString($n = 15)
 $redis_cache = new \pagopa\crawler\RedisCache($connection);
 
 $redis_cache->clearCache();
-die();
 
 for($i=0;$i<1500000;$i++)
 {

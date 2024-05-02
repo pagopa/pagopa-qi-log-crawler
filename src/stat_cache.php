@@ -1,16 +1,30 @@
 <?php
 
-$mem = new Memcached();
-$connect = $mem->addServer('172.17.0.4',11211);
+require_once './vendor/autoload.php';
+
+const REDIS_HOST        = '172.17.0.6';
+const REDIS_PORT        = '6379';
 
 
+$connection =
+    [
+        'scheme' => 'tcp',
+        'host' => REDIS_HOST,
+        'port' => REDIS_PORT
+    ];
 
-if (!$connect)
+
+function randomString($n = 15)
 {
-    echo "Non mi sono connesso al server memcache" .PHP_EOL;
-    exit;
+    $string = '';
+    for($i=0;$i<$n;$i++)
+    {
+        $string .= rand(0, 9);
+    }
+    return $string;
 }
-$mem->setOption(Memcached::OPT_COMPRESSION, true);
 
 
-print_r($mem->getStats());
+$redis_cache = new \pagopa\crawler\RedisCache($connection);
+
+print_r($redis_cache->)
