@@ -95,8 +95,8 @@ create table if not exists public.extra_info_2024 (
     id                  bigint              default nextval('public.extra_information_2024_id_seq'::regclass) not null,
     date_event          date                not null,
     fk_payment          bigint              null,
-    info_name           varchar(20)         not null,
-    info_value          varchar(80)         not null,
+    info_name           varchar(30)         not null,
+    info_value          varchar(50)         not null,
     constraint "EXTRA_INFO_2024_pk" primary key (date_event, id)
 )
 PARTITION BY RANGE (date_event);

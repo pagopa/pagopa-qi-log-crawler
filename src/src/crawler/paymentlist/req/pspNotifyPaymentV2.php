@@ -73,7 +73,8 @@ class pspNotifyPaymentV2 extends AbstractPaymentList
         }
         if (count($cache_data) > 0)
         {
-            $cache->setExtraInfo($cache_data);
+            $extra_info['typePaymentPspNotifyPaymentV2'] = $cache_data;
+            $cache->setExtraInfo($extra_info);
         }
 
         return $cache->getCacheData();

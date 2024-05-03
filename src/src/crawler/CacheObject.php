@@ -25,6 +25,7 @@ class CacheObject
             'pa_emittente'      =>  '',
             'token_ccp'         =>  '',
             'touchpoint'        =>  '',
+            'payment_type'      =>  '',
             'transfer_added'    =>  false,
             'esito'             =>  false,
             'amount_update'     =>  false,
@@ -405,6 +406,25 @@ class CacheObject
     {
         $touchpoint = $this->getKey('touchpoint');
         return !empty($touchpoint);
+    }
+
+    /**
+     * Restituisce il payment type (CC, PPAL, etc.)
+     * @return string
+     */
+    public function getPaymentType() : string
+    {
+        return $this->getKey('payment_type');
+    }
+
+    /**
+     * Restituisce true/false se il payment type è stato già inserito
+     * @return bool
+     */
+    public function hasPaymentType() : bool
+    {
+        $payment_type = $this->getKey('payment_type');
+        return !empty($payment_type);
     }
 
     public function getCacheData() : array

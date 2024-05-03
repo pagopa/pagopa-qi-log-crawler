@@ -7,7 +7,7 @@ use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
 
 #[TestDox('[T00063] Valuta un workflow con la cdInfoWisp')]
-class T00063_WorkFlowWithcdInfoWisp extends TestCase
+class T00063_WorkFlowWithCdInfoWisp extends TestCase
 {
     protected static \GetInfoFromDb $db;
 
