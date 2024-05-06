@@ -5872,3 +5872,130 @@ $data_resp = [
 
 Capsule::statement($render_query, $data_req);
 Capsule::statement($render_query, $data_resp);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+$data_req = [
+    ':id'                       => 240,
+    ':date_event'               => '2024-03-10',
+    ':inserted_timestamp'       => '2024-03-10 10:40:00.197',
+    ':tipoevento'               => 'nodoInviaCarrelloRPT',
+    ':sottotipoevento'          => 'REQ',
+    ':iddominio'                => '',
+    ':iuv'                      => '',
+    ':ccp'                      => '',
+    ':noticenumber'             => '',
+    ':creditorreferenceid'      => '',
+    ':paymenttoken'             => '',
+    ':psp'                      => 'AGID_01',
+    ':stazione'                 => '77777777777_01',
+    ':canale'                   => '88888888888_01',
+    ':sessionid'                => '',
+    ':sessionidoriginal'        => 'session_id_original_000240',
+    ':uniqueid'                 => 'T000240',
+    ':payload'                  => 'PFNPQVAtRU5WOkVudmVsb3BlIHhtbG5zOlNPQVAtRU5WPSJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy9zb2FwL2VudmVsb3BlLyIgeG1sbnM6cHB0PSJodHRwOi8vd3MucGFnYW1lbnRpLnRlbGVtYXRpY2kuZ292L3BwdGhlYWQiIHhtbG5zOndzPSJodHRwOi8vd3MucGFnYW1lbnRpLnRlbGVtYXRpY2kuZ292LyI+Cgk8U09BUC1FTlY6SGVhZGVyPgoJCTxwcHQ6aW50ZXN0YXppb25lQ2FycmVsbG9QUFQ+CgkJCTxpZGVudGlmaWNhdGl2b0ludGVybWVkaWFyaW9QQT43Nzc3Nzc3Nzc3NzwvaWRlbnRpZmljYXRpdm9JbnRlcm1lZGlhcmlvUEE+CgkJCTxpZGVudGlmaWNhdGl2b1N0YXppb25lSW50ZXJtZWRpYXJpb1BBPjc3Nzc3Nzc3Nzc3XzAxPC9pZGVudGlmaWNhdGl2b1N0YXppb25lSW50ZXJtZWRpYXJpb1BBPgoJCQk8aWRlbnRpZmljYXRpdm9DYXJyZWxsbz5jMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDI0MDwvaWRlbnRpZmljYXRpdm9DYXJyZWxsbz4KCQk8L3BwdDppbnRlc3RhemlvbmVDYXJyZWxsb1BQVD4KCTwvU09BUC1FTlY6SGVhZGVyPgoJPFNPQVAtRU5WOkJvZHk+CgkJPG5zMzpub2RvSW52aWFDYXJyZWxsb1JQVCB4bWxuczpuczM9Imh0dHA6Ly93cy5wYWdhbWVudGkudGVsZW1hdGljaS5nb3YvIj4KCQkJPHBhc3N3b3JkPlBMQUNFSE9MREVSPC9wYXNzd29yZD4KCQkJPGlkZW50aWZpY2F0aXZvUFNQPkFHSURfMDE8L2lkZW50aWZpY2F0aXZvUFNQPgoJCQk8aWRlbnRpZmljYXRpdm9JbnRlcm1lZGlhcmlvUFNQPjg4ODg4ODg4ODg4PC9pZGVudGlmaWNhdGl2b0ludGVybWVkaWFyaW9QU1A+CgkJCTxpZGVudGlmaWNhdGl2b0NhbmFsZT44ODg4ODg4ODg4OF8wMTwvaWRlbnRpZmljYXRpdm9DYW5hbGU+CgkJCTxsaXN0YVJQVD4KCQkJCTxlbGVtZW50b0xpc3RhUlBUPgoJCQkJCTxpZGVudGlmaWNhdGl2b0RvbWluaW8+Nzc3Nzc3Nzc3Nzc8L2lkZW50aWZpY2F0aXZvRG9taW5pbz4KCQkJCQk8aWRlbnRpZmljYXRpdm9Vbml2b2NvVmVyc2FtZW50bz4wMTAwMDAwMDAwMDAwMDI0MDwvaWRlbnRpZmljYXRpdm9Vbml2b2NvVmVyc2FtZW50bz4KCQkJCQk8Y29kaWNlQ29udGVzdG9QYWdhbWVudG8+dDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAyNDA8L2NvZGljZUNvbnRlc3RvUGFnYW1lbnRvPgoJCQkJCTxycHQ+UEZKUVZDQjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NWthV2RwZEhCaExtZHZkaTVwZEM5elkyaGxiV0Z6THpJd01URXZVR0ZuWVcxbGJuUnBMeUkrQ2drOGRtVnljMmx2Ym1WUFoyZGxkSFJ2UGpFdU1Ed3ZkbVZ5YzJsdmJtVlBaMmRsZEhSdlBnb0pQR1J2YldsdWFXOCtDZ2tKUEdsa1pXNTBhV1pwWTJGMGFYWnZSRzl0YVc1cGJ6NDNOemMzTnpjM056YzNOend2YVdSbGJuUnBabWxqWVhScGRtOUViMjFwYm1sdlBnb0pQQzlrYjIxcGJtbHZQZ29KUEdsa1pXNTBhV1pwWTJGMGFYWnZUV1Z6YzJGbloybHZVbWxqYUdsbGMzUmhQakl3TWpNeE1qRTFNREV3TVRVek9XRmlZbUV6TXpVdFlXSTBaUzAwWkRFNExXRXpQQzlwWkdWdWRHbG1hV05oZEdsMmIwMWxjM05oWjJkcGIxSnBZMmhwWlhOMFlUNEtDVHhrWVhSaFQzSmhUV1Z6YzJGbloybHZVbWxqYUdsbGMzUmhQakl3TWpNdE1USXRNVFZVTVRNNk1ERTZOVE11TmpFNUt6QXhPakF3UEM5a1lYUmhUM0poVFdWemMyRm5aMmx2VW1samFHbGxjM1JoUGdvSlBHRjFkR1Z1ZEdsallYcHBiMjVsVTI5bloyVjBkRzgrVGk5QlBDOWhkWFJsYm5ScFkyRjZhVzl1WlZOdloyZGxkSFJ2UGdvSlBITnZaMmRsZEhSdlZtVnljMkZ1ZEdVK0Nna0pQR2xrWlc1MGFXWnBZMkYwYVhadlZXNXBkbTlqYjFabGNuTmhiblJsUGdvSkNRazhkR2x3YjBsa1pXNTBhV1pwWTJGMGFYWnZWVzVwZG05amJ6NUhQQzkwYVhCdlNXUmxiblJwWm1sallYUnBkbTlWYm1sMmIyTnZQZ29KQ1FrOFkyOWthV05sU1dSbGJuUnBabWxqWVhScGRtOVZibWwyYjJOdlBqYzNOemMzTnpjM056YzNQQzlqYjJScFkyVkpaR1Z1ZEdsbWFXTmhkR2wyYjFWdWFYWnZZMjgrQ2drSlBDOXBaR1Z1ZEdsbWFXTmhkR2wyYjFWdWFYWnZZMjlXWlhKellXNTBaVDRLQ1FrOFlXNWhaM0poWm1sallWWmxjbk5oYm5SbFBuaDRlSGg0ZUhoNGVEd3ZZVzVoWjNKaFptbGpZVlpsY25OaGJuUmxQZ29KUEM5emIyZG5aWFIwYjFabGNuTmhiblJsUGdvSlBITnZaMmRsZEhSdlVHRm5ZWFJ2Y21VK0Nna0pQR2xrWlc1MGFXWnBZMkYwYVhadlZXNXBkbTlqYjFCaFoyRjBiM0psUGdvSkNRazhkR2x3YjBsa1pXNTBhV1pwWTJGMGFYWnZWVzVwZG05amJ6NUhQQzkwYVhCdlNXUmxiblJwWm1sallYUnBkbTlWYm1sMmIyTnZQZ29KQ1FrOFkyOWthV05sU1dSbGJuUnBabWxqWVhScGRtOVZibWwyYjJOdlBqYzNOemMzTnpjM056YzNQQzlqYjJScFkyVkpaR1Z1ZEdsbWFXTmhkR2wyYjFWdWFYWnZZMjgrQ2drSlBDOXBaR1Z1ZEdsbWFXTmhkR2wyYjFWdWFYWnZZMjlRWVdkaGRHOXlaVDRLQ1FrOFlXNWhaM0poWm1sallWQmhaMkYwYjNKbFBuaDRlSGg0ZUhoNGVEd3ZZVzVoWjNKaFptbGpZVkJoWjJGMGIzSmxQZ29KUEM5emIyZG5aWFIwYjFCaFoyRjBiM0psUGdvSlBHVnVkR1ZDWlc1bFptbGphV0Z5YVc4K0Nna0pQR2xrWlc1MGFXWnBZMkYwYVhadlZXNXBkbTlqYjBKbGJtVm1hV05wWVhKcGJ6NEtDUWtKUEhScGNHOUpaR1Z1ZEdsbWFXTmhkR2wyYjFWdWFYWnZZMjgrUnp3dmRHbHdiMGxrWlc1MGFXWnBZMkYwYVhadlZXNXBkbTlqYno0S0NRa0pQR052WkdsalpVbGtaVzUwYVdacFkyRjBhWFp2Vlc1cGRtOWpiejQzTnpjM056YzNOemMzTnp3dlkyOWthV05sU1dSbGJuUnBabWxqWVhScGRtOVZibWwyYjJOdlBnb0pDVHd2YVdSbGJuUnBabWxqWVhScGRtOVZibWwyYjJOdlFtVnVaV1pwWTJsaGNtbHZQZ29KQ1R4a1pXNXZiV2x1WVhwcGIyNWxRbVZ1WldacFkybGhjbWx2UG5oNGVIaDRlSGc4TDJSbGJtOXRhVzVoZW1sdmJtVkNaVzVsWm1samFXRnlhVzgrQ2drSlBHTnZaR2xqWlZWdWFYUlBjR1Z5UW1WdVpXWnBZMmxoY21sdlBuaDRQQzlqYjJScFkyVlZibWwwVDNCbGNrSmxibVZtYVdOcFlYSnBiejRLQ1FrOFpHVnViMjFWYm1sMFQzQmxja0psYm1WbWFXTnBZWEpwYno1NGVIaDRlSGc4TDJSbGJtOXRWVzVwZEU5d1pYSkNaVzVsWm1samFXRnlhVzgrQ2drSlBHbHVaR2x5YVhwNmIwSmxibVZtYVdOcFlYSnBiejU0ZUhoNFBDOXBibVJwY21sNmVtOUNaVzVsWm1samFXRnlhVzgrQ2drSlBHTnBkbWxqYjBKbGJtVm1hV05wWVhKcGJ6NTRlSGc4TDJOcGRtbGpiMEpsYm1WbWFXTnBZWEpwYno0S0NRazhZMkZ3UW1WdVpXWnBZMmxoY21sdlBuaDRlSGg0UEM5allYQkNaVzVsWm1samFXRnlhVzgrQ2drSlBHeHZZMkZzYVhSaFFtVnVaV1pwWTJsaGNtbHZQbmg0ZUhnOEwyeHZZMkZzYVhSaFFtVnVaV1pwWTJsaGNtbHZQZ29KQ1R4d2NtOTJhVzVqYVdGQ1pXNWxabWxqYVdGeWFXOCtlSGc4TDNCeWIzWnBibU5wWVVKbGJtVm1hV05wWVhKcGJ6NEtDUWs4Ym1GNmFXOXVaVUpsYm1WbWFXTnBZWEpwYno1NGVEd3ZibUY2YVc5dVpVSmxibVZtYVdOcFlYSnBiejRLQ1R3dlpXNTBaVUpsYm1WbWFXTnBZWEpwYno0S0NUeGtZWFJwVm1WeWMyRnRaVzUwYno0S0NRazhaR0YwWVVWelpXTjFlbWx2Ym1WUVlXZGhiV1Z1ZEc4K01qQXlNeTB4TWkweE5Tc3dNVG93TUR3dlpHRjBZVVZ6WldOMWVtbHZibVZRWVdkaGJXVnVkRzgrQ2drSlBHbHRjRzl5ZEc5VWIzUmhiR1ZFWVZabGNuTmhjbVUrTmpBd0xqQXdQQzlwYlhCdmNuUnZWRzkwWVd4bFJHRldaWEp6WVhKbFBnb0pDVHgwYVhCdlZtVnljMkZ0Wlc1MGJ6NUNRbFE4TDNScGNHOVdaWEp6WVcxbGJuUnZQZ29KQ1R4cFpHVnVkR2xtYVdOaGRHbDJiMVZ1YVhadlkyOVdaWEp6WVcxbGJuUnZQakF4TURBd01EQXdNREF3TURBd01qUXdQQzlwWkdWdWRHbG1hV05oZEdsMmIxVnVhWFp2WTI5V1pYSnpZVzFsYm5SdlBnb0pDVHhqYjJScFkyVkRiMjUwWlhOMGIxQmhaMkZ0Wlc1MGJ6NTBNREF3TURBd01EQXdNREF3TURBd01EQXdNREF3TURBd01EQXdNREkwTUR3dlkyOWthV05sUTI5dWRHVnpkRzlRWVdkaGJXVnVkRzgrQ2drSlBHWnBjbTFoVW1salpYWjFkR0UrTUR3dlptbHliV0ZTYVdObGRuVjBZVDRLQ1FrOFpHRjBhVk5wYm1kdmJHOVdaWEp6WVcxbGJuUnZQZ29KQ1FrOGFXMXdiM0owYjFOcGJtZHZiRzlXWlhKellXMWxiblJ2UGpZd01DNHdNRHd2YVcxd2IzSjBiMU5wYm1kdmJHOVdaWEp6WVcxbGJuUnZQZ29KQ1FrOGFXSmhia0ZqWTNKbFpHbDBiejVKVkRFNFZUQXdNREF3TURBd01EQXdNREF3TURBd01EQXdNVEE4TDJsaVlXNUJZMk55WldScGRHOCtDZ2tKQ1R4allYVnpZV3hsVm1WeWMyRnRaVzUwYno1NGVIaDRlSGg0UEM5allYVnpZV3hsVm1WeWMyRnRaVzUwYno0S0NRa0pQR1JoZEdsVGNHVmphV1pwWTJsU2FYTmpiM056YVc5dVpUNTRlSGg0ZUhoNFBDOWtZWFJwVTNCbFkybG1hV05wVW1selkyOXpjMmx2Ym1VK0Nna0pQQzlrWVhScFUybHVaMjlzYjFabGNuTmhiV1Z1ZEc4K0NnazhMMlJoZEdsV1pYSnpZVzFsYm5SdlBnbzhMMUpRVkQ0PTwvcnB0PgoJCQkJPC9lbGVtZW50b0xpc3RhUlBUPgoJCQk8L2xpc3RhUlBUPgoJCQk8bXVsdGlCZW5lZmljaWFyaW8+ZmFsc2U8L211bHRpQmVuZWZpY2lhcmlvPgoJCTwvbnMzOm5vZG9JbnZpYUNhcnJlbGxvUlBUPgoJPC9TT0FQLUVOVjpCb2R5Pgo8L1NPQVAtRU5WOkVudmVsb3BlPg==',
+];
+
+$data_resp = [
+    ':id'                       => 241,
+    ':date_event'               => '2024-03-10',
+    ':inserted_timestamp'       => '2024-03-10 10:42:00.197',
+    ':tipoevento'               => 'nodoInviaCarrelloRPT',
+    ':sottotipoevento'          => 'RESP',
+    ':iddominio'                => '',
+    ':iuv'                      => '',
+    ':ccp'                      => '',
+    ':noticenumber'             => '',
+    ':creditorreferenceid'      => '',
+    ':paymenttoken'             => '',
+    ':psp'                      => 'AGID_01',
+    ':stazione'                 => '77777777777_01',
+    ':canale'                   => '88888888888_01',
+    ':sessionid'                => '',
+    ':sessionidoriginal'        => 'session_id_original_000240',
+    ':uniqueid'                 => 'T000241',
+    ':payload'                  => 'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIiA/Pgo8c29hcGVudjpFbnZlbG9wZSB4bWxuczpwcHQ9Imh0dHA6Ly93cy5wYWdhbWVudGkudGVsZW1hdGljaS5nb3YvIiB4bWxuczpwcHRoZWFkPSJodHRwOi8vd3MucGFnYW1lbnRpLnRlbGVtYXRpY2kuZ292L3BwdGhlYWQiIHhtbG5zOnNvYXBlbnY9Imh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3NvYXAvZW52ZWxvcGUvIiB4bWxuczp0bnM9Imh0dHA6Ly9Ob2RvUGFnYW1lbnRpU1BDLnNwY29vcC5nb3YuaXQvc2Vydml6aS9QYWdhbWVudGlUZWxlbWF0aWNpUlBUIiB4bWxuczp4c2k9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1hLWluc3RhbmNlIj4KCTxzb2FwZW52OkJvZHk+CgkJPHBwdDpub2RvSW52aWFDYXJyZWxsb1JQVFJpc3Bvc3RhPgoJCQk8ZXNpdG9Db21wbGVzc2l2b09wZXJhemlvbmU+T0s8L2VzaXRvQ29tcGxlc3Npdm9PcGVyYXppb25lPgoJCQk8dXJsPmh0dHBzOi8vd2lzcDIucGFnb3BhLmdvdi5pdC93YWxsZXQvd2VsY29tZT9pZFNlc3Npb249NjA2N2FiMGItMGIxNi00NDVhLThlN2MtZGVkZGQ3Y2IxYzZiPC91cmw+CgkJPC9wcHQ6bm9kb0ludmlhQ2FycmVsbG9SUFRSaXNwb3N0YT4KCTwvc29hcGVudjpCb2R5Pgo8L3NvYXBlbnY6RW52ZWxvcGU+',
+];
+
+
+
+Capsule::statement($render_query, $data_req);
+Capsule::statement($render_query, $data_resp);
+
+
+
+
+
+
+
+
+
+
+
+
+$data_req = [
+    ':id'                       => 242,
+    ':date_event'               => '2024-03-10',
+    ':inserted_timestamp'       => '2024-03-10 10:44:00.197',
+    ':tipoevento'               => 'nodoNotificaAnnullamento',
+    ':sottotipoevento'          => 'REQ',
+    ':iddominio'                => '77777777777',
+    ':iuv'                      => '01000000000000240',
+    ':ccp'                      => 't0000000000000000000000000000240',
+    ':noticenumber'             => '',
+    ':creditorreferenceid'      => '01000000000000240',
+    ':paymenttoken'             => 't0000000000000000000000000000240',
+    ':psp'                      => 'AGID_01',
+    ':stazione'                 => '77777777777_01',
+    ':canale'                   => '88888888888_01',
+    ':sessionid'                => '',
+    ':sessionidoriginal'        => 'session_id_original_000240',
+    ':uniqueid'                 => 'T000242',
+    ':payload'                  => '',
+];
+
+$data_resp = [
+    ':id'                       => 243,
+    ':date_event'               => '2024-03-10',
+    ':inserted_timestamp'       => '2024-03-10 10:44:05.197',
+    ':tipoevento'               => 'nodoNotificaAnnullamento',
+    ':sottotipoevento'          => 'RESP',
+    ':iddominio'                => '77777777777',
+    ':iuv'                      => '01000000000000240',
+    ':ccp'                      => 't0000000000000000000000000000240',
+    ':noticenumber'             => '',
+    ':creditorreferenceid'      => '01000000000000240',
+    ':paymenttoken'             => 't0000000000000000000000000000240',
+    ':psp'                      => 'AGID_01',
+    ':stazione'                 => '77777777777_01',
+    ':canale'                   => '88888888888_01',
+    ':sessionid'                => '',
+    ':sessionidoriginal'        => 'session_id_original_000240',
+    ':uniqueid'                 => 'T000243',
+    ':payload'                  => 'eyJlc2l0byI6Ik9LIn0=',
+];
+
+
+
+Capsule::statement($render_query, $data_req);
+Capsule::statement($render_query, $data_resp);

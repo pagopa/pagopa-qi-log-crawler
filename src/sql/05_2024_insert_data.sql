@@ -38,7 +38,9 @@ INSERT INTO mapped_events(tipo_evento,sotto_tipo_evento ,fk_event) values
     ('cdInfoWisp'                            , 'REQ' ,  37),
     ('cdInfoWisp'                            , 'RESP',  38),
     ('nodoInoltraEsitoPagamentoPayPal'       , 'REQ' ,  39),
-    ('nodoInoltraEsitoPagamentoPayPal'       , 'RESP',  40);
+    ('nodoInoltraEsitoPagamentoPayPal'       , 'RESP',  40),
+    ('nodoNotificaAnnullamento'              , 'REQ' ,  41),
+    ('nodoNotificaAnnullamento'              , 'RESP',  42);
 
 insert into mapped_payment_methods (tipoversamento, descrizione) values
     ('CC', 'Carta di Credito'),

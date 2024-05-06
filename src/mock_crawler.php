@@ -132,6 +132,12 @@ $a = new \pagopa\crawler\paymentlist\resp\pspInviaCarrelloRPTCarte(new DateTime(
 $a->run();
 
 
+$a = new \pagopa\crawler\paymentlist\req\nodoNotificaAnnullamento(new \DateTime('2024-03-10'), 'nodoNotificaAnnullamento', 'REQ', $redis_cache);
+$a->run();
+
+$a = new \pagopa\crawler\paymentlist\resp\nodoNotificaAnnullamento(new DateTime('2024-03-10'), 'nodoNotificaAnnullamento', 'RESP', $redis_cache);
+$a->run();
+
 
 $a = new \pagopa\crawler\paymentlist\req\nodoChiediInformazioniPagamento(new DateTime('2024-03-10'), 'nodoChiediInformazioniPagamento', 'REQ', $redis_cache);
 $a->run();
