@@ -119,6 +119,12 @@ $a = new \pagopa\crawler\paymentlist\resp\cdInfoWisp(new \DateTime('2024-03-10')
 $a->run();
 
 
+$a = new \pagopa\crawler\paymentlist\req\nodoInoltraPagamentoMod1(new \DateTime('2024-03-10'), 'nodoInoltraPagamentoMod1', 'REQ', $redis_cache);
+$a->run();
+
+$a = new \pagopa\crawler\paymentlist\resp\nodoInoltraPagamentoMod1(new \DateTime('2024-03-10'), 'nodoInoltraPagamentoMod1', 'RESP', $redis_cache);
+$a->run();
+
 $a = new \pagopa\crawler\paymentlist\req\pspInviaCarrelloRPT(new DateTime('2024-03-10'), 'pspInviaCarrelloRPT', 'REQ', $redis_cache);
 $a->run();
 

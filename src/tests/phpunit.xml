@@ -26,7 +26,7 @@
     </php>
     <testsuites>
         <testsuite name="temp_suite">
-            <file>process/crawler/nodoNotificaAnnullamento/T00065_WorkflowWithAnnulloCarrelloRPT.php</file>
+            <file>process/crawler/nodoInoltraPagamentoMod1/T00066_WorkflowWithInoltroPagamentoMod1.php</file>
         </testsuite>
         <testsuite name="crawler">
             <file>process/crawler/activatePaymentNotice/SingleEvent/T00001_CreateAttemptAllInfoInEvent.php</file>
@@ -85,6 +85,7 @@
             <file>process/crawler/cdInfoWisp/T00063_WorkFlowWithCdInfoWisp.php</file>
             <file>process/crawler/nodoInoltraEsitoPagamentoPayPal/T00064_WorkFlowWithNodoInoltraEsitoPagamentoPayPal.php</file>
             <file>process/crawler/nodoNotificaAnnullamento/T00065_WorkflowWithAnnulloCarrelloRPT.php</file>
+            <file>process/crawler/nodoInoltraPagamentoMod1/T00066_WorkflowWithInoltroPagamentoMod1.php</file>
         </testsuite>
         <testsuite name="unit_tests">
             <!-- Object Method Tests -->
@@ -113,6 +114,7 @@
             <file>pagopa/methods/req/cdInfoWispTest.php</file>
             <file>pagopa/methods/req/nodoInoltraEsitoPagamentoPayPalTest.php</file>
             <file>pagopa/methods/req/nodoNotificaAnnullamentoTest.php</file>
+            <file>pagopa/methods/req/nodoInoltraPagamentoMod1Test.php</file>
 
             <!-- Response Method Tests -->
             <file>pagopa/methods/resp/activatePaymentNoticeTest.php</file>
@@ -136,6 +138,7 @@
             <file>pagopa/methods/resp/cdInfoWispTest.php</file>
             <file>pagopa/methods/resp/nodoInoltraEsitoPagamentoPayPalTest.php</file>
             <file>pagopa/methods/resp/nodoNotificaAnnullamentoTest.php</file>
+            <file>pagopa/methods/resp/nodoInoltraPagamentoMod1Test.php</file>
 
 
             <!-- Request Event Tests -->
@@ -160,6 +163,7 @@
             <file>pagopa/events/req/cdInfoWispTest.php</file>
             <file>pagopa/events/req/nodoInoltraEsitoPagamentoPayPalTest.php</file>
             <file>pagopa/events/req/nodoNotificaAnnullamentoTest.php</file>
+            <file>pagopa/events/req/nodoInoltraPagamentoMod1Test.php</file>
 
             <!-- Response Event Tests -->
             <file>pagopa/events/resp/activatePaymentNoticeTest.php</file>
@@ -182,6 +186,7 @@
             <file>pagopa/events/resp/cdInfoWispTest.php</file>
             <file>pagopa/events/resp/nodoInoltraEsitoPagamentoPayPalTest.php</file>
             <file>pagopa/events/resp/nodoNotificaAnnullamentoTest.php</file>
+            <file>pagopa/events/resp/nodoInoltraPagamentoMod1Test.php</file>
         </testsuite>
         <testsuite name="process">
             <file>process/normal/T0001.php</file>
