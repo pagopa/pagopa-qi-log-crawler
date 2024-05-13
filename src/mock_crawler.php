@@ -171,6 +171,13 @@ $a = new \pagopa\crawler\paymentlist\resp\nodoChiediCopiaRT(new \DateTime('2024-
 $a->run();
 
 
+$a = new \pagopa\crawler\paymentlist\req\paGetPayment(new \DateTime('2024-03-10'), 'paGetPayment', 'REQ', $redis_cache);
+$a->run();
+
+$a = new \pagopa\crawler\paymentlist\resp\paGetPayment(new \DateTime('2024-03-10'), 'paGetPayment', 'RESP', $redis_cache);
+$a->run();
+
+
 $a = new \pagopa\crawler\paymentlist\req\nodoChiediAvanzamentoPagamento(new DateTime('2024-03-10'), 'nodoChiediAvanzamentoPagamento', 'REQ', $redis_cache);
 $a->run();
 

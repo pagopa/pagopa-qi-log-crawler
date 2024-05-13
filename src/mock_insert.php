@@ -6411,3 +6411,157 @@ $data_resp = [
 
 Capsule::statement($render_query, $data_req);
 Capsule::statement($render_query, $data_resp);
+
+
+
+
+
+
+
+
+
+
+
+
+$data_req = [
+    ':id'                       => 256,
+    ':date_event'               => '2024-03-10',
+    ':inserted_timestamp'       => '2024-03-10 10:30:00.197',
+    ':tipoevento'               => 'activatePaymentNotice',
+    ':sottotipoevento'          => 'REQ',
+    ':iddominio'                => '77777777777',
+    ':iuv'                      => '01000000000000250',
+    ':ccp'                      => 't0000000000000000000000000000250',
+    ':noticenumber'             => '301000000000000250',
+    ':creditorreferenceid'      => '01000000000000250',
+    ':paymenttoken'             => 't0000000000000000000000000000250',
+    ':psp'                      => 'AGID_01',
+    ':stazione'                 => '77777777777_01',
+    ':canale'                   => '88888888888_01',
+    ':sessionid'                => 'sessid_000250',
+    ':sessionidoriginal'        => '',
+    ':uniqueid'                 => 'T000256',
+    ':payload'                  => 'PHNvYXBlbnY6RW52ZWxvcGUgeG1sbnM6bm9kPSJodHRwOi8vcGFnb3BhLWFwaS5wYWdvcGEuZ292Lml0L25vZGUvbm9kZUZvclBzcC54c2QiIHhtbG5zOnNvYXBlbnY9Imh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3NvYXAvZW52ZWxvcGUvIj4KCTxzb2FwZW52OkhlYWRlci8+Cgk8c29hcGVudjpCb2R5PgoJCTxub2Q6YWN0aXZhdGVQYXltZW50Tm90aWNlUmVxPgoJCQk8aWRQU1A+UFNQXzAxPC9pZFBTUD4KCQkJPGlkQnJva2VyUFNQPjg4ODg4ODg4ODg4PC9pZEJyb2tlclBTUD4KCQkJPGlkQ2hhbm5lbD44ODg4ODg4ODg4OF8wMTwvaWRDaGFubmVsPgoJCQk8cGFzc3dvcmQ+KioqKio8L3Bhc3N3b3JkPgoJCQk8cXJDb2RlPgoJCQkJPGZpc2NhbENvZGU+Nzc3Nzc3Nzc3Nzc8L2Zpc2NhbENvZGU+CgkJCQk8bm90aWNlTnVtYmVyPjMwMTAwMDAwMDAwMDAwMDI1MDwvbm90aWNlTnVtYmVyPgoJCQk8L3FyQ29kZT4KCQkJPGFtb3VudD4wLjAwPC9hbW91bnQ+CgkJPC9ub2Q6YWN0aXZhdGVQYXltZW50Tm90aWNlUmVxPgoJPC9zb2FwZW52OkJvZHk+Cjwvc29hcGVudjpFbnZlbG9wZT4=',
+];
+$data_resp = [
+    ':id'                       => 257,
+    ':date_event'               => '2024-03-10',
+    ':inserted_timestamp'       => '2024-03-10 10:30:10.197',
+    ':tipoevento'               => 'activatePaymentNotice',
+    ':sottotipoevento'          => 'RESP',
+    ':iddominio'                => '77777777777',
+    ':iuv'                      => '01000000000000250',
+    ':ccp'                      => 't0000000000000000000000000000250',
+    ':noticenumber'             => '301000000000000250',
+    ':creditorreferenceid'      => '01000000000000250',
+    ':paymenttoken'             => 't0000000000000000000000000000250',
+    ':psp'                      => 'AGID_01',
+    ':stazione'                 => '77777777777_01',
+    ':canale'                   => '88888888888_01',
+    ':sessionid'                => 'sessid_000250',
+    ':sessionidoriginal'        => '',
+    ':uniqueid'                 => 'T000257',
+    ':payload'                  => 'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIiA/Pgo8c29hcGVudjpFbnZlbG9wZSB4bWxuczpjb21tb249Imh0dHA6Ly9wYWdvcGEtYXBpLnBhZ29wYS5nb3YuaXQveHNkL2NvbW1vbi10eXBlcy92MS4wLjAvIiB4bWxuczpuZnA9Imh0dHA6Ly9wYWdvcGEtYXBpLnBhZ29wYS5nb3YuaXQvbm9kZS9ub2RlRm9yUHNwLnhzZCIgeG1sbnM6c29hcGVudj0iaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvc29hcC9lbnZlbG9wZS8iIHhtbG5zOnhzPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYSIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSI+Cgk8c29hcGVudjpCb2R5PgoJCTxuZnA6YWN0aXZhdGVQYXltZW50Tm90aWNlUmVzPgoJCQk8b3V0Y29tZT5PSzwvb3V0Y29tZT4KCQkJPHRvdGFsQW1vdW50PjEwMC4wMDwvdG90YWxBbW91bnQ+CgkJCTxwYXltZW50RGVzY3JpcHRpb24+eHh4eHh4eDwvcGF5bWVudERlc2NyaXB0aW9uPgoJCQk8ZmlzY2FsQ29kZVBBPjc3Nzc3Nzc3Nzc3PC9maXNjYWxDb2RlUEE+CgkJCTxjb21wYW55TmFtZT54eHh4eHh4PC9jb21wYW55TmFtZT4KCQkJPHBheW1lbnRUb2tlbj50MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDI1MDwvcGF5bWVudFRva2VuPgoJCQk8dHJhbnNmZXJMaXN0PgoJCQkJPHRyYW5zZmVyPgoJCQkJCTxpZFRyYW5zZmVyPjE8L2lkVHJhbnNmZXI+CgkJCQkJPHRyYW5zZmVyQW1vdW50PjEwMC4wMDwvdHJhbnNmZXJBbW91bnQ+CgkJCQkJPGZpc2NhbENvZGVQQT43Nzc3Nzc3Nzc3NzwvZmlzY2FsQ29kZVBBPgoJCQkJCTxJQkFOPklUMThVMDAwMDAwMDAwMDAwMDAwMDAwMDAwMTwvSUJBTj4KCQkJCQk8cmVtaXR0YW5jZUluZm9ybWF0aW9uPnh4eHg8L3JlbWl0dGFuY2VJbmZvcm1hdGlvbj4KCQkJCTwvdHJhbnNmZXI+CgkJCTwvdHJhbnNmZXJMaXN0PgoJCQk8Y3JlZGl0b3JSZWZlcmVuY2VJZD4wMTAwMDAwMDAwMDAwMDI1MDwvY3JlZGl0b3JSZWZlcmVuY2VJZD4KCQk8L25mcDphY3RpdmF0ZVBheW1lbnROb3RpY2VSZXM+Cgk8L3NvYXBlbnY6Qm9keT4KPC9zb2FwZW52OkVudmVsb3BlPg==',
+];
+Capsule::statement($render_query, $data_req);
+Capsule::statement($render_query, $data_resp);
+
+
+
+
+
+
+
+
+
+
+
+$data_req = [
+    ':id'                       => 258,
+    ':date_event'               => '2024-03-10',
+    ':inserted_timestamp'       => '2024-03-10 10:30:02.197',
+    ':tipoevento'               => 'paGetPayment',
+    ':sottotipoevento'          => 'REQ',
+    ':iddominio'                => '77777777777',
+    ':iuv'                      => '01000000000000250',
+    ':ccp'                      => 't0000000000000000000000000000250',
+    ':noticenumber'             => '301000000000000250',
+    ':creditorreferenceid'      => '01000000000000250',
+    ':paymenttoken'             => 't0000000000000000000000000000250',
+    ':psp'                      => 'AGID_01',
+    ':stazione'                 => '77777777777_01',
+    ':canale'                   => '88888888888_01',
+    ':sessionid'                => 'sessid_000251',
+    ':sessionidoriginal'        => '',
+    ':uniqueid'                 => 'T000258',
+    ':payload'                  => 'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIiA/Pgo8c29hcGVudjpFbnZlbG9wZSB4bWxuczpjb21tb249Imh0dHA6Ly9wYWdvcGEtYXBpLnBhZ29wYS5nb3YuaXQveHNkL2NvbW1vbi10eXBlcy92MS4wLjAvIiB4bWxuczpwYWZuPSJodHRwOi8vcGFnb3BhLWFwaS5wYWdvcGEuZ292Lml0L3BhL3BhRm9yTm9kZS54c2QiIHhtbG5zOnNvYXBlbnY9Imh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3NvYXAvZW52ZWxvcGUvIiB4bWxuczp0bnM9Imh0dHA6Ly9wYWdvcGEtYXBpLnBhZ29wYS5nb3YuaXQvcGFGb3JOb2RlIiB4bWxuczp4c2k9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1hLWluc3RhbmNlIj4KCTxzb2FwZW52OkJvZHk+CgkJPHBhZm46cGFHZXRQYXltZW50UmVxPgoJCQk8aWRQQT43Nzc3Nzc3Nzc3NzwvaWRQQT4KCQkJPGlkQnJva2VyUEE+Nzc3Nzc3Nzc3Nzc8L2lkQnJva2VyUEE+CgkJCTxpZFN0YXRpb24+Nzc3Nzc3Nzc3NzdfMDE8L2lkU3RhdGlvbj4KCQkJPHFyQ29kZT4KCQkJCTxmaXNjYWxDb2RlPjc3Nzc3Nzc3Nzc3PC9maXNjYWxDb2RlPgoJCQkJPG5vdGljZU51bWJlcj4zMDEwMDAwMDAwMDAwMDAyNTA8L25vdGljZU51bWJlcj4KCQkJPC9xckNvZGU+CgkJCTxhbW91bnQ+MC4wMDwvYW1vdW50PgoJCTwvcGFmbjpwYUdldFBheW1lbnRSZXE+Cgk8L3NvYXBlbnY6Qm9keT4KPC9zb2FwZW52OkVudmVsb3BlPg==',
+];
+$data_resp = [
+    ':id'                       => 259,
+    ':date_event'               => '2024-03-10',
+    ':inserted_timestamp'       => '2024-03-10 10:30:05.197',
+    ':tipoevento'               => 'paGetPayment',
+    ':sottotipoevento'          => 'RESP',
+    ':iddominio'                => '77777777777',
+    ':iuv'                      => '01000000000000250',
+    ':ccp'                      => 't0000000000000000000000000000250',
+    ':noticenumber'             => '301000000000000250',
+    ':creditorreferenceid'      => '01000000000000250',
+    ':paymenttoken'             => 't0000000000000000000000000000250',
+    ':psp'                      => 'AGID_01',
+    ':stazione'                 => '77777777777_01',
+    ':canale'                   => '88888888888_01',
+    ':sessionid'                => 'sessid_000251',
+    ':sessionidoriginal'        => '',
+    ':uniqueid'                 => 'T000259',
+    ':payload'                  => 'PFNPQVAtRU5WOkVudmVsb3BlIHhtbG5zOlNPQVAtRU5WPSJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy9zb2FwL2VudmVsb3BlLyI+Cgk8U09BUC1FTlY6SGVhZGVyLz4KCTxTT0FQLUVOVjpCb2R5PgoJCTxuczM6cGFHZXRQYXltZW50UmVzIHhtbG5zOm5zMz0iaHR0cDovL3BhZ29wYS1hcGkucGFnb3BhLmdvdi5pdC9wYS9wYUZvck5vZGUueHNkIj4KCQkJPG91dGNvbWU+T0s8L291dGNvbWU+CgkJCTxkYXRhPgoJCQkJPGNyZWRpdG9yUmVmZXJlbmNlSWQ+MDEwMDAwMDAwMDAwMDAyNTA8L2NyZWRpdG9yUmVmZXJlbmNlSWQ+CgkJCQk8cGF5bWVudEFtb3VudD4xMDAuMDA8L3BheW1lbnRBbW91bnQ+CgkJCQk8ZHVlRGF0ZT4yMDI0LTA1LTEzPC9kdWVEYXRlPgoJCQkJPGRlc2NyaXB0aW9uPnh4eHh4eHg8L2Rlc2NyaXB0aW9uPgoJCQkJPGNvbXBhbnlOYW1lPnh4eHh4PC9jb21wYW55TmFtZT4KCQkJCTx0cmFuc2Zlckxpc3Q+CgkJCQkJPHRyYW5zZmVyPgoJCQkJCQk8aWRUcmFuc2Zlcj4xPC9pZFRyYW5zZmVyPgoJCQkJCQk8dHJhbnNmZXJBbW91bnQ+MTAwLjAwPC90cmFuc2ZlckFtb3VudD4KCQkJCQkJPGZpc2NhbENvZGVQQT43Nzc3Nzc3Nzc3NzwvZmlzY2FsQ29kZVBBPgoJCQkJCQk8SUJBTj5JVDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMTA8L0lCQU4+CgkJCQkJCTxyZW1pdHRhbmNlSW5mb3JtYXRpb24+eHh4eHg8L3JlbWl0dGFuY2VJbmZvcm1hdGlvbj4KCQkJCQkJPHRyYW5zZmVyQ2F0ZWdvcnk+MDEwMTEwMUlNPC90cmFuc2ZlckNhdGVnb3J5PgoJCQkJCTwvdHJhbnNmZXI+CgkJCQk8L3RyYW5zZmVyTGlzdD4KCQkJPC9kYXRhPgoJCTwvbnMzOnBhR2V0UGF5bWVudFJlcz4KCTwvU09BUC1FTlY6Qm9keT4KPC9TT0FQLUVOVjpFbnZlbG9wZT4=',
+];
+Capsule::statement($render_query, $data_req);
+Capsule::statement($render_query, $data_resp);
+
+
+
+
+
+$data_req = [
+    ':id'                       => 260,
+    ':date_event'               => '2024-03-10',
+    ':inserted_timestamp'       => '2024-03-10 10:31:02.197',
+    ':tipoevento'               => 'sendPaymentOutcome',
+    ':sottotipoevento'          => 'REQ',
+    ':iddominio'                => '77777777777',
+    ':iuv'                      => '01000000000000250',
+    ':ccp'                      => 't0000000000000000000000000000250',
+    ':noticenumber'             => '301000000000000250',
+    ':creditorreferenceid'      => '01000000000000250',
+    ':paymenttoken'             => 't0000000000000000000000000000250',
+    ':psp'                      => 'AGID_01',
+    ':stazione'                 => '77777777777_01',
+    ':canale'                   => '88888888888_01',
+    ':sessionid'                => 'sessid_000252',
+    ':sessionidoriginal'        => '',
+    ':uniqueid'                 => 'T000260',
+    ':payload'                  => 'PHNvYXA6RW52ZWxvcGUgeG1sbnM6c29hcD0iaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvc29hcC9lbnZlbG9wZS8iPgoJPHNvYXA6Qm9keT4KCQk8bnMyOnNlbmRQYXltZW50T3V0Y29tZVJlcSB4bWxuczpuczI9Imh0dHA6Ly9wYWdvcGEtYXBpLnBhZ29wYS5nb3YuaXQvbm9kZS9ub2RlRm9yUHNwLnhzZCIgeG1sbnM6bnMzPSJodHRwOi8vd3MucGFnYW1lbnRpLnRlbGVtYXRpY2kuZ292LyI+CgkJCTxpZFBTUD5BR0lEXzAxPC9pZFBTUD4KCQkJPGlkQnJva2VyUFNQPjg4ODg4ODg4ODg4PC9pZEJyb2tlclBTUD4KCQkJPGlkQ2hhbm5lbD44ODg4ODg4ODg4OF8wMTwvaWRDaGFubmVsPgoJCQk8cGFzc3dvcmQ+eHh4eHh4eHg8L3Bhc3N3b3JkPgoJCQk8cGF5bWVudFRva2VuPnQwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMjUwPC9wYXltZW50VG9rZW4+CgkJCTxvdXRjb21lPk9LPC9vdXRjb21lPgoJCQk8ZGV0YWlscz4KCQkJCTxwYXltZW50TWV0aG9kPm90aGVyPC9wYXltZW50TWV0aG9kPgoJCQkJPGZlZT4xLjAwPC9mZWU+CgkJCQk8YXBwbGljYXRpb25EYXRlPjIwMjQtMDQtMDI8L2FwcGxpY2F0aW9uRGF0ZT4KCQkJCTx0cmFuc2ZlckRhdGU+MjAyNC0wNC0wMzwvdHJhbnNmZXJEYXRlPgoJCQk8L2RldGFpbHM+CgkJPC9uczI6c2VuZFBheW1lbnRPdXRjb21lUmVxPgoJPC9zb2FwOkJvZHk+Cjwvc29hcDpFbnZlbG9wZT4=',
+];
+$data_resp = [
+    ':id'                       => 261,
+    ':date_event'               => '2024-03-10',
+    ':inserted_timestamp'       => '2024-03-10 10:31:05.197',
+    ':tipoevento'               => 'sendPaymentOutcome',
+    ':sottotipoevento'          => 'RESP',
+    ':iddominio'                => '77777777777',
+    ':iuv'                      => '01000000000000250',
+    ':ccp'                      => 't0000000000000000000000000000250',
+    ':noticenumber'             => '301000000000000250',
+    ':creditorreferenceid'      => '01000000000000250',
+    ':paymenttoken'             => 't0000000000000000000000000000250',
+    ':psp'                      => 'AGID_01',
+    ':stazione'                 => '77777777777_01',
+    ':canale'                   => '88888888888_01',
+    ':sessionid'                => 'sessid_000252',
+    ':sessionidoriginal'        => '',
+    ':uniqueid'                 => 'T000261',
+    ':payload'                  => 'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIiA/Pjxzb2FwZW52OkVudmVsb3BlIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiIHhtbG5zOnNvYXBlbnY9Imh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3NvYXAvZW52ZWxvcGUvIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOmNvbW1vbj0iaHR0cDovL3BhZ29wYS1hcGkucGFnb3BhLmdvdi5pdC94c2QvY29tbW9uLXR5cGVzL3YxLjAuMC8iIHhtbG5zOm5mcD0iaHR0cDovL3BhZ29wYS1hcGkucGFnb3BhLmdvdi5pdC9ub2RlL25vZGVGb3JQc3AueHNkIj48c29hcGVudjpCb2R5PjxuZnA6c2VuZFBheW1lbnRPdXRjb21lUmVzPjxvdXRjb21lPk9LPC9vdXRjb21lPjwvbmZwOnNlbmRQYXltZW50T3V0Y29tZVJlcz48L3NvYXBlbnY6Qm9keT48L3NvYXBlbnY6RW52ZWxvcGU+',
+];
+Capsule::statement($render_query, $data_req);
+Capsule::statement($render_query, $data_resp);
