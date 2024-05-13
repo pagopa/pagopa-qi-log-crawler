@@ -164,6 +164,13 @@ $a = new \pagopa\crawler\paymentlist\resp\nodoInoltraEsitoPagamentoPayPal(new \D
 $a->run();
 
 
+$a = new \pagopa\crawler\paymentlist\req\nodoChiediCopiaRT(new \DateTime('2024-03-10'), 'nodoChiediCopiaRT', 'REQ', $redis_cache);
+$a->run();
+
+$a = new \pagopa\crawler\paymentlist\resp\nodoChiediCopiaRT(new \DateTime('2024-03-10'), 'nodoChiediCopiaRT', 'RESP', $redis_cache);
+$a->run();
+
+
 $a = new \pagopa\crawler\paymentlist\req\nodoChiediAvanzamentoPagamento(new DateTime('2024-03-10'), 'nodoChiediAvanzamentoPagamento', 'REQ', $redis_cache);
 $a->run();
 

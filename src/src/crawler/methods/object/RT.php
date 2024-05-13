@@ -50,6 +50,21 @@ class RT
         return null;
     }
 
+    public function getIuv() : string|null
+    {
+        return $this->getElementXml($this->payload, 'identificativoUnivocoVersamento');
+    }
+
+    public function getPaEmittente() : string|null
+    {
+        return $this->getElementXml($this->payload, 'identificativoDominio');
+    }
+
+    public function getCcp() : string|null
+    {
+        return $this->getElementXml($this->payload, 'CodiceContestoPagamento');
+    }
+
 
     public function getImporto() : string|null
     {

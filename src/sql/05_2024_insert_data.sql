@@ -42,7 +42,9 @@ INSERT INTO mapped_events(tipo_evento,sotto_tipo_evento ,fk_event) values
     ('nodoNotificaAnnullamento'              , 'REQ' ,  41),
     ('nodoNotificaAnnullamento'              , 'RESP',  42),
     ('nodoInoltraPagamentoMod1'              , 'REQ' ,  43),
-    ('nodoInoltraPagamentoMod1'              , 'RESP',  44);
+    ('nodoInoltraPagamentoMod1'              , 'RESP',  44),
+    ('nodoChiediCopiaRT'                     , 'REQ' ,  45),
+    ('nodoChiediCopiaRT'                     , 'RESP',  46);
 
 insert into mapped_payment_methods (tipoversamento, descrizione) values
     ('CC', 'Carta di Credito'),
