@@ -230,6 +230,13 @@ $a = new \pagopa\crawler\paymentlist\resp\sendPaymentOutcome(new DateTime('2024-
 $a->run();
 
 
+$a = new \pagopa\crawler\paymentlist\req\paSendRT(new \DateTime('2024-03-10'), 'paSendRT', 'REQ', $redis_cache);
+$a->run();
+
+$a = new \pagopa\crawler\paymentlist\resp\paSendRT(new DateTime('2024-03-10'), 'paSendRT', 'RESP', $redis_cache);
+$a->run();
+
+
 $a = new \pagopa\crawler\paymentlist\req\nodoInviaRT(new DateTime('2024-03-10'), 'nodoInviaRT', 'REQ', $redis_cache);
 $a->run();
 

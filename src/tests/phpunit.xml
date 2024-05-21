@@ -26,7 +26,7 @@
     </php>
     <testsuites>
         <testsuite name="temp_suite">
-            <file>process/crawler/paGetPayment/T00068_WorkflowWithpaGetPayment.php</file>
+            <file>process/crawler/paSendRT/T00069_WorkflowWithpaSendRT.php</file>
         </testsuite>
         <testsuite name="crawler">
             <file>process/crawler/activatePaymentNotice/SingleEvent/T00001_CreateAttemptAllInfoInEvent.php</file>
@@ -88,6 +88,7 @@
             <file>process/crawler/nodoInoltraPagamentoMod1/T00066_WorkflowWithInoltroPagamentoMod1.php</file>
             <file>process/crawler/nodoChiediCopiaRT/T00067_WorkflowWithNodoChiediCopiaRT.php</file>
             <file>process/crawler/paGetPayment/T00068_WorkflowWithpaGetPayment.php</file>
+            <file>process/crawler/paSendRT/T00069_WorkflowWithpaSendRT.php</file>
         </testsuite>
         <testsuite name="unit_tests">
             <!-- Object Method Tests -->
@@ -119,6 +120,7 @@
             <file>pagopa/methods/req/nodoInoltraPagamentoMod1Test.php</file>
             <file>pagopa/methods/req/nodoChiediCopiaRTTest.php</file>
             <file>pagopa/methods/req/paGetPaymentTest.php</file>
+            <file>pagopa/methods/req/paSendRTTest.php</file>
 
             <!-- Response Method Tests -->
             <file>pagopa/methods/resp/activatePaymentNoticeTest.php</file>
@@ -145,6 +147,7 @@
             <file>pagopa/methods/resp/nodoInoltraPagamentoMod1Test.php</file>
             <file>pagopa/methods/resp/nodoChiediCopiaRTTest.php</file>
             <file>pagopa/methods/resp/paGetPaymentTest.php</file>
+            <file>pagopa/methods/resp/paSendRTTest.php</file>
 
 
             <!-- Request Event Tests -->
@@ -172,6 +175,7 @@
             <file>pagopa/events/req/nodoInoltraPagamentoMod1Test.php</file>
             <file>pagopa/events/req/nodoChiediCopiaRTTest.php</file>
             <file>pagopa/events/req/paGetPaymentTest.php</file>
+            <file>pagopa/events/req/paSendRTTest.php</file>
 
             <!-- Response Event Tests -->
             <file>pagopa/events/resp/activatePaymentNoticeTest.php</file>
@@ -197,6 +201,7 @@
             <file>pagopa/events/resp/nodoInoltraPagamentoMod1Test.php</file>
             <file>pagopa/events/resp/nodoChiediCopiaRTTest.php</file>
             <file>pagopa/events/resp/paGetPaymentTest.php</file>
+            <file>pagopa/events/resp/paSendRTTest.php</file>
         </testsuite>
         <testsuite name="process">
             <file>process/normal/T0001.php</file>

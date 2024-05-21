@@ -46,7 +46,9 @@ INSERT INTO mapped_events(tipo_evento,sotto_tipo_evento ,fk_event) values
     ('nodoChiediCopiaRT'                     , 'REQ' ,  45),
     ('nodoChiediCopiaRT'                     , 'RESP',  46),
     ('paGetPayment'                          , 'REQ' ,  47),
-    ('paGetPayment'                          , 'RESP',  48);
+    ('paGetPayment'                          , 'RESP',  48),
+    ('paSendRT'                              , 'REQ' ,  49),
+    ('paSendRT'                              , 'RESP',  50);
 
 insert into mapped_payment_methods (tipoversamento, descrizione) values
     ('CC', 'Carta di Credito'),
