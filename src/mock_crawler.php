@@ -238,6 +238,14 @@ $a = new \pagopa\crawler\paymentlist\resp\sendPaymentOutcome(new DateTime('2024-
 $a->run();
 
 
+$a = new \pagopa\crawler\paymentlist\req\sendPaymentOutcomeV2(new \DateTime('2024-03-10'), 'sendPaymentOutcomeV2', 'REQ', $redis_cache);
+$a->run();
+
+$a = new \pagopa\crawler\paymentlist\resp\sendPaymentOutcomeV2(new \DateTime('2024-03-10'), 'sendPaymentOutcomeV2', 'RESP', $redis_cache);
+$a->run();
+
+
+
 $a = new \pagopa\crawler\paymentlist\req\paSendRT(new \DateTime('2024-03-10'), 'paSendRT', 'REQ', $redis_cache);
 $a->run();
 

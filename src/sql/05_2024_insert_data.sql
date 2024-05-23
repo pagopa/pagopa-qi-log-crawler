@@ -50,7 +50,9 @@ INSERT INTO mapped_events(tipo_evento,sotto_tipo_evento ,fk_event) values
     ('paSendRT'                              , 'REQ' ,  49),
     ('paSendRT'                              , 'RESP',  50),
     ('paGetPaymentV2'                        , 'REQ' ,  51),
-    ('paGetPaymentV2'                        , 'RESP',  52);
+    ('paGetPaymentV2'                        , 'RESP',  52),
+    ('sendPaymentOutcomeV2'                  , 'REQ' ,  53),
+    ('sendPaymentOutcomeV2'                  , 'RESP',  54);
 
 insert into mapped_payment_methods (tipoversamento, descrizione) values
     ('CC', 'Carta di Credito'),

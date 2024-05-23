@@ -6992,3 +6992,585 @@ Capsule::statement($render_query, $data_req);
 Capsule::statement($render_query, $data_resp);
 
 
+
+
+
+
+
+
+
+
+
+
+
+$data_req = [
+    ':id' => 280,
+    ':date_event' => '2024-03-10',
+    ':inserted_timestamp' => '2024-03-10 10:52:00.197',
+    ':tipoevento' => 'activatePaymentNoticeV2',
+    ':sottotipoevento' => 'REQ',
+    ':iddominio' => '77777777777',
+    ':iuv' => '01000000000000262',
+    ':ccp' => 't0000000000000000000000000000262',
+    ':noticenumber' => '301000000000000262',
+    ':creditorreferenceid' => '01000000000000262',
+    ':paymenttoken' => 't0000000000000000000000000000262',
+    ':psp' => 'PSP_V2',
+    ':stazione' => '77777777777_01',
+    ':canale' => '88888888888_01',
+    ':sessionid' => 'sessid_000280',
+    ':sessionidoriginal' => '',
+    ':uniqueid' => 'T000280',
+    ':payload' => 'PHNvYXBlbnY6RW52ZWxvcGUgeG1sbnM6bm9kPSJodHRwOi8vcGFnb3BhLWFwaS5wYWdvcGEuZ292Lml0L25vZGUvbm9kZUZvclBzcC54c2QiIHhtbG5zOnNvYXBlbnY9Imh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3NvYXAvZW52ZWxvcGUvIj4KCTxzb2FwZW52OkhlYWRlci8+Cgk8c29hcGVudjpCb2R5PgoJCTxub2Q6YWN0aXZhdGVQYXltZW50Tm90aWNlVjJSZXF1ZXN0PgoJCQk8aWRQU1A+QUdJRF8wMTwvaWRQU1A+CgkJCTxpZEJyb2tlclBTUD44ODg4ODg4ODg4ODwvaWRCcm9rZXJQU1A+CgkJCTxpZENoYW5uZWw+ODg4ODg4ODg4ODhfMDE8L2lkQ2hhbm5lbD4KCQkJPHBhc3N3b3JkPnh4eHh4PC9wYXNzd29yZD4KCQkJPGlkZW1wb3RlbmN5S2V5Pnh4eHh4eHh4eDwvaWRlbXBvdGVuY3lLZXk+CgkJCTxxckNvZGU+CgkJCQk8ZmlzY2FsQ29kZT43Nzc3Nzc3Nzc3NzwvZmlzY2FsQ29kZT4KCQkJCTxub3RpY2VOdW1iZXI+MzAxMDAwMDAwMDAwMDAwMjYyPC9ub3RpY2VOdW1iZXI+CgkJCTwvcXJDb2RlPgoJCQk8ZXhwaXJhdGlvblRpbWU+OTAwMDAwPC9leHBpcmF0aW9uVGltZT4KCQkJPGFtb3VudD4zMDAuMDA8L2Ftb3VudD4KCQk8L25vZDphY3RpdmF0ZVBheW1lbnROb3RpY2VWMlJlcXVlc3Q+Cgk8L3NvYXBlbnY6Qm9keT4KPC9zb2FwZW52OkVudmVsb3BlPg==',
+];
+
+$data_resp = [
+    ':id' => 281,
+    ':date_event' => '2024-03-10',
+    ':inserted_timestamp' => '2024-03-10 10:52:01.197',
+    ':tipoevento' => 'activatePaymentNoticeV2',
+    ':sottotipoevento' => 'RESP',
+    ':iddominio' => '77777777777',
+    ':iuv' => '01000000000000262',
+    ':ccp' => 't0000000000000000000000000000262',
+    ':noticenumber' => '301000000000000262',
+    ':creditorreferenceid' => '01000000000000262',
+    ':paymenttoken' => 't0000000000000000000000000000262',
+    ':psp' => 'PSP_V2',
+    ':stazione' => '77777777777_01',
+    ':canale' => '88888888888_01',
+    ':sessionid' => 'sessid_000280',
+    ':sessionidoriginal' => '',
+    ':uniqueid' => 'T000281',
+    ':payload' => 'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIiA/Pgo8c29hcGVudjpFbnZlbG9wZSB4bWxuczpjb21tb249Imh0dHA6Ly9wYWdvcGEtYXBpLnBhZ29wYS5nb3YuaXQveHNkL2NvbW1vbi10eXBlcy92MS4wLjAvIiB4bWxuczpuZnA9Imh0dHA6Ly9wYWdvcGEtYXBpLnBhZ29wYS5nb3YuaXQvbm9kZS9ub2RlRm9yUHNwLnhzZCIgeG1sbnM6c29hcGVudj0iaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvc29hcC9lbnZlbG9wZS8iIHhtbG5zOnhzPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYSIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSI+Cgk8c29hcGVudjpCb2R5PgoJCTxuZnA6YWN0aXZhdGVQYXltZW50Tm90aWNlVjJSZXNwb25zZT4KCQkJPG91dGNvbWU+T0s8L291dGNvbWU+CgkJCTx0b3RhbEFtb3VudD4zMDAuMDA8L3RvdGFsQW1vdW50PgoJCQk8cGF5bWVudERlc2NyaXB0aW9uPjMwMTAwMDAwMDAwMDAwMDI2MjwvcGF5bWVudERlc2NyaXB0aW9uPgoJCQk8ZmlzY2FsQ29kZVBBPjc3Nzc3Nzc3Nzc3PC9maXNjYWxDb2RlUEE+CgkJCTxjb21wYW55TmFtZT54eHh4eHg8L2NvbXBhbnlOYW1lPgoJCQk8b2ZmaWNlTmFtZT54eHh4eHg8L29mZmljZU5hbWU+CgkJCTxwYXltZW50VG9rZW4+dDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAyNjI8L3BheW1lbnRUb2tlbj4KCQkJPHRyYW5zZmVyTGlzdD4KCQkJCTx0cmFuc2Zlcj4KCQkJCQk8aWRUcmFuc2Zlcj4xPC9pZFRyYW5zZmVyPgoJCQkJCTx0cmFuc2ZlckFtb3VudD4zMDAuMDA8L3RyYW5zZmVyQW1vdW50PgoJCQkJCTxmaXNjYWxDb2RlUEE+Nzc3Nzc3Nzc3Nzc8L2Zpc2NhbENvZGVQQT4KCQkJCQk8Y29tcGFueU5hbWU+eHh4eHh4eDwvY29tcGFueU5hbWU+CgkJCQkJPElCQU4+SVQwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAxPC9JQkFOPgoJCQkJCTxyZW1pdHRhbmNlSW5mb3JtYXRpb24+eHh4eHh4eDwvcmVtaXR0YW5jZUluZm9ybWF0aW9uPgoJCQkJCTx0cmFuc2ZlckNhdGVnb3J5Pnh4eHh4eDwvdHJhbnNmZXJDYXRlZ29yeT4KCQkJCTwvdHJhbnNmZXI+CgkJCTwvdHJhbnNmZXJMaXN0PgoJCQk8Y3JlZGl0b3JSZWZlcmVuY2VJZD4wMTAwMDAwMDAwMDAwMDI2MjwvY3JlZGl0b3JSZWZlcmVuY2VJZD4KCQk8L25mcDphY3RpdmF0ZVBheW1lbnROb3RpY2VWMlJlc3BvbnNlPgoJPC9zb2FwZW52OkJvZHk+Cjwvc29hcGVudjpFbnZlbG9wZT4=',
+];
+
+Capsule::statement($render_query, $data_req);
+Capsule::statement($render_query, $data_resp);
+
+
+
+
+
+
+$data_req = [
+    ':id' => 282,
+    ':date_event' => '2024-03-10',
+    ':inserted_timestamp' => '2024-03-10 10:52:02.197',
+    ':tipoevento' => 'activatePaymentNoticeV2',
+    ':sottotipoevento' => 'REQ',
+    ':iddominio' => '77777777777',
+    ':iuv' => '01000000000000263',
+    ':ccp' => 't0000000000000000000000000000263',
+    ':noticenumber' => '301000000000000263',
+    ':creditorreferenceid' => '01000000000000263',
+    ':paymenttoken' => 't0000000000000000000000000000263',
+    ':psp' => 'PSP_V2',
+    ':stazione' => '77777777777_01',
+    ':canale' => '88888888888_01',
+    ':sessionid' => 'sessid_000281',
+    ':sessionidoriginal' => '',
+    ':uniqueid' => 'T000282',
+    ':payload' => 'PHNvYXBlbnY6RW52ZWxvcGUgeG1sbnM6bm9kPSJodHRwOi8vcGFnb3BhLWFwaS5wYWdvcGEuZ292Lml0L25vZGUvbm9kZUZvclBzcC54c2QiIHhtbG5zOnNvYXBlbnY9Imh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3NvYXAvZW52ZWxvcGUvIj4KCTxzb2FwZW52OkhlYWRlci8+Cgk8c29hcGVudjpCb2R5PgoJCTxub2Q6YWN0aXZhdGVQYXltZW50Tm90aWNlVjJSZXF1ZXN0PgoJCQk8aWRQU1A+QUdJRF8wMTwvaWRQU1A+CgkJCTxpZEJyb2tlclBTUD44ODg4ODg4ODg4ODwvaWRCcm9rZXJQU1A+CgkJCTxpZENoYW5uZWw+ODg4ODg4ODg4ODhfMDE8L2lkQ2hhbm5lbD4KCQkJPHBhc3N3b3JkPnh4eHh4PC9wYXNzd29yZD4KCQkJPGlkZW1wb3RlbmN5S2V5Pnh4eHh4eHh4eDwvaWRlbXBvdGVuY3lLZXk+CgkJCTxxckNvZGU+CgkJCQk8ZmlzY2FsQ29kZT43Nzc3Nzc3Nzc3NzwvZmlzY2FsQ29kZT4KCQkJCTxub3RpY2VOdW1iZXI+MzAxMDAwMDAwMDAwMDAwMjYzPC9ub3RpY2VOdW1iZXI+CgkJCTwvcXJDb2RlPgoJCQk8ZXhwaXJhdGlvblRpbWU+OTAwMDAwPC9leHBpcmF0aW9uVGltZT4KCQkJPGFtb3VudD4xNTAuMDA8L2Ftb3VudD4KCQk8L25vZDphY3RpdmF0ZVBheW1lbnROb3RpY2VWMlJlcXVlc3Q+Cgk8L3NvYXBlbnY6Qm9keT4KPC9zb2FwZW52OkVudmVsb3BlPg==',
+];
+
+$data_resp = [
+    ':id' => 283,
+    ':date_event' => '2024-03-10',
+    ':inserted_timestamp' => '2024-03-10 10:52:03.197',
+    ':tipoevento' => 'activatePaymentNoticeV2',
+    ':sottotipoevento' => 'RESP',
+    ':iddominio' => '77777777777',
+    ':iuv' => '01000000000000263',
+    ':ccp' => 't0000000000000000000000000000263',
+    ':noticenumber' => '301000000000000263',
+    ':creditorreferenceid' => '01000000000000263',
+    ':paymenttoken' => 't0000000000000000000000000000263',
+    ':psp' => 'PSP_V2',
+    ':stazione' => '77777777777_01',
+    ':canale' => '88888888888_01',
+    ':sessionid' => 'sessid_000281',
+    ':sessionidoriginal' => '',
+    ':uniqueid' => 'T000283',
+    ':payload' => 'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIiA/Pgo8c29hcGVudjpFbnZlbG9wZSB4bWxuczpjb21tb249Imh0dHA6Ly9wYWdvcGEtYXBpLnBhZ29wYS5nb3YuaXQveHNkL2NvbW1vbi10eXBlcy92MS4wLjAvIiB4bWxuczpuZnA9Imh0dHA6Ly9wYWdvcGEtYXBpLnBhZ29wYS5nb3YuaXQvbm9kZS9ub2RlRm9yUHNwLnhzZCIgeG1sbnM6c29hcGVudj0iaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvc29hcC9lbnZlbG9wZS8iIHhtbG5zOnhzPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYSIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSI+Cgk8c29hcGVudjpCb2R5PgoJCTxuZnA6YWN0aXZhdGVQYXltZW50Tm90aWNlVjJSZXNwb25zZT4KCQkJPG91dGNvbWU+T0s8L291dGNvbWU+CgkJCTx0b3RhbEFtb3VudD4xNTAuMDA8L3RvdGFsQW1vdW50PgoJCQk8cGF5bWVudERlc2NyaXB0aW9uPjMwMTAwMDAwMDAwMDAwMDI2MzwvcGF5bWVudERlc2NyaXB0aW9uPgoJCQk8ZmlzY2FsQ29kZVBBPjc3Nzc3Nzc3Nzc3PC9maXNjYWxDb2RlUEE+CgkJCTxjb21wYW55TmFtZT54eHh4eHg8L2NvbXBhbnlOYW1lPgoJCQk8b2ZmaWNlTmFtZT54eHh4eHg8L29mZmljZU5hbWU+CgkJCTxwYXltZW50VG9rZW4+dDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAyNjM8L3BheW1lbnRUb2tlbj4KCQkJPHRyYW5zZmVyTGlzdD4KCQkJCTx0cmFuc2Zlcj4KCQkJCQk8aWRUcmFuc2Zlcj4xPC9pZFRyYW5zZmVyPgoJCQkJCTx0cmFuc2ZlckFtb3VudD4xNTAuMDA8L3RyYW5zZmVyQW1vdW50PgoJCQkJCTxmaXNjYWxDb2RlUEE+Nzc3Nzc3Nzc3Nzc8L2Zpc2NhbENvZGVQQT4KCQkJCQk8Y29tcGFueU5hbWU+eHh4eHh4eDwvY29tcGFueU5hbWU+CgkJCQkJPElCQU4+SVQwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAxPC9JQkFOPgoJCQkJCTxyZW1pdHRhbmNlSW5mb3JtYXRpb24+eHh4eHh4eDwvcmVtaXR0YW5jZUluZm9ybWF0aW9uPgoJCQkJCTx0cmFuc2ZlckNhdGVnb3J5Pnh4eHh4eDwvdHJhbnNmZXJDYXRlZ29yeT4KCQkJCTwvdHJhbnNmZXI+CgkJCTwvdHJhbnNmZXJMaXN0PgoJCQk8Y3JlZGl0b3JSZWZlcmVuY2VJZD4wMTAwMDAwMDAwMDAwMDI2MzwvY3JlZGl0b3JSZWZlcmVuY2VJZD4KCQk8L25mcDphY3RpdmF0ZVBheW1lbnROb3RpY2VWMlJlc3BvbnNlPgoJPC9zb2FwZW52OkJvZHk+Cjwvc29hcGVudjpFbnZlbG9wZT4=',
+];
+
+Capsule::statement($render_query, $data_req);
+Capsule::statement($render_query, $data_resp);
+
+
+
+
+
+$data_req = [
+    ':id' => 284,
+    ':date_event' => '2024-03-10',
+    ':inserted_timestamp' => '2024-03-10 10:52:04.197',
+    ':tipoevento' => 'sendPaymentOutcomeV2',
+    ':sottotipoevento' => 'REQ',
+    ':iddominio' => '77777777777',
+    ':iuv' => '01000000000000262',
+    ':ccp' => 't0000000000000000000000000000262',
+    ':noticenumber' => '301000000000000262',
+    ':creditorreferenceid' => '01000000000000262',
+    ':paymenttoken' => 't0000000000000000000000000000262',
+    ':psp' => 'PSP_V2',
+    ':stazione' => '77777777777_01',
+    ':canale' => '88888888888_01',
+    ':sessionid' => 'sessid_000282',
+    ':sessionidoriginal' => '',
+    ':uniqueid' => 'T000284',
+    ':payload' => 'PHNvYXA6RW52ZWxvcGUgeG1sbnM6c29hcD0iaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvc29hcC9lbnZlbG9wZS8iPgogIDxzb2FwOkJvZHk+CiAgICA8bnMzOnNlbmRQYXltZW50T3V0Y29tZVYyUmVxdWVzdCB4bWxuczpuczI9Imh0dHA6Ly93d3cuZGlnaXRwYS5nb3YuaXQvc2NoZW1hcy8yMDExL1BhZ2FtZW50aS8iIHhtbG5zOm5zMz0iaHR0cDovL3BhZ29wYS1hcGkucGFnb3BhLmdvdi5pdC9ub2RlL25vZGVGb3JQc3AueHNkIiB4bWxuczpuczQ9Imh0dHA6Ly93cy5wYWdhbWVudGkudGVsZW1hdGljaS5nb3YvIiB4bWxuczpuczU9Imh0dHA6Ly9wYWdvcGEtYXBpLnBhZ29wYS5nb3YuaXQvcHNwL3BzcEZvck5vZGUueHNkIj4KICAgICAgPGlkUFNQPkFHSURfMDE8L2lkUFNQPgogICAgICA8aWRCcm9rZXJQU1A+ODg4ODg4ODg4ODg8L2lkQnJva2VyUFNQPgogICAgICA8aWRDaGFubmVsPjg4ODg4ODg4ODg4XzAxPC9pZENoYW5uZWw+CiAgICAgIDxwYXNzd29yZD5QTEFDRUhPTERFUjwvcGFzc3dvcmQ+CiAgICAgIDxwYXltZW50VG9rZW5zPgogICAgICAgIDxwYXltZW50VG9rZW4+dDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAyNjI8L3BheW1lbnRUb2tlbj4KICAgICAgICA8cGF5bWVudFRva2VuPnQwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMjYzPC9wYXltZW50VG9rZW4+CiAgICAgIDwvcGF5bWVudFRva2Vucz4KICAgICAgPG91dGNvbWU+T0s8L291dGNvbWU+CiAgICAgIDxkZXRhaWxzPgogICAgICAJPHBheW1lbnRNZXRob2Q+TUVUT0RPPC9wYXltZW50TWV0aG9kPgogICAgICAJPHBheW1lbnRDaGFubmVsPkNBTkFMRTwvcGF5bWVudENoYW5uZWw+CiAgICAgIDwvZGV0YWlscz4KICAgIDwvbnMzOnNlbmRQYXltZW50T3V0Y29tZVYyUmVxdWVzdD4KICA8L3NvYXA6Qm9keT4KPC9zb2FwOkVudmVsb3BlPg==',
+];
+
+$data_resp = [
+    ':id' => 285,
+    ':date_event' => '2024-03-10',
+    ':inserted_timestamp' => '2024-03-10 10:52:05.197',
+    ':tipoevento' => 'sendPaymentOutcomeV2',
+    ':sottotipoevento' => 'RESP',
+    ':iddominio' => '77777777777',
+    ':iuv' => '01000000000000262',
+    ':ccp' => 't0000000000000000000000000000262',
+    ':noticenumber' => '301000000000000262',
+    ':creditorreferenceid' => '01000000000000262',
+    ':paymenttoken' => 't0000000000000000000000000000262',
+    ':psp' => 'PSP_V2',
+    ':stazione' => '77777777777_01',
+    ':canale' => '88888888888_01',
+    ':sessionid' => 'sessid_000282',
+    ':sessionidoriginal' => '',
+    ':uniqueid' => 'T000285',
+    ':payload' => 'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIiA/Pgo8c29hcGVudjpFbnZlbG9wZSB4bWxuczpjb21tb249Imh0dHA6Ly9wYWdvcGEtYXBpLnBhZ29wYS5nb3YuaXQveHNkL2NvbW1vbi10eXBlcy92MS4wLjAvIiB4bWxuczpuZnA9Imh0dHA6Ly9wYWdvcGEtYXBpLnBhZ29wYS5nb3YuaXQvbm9kZS9ub2RlRm9yUHNwLnhzZCIgeG1sbnM6c29hcGVudj0iaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvc29hcC9lbnZlbG9wZS8iIHhtbG5zOnhzPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYSIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSI+Cgk8c29hcGVudjpCb2R5PgoJCTxuZnA6c2VuZFBheW1lbnRPdXRjb21lVjJSZXNwb25zZT4KCQkJPG91dGNvbWU+T0s8L291dGNvbWU+CgkJPC9uZnA6c2VuZFBheW1lbnRPdXRjb21lVjJSZXNwb25zZT4KCTwvc29hcGVudjpCb2R5Pgo8L3NvYXBlbnY6RW52ZWxvcGU+',
+];
+
+
+Capsule::statement($render_query, $data_req);
+Capsule::statement($render_query, $data_resp);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+$data_req = [
+    ':id' => 286,
+    ':date_event' => '2024-03-10',
+    ':inserted_timestamp' => '2024-03-10 10:52:00.197',
+    ':tipoevento' => 'activatePaymentNoticeV2',
+    ':sottotipoevento' => 'REQ',
+    ':iddominio' => '77777777777',
+    ':iuv' => '01000000000000270',
+    ':ccp' => 't0000000000000000000000000000270',
+    ':noticenumber' => '301000000000000270',
+    ':creditorreferenceid' => '01000000000000270',
+    ':paymenttoken' => 't0000000000000000000000000000270',
+    ':psp' => 'PSP_V2',
+    ':stazione' => '77777777777_01',
+    ':canale' => '88888888888_01',
+    ':sessionid' => 'sessid_000286',
+    ':sessionidoriginal' => '',
+    ':uniqueid' => 'T000286',
+    ':payload' => 'PHNvYXBlbnY6RW52ZWxvcGUgeG1sbnM6bm9kPSJodHRwOi8vcGFnb3BhLWFwaS5wYWdvcGEuZ292Lml0L25vZGUvbm9kZUZvclBzcC54c2QiIHhtbG5zOnNvYXBlbnY9Imh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3NvYXAvZW52ZWxvcGUvIj4KCTxzb2FwZW52OkhlYWRlci8+Cgk8c29hcGVudjpCb2R5PgoJCTxub2Q6YWN0aXZhdGVQYXltZW50Tm90aWNlVjJSZXF1ZXN0PgoJCQk8aWRQU1A+QUdJRF8wMTwvaWRQU1A+CgkJCTxpZEJyb2tlclBTUD44ODg4ODg4ODg4ODwvaWRCcm9rZXJQU1A+CgkJCTxpZENoYW5uZWw+ODg4ODg4ODg4ODhfMDE8L2lkQ2hhbm5lbD4KCQkJPHBhc3N3b3JkPnh4eHh4PC9wYXNzd29yZD4KCQkJPGlkZW1wb3RlbmN5S2V5Pnh4eHh4eHh4eDwvaWRlbXBvdGVuY3lLZXk+CgkJCTxxckNvZGU+CgkJCQk8ZmlzY2FsQ29kZT43Nzc3Nzc3Nzc3NzwvZmlzY2FsQ29kZT4KCQkJCTxub3RpY2VOdW1iZXI+MzAxMDAwMDAwMDAwMDAwMjcwPC9ub3RpY2VOdW1iZXI+CgkJCTwvcXJDb2RlPgoJCQk8ZXhwaXJhdGlvblRpbWU+OTAwMDAwPC9leHBpcmF0aW9uVGltZT4KCQkJPGFtb3VudD4zMDAuMDA8L2Ftb3VudD4KCQk8L25vZDphY3RpdmF0ZVBheW1lbnROb3RpY2VWMlJlcXVlc3Q+Cgk8L3NvYXBlbnY6Qm9keT4KPC9zb2FwZW52OkVudmVsb3BlPg==',
+];
+
+$data_resp = [
+    ':id' => 287,
+    ':date_event' => '2024-03-10',
+    ':inserted_timestamp' => '2024-03-10 10:52:03.197',
+    ':tipoevento' => 'activatePaymentNoticeV2',
+    ':sottotipoevento' => 'RESP',
+    ':iddominio' => '77777777777',
+    ':iuv' => '01000000000000270',
+    ':ccp' => 't0000000000000000000000000000270',
+    ':noticenumber' => '301000000000000270',
+    ':creditorreferenceid' => '01000000000000270',
+    ':paymenttoken' => 't0000000000000000000000000000270',
+    ':psp' => 'PSP_V2',
+    ':stazione' => '77777777777_01',
+    ':canale' => '88888888888_01',
+    ':sessionid' => 'sessid_000286',
+    ':sessionidoriginal' => '',
+    ':uniqueid' => 'T000287',
+    ':payload' => 'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIiA/Pgo8c29hcGVudjpFbnZlbG9wZSB4bWxuczpjb21tb249Imh0dHA6Ly9wYWdvcGEtYXBpLnBhZ29wYS5nb3YuaXQveHNkL2NvbW1vbi10eXBlcy92MS4wLjAvIiB4bWxuczpuZnA9Imh0dHA6Ly9wYWdvcGEtYXBpLnBhZ29wYS5nb3YuaXQvbm9kZS9ub2RlRm9yUHNwLnhzZCIgeG1sbnM6c29hcGVudj0iaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvc29hcC9lbnZlbG9wZS8iIHhtbG5zOnhzPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYSIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSI+Cgk8c29hcGVudjpCb2R5PgoJCTxuZnA6YWN0aXZhdGVQYXltZW50Tm90aWNlVjJSZXNwb25zZT4KCQkJPG91dGNvbWU+T0s8L291dGNvbWU+CgkJCTx0b3RhbEFtb3VudD4zMDAuMDA8L3RvdGFsQW1vdW50PgoJCQk8cGF5bWVudERlc2NyaXB0aW9uPjMwMTAwMDAwMDAwMDAwMDI3MDwvcGF5bWVudERlc2NyaXB0aW9uPgoJCQk8ZmlzY2FsQ29kZVBBPjc3Nzc3Nzc3Nzc3PC9maXNjYWxDb2RlUEE+CgkJCTxjb21wYW55TmFtZT54eHh4eHg8L2NvbXBhbnlOYW1lPgoJCQk8b2ZmaWNlTmFtZT54eHh4eHg8L29mZmljZU5hbWU+CgkJCTxwYXltZW50VG9rZW4+dDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAyNzA8L3BheW1lbnRUb2tlbj4KCQkJPHRyYW5zZmVyTGlzdD4KCQkJCTx0cmFuc2Zlcj4KCQkJCQk8aWRUcmFuc2Zlcj4xPC9pZFRyYW5zZmVyPgoJCQkJCTx0cmFuc2ZlckFtb3VudD4yMDAuMDA8L3RyYW5zZmVyQW1vdW50PgoJCQkJCTxmaXNjYWxDb2RlUEE+Nzc3Nzc3Nzc3Nzc8L2Zpc2NhbENvZGVQQT4KCQkJCQk8Y29tcGFueU5hbWU+eHh4eHh4eDwvY29tcGFueU5hbWU+CgkJCQkJPElCQU4+SVQwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAxPC9JQkFOPgoJCQkJCTxyZW1pdHRhbmNlSW5mb3JtYXRpb24+eHh4eHh4eDwvcmVtaXR0YW5jZUluZm9ybWF0aW9uPgoJCQkJCTx0cmFuc2ZlckNhdGVnb3J5Pnh4eHh4eDwvdHJhbnNmZXJDYXRlZ29yeT4KCQkJCTwvdHJhbnNmZXI+CgkJCQk8dHJhbnNmZXI+CgkJCQkJPGlkVHJhbnNmZXI+MjwvaWRUcmFuc2Zlcj4KCQkJCQk8dHJhbnNmZXJBbW91bnQ+MTAwLjAwPC90cmFuc2ZlckFtb3VudD4KCQkJCQk8ZmlzY2FsQ29kZVBBPjc3Nzc3Nzc3Nzc4PC9maXNjYWxDb2RlUEE+CgkJCQkJPGNvbXBhbnlOYW1lPnh4eHh4eHg8L2NvbXBhbnlOYW1lPgoJCQkJCTxJQkFOPklUMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMjwvSUJBTj4KCQkJCQk8cmVtaXR0YW5jZUluZm9ybWF0aW9uPnh4eHh4eHg8L3JlbWl0dGFuY2VJbmZvcm1hdGlvbj4KCQkJCQk8dHJhbnNmZXJDYXRlZ29yeT54eHh4eHg8L3RyYW5zZmVyQ2F0ZWdvcnk+CgkJCQk8L3RyYW5zZmVyPgoJCQk8L3RyYW5zZmVyTGlzdD4KCQkJPGNyZWRpdG9yUmVmZXJlbmNlSWQ+MDEwMDAwMDAwMDAwMDAyNzA8L2NyZWRpdG9yUmVmZXJlbmNlSWQ+CgkJPC9uZnA6YWN0aXZhdGVQYXltZW50Tm90aWNlVjJSZXNwb25zZT4KCTwvc29hcGVudjpCb2R5Pgo8L3NvYXBlbnY6RW52ZWxvcGU+',
+];
+
+
+
+Capsule::statement($render_query, $data_req);
+Capsule::statement($render_query, $data_resp);
+
+
+
+
+
+
+
+
+
+
+
+
+$data_req = [
+    ':id' => 288,
+    ':date_event' => '2024-03-10',
+    ':inserted_timestamp' => '2024-03-10 10:52:04.197',
+    ':tipoevento' => 'activatePaymentNoticeV2',
+    ':sottotipoevento' => 'REQ',
+    ':iddominio' => '77777777777',
+    ':iuv' => '01000000000000271',
+    ':ccp' => 't0000000000000000000000000000271',
+    ':noticenumber' => '301000000000000271',
+    ':creditorreferenceid' => '01000000000000271',
+    ':paymenttoken' => 't0000000000000000000000000000271',
+    ':psp' => 'PSP_V2',
+    ':stazione' => '77777777777_01',
+    ':canale' => '88888888888_01',
+    ':sessionid' => 'sessid_000287',
+    ':sessionidoriginal' => '',
+    ':uniqueid' => 'T000288',
+    ':payload' => 'PHNvYXBlbnY6RW52ZWxvcGUgeG1sbnM6bm9kPSJodHRwOi8vcGFnb3BhLWFwaS5wYWdvcGEuZ292Lml0L25vZGUvbm9kZUZvclBzcC54c2QiIHhtbG5zOnNvYXBlbnY9Imh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3NvYXAvZW52ZWxvcGUvIj4KCTxzb2FwZW52OkhlYWRlci8+Cgk8c29hcGVudjpCb2R5PgoJCTxub2Q6YWN0aXZhdGVQYXltZW50Tm90aWNlVjJSZXF1ZXN0PgoJCQk8aWRQU1A+QUdJRF8wMTwvaWRQU1A+CgkJCTxpZEJyb2tlclBTUD44ODg4ODg4ODg4ODwvaWRCcm9rZXJQU1A+CgkJCTxpZENoYW5uZWw+ODg4ODg4ODg4ODhfMDE8L2lkQ2hhbm5lbD4KCQkJPHBhc3N3b3JkPnh4eHh4PC9wYXNzd29yZD4KCQkJPGlkZW1wb3RlbmN5S2V5Pnh4eHh4eHh4eDwvaWRlbXBvdGVuY3lLZXk+CgkJCTxxckNvZGU+CgkJCQk8ZmlzY2FsQ29kZT43Nzc3Nzc3Nzc3NzwvZmlzY2FsQ29kZT4KCQkJCTxub3RpY2VOdW1iZXI+MzAxMDAwMDAwMDAwMDAwMjcxPC9ub3RpY2VOdW1iZXI+CgkJCTwvcXJDb2RlPgoJCQk8ZXhwaXJhdGlvblRpbWU+OTAwMDAwPC9leHBpcmF0aW9uVGltZT4KCQkJPGFtb3VudD40MDAuMDA8L2Ftb3VudD4KCQk8L25vZDphY3RpdmF0ZVBheW1lbnROb3RpY2VWMlJlcXVlc3Q+Cgk8L3NvYXBlbnY6Qm9keT4KPC9zb2FwZW52OkVudmVsb3BlPg==',
+];
+
+$data_resp = [
+    ':id' => 289,
+    ':date_event' => '2024-03-10',
+    ':inserted_timestamp' => '2024-03-10 10:52:07.197',
+    ':tipoevento' => 'activatePaymentNoticeV2',
+    ':sottotipoevento' => 'RESP',
+    ':iddominio' => '77777777777',
+    ':iuv' => '01000000000000271',
+    ':ccp' => 't0000000000000000000000000000271',
+    ':noticenumber' => '301000000000000271',
+    ':creditorreferenceid' => '01000000000000271',
+    ':paymenttoken' => 't0000000000000000000000000000271',
+    ':psp' => 'PSP_V2',
+    ':stazione' => '77777777777_01',
+    ':canale' => '88888888888_01',
+    ':sessionid' => 'sessid_000287',
+    ':sessionidoriginal' => '',
+    ':uniqueid' => 'T000289',
+    ':payload' => 'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIiA/Pgo8c29hcGVudjpFbnZlbG9wZSB4bWxuczpjb21tb249Imh0dHA6Ly9wYWdvcGEtYXBpLnBhZ29wYS5nb3YuaXQveHNkL2NvbW1vbi10eXBlcy92MS4wLjAvIiB4bWxuczpuZnA9Imh0dHA6Ly9wYWdvcGEtYXBpLnBhZ29wYS5nb3YuaXQvbm9kZS9ub2RlRm9yUHNwLnhzZCIgeG1sbnM6c29hcGVudj0iaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvc29hcC9lbnZlbG9wZS8iIHhtbG5zOnhzPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYSIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSI+Cgk8c29hcGVudjpCb2R5PgoJCTxuZnA6YWN0aXZhdGVQYXltZW50Tm90aWNlVjJSZXNwb25zZT4KCQkJPG91dGNvbWU+T0s8L291dGNvbWU+CgkJCTx0b3RhbEFtb3VudD40MDAuMDA8L3RvdGFsQW1vdW50PgoJCQk8cGF5bWVudERlc2NyaXB0aW9uPjMwMTAwMDAwMDAwMDAwMDI3MTwvcGF5bWVudERlc2NyaXB0aW9uPgoJCQk8ZmlzY2FsQ29kZVBBPjc3Nzc3Nzc3Nzc3PC9maXNjYWxDb2RlUEE+CgkJCTxjb21wYW55TmFtZT54eHh4eHg8L2NvbXBhbnlOYW1lPgoJCQk8b2ZmaWNlTmFtZT54eHh4eHg8L29mZmljZU5hbWU+CgkJCTxwYXltZW50VG9rZW4+dDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAyNzE8L3BheW1lbnRUb2tlbj4KCQkJPHRyYW5zZmVyTGlzdD4KCQkJCTx0cmFuc2Zlcj4KCQkJCQk8aWRUcmFuc2Zlcj4xPC9pZFRyYW5zZmVyPgoJCQkJCTx0cmFuc2ZlckFtb3VudD4yNTAuMDA8L3RyYW5zZmVyQW1vdW50PgoJCQkJCTxmaXNjYWxDb2RlUEE+Nzc3Nzc3Nzc3Nzc8L2Zpc2NhbENvZGVQQT4KCQkJCQk8Y29tcGFueU5hbWU+eHh4eHh4eDwvY29tcGFueU5hbWU+CgkJCQkJPElCQU4+SVQwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAxPC9JQkFOPgoJCQkJCTxyZW1pdHRhbmNlSW5mb3JtYXRpb24+eHh4eHh4eDwvcmVtaXR0YW5jZUluZm9ybWF0aW9uPgoJCQkJCTx0cmFuc2ZlckNhdGVnb3J5Pnh4eHh4eDwvdHJhbnNmZXJDYXRlZ29yeT4KCQkJCTwvdHJhbnNmZXI+CgkJCQk8dHJhbnNmZXI+CgkJCQkJPGlkVHJhbnNmZXI+MjwvaWRUcmFuc2Zlcj4KCQkJCQk8dHJhbnNmZXJBbW91bnQ+MTUwLjAwPC90cmFuc2ZlckFtb3VudD4KCQkJCQk8ZmlzY2FsQ29kZVBBPjc3Nzc3Nzc3Nzc4PC9maXNjYWxDb2RlUEE+CgkJCQkJPGNvbXBhbnlOYW1lPnh4eHh4eHg8L2NvbXBhbnlOYW1lPgoJCQkJCTxJQkFOPklUMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMjwvSUJBTj4KCQkJCQk8cmVtaXR0YW5jZUluZm9ybWF0aW9uPnh4eHh4eHg8L3JlbWl0dGFuY2VJbmZvcm1hdGlvbj4KCQkJCQk8dHJhbnNmZXJDYXRlZ29yeT54eHh4eHg8L3RyYW5zZmVyQ2F0ZWdvcnk+CgkJCQk8L3RyYW5zZmVyPgoJCQk8L3RyYW5zZmVyTGlzdD4KCQkJPGNyZWRpdG9yUmVmZXJlbmNlSWQ+MDEwMDAwMDAwMDAwMDAyNzE8L2NyZWRpdG9yUmVmZXJlbmNlSWQ+CgkJPC9uZnA6YWN0aXZhdGVQYXltZW50Tm90aWNlVjJSZXNwb25zZT4KCTwvc29hcGVudjpCb2R5Pgo8L3NvYXBlbnY6RW52ZWxvcGU+',
+];
+
+
+
+
+
+
+Capsule::statement($render_query, $data_req);
+Capsule::statement($render_query, $data_resp);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+$data_req = [
+    ':id'                       => 290,
+    ':date_event'               => '2024-03-10',
+    ':inserted_timestamp'       => '2024-03-10 10:52:01.197',
+    ':tipoevento'               => 'paGetPaymentV2',
+    ':sottotipoevento'          => 'REQ',
+    ':iddominio'                => '77777777777',
+    ':iuv' 						=> '01000000000000270',
+    ':ccp' 						=> 't0000000000000000000000000000270',
+    ':noticenumber' 			=> '301000000000000270',
+    ':creditorreferenceid' 		=> '01000000000000270',
+    ':paymenttoken' 			=> 't0000000000000000000000000000270',
+    ':psp'                      => 'AGID_01',
+    ':stazione'                 => '77777777777_01',
+    ':canale'                   => '88888888888_01',
+    ':sessionid'                => 'sessid_000288',
+    ':sessionidoriginal'        => '',
+    ':uniqueid'                 => 'T000290',
+    ':payload'                  => 'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIiA/Pgo8c29hcGVudjpFbnZlbG9wZSB4bWxuczpjb21tb249Imh0dHA6Ly9wYWdvcGEtYXBpLnBhZ29wYS5nb3YuaXQveHNkL2NvbW1vbi10eXBlcy92MS4wLjAvIiB4bWxuczpwYWZuPSJodHRwOi8vcGFnb3BhLWFwaS5wYWdvcGEuZ292Lml0L3BhL3BhRm9yTm9kZS54c2QiIHhtbG5zOnNvYXBlbnY9Imh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3NvYXAvZW52ZWxvcGUvIiB4bWxuczp0bnM9Imh0dHA6Ly9wYWdvcGEtYXBpLnBhZ29wYS5nb3YuaXQvcGFGb3JOb2RlIiB4bWxuczp4c2k9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1hLWluc3RhbmNlIj4KCTxzb2FwZW52OkJvZHk+CgkJPHBhZm46cGFHZXRQYXltZW50VjJSZXF1ZXN0PgoJCQk8aWRQQT43Nzc3Nzc3Nzc3NzwvaWRQQT4KCQkJPGlkQnJva2VyUEE+Nzc3Nzc3Nzc3Nzc8L2lkQnJva2VyUEE+CgkJCTxpZFN0YXRpb24+Nzc3Nzc3Nzc3NzdfMDE8L2lkU3RhdGlvbj4KCQkJPHFyQ29kZT4KCQkJCTxmaXNjYWxDb2RlPjc3Nzc3Nzc3Nzc3PC9maXNjYWxDb2RlPgoJCQkJPG5vdGljZU51bWJlcj4zMDEwMDAwMDAwMDAwMDAyNzA8L25vdGljZU51bWJlcj4KCQkJPC9xckNvZGU+CgkJCTxhbW91bnQ+MzAwLjAwPC9hbW91bnQ+CgkJCTx0cmFuc2ZlclR5cGU+UEFHT1BBPC90cmFuc2ZlclR5cGU+CgkJPC9wYWZuOnBhR2V0UGF5bWVudFYyUmVxdWVzdD4KCTwvc29hcGVudjpCb2R5Pgo8L3NvYXBlbnY6RW52ZWxvcGU+',
+];
+$data_resp = [
+    ':id'                       => 291,
+    ':date_event'               => '2024-03-10',
+    ':inserted_timestamp'       => '2024-03-10 10:52:02.197',
+    ':tipoevento'               => 'paGetPaymentV2',
+    ':sottotipoevento'          => 'RESP',
+    ':iddominio'                => '77777777777',
+    ':iuv' 						=> '01000000000000270',
+    ':ccp' 						=> 't0000000000000000000000000000270',
+    ':noticenumber' 			=> '301000000000000270',
+    ':creditorreferenceid' 		=> '01000000000000270',
+    ':paymenttoken' 			=> 't0000000000000000000000000000270',
+    ':psp'                      => 'AGID_01',
+    ':stazione'                 => '77777777777_01',
+    ':canale'                   => '88888888888_01',
+    ':sessionid'                => 'sessid_000288',
+    ':sessionidoriginal'        => '',
+    ':uniqueid'                 => 'T000291',
+    ':payload'                  => 'PHNvYXBlbnY6RW52ZWxvcGUgeG1sbnM6cGFmPSJodHRwOi8vcGFnb3BhLWFwaS5wYWdvcGEuZ292Lml0L3BhL3BhRm9yTm9kZS54c2QiIHhtbG5zOnNvYXBlbnY9Imh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3NvYXAvZW52ZWxvcGUvIj4KCTxzb2FwZW52OkhlYWRlci8+Cgk8c29hcGVudjpCb2R5PgoJCTxwYWY6cGFHZXRQYXltZW50VjJSZXNwb25zZT4KCQkJPG91dGNvbWU+T0s8L291dGNvbWU+CgkJCTxkYXRhPgoJCQkJPGNyZWRpdG9yUmVmZXJlbmNlSWQ+MDEwMDAwMDAwMDAwMDAyNzE8L2NyZWRpdG9yUmVmZXJlbmNlSWQ+CgkJCQk8cGF5bWVudEFtb3VudD40MDAuMDA8L3BheW1lbnRBbW91bnQ+CgkJCQk8ZHVlRGF0ZT4yMDI0LTA1LTIyPC9kdWVEYXRlPgoJCQkJPHJldGVudGlvbkRhdGU+MjAyNC0wNS0yM1QwMDowMDowMDwvcmV0ZW50aW9uRGF0ZT4KCQkJCTxsYXN0UGF5bWVudD4wPC9sYXN0UGF5bWVudD4KCQkJCTxkZXNjcmlwdGlvbj54eHh4eHh4eDwvZGVzY3JpcHRpb24+CgkJCQk8Y29tcGFueU5hbWU+eHh4eHh4eDwvY29tcGFueU5hbWU+CgkJCQk8b2ZmaWNlTmFtZT54eHh4eDwvb2ZmaWNlTmFtZT4KCQkJCTxkZWJ0b3I+CgkJCQkJPHVuaXF1ZUlkZW50aWZpZXI+CgkJCQkJCTxlbnRpdHlVbmlxdWVJZGVudGlmaWVyVHlwZT5GPC9lbnRpdHlVbmlxdWVJZGVudGlmaWVyVHlwZT4KCQkJCQkJPGVudGl0eVVuaXF1ZUlkZW50aWZpZXJWYWx1ZT5YWFhYWFhYWFhYWFhYWFhYPC9lbnRpdHlVbmlxdWVJZGVudGlmaWVyVmFsdWU+CgkJCQkJPC91bmlxdWVJZGVudGlmaWVyPgoJCQkJCTxmdWxsTmFtZT54eHh4eHg8L2Z1bGxOYW1lPgoJCQkJCTxlLW1haWw+eHh4eHh4eHhAeHh4eHgueHh4PC9lLW1haWw+CgkJCQk8L2RlYnRvcj4KCQkJCTx0cmFuc2Zlckxpc3Q+CgkJCQkJPHRyYW5zZmVyPgoJCQkJCQk8aWRUcmFuc2Zlcj4xPC9pZFRyYW5zZmVyPgoJCQkJCQk8dHJhbnNmZXJBbW91bnQ+MjUwLjAwPC90cmFuc2ZlckFtb3VudD4KCQkJCQkJPGZpc2NhbENvZGVQQT43Nzc3Nzc3Nzc3NzwvZmlzY2FsQ29kZVBBPgoJCQkJCQk8Y29tcGFueU5hbWU+eHh4eHh4eDwvY29tcGFueU5hbWU+CgkJCQkJCTxJQkFOPklUMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMTwvSUJBTj4KCQkJCQkJPHJlbWl0dGFuY2VJbmZvcm1hdGlvbj54eHh4eHh4PC9yZW1pdHRhbmNlSW5mb3JtYXRpb24+CgkJCQkJCTx0cmFuc2ZlckNhdGVnb3J5Pnh4eHh4eDwvdHJhbnNmZXJDYXRlZ29yeT4KCQkJCQk8L3RyYW5zZmVyPgoJCQkJCTx0cmFuc2Zlcj4KCQkJCQkJPGlkVHJhbnNmZXI+MjwvaWRUcmFuc2Zlcj4KCQkJCQkJPHRyYW5zZmVyQW1vdW50PjE1MC4wMDwvdHJhbnNmZXJBbW91bnQ+CgkJCQkJCTxmaXNjYWxDb2RlUEE+Nzc3Nzc3Nzc3Nzg8L2Zpc2NhbENvZGVQQT4KCQkJCQkJPGNvbXBhbnlOYW1lPnh4eHh4eHg8L2NvbXBhbnlOYW1lPgoJCQkJCQk8SUJBTj5JVDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDI8L0lCQU4+CgkJCQkJCTxyZW1pdHRhbmNlSW5mb3JtYXRpb24+eHh4eHh4eDwvcmVtaXR0YW5jZUluZm9ybWF0aW9uPgoJCQkJCQk8dHJhbnNmZXJDYXRlZ29yeT54eHh4eHg8L3RyYW5zZmVyQ2F0ZWdvcnk+CgkJCQkJPC90cmFuc2Zlcj4KCQkJCTwvdHJhbnNmZXJMaXN0PgoJCQk8L2RhdGE+CgkJPC9wYWY6cGFHZXRQYXltZW50VjJSZXNwb25zZT4KCTwvc29hcGVudjpCb2R5Pgo8L3NvYXBlbnY6RW52ZWxvcGU+',
+];
+Capsule::statement($render_query, $data_req);
+Capsule::statement($render_query, $data_resp);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+$data_req = [
+    ':id'                       => 292,
+    ':date_event'               => '2024-03-10',
+    ':inserted_timestamp'       => '2024-03-10 10:52:05.197',
+    ':tipoevento'               => 'paGetPaymentV2',
+    ':sottotipoevento'          => 'REQ',
+    ':iddominio'                => '77777777777',
+    ':iuv' => '01000000000000271',
+    ':ccp' => 't0000000000000000000000000000271',
+    ':noticenumber' => '301000000000000271',
+    ':creditorreferenceid' => '01000000000000271',
+    ':paymenttoken' => 't0000000000000000000000000000271',
+    ':psp'                      => 'AGID_01',
+    ':stazione'                 => '77777777777_01',
+    ':canale'                   => '88888888888_01',
+    ':sessionid'                => 'sessid_000289',
+    ':sessionidoriginal'        => '',
+    ':uniqueid'                 => 'T000292',
+    ':payload'                  => 'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIiA/Pgo8c29hcGVudjpFbnZlbG9wZSB4bWxuczpjb21tb249Imh0dHA6Ly9wYWdvcGEtYXBpLnBhZ29wYS5nb3YuaXQveHNkL2NvbW1vbi10eXBlcy92MS4wLjAvIiB4bWxuczpwYWZuPSJodHRwOi8vcGFnb3BhLWFwaS5wYWdvcGEuZ292Lml0L3BhL3BhRm9yTm9kZS54c2QiIHhtbG5zOnNvYXBlbnY9Imh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3NvYXAvZW52ZWxvcGUvIiB4bWxuczp0bnM9Imh0dHA6Ly9wYWdvcGEtYXBpLnBhZ29wYS5nb3YuaXQvcGFGb3JOb2RlIiB4bWxuczp4c2k9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1hLWluc3RhbmNlIj4KCTxzb2FwZW52OkJvZHk+CgkJPHBhZm46cGFHZXRQYXltZW50VjJSZXF1ZXN0PgoJCQk8aWRQQT43Nzc3Nzc3Nzc3NzwvaWRQQT4KCQkJPGlkQnJva2VyUEE+Nzc3Nzc3Nzc3Nzc8L2lkQnJva2VyUEE+CgkJCTxpZFN0YXRpb24+Nzc3Nzc3Nzc3NzdfMDE8L2lkU3RhdGlvbj4KCQkJPHFyQ29kZT4KCQkJCTxmaXNjYWxDb2RlPjc3Nzc3Nzc3Nzc3PC9maXNjYWxDb2RlPgoJCQkJPG5vdGljZU51bWJlcj4zMDEwMDAwMDAwMDAwMDAyNzE8L25vdGljZU51bWJlcj4KCQkJPC9xckNvZGU+CgkJCTxhbW91bnQ+NDAwLjAwPC9hbW91bnQ+CgkJCTx0cmFuc2ZlclR5cGU+UEFHT1BBPC90cmFuc2ZlclR5cGU+CgkJPC9wYWZuOnBhR2V0UGF5bWVudFYyUmVxdWVzdD4KCTwvc29hcGVudjpCb2R5Pgo8L3NvYXBlbnY6RW52ZWxvcGU+',
+];
+$data_resp = [
+    ':id'                       => 293,
+    ':date_event'               => '2024-03-10',
+    ':inserted_timestamp'       => '2024-03-10 10:52:06.197',
+    ':tipoevento'               => 'paGetPaymentV2',
+    ':sottotipoevento'          => 'RESP',
+    ':iddominio'                => '77777777777',
+    ':iuv' => '01000000000000271',
+    ':ccp' => 't0000000000000000000000000000271',
+    ':noticenumber' => '301000000000000271',
+    ':creditorreferenceid' => '01000000000000271',
+    ':paymenttoken' => 't0000000000000000000000000000271',
+    ':psp'                      => 'AGID_01',
+    ':stazione'                 => '77777777777_01',
+    ':canale'                   => '88888888888_01',
+    ':sessionid'                => 'sessid_000289',
+    ':sessionidoriginal'        => '',
+    ':uniqueid'                 => 'T000293',
+    ':payload'                  => 'PHNvYXBlbnY6RW52ZWxvcGUgeG1sbnM6cGFmPSJodHRwOi8vcGFnb3BhLWFwaS5wYWdvcGEuZ292Lml0L3BhL3BhRm9yTm9kZS54c2QiIHhtbG5zOnNvYXBlbnY9Imh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3NvYXAvZW52ZWxvcGUvIj4KCTxzb2FwZW52OkhlYWRlci8+Cgk8c29hcGVudjpCb2R5PgoJCTxwYWY6cGFHZXRQYXltZW50VjJSZXNwb25zZT4KCQkJPG91dGNvbWU+T0s8L291dGNvbWU+CgkJCTxkYXRhPgoJCQkJPGNyZWRpdG9yUmVmZXJlbmNlSWQ+MDEwMDAwMDAwMDAwMDAyNzE8L2NyZWRpdG9yUmVmZXJlbmNlSWQ+CgkJCQk8cGF5bWVudEFtb3VudD40MDAuMDA8L3BheW1lbnRBbW91bnQ+CgkJCQk8ZHVlRGF0ZT4yMDI0LTA1LTIyPC9kdWVEYXRlPgoJCQkJPHJldGVudGlvbkRhdGU+MjAyNC0wNS0yM1QwMDowMDowMDwvcmV0ZW50aW9uRGF0ZT4KCQkJCTxsYXN0UGF5bWVudD4wPC9sYXN0UGF5bWVudD4KCQkJCTxkZXNjcmlwdGlvbj54eHh4eHh4eDwvZGVzY3JpcHRpb24+CgkJCQk8Y29tcGFueU5hbWU+eHh4eHh4eDwvY29tcGFueU5hbWU+CgkJCQk8b2ZmaWNlTmFtZT54eHh4eDwvb2ZmaWNlTmFtZT4KCQkJCTxkZWJ0b3I+CgkJCQkJPHVuaXF1ZUlkZW50aWZpZXI+CgkJCQkJCTxlbnRpdHlVbmlxdWVJZGVudGlmaWVyVHlwZT5GPC9lbnRpdHlVbmlxdWVJZGVudGlmaWVyVHlwZT4KCQkJCQkJPGVudGl0eVVuaXF1ZUlkZW50aWZpZXJWYWx1ZT5YWFhYWFhYWFhYWFhYWFhYPC9lbnRpdHlVbmlxdWVJZGVudGlmaWVyVmFsdWU+CgkJCQkJPC91bmlxdWVJZGVudGlmaWVyPgoJCQkJCTxmdWxsTmFtZT54eHh4eHg8L2Z1bGxOYW1lPgoJCQkJCTxlLW1haWw+eHh4eHh4eHhAeHh4eHgueHh4PC9lLW1haWw+CgkJCQk8L2RlYnRvcj4KCQkJCTx0cmFuc2Zlckxpc3Q+CgkJCQkJPHRyYW5zZmVyPgoJCQkJCQk8aWRUcmFuc2Zlcj4xPC9pZFRyYW5zZmVyPgoJCQkJCQk8dHJhbnNmZXJBbW91bnQ+MjUwLjAwPC90cmFuc2ZlckFtb3VudD4KCQkJCQkJPGZpc2NhbENvZGVQQT43Nzc3Nzc3Nzc3NzwvZmlzY2FsQ29kZVBBPgoJCQkJCQk8Y29tcGFueU5hbWU+eHh4eHh4eDwvY29tcGFueU5hbWU+CgkJCQkJCTxJQkFOPklUMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMTwvSUJBTj4KCQkJCQkJPHJlbWl0dGFuY2VJbmZvcm1hdGlvbj54eHh4eHh4PC9yZW1pdHRhbmNlSW5mb3JtYXRpb24+CgkJCQkJCTx0cmFuc2ZlckNhdGVnb3J5Pnh4eHh4eDwvdHJhbnNmZXJDYXRlZ29yeT4KCQkJCQk8L3RyYW5zZmVyPgoJCQkJCTx0cmFuc2Zlcj4KCQkJCQkJPGlkVHJhbnNmZXI+MTwvaWRUcmFuc2Zlcj4KCQkJCQkJPHRyYW5zZmVyQW1vdW50PjE1MC4wMDwvdHJhbnNmZXJBbW91bnQ+CgkJCQkJCTxmaXNjYWxDb2RlUEE+Nzc3Nzc3Nzc3Nzg8L2Zpc2NhbENvZGVQQT4KCQkJCQkJPGNvbXBhbnlOYW1lPnh4eHh4eHg8L2NvbXBhbnlOYW1lPgoJCQkJCQk8SUJBTj5JVDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDI8L0lCQU4+CgkJCQkJCTxyZW1pdHRhbmNlSW5mb3JtYXRpb24+eHh4eHh4eDwvcmVtaXR0YW5jZUluZm9ybWF0aW9uPgoJCQkJCQk8dHJhbnNmZXJDYXRlZ29yeT54eHh4eHg8L3RyYW5zZmVyQ2F0ZWdvcnk+CgkJCQkJPC90cmFuc2Zlcj4KCQkJCTwvdHJhbnNmZXJMaXN0PgoJCQk8L2RhdGE+CgkJPC9wYWY6cGFHZXRQYXltZW50VjJSZXNwb25zZT4KCTwvc29hcGVudjpCb2R5Pgo8L3NvYXBlbnY6RW52ZWxvcGU+',
+];
+Capsule::statement($render_query, $data_req);
+Capsule::statement($render_query, $data_resp);
+
+
+
+
+
+
+
+
+
+
+
+$data_req = [
+    ':id' => 294,
+    ':date_event' => '2024-03-10',
+    ':inserted_timestamp' => '2024-03-10 10:55:00.197',
+    ':tipoevento' => 'closePayment-v2',
+    ':sottotipoevento' => 'REQ',
+    ':iddominio' => '77777777777',
+    ':iuv' => '01000000000000270',
+    ':ccp' => 't0000000000000000000000000000270',
+    ':noticenumber' => '301000000000000270',
+    ':creditorreferenceid' => '01000000000000270',
+    ':paymenttoken' => 't0000000000000000000000000000270',
+    ':psp' => 'PSP_V2',
+    ':stazione' => '77777777777_01',
+    ':canale' => '88888888888_01',
+    ':sessionid' => 'sessid_000290',
+    ':sessionidoriginal' => 'sessidoriginal_closepayment_v2_spo_v2',
+    ':uniqueid' => 'T000294',
+    ':payload' => 'ewogICAgImFkZGl0aW9uYWxQYXltZW50SW5mb3JtYXRpb25zIjogewogICAgICAgICJhdXRob3JpemF0aW9uQ29kZSI6ICIxMTExMTUiLAogICAgICAgICJmZWUiOiAiMi4wMCIsCiAgICAgICAgIm91dGNvbWVQYXltZW50R2F0ZXdheSI6ICJPSyIsCiAgICAgICAgInJybiI6ICIwMDAwMDAwMDAwMDkiLAogICAgICAgICJ0aW1lc3RhbXBPcGVyYXRpb24iOiAiMjAyNC0wNC0yNFQwOTo0ODo1NyIsCiAgICAgICAgInRvdGFsQW1vdW50IjogIjI0Mi4wMCIKICAgIH0sCiAgICAiZmVlIjogMi4wLAogICAgImlkQnJva2VyUFNQIjogIjg4ODg4ODg4ODg4IiwKICAgICJpZENoYW5uZWwiOiAiODg4ODg4ODg4ODhfMDEiLAogICAgImlkUFNQIjogIlBTUF9DUCIsCiAgICAib3V0Y29tZSI6ICJPSyIsCiAgICAicGF5bWVudE1ldGhvZCI6ICJDUCIsCiAgICAicGF5bWVudFRva2VucyI6IFsKICAgICAgICAidDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAyNzAiLAogICAgICAgICJ0MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDI3MSIKICAgIF0sCiAgICAidGltZXN0YW1wT3BlcmF0aW9uIjogIjIwMjQtMDQtMjRUMDc6NDg6NTcuNDcyWiIsCiAgICAidG90YWxBbW91bnQiOiAyMDIuMCwKICAgICJ0cmFuc2FjdGlvbkRldGFpbHMiOiB7CiAgICAgICAgImluZm8iOiB7CiAgICAgICAgICAgICJicmFuZCI6ICJNQyIsCiAgICAgICAgICAgICJicmFuZExvZ28iOiAiaHR0cHM6Ly9hc3NldHMuY2RuLnBsYXRmb3JtLnBhZ29wYS5pdC9jcmVkaXRjYXJkL21hc3RlcmNhcmQucG5nIiwKICAgICAgICAgICAgImNsaWVudElkIjogIkNIRUNLT1VUIiwKICAgICAgICAgICAgInBheW1lbnRNZXRob2ROYW1lIjogIkNBUkRTIiwKICAgICAgICAgICAgInR5cGUiOiAiQ1AiCiAgICAgICAgfSwKICAgICAgICAidHJhbnNhY3Rpb24iOiB7CiAgICAgICAgICAgICJhbW91bnQiOiAyMDAwMCwKICAgICAgICAgICAgImF1dGhvcml6YXRpb25Db2RlIjogIjExMTExNSIsCiAgICAgICAgICAgICJjcmVhdGlvbkRhdGUiOiAiMjAyNC0wNC0yNFQwNzo0ODoxNC45MjAyMDY1MTVaIiwKICAgICAgICAgICAgImZlZSI6IDIwMCwKICAgICAgICAgICAgImdyYW5kVG90YWwiOiAyMDIwMCwKICAgICAgICAgICAgInBheW1lbnRHYXRld2F5IjogIk5QRyIsCiAgICAgICAgICAgICJwc3AiOiB7CiAgICAgICAgICAgICAgICAiYnJva2VyTmFtZSI6ICI4ODg4ODg4ODg4OCIsCiAgICAgICAgICAgICAgICAiYnVzaW5lc3NOYW1lIjogIlBzcENwIiwKICAgICAgICAgICAgICAgICJpZENoYW5uZWwiOiAiODg4ODg4ODg4ODhfMDEiLAogICAgICAgICAgICAgICAgImlkUHNwIjogIlBTUF9DUCIsCiAgICAgICAgICAgICAgICAicHNwT25VcyI6IGZhbHNlCiAgICAgICAgICAgIH0sCiAgICAgICAgICAgICJycm4iOiAiMDAwMDAwMDAwMDA5IiwKICAgICAgICAgICAgInRpbWVzdGFtcE9wZXJhdGlvbiI6ICIyMDI0LTA0LTI0VDA3OjQ4OjU3LjQ3MloiLAogICAgICAgICAgICAidHJhbnNhY3Rpb25JZCI6ICIwOGY2MTY2ZjNmOTM0ZTZiOGFlNTQ3MjZkNDVlMTJhOCIsCiAgICAgICAgICAgICJ0cmFuc2FjdGlvblN0YXR1cyI6ICJDb25mZXJtYXRvIgogICAgICAgIH0sCiAgICAgICAgInVzZXIiOiB7CiAgICAgICAgICAgICJ0eXBlIjogIkdVRVNUIgogICAgICAgIH0KICAgIH0sCiAgICAidHJhbnNhY3Rpb25JZCI6ICIwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAxMCIKfQ==',
+];
+
+$data_resp = [
+    ':id' => 295,
+    ':date_event' => '2024-03-10',
+    ':inserted_timestamp' => '2024-03-10 10:55:10.197',
+    ':tipoevento' => 'closePayment-v2',
+    ':sottotipoevento' => 'RESP',
+    ':iddominio' => '77777777777',
+    ':iuv' => '01000000000000270',
+    ':ccp' => 't0000000000000000000000000000270',
+    ':noticenumber' => '301000000000000270',
+    ':creditorreferenceid' => '01000000000000270',
+    ':paymenttoken' => 't0000000000000000000000000000270',
+    ':psp' => 'PSP_V2',
+    ':stazione' => '77777777777_01',
+    ':canale' => '88888888888_01',
+    ':sessionid' => 'sessid_000290',
+    ':sessionidoriginal' => 'sessidoriginal_closepayment_v2_spo_v2',
+    ':uniqueid' => 'T000295',
+    ':payload' => 'ewogICAgIm91dGNvbWUiOiAiT0siCn0=',
+];
+
+
+
+
+Capsule::statement($render_query, $data_req);
+Capsule::statement($render_query, $data_resp);
+
+
+
+
+
+
+
+
+$data_req = [
+    ':id' => 296,
+    ':date_event' => '2024-03-10',
+    ':inserted_timestamp' => '2024-03-10 10:55:04.197',
+    ':tipoevento' => 'pspNotifyPaymentV2',
+    ':sottotipoevento' => 'REQ',
+    ':iddominio' => '77777777777',
+    ':iuv' => '01000000000000270',
+    ':ccp' => 't0000000000000000000000000000270',
+    ':noticenumber' => '301000000000000270',
+    ':creditorreferenceid' => '01000000000000270',
+    ':paymenttoken' => 't0000000000000000000000000000270',
+    ':psp' => 'PSP_V2',
+    ':stazione' => '77777777777_01',
+    ':canale' => '88888888888_01',
+    ':sessionid' => 'sessid_000291',
+    ':sessionidoriginal' => 'sessidoriginal_closepayment_v2_spo_v2',
+    ':uniqueid' => 'T000296',
+    ':payload' => 'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIiA/Pgo8c29hcGVudjpFbnZlbG9wZSB4bWxuczpjb21tb249Imh0dHA6Ly9wYWdvcGEtYXBpLnBhZ29wYS5nb3YuaXQveHNkL2NvbW1vbi10eXBlcy92MS4wLjAvIiB4bWxuczpwZm49Imh0dHA6Ly9wYWdvcGEtYXBpLnBhZ29wYS5nb3YuaXQvcHNwL3BzcEZvck5vZGUueHNkIiB4bWxuczpzb2FwZW52PSJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy9zb2FwL2VudmVsb3BlLyIgeG1sbnM6eHM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1hIiB4bWxuczp4c2k9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1hLWluc3RhbmNlIj4KCTxzb2FwZW52OkJvZHk+CgkJPHBmbjpwc3BOb3RpZnlQYXltZW50VjI+CgkJCTxpZFBTUD5QU1BfVjI8L2lkUFNQPgoJCQk8aWRCcm9rZXJQU1A+ODg4ODg4ODg4ODg8L2lkQnJva2VyUFNQPgoJCQk8aWRDaGFubmVsPjg4ODg4ODg4ODg4XzAyPC9pZENoYW5uZWw+CgkJCTx0cmFuc2FjdGlvbklkPnQwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAxMDAxPC90cmFuc2FjdGlvbklkPgoJCQk8dG90YWxBbW91bnQ+NzAwLjAwPC90b3RhbEFtb3VudD4KCQkJPGZlZT4xLjAwPC9mZWU+CgkJCTx0aW1lc3RhbXBPcGVyYXRpb24+MjAyNC0wNC0xOVQyMzowMTo0NDwvdGltZXN0YW1wT3BlcmF0aW9uPgoJCQk8cGF5bWVudExpc3Q+CgkJCQk8cGF5bWVudD4KCQkJCQk8cGF5bWVudFRva2VuPnQwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMjcwPC9wYXltZW50VG9rZW4+CgkJCQkJPHBheW1lbnREZXNjcmlwdGlvbj5wYWdhbWVudG8gbXVsdGliZW5lZmljaWFyaW88L3BheW1lbnREZXNjcmlwdGlvbj4KCQkJCQk8ZmlzY2FsQ29kZVBBPjc3Nzc3Nzc3Nzc3PC9maXNjYWxDb2RlUEE+CgkJCQkJPGNvbXBhbnlOYW1lPnh4eHh4eHh4PC9jb21wYW55TmFtZT4KCQkJCQk8Y3JlZGl0b3JSZWZlcmVuY2VJZD4wMTAwMDAwMDAwMDAwMDI3MDwvY3JlZGl0b3JSZWZlcmVuY2VJZD4KCQkJCQk8ZGVidEFtb3VudD4zMDAuMDA8L2RlYnRBbW91bnQ+CgkJCQkJPHRyYW5zZmVyTGlzdD4KCQkJCQkJPHRyYW5zZmVyPgoJCQkJCQkJPGlkVHJhbnNmZXI+MTwvaWRUcmFuc2Zlcj4KCQkJCQkJCTx0cmFuc2ZlckFtb3VudD4yMDAuMDA8L3RyYW5zZmVyQW1vdW50PgoJCQkJCQkJPGZpc2NhbENvZGVQQT43Nzc3Nzc3Nzc3NzwvZmlzY2FsQ29kZVBBPgoJCQkJCQkJPGNvbXBhbnlOYW1lPnh4eHh4eHg8L2NvbXBhbnlOYW1lPgoJCQkJCQkJPElCQU4+SVQwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAxPC9JQkFOPgoJCQkJCQkJPHJlbWl0dGFuY2VJbmZvcm1hdGlvbj54eHh4eHh4PC9yZW1pdHRhbmNlSW5mb3JtYXRpb24+CgkJCQkJCQk8dHJhbnNmZXJDYXRlZ29yeT54eHh4eHg8L3RyYW5zZmVyQ2F0ZWdvcnk+CgkJCQkJCTwvdHJhbnNmZXI+CgkJCQkJCTx0cmFuc2Zlcj4KCQkJCQkJCTxpZFRyYW5zZmVyPjE8L2lkVHJhbnNmZXI+CgkJCQkJCQk8dHJhbnNmZXJBbW91bnQ+MTAwLjAwPC90cmFuc2ZlckFtb3VudD4KCQkJCQkJCTxmaXNjYWxDb2RlUEE+Nzc3Nzc3Nzc3Nzg8L2Zpc2NhbENvZGVQQT4KCQkJCQkJCTxjb21wYW55TmFtZT54eHh4eHh4PC9jb21wYW55TmFtZT4KCQkJCQkJCTxJQkFOPklUMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMjwvSUJBTj4KCQkJCQkJCTxyZW1pdHRhbmNlSW5mb3JtYXRpb24+eHh4eHh4eDwvcmVtaXR0YW5jZUluZm9ybWF0aW9uPgoJCQkJCQkJPHRyYW5zZmVyQ2F0ZWdvcnk+eHh4eHh4PC90cmFuc2ZlckNhdGVnb3J5PgoJCQkJCQk8L3RyYW5zZmVyPgoJCQkJCTwvdHJhbnNmZXJMaXN0PgoJCQkJPC9wYXltZW50PgoJCQkJPHBheW1lbnQ+CgkJCQkJPHBheW1lbnRUb2tlbj50MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDI3MTwvcGF5bWVudFRva2VuPgoJCQkJCTxwYXltZW50RGVzY3JpcHRpb24+cGFnYW1lbnRvIG11bHRpYmVuZWZpY2lhcmlvPC9wYXltZW50RGVzY3JpcHRpb24+CgkJCQkJPGZpc2NhbENvZGVQQT43Nzc3Nzc3Nzc4NzwvZmlzY2FsQ29kZVBBPgoJCQkJCTxjb21wYW55TmFtZT54eHh4eHh4eDwvY29tcGFueU5hbWU+CgkJCQkJPGNyZWRpdG9yUmVmZXJlbmNlSWQ+MDEwMDAwMDAwMDAwMDAyNzE8L2NyZWRpdG9yUmVmZXJlbmNlSWQ+CgkJCQkJPGRlYnRBbW91bnQ+NDAwLjAwPC9kZWJ0QW1vdW50PgoJCQkJCTx0cmFuc2Zlckxpc3Q+CgkJCQkJCTx0cmFuc2Zlcj4KCQkJCQkJCTxpZFRyYW5zZmVyPjE8L2lkVHJhbnNmZXI+CgkJCQkJCQk8dHJhbnNmZXJBbW91bnQ+MjUwLjAwPC90cmFuc2ZlckFtb3VudD4KCQkJCQkJCTxmaXNjYWxDb2RlUEE+Nzc3Nzc3Nzc3Nzc8L2Zpc2NhbENvZGVQQT4KCQkJCQkJCTxjb21wYW55TmFtZT54eHh4eHh4PC9jb21wYW55TmFtZT4KCQkJCQkJCTxJQkFOPklUMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMTwvSUJBTj4KCQkJCQkJCTxyZW1pdHRhbmNlSW5mb3JtYXRpb24+eHh4eHh4eDwvcmVtaXR0YW5jZUluZm9ybWF0aW9uPgoJCQkJCQkJPHRyYW5zZmVyQ2F0ZWdvcnk+eHh4eHh4PC90cmFuc2ZlckNhdGVnb3J5PgoJCQkJCQk8L3RyYW5zZmVyPgoJCQkJCQk8dHJhbnNmZXI+CgkJCQkJCQk8aWRUcmFuc2Zlcj4xPC9pZFRyYW5zZmVyPgoJCQkJCQkJPHRyYW5zZmVyQW1vdW50PjE1MC4wMDwvdHJhbnNmZXJBbW91bnQ+CgkJCQkJCQk8ZmlzY2FsQ29kZVBBPjc3Nzc3Nzc3Nzc4PC9maXNjYWxDb2RlUEE+CgkJCQkJCQk8Y29tcGFueU5hbWU+eHh4eHh4eDwvY29tcGFueU5hbWU+CgkJCQkJCQk8SUJBTj5JVDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDI8L0lCQU4+CgkJCQkJCQk8cmVtaXR0YW5jZUluZm9ybWF0aW9uPnh4eHh4eHg8L3JlbWl0dGFuY2VJbmZvcm1hdGlvbj4KCQkJCQkJCTx0cmFuc2ZlckNhdGVnb3J5Pnh4eHh4eDwvdHJhbnNmZXJDYXRlZ29yeT4KCQkJCQkJPC90cmFuc2Zlcj4KCQkJCQk8L3RyYW5zZmVyTGlzdD4KCQkJCTwvcGF5bWVudD4KCQkJPC9wYXltZW50TGlzdD4KCQkJPGFkZGl0aW9uYWxQYXltZW50SW5mb3JtYXRpb25zPgoJCQkJPG1ldGFkYXRhPgoJCQkJCTxtYXBFbnRyeT4KCQkJCQkJPGtleT50aXBvVmVyc2FtZW50bzwva2V5PgoJCQkJCQk8dmFsdWU+Q1A8L3ZhbHVlPgoJCQkJCTwvbWFwRW50cnk+CgkJCQkJPG1hcEVudHJ5PgoJCQkJCQk8a2V5Pm91dGNvbWVQYXltZW50R2F0ZXdheTwva2V5PgoJCQkJCQk8dmFsdWU+T0s8L3ZhbHVlPgoJCQkJCTwvbWFwRW50cnk+CgkJCQkJPG1hcEVudHJ5PgoJCQkJCQk8a2V5PnRpbWVzdGFtcE9wZXJhdGlvbjwva2V5PgoJCQkJCQk8dmFsdWU+MjAyNC0wNC0xOVQyMzowMTo0NDwvdmFsdWU+CgkJCQkJPC9tYXBFbnRyeT4KCQkJCQk8bWFwRW50cnk+CgkJCQkJCTxrZXk+dG90YWxBbW91bnQ8L2tleT4KCQkJCQkJPHZhbHVlPjcwMS4wMDwvdmFsdWU+CgkJCQkJPC9tYXBFbnRyeT4KCQkJCQk8bWFwRW50cnk+CgkJCQkJCTxrZXk+ZmVlPC9rZXk+CgkJCQkJCTx2YWx1ZT4xLjAwPC92YWx1ZT4KCQkJCQk8L21hcEVudHJ5PgoJCQkJCTxtYXBFbnRyeT4KCQkJCQkJPGtleT5hdXRob3JpemF0aW9uQ29kZTwva2V5PgoJCQkJCQk8dmFsdWU+OTg3NjU0PC92YWx1ZT4KCQkJCQk8L21hcEVudHJ5PgoJCQkJCTxtYXBFbnRyeT4KCQkJCQkJPGtleT5ycm48L2tleT4KCQkJCQkJPHZhbHVlPnJybl9TUE9WMjwvdmFsdWU+CgkJCQkJPC9tYXBFbnRyeT4KCQkJCTwvbWV0YWRhdGE+CgkJCTwvYWRkaXRpb25hbFBheW1lbnRJbmZvcm1hdGlvbnM+CgkJPC9wZm46cHNwTm90aWZ5UGF5bWVudFYyPgoJPC9zb2FwZW52OkJvZHk+Cjwvc29hcGVudjpFbnZlbG9wZT4=',
+];
+
+$data_resp = [
+    ':id' => 297,
+    ':date_event' => '2024-03-10',
+    ':inserted_timestamp' => '2024-03-10 10:55:06.197',
+    ':tipoevento' => 'pspNotifyPaymentV2',
+    ':sottotipoevento' => 'RESP',
+    ':iddominio' => '77777777777',
+    ':iuv' => '01000000000000270',
+    ':ccp' => 't0000000000000000000000000000270',
+    ':noticenumber' => '301000000000000270',
+    ':creditorreferenceid' => '01000000000000270',
+    ':paymenttoken' => 't0000000000000000000000000000270',
+    ':psp' => 'PSP_V2',
+    ':stazione' => '77777777777_01',
+    ':canale' => '88888888888_01',
+    ':sessionid' => 'sessid_000291',
+    ':sessionidoriginal' => 'sessidoriginal_closepayment_v2_spo_v2',
+    ':uniqueid' => 'T000297',
+    ':payload' => 'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIiA/Pgo8c29hcGVudjpFbnZlbG9wZSB4bWxuczpjb21tb249Imh0dHA6Ly9wYWdvcGEtYXBpLnBhZ29wYS5nb3YuaXQveHNkL2NvbW1vbi10eXBlcy92MS4wLjAvIiB4bWxuczpwZm49Imh0dHA6Ly9wYWdvcGEtYXBpLnBhZ29wYS5nb3YuaXQvcHNwL3BzcEZvck5vZGUueHNkIiB4bWxuczpzb2FwZW52PSJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy9zb2FwL2VudmVsb3BlLyIgeG1sbnM6eHM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1hIiB4bWxuczp4c2k9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1hLWluc3RhbmNlIj4KCTxzb2FwZW52OkJvZHk+CgkJPHBmbjpwc3BOb3RpZnlQYXltZW50VjI+CgkJCTxpZFBTUD5QU1BfVjI8L2lkUFNQPgoJCQk8aWRCcm9rZXJQU1A+ODg4ODg4ODg4ODg8L2lkQnJva2VyUFNQPgoJCQk8aWRDaGFubmVsPjg4ODg4ODg4ODg4XzAyPC9pZENoYW5uZWw+CgkJCTx0cmFuc2FjdGlvbklkPnQwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAxMDAxPC90cmFuc2FjdGlvbklkPgoJCQk8dG90YWxBbW91bnQ+NzAwLjAwPC90b3RhbEFtb3VudD4KCQkJPGZlZT4xLjAwPC9mZWU+CgkJCTx0aW1lc3RhbXBPcGVyYXRpb24+MjAyNC0wNC0xOVQyMzowMTo0NDwvdGltZXN0YW1wT3BlcmF0aW9uPgoJCQk8cGF5bWVudExpc3Q+CgkJCQk8cGF5bWVudD4KCQkJCQk8cGF5bWVudFRva2VuPnQwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMjcwPC9wYXltZW50VG9rZW4+CgkJCQkJPHBheW1lbnREZXNjcmlwdGlvbj5wYWdhbWVudG8gbXVsdGliZW5lZmljaWFyaW88L3BheW1lbnREZXNjcmlwdGlvbj4KCQkJCQk8ZmlzY2FsQ29kZVBBPjc3Nzc3Nzc3Nzc3PC9maXNjYWxDb2RlUEE+CgkJCQkJPGNvbXBhbnlOYW1lPnh4eHh4eHh4PC9jb21wYW55TmFtZT4KCQkJCQk8Y3JlZGl0b3JSZWZlcmVuY2VJZD4wMTAwMDAwMDAwMDAwMDI3MDwvY3JlZGl0b3JSZWZlcmVuY2VJZD4KCQkJCQk8ZGVidEFtb3VudD4zMDAuMDA8L2RlYnRBbW91bnQ+CgkJCQkJPHRyYW5zZmVyTGlzdD4KCQkJCQkJPHRyYW5zZmVyPgoJCQkJCQkJPGlkVHJhbnNmZXI+MTwvaWRUcmFuc2Zlcj4KCQkJCQkJCTx0cmFuc2ZlckFtb3VudD4yMDAuMDA8L3RyYW5zZmVyQW1vdW50PgoJCQkJCQkJPGZpc2NhbENvZGVQQT43Nzc3Nzc3Nzc3NzwvZmlzY2FsQ29kZVBBPgoJCQkJCQkJPGNvbXBhbnlOYW1lPnh4eHh4eHg8L2NvbXBhbnlOYW1lPgoJCQkJCQkJPElCQU4+SVQwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAxPC9JQkFOPgoJCQkJCQkJPHJlbWl0dGFuY2VJbmZvcm1hdGlvbj54eHh4eHh4PC9yZW1pdHRhbmNlSW5mb3JtYXRpb24+CgkJCQkJCQk8dHJhbnNmZXJDYXRlZ29yeT54eHh4eHg8L3RyYW5zZmVyQ2F0ZWdvcnk+CgkJCQkJCTwvdHJhbnNmZXI+CgkJCQkJCTx0cmFuc2Zlcj4KCQkJCQkJCTxpZFRyYW5zZmVyPjI8L2lkVHJhbnNmZXI+CgkJCQkJCQk8dHJhbnNmZXJBbW91bnQ+MTAwLjAwPC90cmFuc2ZlckFtb3VudD4KCQkJCQkJCTxmaXNjYWxDb2RlUEE+Nzc3Nzc3Nzc3Nzg8L2Zpc2NhbENvZGVQQT4KCQkJCQkJCTxjb21wYW55TmFtZT54eHh4eHh4PC9jb21wYW55TmFtZT4KCQkJCQkJCTxJQkFOPklUMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMjwvSUJBTj4KCQkJCQkJCTxyZW1pdHRhbmNlSW5mb3JtYXRpb24+eHh4eHh4eDwvcmVtaXR0YW5jZUluZm9ybWF0aW9uPgoJCQkJCQkJPHRyYW5zZmVyQ2F0ZWdvcnk+eHh4eHh4PC90cmFuc2ZlckNhdGVnb3J5PgoJCQkJCQk8L3RyYW5zZmVyPgoJCQkJCTwvdHJhbnNmZXJMaXN0PgoJCQkJPC9wYXltZW50PgoJCQkJPHBheW1lbnQ+CgkJCQkJPHBheW1lbnRUb2tlbj50MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDI3MTwvcGF5bWVudFRva2VuPgoJCQkJCTxwYXltZW50RGVzY3JpcHRpb24+cGFnYW1lbnRvIG11bHRpYmVuZWZpY2lhcmlvPC9wYXltZW50RGVzY3JpcHRpb24+CgkJCQkJPGZpc2NhbENvZGVQQT43Nzc3Nzc3Nzc4NzwvZmlzY2FsQ29kZVBBPgoJCQkJCTxjb21wYW55TmFtZT54eHh4eHh4eDwvY29tcGFueU5hbWU+CgkJCQkJPGNyZWRpdG9yUmVmZXJlbmNlSWQ+MDEwMDAwMDAwMDAwMDAyNzE8L2NyZWRpdG9yUmVmZXJlbmNlSWQ+CgkJCQkJPGRlYnRBbW91bnQ+NDAwLjAwPC9kZWJ0QW1vdW50PgoJCQkJCTx0cmFuc2Zlckxpc3Q+CgkJCQkJCTx0cmFuc2Zlcj4KCQkJCQkJCTxpZFRyYW5zZmVyPjE8L2lkVHJhbnNmZXI+CgkJCQkJCQk8dHJhbnNmZXJBbW91bnQ+MjUwLjAwPC90cmFuc2ZlckFtb3VudD4KCQkJCQkJCTxmaXNjYWxDb2RlUEE+Nzc3Nzc3Nzc3Nzc8L2Zpc2NhbENvZGVQQT4KCQkJCQkJCTxjb21wYW55TmFtZT54eHh4eHh4PC9jb21wYW55TmFtZT4KCQkJCQkJCTxJQkFOPklUMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMTwvSUJBTj4KCQkJCQkJCTxyZW1pdHRhbmNlSW5mb3JtYXRpb24+eHh4eHh4eDwvcmVtaXR0YW5jZUluZm9ybWF0aW9uPgoJCQkJCQkJPHRyYW5zZmVyQ2F0ZWdvcnk+eHh4eHh4PC90cmFuc2ZlckNhdGVnb3J5PgoJCQkJCQk8L3RyYW5zZmVyPgoJCQkJCQk8dHJhbnNmZXI+CgkJCQkJCQk8aWRUcmFuc2Zlcj4yPC9pZFRyYW5zZmVyPgoJCQkJCQkJPHRyYW5zZmVyQW1vdW50PjE1MC4wMDwvdHJhbnNmZXJBbW91bnQ+CgkJCQkJCQk8ZmlzY2FsQ29kZVBBPjc3Nzc3Nzc3Nzc4PC9maXNjYWxDb2RlUEE+CgkJCQkJCQk8Y29tcGFueU5hbWU+eHh4eHh4eDwvY29tcGFueU5hbWU+CgkJCQkJCQk8SUJBTj5JVDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDI8L0lCQU4+CgkJCQkJCQk8cmVtaXR0YW5jZUluZm9ybWF0aW9uPnh4eHh4eHg8L3JlbWl0dGFuY2VJbmZvcm1hdGlvbj4KCQkJCQkJCTx0cmFuc2ZlckNhdGVnb3J5Pnh4eHh4eDwvdHJhbnNmZXJDYXRlZ29yeT4KCQkJCQkJPC90cmFuc2Zlcj4KCQkJCQk8L3RyYW5zZmVyTGlzdD4KCQkJCTwvcGF5bWVudD4KCQkJPC9wYXltZW50TGlzdD4KCQkJPGFkZGl0aW9uYWxQYXltZW50SW5mb3JtYXRpb25zPgoJCQkJPG1ldGFkYXRhPgoJCQkJCTxtYXBFbnRyeT4KCQkJCQkJPGtleT50aXBvVmVyc2FtZW50bzwva2V5PgoJCQkJCQk8dmFsdWU+Q1A8L3ZhbHVlPgoJCQkJCTwvbWFwRW50cnk+CgkJCQkJPG1hcEVudHJ5PgoJCQkJCQk8a2V5Pm91dGNvbWVQYXltZW50R2F0ZXdheTwva2V5PgoJCQkJCQk8dmFsdWU+T0s8L3ZhbHVlPgoJCQkJCTwvbWFwRW50cnk+CgkJCQkJPG1hcEVudHJ5PgoJCQkJCQk8a2V5PnRpbWVzdGFtcE9wZXJhdGlvbjwva2V5PgoJCQkJCQk8dmFsdWU+MjAyNC0wNC0xOVQyMzowMTo0NDwvdmFsdWU+CgkJCQkJPC9tYXBFbnRyeT4KCQkJCQk8bWFwRW50cnk+CgkJCQkJCTxrZXk+dG90YWxBbW91bnQ8L2tleT4KCQkJCQkJPHZhbHVlPjcwMS4wMDwvdmFsdWU+CgkJCQkJPC9tYXBFbnRyeT4KCQkJCQk8bWFwRW50cnk+CgkJCQkJCTxrZXk+ZmVlPC9rZXk+CgkJCQkJCTx2YWx1ZT4xLjAwPC92YWx1ZT4KCQkJCQk8L21hcEVudHJ5PgoJCQkJCTxtYXBFbnRyeT4KCQkJCQkJPGtleT5hdXRob3JpemF0aW9uQ29kZTwva2V5PgoJCQkJCQk8dmFsdWU+MTAwMDAxPC92YWx1ZT4KCQkJCQk8L21hcEVudHJ5PgoJCQkJCTxtYXBFbnRyeT4KCQkJCQkJPGtleT5ycm48L2tleT4KCQkJCQkJPHZhbHVlPnp6enp6enp6enp6enp6enp6enp6ejE8L3ZhbHVlPgoJCQkJCTwvbWFwRW50cnk+CgkJCQk8L21ldGFkYXRhPgoJCQk8L2FkZGl0aW9uYWxQYXltZW50SW5mb3JtYXRpb25zPgoJCTwvcGZuOnBzcE5vdGlmeVBheW1lbnRWMj4KCTwvc29hcGVudjpCb2R5Pgo8L3NvYXBlbnY6RW52ZWxvcGU+',
+];
+
+
+
+
+Capsule::statement($render_query, $data_req);
+Capsule::statement($render_query, $data_resp);
+
+
+
+
+
+
+
+
+
+
+
+$data_req = [
+    ':id' => 298,
+    ':date_event' => '2024-03-10',
+    ':inserted_timestamp' => '2024-03-10 10:58:04.197',
+    ':tipoevento' => 'sendPaymentOutcomeV2',
+    ':sottotipoevento' => 'REQ',
+    ':iddominio' => '77777777777',
+    ':iuv' => '01000000000000270',
+    ':ccp' => 't0000000000000000000000000000270',
+    ':noticenumber' => '301000000000000270',
+    ':creditorreferenceid' => '01000000000000270',
+    ':paymenttoken' => 't0000000000000000000000000000270',
+    ':psp' => 'PSP_V2',
+    ':stazione' => '77777777777_01',
+    ':canale' => '88888888888_01',
+    ':sessionid' => 'sessid_000292',
+    ':sessionidoriginal' => '',
+    ':uniqueid' => 'T000298',
+    ':payload' => 'PHNvYXA6RW52ZWxvcGUgeG1sbnM6c29hcD0iaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvc29hcC9lbnZlbG9wZS8iPgogIDxzb2FwOkJvZHk+CiAgICA8bnMzOnNlbmRQYXltZW50T3V0Y29tZVYyUmVxdWVzdCB4bWxuczpuczI9Imh0dHA6Ly93d3cuZGlnaXRwYS5nb3YuaXQvc2NoZW1hcy8yMDExL1BhZ2FtZW50aS8iIHhtbG5zOm5zMz0iaHR0cDovL3BhZ29wYS1hcGkucGFnb3BhLmdvdi5pdC9ub2RlL25vZGVGb3JQc3AueHNkIiB4bWxuczpuczQ9Imh0dHA6Ly93cy5wYWdhbWVudGkudGVsZW1hdGljaS5nb3YvIiB4bWxuczpuczU9Imh0dHA6Ly9wYWdvcGEtYXBpLnBhZ29wYS5nb3YuaXQvcHNwL3BzcEZvck5vZGUueHNkIj4KICAgICAgPGlkUFNQPkFHSURfMDE8L2lkUFNQPgogICAgICA8aWRCcm9rZXJQU1A+ODg4ODg4ODg4ODg8L2lkQnJva2VyUFNQPgogICAgICA8aWRDaGFubmVsPjg4ODg4ODg4ODg4XzAxPC9pZENoYW5uZWw+CiAgICAgIDxwYXNzd29yZD5QTEFDRUhPTERFUjwvcGFzc3dvcmQ+CiAgICAgIDxwYXltZW50VG9rZW5zPgogICAgICAgIDxwYXltZW50VG9rZW4+dDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAyNzA8L3BheW1lbnRUb2tlbj4KICAgICAgICA8cGF5bWVudFRva2VuPnQwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMjcxPC9wYXltZW50VG9rZW4+CiAgICAgIDwvcGF5bWVudFRva2Vucz4KICAgICAgPG91dGNvbWU+T0s8L291dGNvbWU+CiAgICAgIDxkZXRhaWxzPgogICAgICAJPHBheW1lbnRNZXRob2Q+TUVUT0RPPC9wYXltZW50TWV0aG9kPgogICAgICAJPHBheW1lbnRDaGFubmVsPkNBTkFMRTwvcGF5bWVudENoYW5uZWw+CiAgICAgIDwvZGV0YWlscz4KICAgIDwvbnMzOnNlbmRQYXltZW50T3V0Y29tZVYyUmVxdWVzdD4KICA8L3NvYXA6Qm9keT4KPC9zb2FwOkVudmVsb3BlPg==',
+];
+
+$data_resp = [
+    ':id' => 299,
+    ':date_event' => '2024-03-10',
+    ':inserted_timestamp' => '2024-03-10 10:58:05.197',
+    ':tipoevento' => 'sendPaymentOutcomeV2',
+    ':sottotipoevento' => 'RESP',
+    ':iddominio' => '77777777777',
+    ':iuv' => '01000000000000270',
+    ':ccp' => 't0000000000000000000000000000270',
+    ':noticenumber' => '301000000000000270',
+    ':creditorreferenceid' => '01000000000000270',
+    ':paymenttoken' => 't0000000000000000000000000000270',
+    ':psp' => 'PSP_V2',
+    ':stazione' => '77777777777_01',
+    ':canale' => '88888888888_01',
+    ':sessionid' => 'sessid_000292',
+    ':sessionidoriginal' => '',
+    ':uniqueid' => 'T000299',
+    ':payload' => 'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIiA/Pgo8c29hcGVudjpFbnZlbG9wZSB4bWxuczpjb21tb249Imh0dHA6Ly9wYWdvcGEtYXBpLnBhZ29wYS5nb3YuaXQveHNkL2NvbW1vbi10eXBlcy92MS4wLjAvIiB4bWxuczpuZnA9Imh0dHA6Ly9wYWdvcGEtYXBpLnBhZ29wYS5nb3YuaXQvbm9kZS9ub2RlRm9yUHNwLnhzZCIgeG1sbnM6c29hcGVudj0iaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvc29hcC9lbnZlbG9wZS8iIHhtbG5zOnhzPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYSIgeG1sbnM6eHNpPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtYS1pbnN0YW5jZSI+Cgk8c29hcGVudjpCb2R5PgoJCTxuZnA6c2VuZFBheW1lbnRPdXRjb21lVjJSZXNwb25zZT4KCQkJPG91dGNvbWU+T0s8L291dGNvbWU+CgkJPC9uZnA6c2VuZFBheW1lbnRPdXRjb21lVjJSZXNwb25zZT4KCTwvc29hcGVudjpCb2R5Pgo8L3NvYXBlbnY6RW52ZWxvcGU+',
+];
+
+
+
+
+
+Capsule::statement($render_query, $data_req);
+Capsule::statement($render_query, $data_resp);
+
