@@ -42,6 +42,11 @@ obj/
 /src/vendor/
 /src/vendor/**/.git
 /src/tests/.phpunit.result.cache
+/vendor/
+/vendor/**/.git
+/tests/.phpunit.result.cache
 old/
 trash/
+composer.lock
+.*env
 
