@@ -1,4 +1,4 @@
-FROM php:8.2-fpm
+FROM php:8.2-fpm@sha256:95daac6a2a785926b677973a2ef26b61d9d3c248ff33eaf857b71780bceea7ca
 
 
 RUN apt -y update -y && apt -y upgrade && apt -y install git libpq-dev libzip-dev zip libmemcached-dev && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql && docker-php-ext-install pdo pdo_pgsql pgsql && docker-php-ext-install zip
