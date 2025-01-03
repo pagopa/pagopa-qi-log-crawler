@@ -19,7 +19,11 @@
         <const name="DB_PASSWORD" value="mock" />
     </php>
     <testsuites>
-        <testsuite name="temp_suite">
+        <testsuite name="unit_test">
+            <file>ut/payload/req/activatePaymentNoticeTest.php</file>
+        </testsuite>
+        <testsuite name="single_test">
+            <file>ut/payload/resp/activatePaymentNoticeTest.php</file>
         </testsuite>
     </testsuites>
 </phpunit>
