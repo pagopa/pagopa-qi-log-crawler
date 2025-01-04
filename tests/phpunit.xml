@@ -20,10 +20,15 @@
     </php>
     <testsuites>
         <testsuite name="unit_test">
+            <!-- request unit tests -->
             <file>ut/payload/req/activatePaymentNoticeTest.php</file>
+            <file>ut/payload/req/verifyPaymentNoticeTest.php</file>
+
+            <!-- response unit tests -->
+            <file>ut/payload/resp/activatePaymentNoticeTest.php</file>
         </testsuite>
         <testsuite name="single_test">
-            <file>ut/payload/resp/activatePaymentNoticeTest.php</file>
+            <file>ut/payload/resp/verifyPaymentNoticeTest.php</file>
         </testsuite>
     </testsuites>
 </phpunit>
