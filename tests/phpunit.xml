@@ -26,6 +26,7 @@
 
             <!-- response unit tests -->
             <file>ut/payload/resp/activatePaymentNoticeTest.php</file>
+            <file>ut/payload/resp/verifyPaymentNoticeTest.php</file>
         </testsuite>
         <testsuite name="single_test">
             <file>ut/payload/resp/verifyPaymentNoticeTest.php</file>
