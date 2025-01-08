@@ -19,7 +19,7 @@
         <const name="DB_PASSWORD" value="mock" />
     </php>
     <testsuites>
-        <testsuite name="unit_test">
+        <testsuite name="unit_test_payload">
             <!-- request unit tests -->
             <file>ut/payload/req/activatePaymentNoticeTest.php</file>
             <file>ut/payload/req/verifyPaymentNoticeTest.php</file>
@@ -27,6 +27,12 @@
             <!-- response unit tests -->
             <file>ut/payload/resp/activatePaymentNoticeTest.php</file>
             <file>ut/payload/resp/verifyPaymentNoticeTest.php</file>
+        </testsuite>
+        <testsuite name="unit_test_event">
+            <!-- request event unit tests -->
+            <file>ut/events/req/activatePaymentNoticeTest.php</file>
+
+            <!-- response event unit tests -->
         </testsuite>
         <testsuite name="single_test">
             <file>ut/payload/resp/verifyPaymentNoticeTest.php</file>
