@@ -163,7 +163,9 @@ class RequestXML extends XmlParser
 
     public function getPaymentMetaDataCount(int $paymentPosition = 0): int
     {
-        return $this->getElementsCount(static::XPATH_PAYMENT_METADATA_COUNT);
+        $paymentPosition++;
+        $xpath = vsprintf(static::XPATH_PAYMENT_METADATA_COUNT, [$paymentPosition]);
+        return $this->getElementsCount($xpath);
     }
 
     public function getPaymentMetaDataName(int $metadataPosition = 0, int $paymentPosition = 0): string|null
