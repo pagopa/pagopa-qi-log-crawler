@@ -2,15 +2,29 @@
 
 namespace pagopa\sert\payload;
 
-use pagopa\sert\payload\ParserInterface;
 use SimpleXMLElement;
 use Exception;
 
+/**
+ * <p>Semplice classe che gestisce la ricerca di un elemento XML dato un <b>xPath</b> o restituisce il numero di elementi presenti in un XML
+ * dato un <b>xPath</b></p>
+ * <p>Effettua un check sulla sintassi dell'XML senza considerare namespace e contenuto dei tag xml</p>
+ *
+ * @see ParserInterface
+ */
 class XmlParser implements ParserInterface
 {
 
+    /**
+     * Contiene il payload dell'evento senza i namespace
+     * @var string
+     */
     protected string $xml;
 
+    /**
+     * Contiene true/false in base alla validità del payload (solo check su sintassi XML, non su correttezza primitive)
+     * @var bool
+     */
     protected bool $isValid = true;
 
     public function __construct(string $xml_content)
@@ -32,13 +46,18 @@ class XmlParser implements ParserInterface
     }
 
 
+    /**
+     * Restituisce true/false se il payload dell'evento è o meno valido
+     * @return bool
+     */
     public function isValid(): bool
     {
         return $this->isValid;
     }
 
     /**
-     * Gli devi dare l'xpath corretto. Se ci sono più elementi, ti da il primo
+     * Restituisce l'elemento raggiunto da $xpath. Se $xpath è vuoto, restituisce null
+     * Se ad $xpath non corrisponde nulla, restituisce null
      * @param string $xpath
      * @return string|null
      * @throws Exception
@@ -59,6 +78,13 @@ class XmlParser implements ParserInterface
         return $query[0];
     }
 
+    /**
+     * Restituisce il numero di elementi trovati da $xpath. Se $xpath è vuoto, restituisce null
+     * Se non trova elementi, restituisce 0
+     * @param string $xpath
+     * @return int
+     * @throws Exception
+     */
     public function getElementsCount(string $xpath): int
     {
         if ($xpath == '')
