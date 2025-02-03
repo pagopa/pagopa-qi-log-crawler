@@ -29,18 +29,20 @@
             <file>payload/req/activatePaymentNoticeTest.php</file>
             <file>payload/req/verifyPaymentNoticeTest.php</file>
             <file>payload/req/sendPaymentOutcomeTest.php</file>
+            <file>payload/req/paGetPaymentTest.php</file>
 
             <!-- response unit tests -->
             <file>payload/resp/activatePaymentNoticeTest.php</file>
             <file>payload/resp/verifyPaymentNoticeTest.php</file>
             <file>payload/resp/sendPaymentOutcomeTest.php</file>
+            <file>payload/resp/paGetPaymentTest.php</file>
         </testsuite>
         <testsuite name="unit_test_event">
             <!-- request event unit tests -->
             <!-- response event unit tests -->
         </testsuite>
         <testsuite name="single_test">
-            <file>payload/resp/sendPaymentOutcomeTest.php</file>
+            <file>payload/resp/paGetPaymentTest.php</file>
         </testsuite>
     </testsuites>
     <coverage includeUncoveredFiles="false" pathCoverage="false">
