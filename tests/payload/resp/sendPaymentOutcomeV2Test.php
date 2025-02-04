@@ -54,4 +54,11 @@ class sendPaymentOutcomeV2Test extends TestCase
         $this->assertNull($this->instance->getFaultString());
         $this->assertEquals('Token scaduto', $this->instance_fault->getFaultString());
     }
+
+    #[TestDox('getPaymentsCount()')]
+    public function testGetPaymentsCount()
+    {
+        $this->assertEquals(1, $this->instance->getPaymentsCount());
+        $this->assertEquals(0, $this->instance_fault->getPaymentsCount());
+    }
 }
