@@ -190,9 +190,6 @@ class activatePaymentNoticeV2Test extends TestCase
 
         $this->assertNull($this->instance_fault->getTransferMetaDataName(0, 0));
         $this->assertNull($this->instance_fault->getTransferMetaDataName(1, 0));
-
-
-
     }
 
     #[TestDox('isBollo()')]
@@ -466,7 +463,6 @@ class activatePaymentNoticeV2Test extends TestCase
     #[TestDox('getTransferPa()')]
     public function testGetTransferPa()
     {
-
         $this->assertEquals('77777777777', $this->instance_1_transfer->getTransferPa(0));
         $this->assertNull($this->instance_1_transfer->getTransferPa(1));
 
