@@ -35,6 +35,7 @@
             <file>payload/req/paGetPaymentTest.php</file>
             <file>payload/req/paGetPaymentV2Test.php</file>
             <file>payload/req/paSendRTTest.php</file>
+            <file>payload/req/paSendRTV2Test.php</file>
 
             <!-- response unit tests -->
             <file>payload/resp/verifyPaymentNoticeTest.php</file>
@@ -46,13 +47,14 @@
             <file>payload/resp/paGetPaymentTest.php</file>
             <file>payload/resp/paGetPaymentV2Test.php</file>
             <file>payload/resp/paSendRTTest.php</file>
+            <file>payload/resp/paSendRTV2Test.php</file>
         </testsuite>
         <testsuite name="unit_test_event">
             <!-- request event unit tests -->
             <!-- response event unit tests -->
         </testsuite>
         <testsuite name="single_test">
-            <file>payload/resp/paGetPaymentV2Test.php</file>
+            <file>payload/resp/paSendRTV2Test.php</file>
         </testsuite>
     </testsuites>
     <coverage includeUncoveredFiles="false" pathCoverage="false">
