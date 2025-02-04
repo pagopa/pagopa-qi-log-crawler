@@ -60,7 +60,6 @@ class XmlParser implements ParserInterface
      * Se ad $xpath non corrisponde nulla, restituisce null
      * @param string $xpath
      * @return string|null
-     * @throws Exception
      */
     public function getElement(string $xpath): string|null
     {
@@ -68,14 +67,20 @@ class XmlParser implements ParserInterface
         {
             return null;
         }
-        $xml = new SimpleXMLElement($this->xml);
-        $query = $xml->xpath($xpath);
+        try {
+            $xml = new SimpleXMLElement($this->xml);
+            $query = $xml->xpath($xpath);
 
-        if ((is_null($query)) || ($query === false) || (count($query) === 0))
+            if ((is_null($query)) || ($query === false) || (count($query) === 0))
+            {
+                return null;
+            }
+            return $query[0];
+        }
+        catch (\Exception)
         {
             return null;
         }
-        return $query[0];
     }
 
     /**
@@ -83,7 +88,6 @@ class XmlParser implements ParserInterface
      * Se non trova elementi, restituisce 0
      * @param string $xpath
      * @return int
-     * @throws Exception
      */
     public function getElementsCount(string $xpath): int
     {
@@ -91,8 +95,14 @@ class XmlParser implements ParserInterface
         {
             return 0;
         }
-        $xml = new SimpleXMLElement($this->xml);
-        $query = $xml->xpath($xpath);
-        return count($query);
+        try {
+            $xml = new SimpleXMLElement($this->xml);
+            $query = $xml->xpath($xpath);
+            return count($query);
+        }
+        catch (\Exception)
+        {
+            return 0;
+        }
     }
 }

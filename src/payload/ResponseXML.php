@@ -25,7 +25,6 @@ class ResponseXML extends RequestXML
     /**
      * <p>Restituisce il faultCode del payload di una Response. Se non presente restituisce null</p>
      * @return string|null
-     * @throws Exception
      * @see static::XPATH_FAULT_CODE
      */
     public function getFaultCode() : string|null
@@ -36,7 +35,6 @@ class ResponseXML extends RequestXML
     /**
      * <p>Restituisce il faultString del payload di una Response. Se non presente restituisce null</p>
      * @return string|null
-     * @throws Exception
      * @see static::XPATH_FAULT_STRING
      */
     public function getFaultString() : string|null
