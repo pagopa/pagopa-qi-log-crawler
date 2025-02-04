@@ -7,7 +7,6 @@ use pagopa\sert\payload\ResponseXML;
 class paGetPayment extends ResponseXML
 {
 
-
     const string XPATH_OUTCOME                          = '//paGetPaymentRes/outcome';
     const string XPATH_CREDITOR_REFERENCE               = '//paGetPaymentRes/data/creditorReferenceId';
     const string XPATH_IUV                              = '//paGetPaymentRes/data/creditorReferenceId';
@@ -27,8 +26,6 @@ class paGetPayment extends ResponseXML
 
     const string XPATH_FAULT_CODE                       = '//paGetPaymentRes/fault/faultCode';
     const string XPATH_FAULT_STRING                     = '//paGetPaymentRes/fault/faultString';
-
-
 
     public function getPaymentsCount(): int
     {

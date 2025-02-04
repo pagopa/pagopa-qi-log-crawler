@@ -170,7 +170,6 @@ class RequestXML extends XmlParser
      * <p>Restituisce l'i-esimo noticeNumber gestito dal payload</p>
      * @param int $index <p>Posizione del nav all'interno del payload. </p><p>default=0</p>
      * @return string|null
-     * @throws Exception
      * @see static::XPATH_NAV
      */
     public function getNav(int $index = 0): string|null
@@ -183,7 +182,6 @@ class RequestXML extends XmlParser
      * <p>Restituisce l'i-esima PA che ha emesso l'avviso presente nel payload</p>
      * @param int $index <p>Posizione della PA all'interno del payload</p><p>default=0</p>
      * @return string|null
-     * @throws Exception
      * @see static::XPATH_PA_EMITTENTE
      */
     public function getPaEmittente(int $index = 0): string|null
@@ -197,7 +195,6 @@ class RequestXML extends XmlParser
      * <p>Restituisce l'i-esimo IUV associato all'avviso presente nel payload</p>
      * @param int $index <p>Posizione dello IUV all'interno del payload</p><p>default=0</p>
      * @return string|null
-     * @throws Exception
      * @see static::XPATH_IUV
      */
     public function getIuv(int $index = 0): string|null
@@ -211,7 +208,6 @@ class RequestXML extends XmlParser
      * <p>Restituisce l'i-esimo Creditor Reference Id associato all'avviso presente nel payload</p>
      * @param int $index <p>Posizione del Creditor Reference Id all'interno del payload</p><p>default=0</p>
      * @return string|null
-     * @throws Exception
      * @see static::XPATH_CREDITOR_REFERENCE
      */
     public function getCreditorReference(int $index = 0): string|null
@@ -235,7 +231,6 @@ class RequestXML extends XmlParser
      * <p>Restituisce l'i-esimo Token associato all'avviso presente nel payload</p>
      * @param int $index <p>Posizione del token all'interno del payload</p><p>default=0</p>
      * @return string|null
-     * @throws Exception
      * @see static::XPATH_TOKEN
      */
     public function getToken(int $index = 0): string|null
@@ -249,7 +244,6 @@ class RequestXML extends XmlParser
      * <p>Restituisce l'i-esimo importo associato all'avviso presente nel payload</p>
      * @param int $index <p>Posizione dell'importo all'interno del payload</p>
      * @return string|null
-     * @throws Exception
      * @see static::XPATH_AMOUNT
      */
     public function getAmount(int $index = 0) : string|null
@@ -262,7 +256,6 @@ class RequestXML extends XmlParser
     /**
      * <p>Restituisce l'importo totale presente nel payload. Per le primitive che non gestiscono carrelli corrisponde al metodo <code>getAmount()</code></p>
      * @return string|null
-     * @throws Exception
      * @see static::XPATH_TOTAL_AMOUNT
      */
     public function getTotalAmount() : string|null
@@ -274,7 +267,6 @@ class RequestXML extends XmlParser
      * <p>Restituisce il numero di transfer associati al pagamento</p>
      * @param int $paymentPosition <p>Posizione del pagamento nel payload (utile per le <code>pspNotifyPaymentV2</code>). </p><p>default=0</p>
      * @return int
-     * @throws Exception
      * @see static::XPATH_TRANSFER_COUNT
      */
     public function getTransferCount(int $paymentPosition = 0): int
@@ -289,7 +281,6 @@ class RequestXML extends XmlParser
      * @param int $transferPosition <p>Posizione del transfer nel payload.</p><p>default=0</p>
      * @param int $paymentPosition <p>Posizione del pagamento nel payload.</p><p>default=0</p>
      * @return string|null
-     * @throws Exception
      * @see static::XPATH_TRANSFER_ID
      */
     public function getTransferId(int $transferPosition = 0, int $paymentPosition = 0): string|null
@@ -305,7 +296,6 @@ class RequestXML extends XmlParser
      * @param int $transferPosition <p>Posizione del transfer nel payload.</p><p>default=0</p>
      * @param int $paymentPosition <p>Posizione del pagamento nel payload, utile nel caso di <code>pspNotifyPaymentV2</code>.</p><p>default=0</p>
      * @return string|null
-     * @throws Exception
      * @see static::XPATH_TRANSFER_AMOUNT
      */
     public function getTransferAmount(int $transferPosition = 0, int $paymentPosition = 0): string|null
@@ -321,7 +311,6 @@ class RequestXML extends XmlParser
      * @param int $transferPosition <p>Posizione del transfer nel payload.</p><p>default=0</p>
      * @param int $paymentPosition <p>Posizione del pagamento nel payload, utile nel caso di <code>pspNotifyPaymentV2</code>.</p><p>default=0</p>
      * @return string|null
-     * @throws Exception
      * @see static::XPATH_TRANSFER_PA
      */
     public function getTransferPa(int $transferPosition = 0, int $paymentPosition = 0): string|null
@@ -337,7 +326,6 @@ class RequestXML extends XmlParser
      * @param int $transferPosition <p>Posizione del transfer nel payload.</p><p>default=0</p>
      * @param int $paymentPosition <p>Posizione del pagamento nel payload, utile nel caso di <code>pspNotifyPaymentV2</code>.</p><p>default=0</p>
      * @return string|null
-     * @throws Exception
      * @see static::XPATH_TRANSFER_IBAN
      */
     public function getTransferIban(int $transferPosition = 0, int $paymentPosition = 0): string|null
@@ -353,7 +341,6 @@ class RequestXML extends XmlParser
      * @param int $transferPosition <p>Posizione del transfer nel payload.</p><p>default=0</p>
      * @param int $paymentPosition <p>Posizione del pagamento nel payload, utile nel caso di <code>pspNotifyPaymentV2</code>.</p><p>default=0</p>
      * @return bool
-     * @throws Exception
      * @see static::XPATH_TRANSFER_BOLLO
      */
     public function isBollo(int $transferPosition = 0, int $paymentPosition = 0): bool
@@ -368,7 +355,6 @@ class RequestXML extends XmlParser
      * <p>Restituisce il numero di metadata associati al payment.</p>
      * @param int $paymentPosition <p>Posizione del payment nel payload, utile nel caso di <code>pspNotifyPaymentV2</code>.</p><p>default=0</p>
      * @return int
-     * @throws Exception
      * @see static::XPATH_PAYMENT_METADATA_COUNT
      */
     public function getPaymentMetaDataCount(int $paymentPosition = 0): int
@@ -383,7 +369,6 @@ class RequestXML extends XmlParser
      * @param int $metadataPosition <p>Posizione del metadata nel payment.</p><p>default=0</p>
      * @param int $paymentPosition <p>Posizione del payment nel payload, utile nel caso di <code>pspNotifyPaymentV2</code>.</p></p>default=0</p>
      * @return string|null
-     * @throws Exception
      * @see static::XPATH_PAYMENT_METADATA_NAME
      */
     public function getPaymentMetaDataName(int $metadataPosition = 0, int $paymentPosition = 0): string|null
@@ -399,7 +384,6 @@ class RequestXML extends XmlParser
      * @param int $metadataPosition <p>Posizione del metadata nel payment.</p><p>default=0</p>
      * @param int $paymentPosition <p>Posizione del payment nel payload, utile nel caso di <code>pspNotifyPaymentV2</code>.</p><p>default=0</p>
      * @return string|null
-     * @throws Exception
      * @see static::XPATH_PAYMENT_METADATA_VALUE
      */
     public function getPaymentMetaDataValue(int $metadataPosition = 0, int $paymentPosition = 0): string|null
@@ -415,7 +399,6 @@ class RequestXML extends XmlParser
      * @param int $transferPosition <p>Posizione del transfer nel payment.</p><p>default=0</p>
      * @param int $paymentPosition <p>Posizione del payment nel payload, utile nel caso di <code>pspNotifyPaymentV2</code>.</p><p>default=0</p>
      * @return int
-     * @throws Exception
      * @see static::XPATH_TRANSFER_METADATA_COUNT
      */
     public function getTransferMetaDataCount(int $transferPosition = 0, int $paymentPosition = 0): int
@@ -432,7 +415,6 @@ class RequestXML extends XmlParser
      * @param int $transferPosition <p>Posizione del transfer nel payment.</p><p>default=0</p>
      * @param int $paymentPosition <p>Posizione del payment nel payload, utile nel caso di <code>pspNotifyPaymentV2</code>.</p><p>default=0</p>
      * @return string|null
-     * @throws Exception
      * @see static::XPATH_TRANSFER_METADATA_NAME
      */
     public function getTransferMetaDataName(int $metadataPosition = 0, int $transferPosition = 0, int $paymentPosition = 0): string|null
@@ -450,7 +432,6 @@ class RequestXML extends XmlParser
      * @param int $transferPosition <p>Posizione del transfer nel payment.</p><p>default=0</p>
      * @param int $paymentPosition <p>Posizione del payment nel payload, utile nel caso di <code>pspNotifyPaymentV2</code>.</p><p>default=0</p>
      * @return string|null
-     * @throws Exception
      * @see static::XPATH_TRANSFER_METADATA_VALUE
      */
     public function getTransferMetaDataValue(int $metadataPosition = 0, int $transferPosition = 0, int $paymentPosition = 0): string|null
@@ -465,7 +446,6 @@ class RequestXML extends XmlParser
     /**
      * <p>Restituisce l'intermediario il CF del <b>Partner Tecnologico</b> / <b>Intermediario</b> che intermedia la PA che emette l'avviso</p>
      * @return string|null
-     * @throws Exception
      * @see static::XPATH_BROKER_PA
      */
     public function getBrokerPa(): string|null
@@ -476,7 +456,6 @@ class RequestXML extends XmlParser
     /**
      * <p>Restituisce la stazione del <b>Partner Tecnologico</b> / <b>Intermediario</b> che intermedia la PA che emette l'avviso</p>
      * @return string|null
-     * @throws Exception
      * @see static::XPATH_BROKER_STATION
      */
     public function getBrokerStation(): string|null
@@ -487,7 +466,6 @@ class RequestXML extends XmlParser
     /**
      * <p>Restituisce il PSP ID che gestisce la transazione</p>
      * @return string|null
-     * @throws Exception
      * @see static::XPATH_PSP_ID
      */
     public function getPspId(): string|null
@@ -498,7 +476,6 @@ class RequestXML extends XmlParser
     /**
      * <p>Restituisce il canale del <b>Partner Tecnologico</b> / <b>Intermediario</b> che intermedia il PSP che effettua la transazione</p>
      * @return string|null
-     * @throws Exception
      * @see static::XPATH_BROKER_CHANNEL
      */
     public function getPspChannel(): string|null
@@ -509,7 +486,6 @@ class RequestXML extends XmlParser
     /**
      * <p>Restituisce il CF del <b>Partner Tecnologico</b> / <b>Intermediario</b> che intermedia il PSP che effettua la transazione</p>
      * @return string|null
-     * @throws Exception
      * @see static::XPATH_BROKER_PSP;
      */
     public function getPspBroker(): string|null
@@ -520,7 +496,6 @@ class RequestXML extends XmlParser
     /**
      * <p>Restituisce l'outcome del payload.</p>
      * @return string|null
-     * @throws Exception
      * @see static::XPATH_OUTCOME
      */
     public function getOutcome(): string|null
