@@ -1,0 +1,9 @@
+<bancomatpayPayment>
+    <transactionId>{{bancomatPayPayment.transaction_id}}</transactionId>
+    <outcomePaymentGateway>OK</outcomePaymentGateway>
+    <totalAmount>{{amount}}</totalAmount>
+    <fee>{{bancomatPayPayment.fee}}</fee>
+    <timestampOperation>2099-01-01T00:00:00</timestampOperation>
+    <authorizationCode>{{bancomatPayPayment.authorizationCode}}</authorizationCode>
+    <paymentGateway>{{bancomatPayPayment.paymentGateway}}</paymentGateway>
+</bancomatpayPayment>
