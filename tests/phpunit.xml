@@ -29,6 +29,7 @@
             <file>payload/req/verifyPaymentNoticeTest.php</file>
             <file>payload/req/activatePaymentNoticeTest.php</file>
             <file>payload/req/activatePaymentNoticeV2Test.php</file>
+            <file>payload/req/pspNotifyPaymentTest.php</file>
             <file>payload/req/sendPaymentOutcomeTest.php</file>
             <file>payload/req/sendPaymentOutcomeV2Test.php</file>
             <file>payload/req/paVerifyPaymentNoticeTest.php</file>
@@ -41,6 +42,7 @@
             <file>payload/resp/verifyPaymentNoticeTest.php</file>
             <file>payload/resp/activatePaymentNoticeTest.php</file>
             <file>payload/resp/activatePaymentNoticeV2Test.php</file>
+            <file>payload/resp/pspNotifyPaymentTest.php</file>
             <file>payload/resp/sendPaymentOutcomeTest.php</file>
             <file>payload/resp/sendPaymentOutcomeV2Test.php</file>
             <file>payload/resp/paVerifyPaymentNoticeTest.php</file>
@@ -54,7 +56,7 @@
             <!-- response event unit tests -->
         </testsuite>
         <testsuite name="single_test">
-            <file>payload/resp/paSendRTV2Test.php</file>
+            <file>payload/resp/pspNotifyPaymentTest.php</file>
         </testsuite>
     </testsuites>
     <coverage includeUncoveredFiles="false" pathCoverage="false">
