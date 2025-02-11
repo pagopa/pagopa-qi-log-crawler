@@ -1,4 +1,3 @@
 {
-"description": "{{description}}",
-"outcome": "KO"
+"outcome": "OK"
 }

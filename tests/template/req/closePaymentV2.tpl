@@ -5,11 +5,12 @@
   },
   "idBrokerPSP": "{{brokerpsp}}",
   "idPSP": "{{psp}}",
+  "idChannel": "{{channel}}",
   "outcome": "{{outcome}}",
   "paymentMethod": "{{paymentMethod}}",
   "paymentTokens": [
       {% for t in tokens %}
-      "{{t}}"
+      "{{t}}"{{ not loop.last ? ',' }}
       {% endfor %}
   ],
   "timestampOperation": "2099-01-01T00:00:00.000Z",
@@ -21,7 +22,7 @@
       "type": "PAGO"
     },
     "transaction": {
-      "amount": "{{amount}},
+      "amount": "{{amount}}",
       "authorizationCode": "{{authorizationCode}}",
       "creationDate": "2099-01-01T00:00:00.000Z",
       "fee": "{{fee}}",
