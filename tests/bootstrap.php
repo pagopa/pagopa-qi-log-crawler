@@ -36,6 +36,12 @@ function getPayload(string $method, string $request_type, array $data) : string
     return $xml->saveXML();
 }
 
+function getPayloadJson(string $method, string $request_type, array $data) : string
+{
+    global $twig;
+    $template_file = sprintf('%s/%s.tpl', strtolower($request_type), $method);
+    return $twig->render($template_file, $data);
+}
 
 
 

@@ -16,13 +16,13 @@ class XmlParser implements ParserInterface
 {
 
     /**
-     * Contiene il payload dell'evento senza i namespace
+     * <p>Contiene il payload dell'evento senza i namespace</p>
      * @var string
      */
     protected string $xml;
 
     /**
-     * Contiene true/false in base alla validità del payload (solo check su sintassi XML, non su correttezza primitive)
+     * <p>Contiene true/false in base alla validità del payload (solo check su sintassi XML, non su correttezza primitive)</p>
      * @var bool
      */
     protected bool $isValid = true;
@@ -47,7 +47,7 @@ class XmlParser implements ParserInterface
 
 
     /**
-     * Restituisce true/false se il payload dell'evento è o meno valido
+     * <p>Restituisce true/false se il payload dell'evento è o meno valido</p>
      * @return bool
      */
     public function isValid(): bool
@@ -56,8 +56,8 @@ class XmlParser implements ParserInterface
     }
 
     /**
-     * Restituisce l'elemento raggiunto da $xpath. Se $xpath è vuoto, restituisce null
-     * Se ad $xpath non corrisponde nulla, restituisce null
+     * <p>Restituisce l'elemento raggiunto da <code>\$xpath</code>. Se <code>\$xpath</code> è vuoto, restituisce <code>null</code></p>
+     * <p>Se ad <code>\$xpath</code> non corrisponde nulla, restituisce <code>null</code></p>
      * @param string $xpath
      * @return string|null
      */
@@ -84,8 +84,8 @@ class XmlParser implements ParserInterface
     }
 
     /**
-     * Restituisce il numero di elementi trovati da $xpath. Se $xpath è vuoto, restituisce null
-     * Se non trova elementi, restituisce 0
+     * <p>Restituisce il numero di elementi trovati da <code>\$xpath</code>. Se <code>\$xpath</code> è vuoto, restituisce <code>null</code></p>
+     * <p>Se non trova elementi, restituisce <b>0</b></p>
      * @param string $xpath
      * @return int
      */

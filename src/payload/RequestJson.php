@@ -2,22 +2,21 @@
 
 namespace pagopa\sert\payload;
 
-use Exception;
-
 /**
- * <p>Classe generica che serve a recuperare le informazioni di un payload di una qualsiasi primitiva XML.
+ * <p>Classe generica che serve a recuperare le informazioni di un payload di una qualsiasi primitiva JSON.
  * Va estesa in base al payload, e nella classe estesa vanno dichiarate solo le costanti utili per recuperare
  * le informazioni presenti nel payload.</p>
  * <p>Ogni costante ha uno scopo, e viene richiamata da un metodo specifico.</p>
  *
  * <p>Es.
- * Se si crea la classe <code>req/activatePaymentNotice</code> che estende <code>RequestXML</code>, è inutile dichiarare <code>XPATH_IUV</code> in quanto
- * nella <code>activatePaymentNotice</code> Request lo IUV non è presente.</p>
+ * Se si crea la classe <code>req/closePayment-v2</code> che estende <code>RequestJson</code>, è inutile dichiarare <code>XPATH_IUV</code> in quanto
+ * nella <code>closePayment-v2</code> Request lo IUV non è presente.</p>
  *
- * @see XmlParser
+ * @see JsonParser
  */
-class RequestXML extends XmlParser
+class RequestJson extends JsonParser
 {
+
     /**
      * Xpath per recuperare dal payload il notice Number
      */
@@ -187,7 +186,6 @@ class RequestXML extends XmlParser
      */
     public function getPaEmittente(int $index = 0): string|null
     {
-        $index++;
         $xpath = vsprintf(static::XPATH_PA_EMITTENTE, [$index]);
         return $this->getElement($xpath);
     }
@@ -200,7 +198,6 @@ class RequestXML extends XmlParser
      */
     public function getIuv(int $index = 0): string|null
     {
-        $index++;
         $xpath = vsprintf(static::XPATH_IUV, [$index]);
         return $this->getElement($xpath);
     }
@@ -213,7 +210,6 @@ class RequestXML extends XmlParser
      */
     public function getCreditorReference(int $index = 0): string|null
     {
-        $index++;
         $xpath = vsprintf(static::XPATH_CREDITOR_REFERENCE, [$index]);
         return $this->getElement($xpath);
     }
@@ -236,7 +232,6 @@ class RequestXML extends XmlParser
      */
     public function getToken(int $index = 0): string|null
     {
-        $index++;
         $xpath = vsprintf(static::XPATH_TOKEN, [$index]);
         return $this->getElement($xpath);
     }
@@ -249,7 +244,6 @@ class RequestXML extends XmlParser
      */
     public function getAmount(int $index = 0) : string|null
     {
-        $index++;
         $xpath = vsprintf(static::XPATH_AMOUNT, [$index]);
         return $this->getElement($xpath);
     }
@@ -272,7 +266,6 @@ class RequestXML extends XmlParser
      */
     public function getTransferCount(int $paymentPosition = 0): int
     {
-        $paymentPosition++;
         $xpath = vsprintf(static::XPATH_TRANSFER_COUNT, [$paymentPosition]);
         return $this->getElementsCount($xpath);
     }
@@ -286,8 +279,6 @@ class RequestXML extends XmlParser
      */
     public function getTransferId(int $transferPosition = 0, int $paymentPosition = 0): string|null
     {
-        $transferPosition++;
-        $paymentPosition++;
         $xpath = vsprintf(static::XPATH_TRANSFER_ID, [$transferPosition, $paymentPosition]);
         return $this->getElement($xpath);
     }
@@ -301,8 +292,6 @@ class RequestXML extends XmlParser
      */
     public function getTransferAmount(int $transferPosition = 0, int $paymentPosition = 0): string|null
     {
-        $transferPosition++;
-        $paymentPosition++;
         $xpath = vsprintf(static::XPATH_TRANSFER_AMOUNT, [$transferPosition, $paymentPosition]);
         return $this->getElement($xpath);
     }
@@ -316,8 +305,6 @@ class RequestXML extends XmlParser
      */
     public function getTransferPa(int $transferPosition = 0, int $paymentPosition = 0): string|null
     {
-        $transferPosition++;
-        $paymentPosition++;
         $xpath = vsprintf(static::XPATH_TRANSFER_PA, [$transferPosition, $paymentPosition]);
         return $this->getElement($xpath);
     }
@@ -331,8 +318,6 @@ class RequestXML extends XmlParser
      */
     public function getTransferIban(int $transferPosition = 0, int $paymentPosition = 0): string|null
     {
-        $transferPosition++;
-        $paymentPosition++;
         $xpath = vsprintf(static::XPATH_TRANSFER_IBAN, [$transferPosition, $paymentPosition]);
         return $this->getElement($xpath);
     }
@@ -346,8 +331,6 @@ class RequestXML extends XmlParser
      */
     public function isBollo(int $transferPosition = 0, int $paymentPosition = 0): bool
     {
-        $transferPosition++;
-        $paymentPosition++;
         $xpath = vsprintf(static::XPATH_TRANSFER_BOLLO, [$transferPosition, $paymentPosition]);
         return !is_null($this->getElement($xpath));
     }
@@ -360,7 +343,6 @@ class RequestXML extends XmlParser
      */
     public function getPaymentMetaDataCount(int $paymentPosition = 0): int
     {
-        $paymentPosition++;
         $xpath = vsprintf(static::XPATH_PAYMENT_METADATA_COUNT, [$paymentPosition]);
         return $this->getElementsCount($xpath);
     }
@@ -374,8 +356,6 @@ class RequestXML extends XmlParser
      */
     public function getPaymentMetaDataName(int $metadataPosition = 0, int $paymentPosition = 0): string|null
     {
-        $metadataPosition++;
-        $paymentPosition++;
         $xpath = vsprintf(static::XPATH_PAYMENT_METADATA_NAME, [$metadataPosition, $paymentPosition]);
         return $this->getElement($xpath);
     }
@@ -389,8 +369,6 @@ class RequestXML extends XmlParser
      */
     public function getPaymentMetaDataValue(int $metadataPosition = 0, int $paymentPosition = 0): string|null
     {
-        $metadataPosition++;
-        $paymentPosition++;
         $xpath = vsprintf(static::XPATH_PAYMENT_METADATA_VALUE, [$metadataPosition, $paymentPosition]);
         return $this->getElement($xpath);
     }
@@ -404,8 +382,6 @@ class RequestXML extends XmlParser
      */
     public function getTransferMetaDataCount(int $transferPosition = 0, int $paymentPosition = 0): int
     {
-        $transferPosition++;
-        $paymentPosition++;
         $xpath = vsprintf(static::XPATH_TRANSFER_METADATA_COUNT, [$transferPosition, $paymentPosition]);
         return $this->getElementsCount($xpath);
     }
@@ -420,9 +396,6 @@ class RequestXML extends XmlParser
      */
     public function getTransferMetaDataName(int $metadataPosition = 0, int $transferPosition = 0, int $paymentPosition = 0): string|null
     {
-        $metadataPosition++;
-        $transferPosition++;
-        $paymentPosition++;
         $xpath = vsprintf(static::XPATH_TRANSFER_METADATA_NAME, [$metadataPosition, $transferPosition, $paymentPosition]);
         return $this->getElement($xpath);
     }
@@ -437,9 +410,6 @@ class RequestXML extends XmlParser
      */
     public function getTransferMetaDataValue(int $metadataPosition = 0, int $transferPosition = 0, int $paymentPosition = 0): string|null
     {
-        $metadataPosition++;
-        $transferPosition++;
-        $paymentPosition++;
         $xpath = vsprintf(static::XPATH_TRANSFER_METADATA_VALUE, [$metadataPosition, $transferPosition, $paymentPosition]);
         return $this->getElement($xpath);
     }
@@ -503,4 +473,5 @@ class RequestXML extends XmlParser
     {
         return $this->getElement(static::XPATH_OUTCOME);
     }
+
 }
