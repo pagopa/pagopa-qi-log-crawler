@@ -15,24 +15,24 @@ class RequestJsonTest extends TestCase
     protected RequestJson $instance;
 
     protected function setUp(): void
-    {
-        $data = [
-            'totalAmount' => '301.00',
-            'amount' => '30000',
-            'fee' => '1.00',
-            'outcome' => 'OK',
-            'brokerpa' => '77777777777',
-            'station' => '77777777777_01',
-            'psp' => 'AGID_01',
-            'channel' => '88888888888_01',
-            'brokerpsp' => '88888888888',
-            "tokens" => [
-                't0000000000000000000000000000001',
-                't0000000000000000000000000000002'
-            ],
-            'transaction_id' => 'TR000000000000000000000000000001',
-            'authorizationCode' => 'AUTH_CODE_01'
-        ];
+    {$data = [
+        'totalAmount' => '301.00',
+        'amount' => '30000',
+        'fee' => '1.00',
+        'outcome' => 'OK',
+        'brokerpa' => '77777777777',
+        'station' => '77777777777_01',
+        'psp' => 'AGID_01',
+        'channel' => '88888888888_01',
+        'brokerpsp' => '88888888888',
+        "tokens" => [
+            't0000000000000000000000000000001',
+            't0000000000000000000000000000002'
+        ],
+        'transaction_id' => 'TR000000000000000000000000000001',
+        'authorizationCode' => 'AUTH_CODE_01'
+    ];
+
         $this->instance = new RequestJson(getPayloadJson('closePaymentV2', 'req', $data));
     }
 
