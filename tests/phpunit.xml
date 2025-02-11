@@ -10,20 +10,14 @@
         colors="true"
         testdox="true"
         bootstrap="bootstrap.php">
-    <php>
-        <const name="MEMCACHED_HOST" value="172.17.0.3" />
-        <const name="MEMCACHED_PORT" value="11211" />
-        <const name="DB_HOST" value="172.17.0.5" />
-        <const name="DB_PORT" value="5432" />
-        <const name="DB_DATABASE" value="postgres" />
-        <const name="DB_USERNAME" value="postgres" />
-        <const name="DB_PASSWORD" value="mock" />
-    </php>
     <testsuites>
         <testsuite name="unit_test_payload">
             <file>payload/XmlParserTest.php</file>
             <file>payload/RequestXMLTest.php</file>
             <file>payload/ResponseXMLTest.php</file>
+            <file>payload/JsonParserTest.php</file>
+            <file>payload/RequestJsonTest.php</file>
+            <file>payload/ResponseJsonTest.php</file>
 
             <!-- request unit tests -->
             <file>payload/req/verifyPaymentNoticeTest.php</file>
@@ -58,7 +52,7 @@
             <!-- response event unit tests -->
         </testsuite>
         <testsuite name="single_test">
-            <file>payload/resp/pspNotifyPaymentV2Test.php</file>
+            <file>payload/ResponseJsonTest.php</file>
         </testsuite>
     </testsuites>
     <coverage includeUncoveredFiles="false" pathCoverage="false">
