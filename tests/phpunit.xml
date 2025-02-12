@@ -18,6 +18,8 @@
             <file>payload/JsonParserTest.php</file>
             <file>payload/RequestJsonTest.php</file>
             <file>payload/ResponseJsonTest.php</file>
+            <file>payload/object/RPTTest.php</file>
+            <file>payload/object/RTTest.php</file>
 
             <!-- request unit tests -->
             <file>payload/req/verifyPaymentNoticeTest.php</file>
@@ -58,7 +60,7 @@
             <!-- response event unit tests -->
         </testsuite>
         <testsuite name="single_test">
-            <file>payload/resp/activateIOPaymentTest.php</file>
+            <file>payload/object/RTTest.php</file>
         </testsuite>
     </testsuites>
     <coverage includeUncoveredFiles="false" pathCoverage="false">
