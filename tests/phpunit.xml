@@ -22,6 +22,9 @@
             <file>payload/object/RTTest.php</file>
 
             <!-- request unit tests -->
+            <file>payload/req/nodoVerificaRPTTest.php</file>
+            <file>payload/req/nodoAttivaRPTTest.php</file>
+            <file>payload/req/nodoInviaRTTest.php</file>
             <file>payload/req/verifyPaymentNoticeTest.php</file>
             <file>payload/req/activateIOPaymentTest.php</file>
             <file>payload/req/activatePaymentNoticeTest.php</file>
@@ -39,6 +42,9 @@
             <file>payload/req/paSendRTV2Test.php</file>
 
             <!-- response unit tests -->
+            <file>payload/resp/nodoVerificaRPTTest.php</file>
+            <file>payload/resp/nodoAttivaRPTTest.php</file>
+            <file>payload/resp/nodoInviaRTTest.php</file>
             <file>payload/resp/verifyPaymentNoticeTest.php</file>
             <file>payload/resp/activateIOPaymentTest.php</file>
             <file>payload/resp/activatePaymentNoticeTest.php</file>
@@ -60,7 +66,7 @@
             <!-- response event unit tests -->
         </testsuite>
         <testsuite name="single_test">
-            <file>payload/object/RTTest.php</file>
+            <file>payload/req/nodoInviaRTTest.php</file>
         </testsuite>
     </testsuites>
     <coverage includeUncoveredFiles="false" pathCoverage="false">
