@@ -29,6 +29,9 @@
             <file>payload/req/paaAttivaRPTTest.php</file>
             <file>payload/req/paaInviaRTTest.php</file>
             <file>payload/req/nodoInviaRPTTest.php</file>
+            <file>payload/req/nodoInviaCarrelloRPTTest.php</file>
+            <file>payload/req/pspInviaCarrelloRPTTest.php</file>
+            <file>payload/req/pspInviaCarrelloRPTCarteTest.php</file>
             <file>payload/req/verifyPaymentNoticeTest.php</file>
             <file>payload/req/activateIOPaymentTest.php</file>
             <file>payload/req/activatePaymentNoticeTest.php</file>
@@ -54,6 +57,8 @@
             <file>payload/resp/paaInviaRTTest.php</file>
             <file>payload/resp/nodoInviaRPTTest.php</file>
             <file>payload/resp/nodoInviaCarrelloRPTTest.php</file>
+            <file>payload/resp/pspInviaCarrelloRPTTest.php</file>
+            <file>payload/resp/pspInviaCarrelloRPTCarteTest.php</file>
             <file>payload/resp/verifyPaymentNoticeTest.php</file>
             <file>payload/resp/activateIOPaymentTest.php</file>
             <file>payload/resp/activatePaymentNoticeTest.php</file>
@@ -75,7 +80,7 @@
             <!-- response event unit tests -->
         </testsuite>
         <testsuite name="single_test">
-            <file>payload/req/nodoInviaCarrelloRPTTest.php</file>
+            <file>payload/resp/pspInviaCarrelloRPTTest.php</file>
         </testsuite>
     </testsuites>
     <coverage includeUncoveredFiles="false" pathCoverage="false">
