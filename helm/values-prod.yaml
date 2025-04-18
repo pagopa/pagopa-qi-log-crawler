@@ -26,15 +26,17 @@ microservice-chart:
   service:
     create: true
     type: ClusterIP
-    port: 80
+    ports:
+      - 80
   ingress:
     create: true
     host: "weuprod.<namespace>.internal.platform.pagopa.it"  # TODO
     path: /pagopa-<project-name>-service/(.*) # TODO
+    servicePort: 80
   serviceAccount:
     create: false
     annotations: {}
-    name: ""
+    name: "qi-workload-identity"
   podAnnotations: {}
   podSecurityContext:
     seccompProfile:
@@ -71,3 +73,5 @@ microservice-chart:
   nodeSelector: {}
   tolerations: []
   affinity: {}
+  azure:
+    workloadIdentityClientId: "317af93b-1bf8-43fb-998a-4e58eafc53c8"
